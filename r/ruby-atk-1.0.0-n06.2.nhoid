@@ -1,0 +1,41 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	ruby-atk
+# Version:	1.0.0
+# Release:	n06.2
+# License:	LGPL
+# Group:	Programming
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64 arm arm64
+# Url:	http://ruby-gnome2.sourceforge.jp
+# Description:	Ruby bindings for atk.
+# MD5:	b76b2ec9dcc5ac553548a9f650b7c807  ruby-atk-1.0.0.tar.xz
+
+
+# BuildDep:	/usr/lib/ruby/site_ruby/1.9.1/i686-linux/glib2.so	/usr/lib/ruby/site_ruby/1.9.1/i686-linux/glib2.so
+# BuildDep:	/usr/lib/libatk-1.0.so	/usr/lib/libatk-1.0.so
+# BuildDep:	/usr/lib/ruby/gems/1.9.1/cache/pkg-config-1.0.7.gem	/usr/lib/ruby/gems/1.9.1/cache/pkg-config-1.0.7.gem
+# Dep(post):	/usr/lib/ruby/gems/1.9.1/cache/pkg-config-1.0.7.gem	/usr/lib/ruby/gems/1.9.1/cache/pkg-config-1.0.7.gem
+# Dep(post):	/usr/lib/libatk-1.0.so	/usr/lib/libatk-1.0.so
+# Dep(post):	/usr/lib/ruby/site_ruby/1.9.1/i686-linux/glib2.so	/usr/lib/ruby/site_ruby/1.9.1/i686-linux/glib2.so
+
+nbuild() {
+pkgdir=/tmp/ratk
+ruby extconf.rb atk --topdir=$pkgdir
+make
+}
+
+ninstall() {
+pkgdir=/tmp/ratk
+make DESTDIR="$pkgdir" install
+cp -r $pkgdir/* /
+rm -r $pkgdir
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

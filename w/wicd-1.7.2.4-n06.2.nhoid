@@ -1,0 +1,76 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	wicd
+# Version:	1.7.2.4
+# Release:	n06.2
+# License:	GPLv2
+# Group:	Networking
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64 arm arm64
+# Url:	http://wicd.sourceforge.net/
+# Description:	New and alternative wireless/wired network management utility.
+# MD5:	ae24fb341328444f658b93f410100909  wicd-1.7.2.4.tar.xz
+
+
+# BuildDep:	/usr/bin/python	/usr/bin/python
+# BuildDep:	/usr/lib/python2.7/site-packages/dbus/_dbus.py	/usr/lib/python2.7/site-packages/dbus/_dbus.py
+# BuildDep:	/usr/lib/python2.7/site-packages/gtk-2.0/gtk/_gtk.so	/usr/lib/python2.7/site-packages/gtk-2.0/gtk/_gtk.so
+# BuildDep:	/sbin/dhcpcd	/sbin/dhcpcd
+# BuildDep:	/usr/sbin/wpa_supplicant	/usr/sbin/wpa_supplicant
+# BuildDep:	/usr/sbin/iwconfig	/usr/sbin/iwconfig
+# BuildDep:	/usr/lib/python2.7/site-packages/urwid/listbox.py	/usr/lib/python2.7/site-packages/urwid/listbox.py
+# BuildDep:	/usr/bin/ck-launch-session	/usr/bin/ck-launch-session
+# BuildDep:	/sbin/mii-tool	/sbin/mii-tool
+# BuildDep:	/usr/bin/pybabel	/usr/bin/pybabel
+# Dep(post):	/usr/bin/pybabel	/usr/bin/pybabel
+# Dep(post):	/sbin/mii-tool	/sbin/mii-tool
+# Dep(post):	/usr/bin/ck-launch-session	/usr/bin/ck-launch-session
+# Dep(post):	/usr/lib/python2.7/site-packages/urwid/listbox.py	/usr/lib/python2.7/site-packages/urwid/listbox.py
+# Dep(post):	/usr/sbin/iwconfig	/usr/sbin/iwconfig
+# Dep(post):	/usr/sbin/wpa_supplicant	/usr/sbin/wpa_supplicant
+# Dep(post):	/sbin/dhcpcd	/sbin/dhcpcd
+# Dep(post):	/usr/lib/python2.7/site-packages/gtk-2.0/gtk/_gtk.so	/usr/lib/python2.7/site-packages/gtk-2.0/gtk/_gtk.so
+# Dep(post):	/usr/lib/python2.7/site-packages/dbus/_dbus.py	/usr/lib/python2.7/site-packages/dbus/_dbus.py
+
+nbuild() {
+noemptyfuncs
+}
+
+ninstall() {
+patch -p0 < ../dbus_string_fix.patch
+python setup.py configure --no-install-init \
+--resume=/usr/share/wicd/scripts/ \
+--suspend=/usr/share/wicd/scripts/ \
+--verbose \
+--python=/usr/bin/python \
+--lib=/usr/lib \
+--systemd=/usr/lib/systemd/system
+mkdir -p translations/ast/LC_MESSAGES
+msgfmt po/ast.po -o translations/ast/LC_MESSAGES/wicd.mo
+pkgdir=/tmp/wicd
+python setup.py install --root=$pkgdir
+install -Dm755 ../wicd /etc/rc.d/init.d/wicd
+ln -sf  /etc/rc.d/init.d/wicd /etc/rc.d/rc0.d/K78wicd
+ln -sf  /etc/rc.d/init.d/wicd /etc/rc.d/rc1.d/K78wicd
+ln -sf  /etc/rc.d/init.d/wicd /etc/rc.d/rc2.d/K78wicd
+ln -sf  /etc/rc.d/init.d/wicd /etc/rc.d/rc3.d/S82wicd
+ln -sf  /etc/rc.d/init.d/wicd /etc/rc.d/rc4.d/S82wicd
+ln -sf  /etc/rc.d/init.d/wicd /etc/rc.d/rc5.d/S82wicd
+ln -sf  /etc/rc.d/init.d/wicd /etc/rc.d/rc6.d/K78wicd
+install -Dm644 ../wicd.desktop /usr/share/applications/wicd.desktop
+cd build/lib/wicd
+for i in *.py; do
+install -Dm 755 $i $pkgdir/usr/lib/wicd/$i
+done
+rm -rf $pkgdir/usr/share/autostart
+cp -r /tmp/wicd/* /
+rm -r /tmp/wicd
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+rm -r /etc/rc.d/rc{0,1,2,3,4,5,6}.d/*wicd
+}

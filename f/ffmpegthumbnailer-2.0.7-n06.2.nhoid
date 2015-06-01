@@ -1,0 +1,39 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	ffmpegthumbnailer
+# Version:	2.0.7
+# Release:	n06.2
+# License:	GPLv2
+# Group:	Multimedia
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64 arm arm64
+# Url:	http://code.google.com/p/ffmpegthumbnailer
+# Description:	Lightweight video thumbnailer that can be used by file managers..
+# MD5:	3472344e46a1289d433520fa1b4a6b4a  ffmpegthumbnailer-2.0.7.tar.xz
+
+
+# BuildDep:	/usr/bin/ffmpeg	/usr/bin/ffmpeg
+# BuildDep:	/usr/lib/libjpeg.so	/usr/lib/libjpeg.so
+# BuildDep:	/usr/lib/libpng.so	/usr/lib/libpng.so
+# BuildDep:	/usr/lib/libgvfscommon.so	/usr/lib/libgvfscommon.so
+# Dep(post):	/usr/lib/libgvfscommon.so	/usr/lib/libgvfscommon.so
+# Dep(post):	/usr/lib/libpng.so	/usr/lib/libpng.so
+# Dep(post):	/usr/lib/libjpeg.so	/usr/lib/libjpeg.so
+# Dep(post):	/usr/bin/ffmpeg	/usr/bin/ffmpeg
+
+nbuild() {
+./configure --prefix=/usr --enable-gio
+make
+}
+
+ninstall() {
+make install
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

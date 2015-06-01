@@ -1,0 +1,42 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	neon
+# Version:	0.29.6
+# Release:	n06.2
+# License:	GPL LGPL
+# Group:	Multimedia
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64 arm arm64
+# Url:	http://www.webdav.org/neon/
+# Description:	HTTP and WebDAV client library with a C interface.
+# MD5:	054a10e937be458db77759c7b3211840  neon-0.29.6.tar.xz
+
+
+# BuildDep:	/usr/lib/libkrb5.so	/usr/lib/libkrb5.so
+# BuildDep:	/usr/lib/libexpat.so	/usr/lib/libexpat.so
+# BuildDep:	/etc/ca-certificates.conf	/etc/ca-certificates.conf
+# Dep(post):	/etc/ca-certificates.conf	/etc/ca-certificates.conf
+# Dep(post):	/usr/lib/libexpat.so	/usr/lib/libexpat.so
+# Dep(post):	/usr/lib/libkrb5.so	/usr/lib/libkrb5.so
+
+nbuild() {
+./configure --prefix=/usr \
+--with-expat \
+--enable-shared \
+--disable-static \
+--with-ssl=openssl \
+--with-ca-bundle=/etc/ca-certificates.crt
+make
+}
+
+ninstall() {
+make install
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

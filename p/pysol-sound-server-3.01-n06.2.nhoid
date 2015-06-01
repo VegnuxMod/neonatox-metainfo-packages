@@ -1,0 +1,39 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	pysol-sound-server
+# Version:	3.01
+# Release:	n06.2
+# License:	GPL LGPL
+# Group:	Multimedia
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64 arm arm64 armel
+# Url:	http://www.pysol.org/
+# Description:	A Python extension module that plays WAV samples together with MP3 or MOD background music.
+# MD5:	76f17c23c9e08dba3d209ff96e180f23  pysol-sound-server-3.01.tar.xz
+
+
+# BuildDep:	/usr/bin/python	/usr/bin/python
+# BuildDep:	/usr/lib/libsmpeg.so	/usr/lib/libsmpeg.so
+# Dep(post):	/usr/bin/python	/usr/bin/python
+# Dep(post):	/usr/lib/libsmpeg.so	/usr/lib/libsmpeg.so
+
+nbuild() {
+cd src
+./configure
+make
+}
+
+ninstall() {
+cd src
+python setup.py install --root=/tmp/pysolss
+cp -r /tmp/pysolss/* /
+rm -r /tmp/pysolss
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

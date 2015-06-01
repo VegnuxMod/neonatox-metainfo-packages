@@ -1,0 +1,63 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	neverball
+# Version:	1.5.4
+# Release:	n06.2
+# License:	GPL
+# Group:	Games
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64 arm arm64
+# Url:	http://neverball.org/
+# Description:	3D game similar to Super Monkey Ball or Marble Madness.
+# MD5:	12bcacd80ac9f4abd08d1fc27366b20a  neverball-1.5.4.tar.xz
+
+
+# BuildDep:	/usr/lib/libSDL_ttf.so	/usr/lib/libSDL_ttf.so
+# BuildDep:	/usr/lib/libGL.so	/usr/lib/libGL.so
+# BuildDep:	/usr/lib/libpng.so	/usr/lib/libpng.so
+# BuildDep:	/usr/lib/libjpeg.so	/usr/lib/libjpeg.so
+# BuildDep:	/usr/lib/libvorbis.so	/usr/lib/libvorbis.so
+# BuildDep:	/usr/lib/libphysfs.so	/usr/lib/libphysfs.so
+# Dep(post):	/usr/lib/libphysfs.so	/usr/lib/libphysfs.so
+# Dep(post):	/usr/lib/libvorbis.so	/usr/lib/libvorbis.so
+# Dep(post):	/usr/lib/libjpeg.so	/usr/lib/libjpeg.so
+# Dep(post):	/usr/lib/libpng.so	/usr/lib/libpng.so
+# Dep(post):	/usr/lib/libGL.so	/usr/lib/libGL.so
+# Dep(post):	/usr/lib/libSDL_ttf.so	/usr/lib/libSDL_ttf.so
+
+nbuild() {
+sed -i 's|#define CONFIG_LOCALE "./locale"|#define CONFIG_LOCALE "/usr/share/locale"|' share/base_config.h
+if [ "$(uname -m)" = "i686" ] ;then
+make ENABLE_NLS=1 DATADIR=/usr/share/neverball SSE_CFLAGS=""
+else
+make ENABLE_NLS=1 DATADIR=/usr/share/neverball
+fi
+}
+
+ninstall() {
+pkgdir=/tmp/neverball
+install -d "${pkgdir}/usr/bin"
+install -d "${pkgdir}"/usr/share/{neverball,locale,applications,pixmaps,doc/neverball}
+install -d "${pkgdir}"/usr/share/man/man{1,6}
+install -m755 neverball neverputt mapc "${pkgdir}/usr/bin"
+cp -r locale/* "${pkgdir}/usr/share/locale/"
+cp -r data/* "${pkgdir}/usr/share/neverball/"
+install -m644 doc/* "${pkgdir}/usr/share/doc/neverball/"
+install -m644 dist/*.desktop "${pkgdir}/usr/share/applications/"
+install -m644 dist/*.png "${pkgdir}/usr/share/pixmaps/"
+install -m644 dist/mapc.1 "${pkgdir}/usr/share/man/man1"
+install -m644 dist/{neverball.6,neverputt.6} "${pkgdir}/usr/share/man/man6"
+ln -s neverball_48.png "${pkgdir}/usr/share/pixmaps/neverball.png"
+ln -s neverputt_48.png "${pkgdir}/usr/share/pixmaps/neverputt.png"
+find "${pkgdir}/usr/share/neverball" -type f -exec chmod 0644 {} \;
+cp -r ${pkgdir}/* /
+rm -r ${pkgdir}
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

@@ -1,0 +1,31 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	libart_lgpl
+# Version:	2.3.21
+# Release:	n06.2
+# License:	LGPL
+# Group:	System
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64 arm arm64
+# Url:	http://www.levien.com/libart/
+# Description:	A library for high-performance 2D graphics.
+# MD5:	38fb2b098c2c01a5e751d14cccc56931  libart_lgpl-2.3.21.tar.xz
+
+
+
+nbuild() {
+./configure --prefix=/usr
+make
+}
+
+ninstall() {
+make install
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

@@ -1,0 +1,31 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	libupnp
+# Version:	1.6.13
+# Release:	n06.2
+# License:	BSD
+# Group:	Networking
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64 arm arm64
+# Url:	http://pupnp.sourceforge.net/
+# Description:	Portable Open Source UPnP Development Kit.
+# MD5:	1c8a6699bac1a5f7b96e10e72d82c65d  libupnp-1.6.13.tar.xz
+
+
+
+nbuild() {
+./configure --prefix=/usr
+make
+}
+
+ninstall() {
+make install
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

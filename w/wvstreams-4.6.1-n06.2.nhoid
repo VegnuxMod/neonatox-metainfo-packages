@@ -1,0 +1,46 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	wvstreams
+# Version:	4.6.1
+# Release:	n06.2
+# License:	LGPL
+# Group:	Programming
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64 arm arm64
+# Url:	http://alumnit.ca/wiki/?page=WvStreams
+# Description:	A network programming library written in C++.
+# MD5:	afb96568d03f9ecd055296341e81276e  wvstreams-4.6.1.tar.xz
+
+
+# BuildDep:	/usr/lib/libz.so	/usr/lib/libz.so
+# BuildDep:	/usr/lib/libpam.so	/usr/lib/libpam.so
+# BuildDep:	/usr/lib/libxplc.so.0.3.13	/usr/lib/libxplc.so.0.3.13
+# BuildDep:	/usr/lib/libssl.so	/usr/lib/libssl.so
+# BuildDep:	/usr/lib/libreadline.so	/usr/lib/libreadline.so
+# Dep(post):	/usr/lib/libreadline.so	/usr/lib/libreadline.so
+# Dep(post):	/usr/lib/libssl.so	/usr/lib/libssl.so
+# Dep(post):	/usr/lib/libxplc.so.0.3.13	/usr/lib/libxplc.so.0.3.13
+# Dep(post):	/usr/lib/libpam.so	/usr/lib/libpam.so
+# Dep(post):	/usr/lib/libz.so	/usr/lib/libz.so
+
+nbuild() {
+./configure --prefix=/usr --sysconfdir=/etc \
+--localstatedir=/var --without-dbus \
+--with-pam --with-openssl \
+--without-tcl --without-qt
+make COPTS="$CFLAGS -fPIC" CXXOPTS="$CXXFLAGS -fPIC -fpermissive" VERBOSE=1
+}
+
+ninstall() {
+make install
+rm /usr/lib/pkgconfig/libwvdbus.pc
+rm /usr/lib/pkgconfig/libwvqt.pc
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

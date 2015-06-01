@@ -1,0 +1,37 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sánchez <cargabsj175@gmail.com>
+
+# Name:	gnutls
+# Version:	2.8.6
+# Release:	n06.2
+# License:	GPLv3 LGPL
+# Group:	Core System
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64
+# Url:	http://www.gnu.org/software/gnutls/
+# Description:	A library which provides a secure layer over a reliable transport layer.
+# MD5:	3ff433243dd72d51b61a3795632e9b6f  gnutls-2.8.6.tar.xz
+
+
+# BuildDep:	/usr/lib/libtasn1.so	/usr/lib/libtasn1.so
+# BuildDep:	/usr/lib/libz.so	/usr/lib/libz.so
+# BuildDep:	/usr/lib/libgcrypt.so	/usr/lib/libgcrypt.so
+# Dep(post):	/usr/lib/libgcrypt.so	/usr/lib/libgcrypt.so
+# Dep(post):	/usr/lib/libz.so	/usr/lib/libz.so
+# Dep(post):	/usr/lib/libtasn1.so	/usr/lib/libtasn1.so
+
+nbuild() {
+./configure --prefix=/usr --with-zlib --disable-guile
+make
+}
+
+ninstall() {
+make install
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

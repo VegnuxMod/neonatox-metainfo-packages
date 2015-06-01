@@ -1,0 +1,31 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com.>
+
+# Name:	libdiscid
+# Version:	0.2.2
+# Release:	n06.2
+# License:	GPL
+# Group:	Multimedia
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64
+# Url:	http://musicbrainz.org/doc/libdiscid
+# Description:	A Library for creating MusicBrainz DiscIDs.
+# MD5:	45f0fd33cdbaf398a65b680db8968601  libdiscid-0.2.2.tar.xz
+
+
+
+nbuild() {
+./configure --prefix=/usr
+make
+}
+
+ninstall() {
+make install
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

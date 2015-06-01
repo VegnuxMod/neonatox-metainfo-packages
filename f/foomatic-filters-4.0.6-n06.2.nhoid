@@ -1,0 +1,35 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	foomatic-filters
+# Version:	4.0.6
+# Release:	n06.2
+# License:	GPL
+# Group:	System
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64 arm arm64
+# Url:	http://www.linuxprinting.org/foomatic.html
+# Description:	Foomatic - Filter scripts used by the printer spoolers to convert the incoming PostScript data into the printer's native format.
+# MD5:	ddca218aef9906ee8a21473253b1f85c  foomatic-filters-4.0.6.tar.xz
+
+
+# BuildDep:	/usr/bin/perl	/usr/bin/perl
+# BuildDep:	/usr/lib/libnetsnmp.so	/usr/lib/libnetsnmp.so
+# Dep(post):	/usr/lib/libnetsnmp.so	/usr/lib/libnetsnmp.so
+# Dep(post):	/usr/bin/perl	/usr/bin/perl
+
+nbuild() {
+./configure --prefix=/usr --sysconfdir=/etc
+make
+}
+
+ninstall() {
+make install
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

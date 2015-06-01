@@ -1,0 +1,48 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	rkhunter
+# Version:	1.4.0
+# Release:	n06.2
+# License:	GPL
+# Group:	System
+# Arch:	noarch
+# Url:	http://rkhunter.sourceforge.net/
+# Description:	Checks machines for the presence of rootkits and other unwanted tools.
+# MD5:	126da739c9008505e8867b6c6de38b8a  rkhunter-1.4.0.tar.xz
+
+# BuildDep:	/bin/bash	/bin/bash
+# BuildDep:	/usr/bin/perl	/usr/bin/perl
+# BuildDep:	/usr/bin/wget	/usr/bin/wget
+# Dep(post):	/usr/bin/wget	/usr/bin/wget
+# Dep(post):	/usr/bin/perl	/usr/bin/perl
+# Dep(post):	/bin/bash	/bin/bash
+
+nbuild() {
+noemptyfuncs
+}
+
+ninstall() {
+pkgdir=/tmp/rkhunter
+sed -i -e "s/lib64/lib/g" installer.sh
+install -dm0755 "${pkgdir}/usr"
+./installer.sh --layout custom "${pkgdir}/usr" --striproot "${pkgdir}" --install
+mv "${pkgdir}/usr/etc" "${pkgdir}"
+mv "${pkgdir}/usr/var" "${pkgdir}"
+sed -i -e "s#/usr/etc/rkhunter.conf#/etc/rkhunter.conf#g" "${pkgdir}/usr/bin/rkhunter"
+sed -i -e "s#/usr/etc/rkhunter.conf#/etc/rkhunter.conf#g" "${pkgdir}/etc/rkhunter.conf"
+sed -i -e "s#/usr/var/lib/rkhunter/db#/var/lib/rkhunter/db#g" "${pkgdir}/etc/rkhunter.conf"
+sed -i -e "s#/usr/var/lib/rkhunter/tmp#/var/lib/rkhunter/tmp#g" "${pkgdir}/etc/rkhunter.conf"
+rm -f "${pkgdir}/var/lib/rkhunter/tmp/"{group,passwd}
+sed -i 's|^#ALLOWHIDDENDIR=/dev/.udev$|ALLOWHIDDENDIR=/dev/.udev|' "${pkgdir}/etc/rkhunter.conf"
+cp -R ${pkgdir}/* /
+rm -R ${pkgdir}
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

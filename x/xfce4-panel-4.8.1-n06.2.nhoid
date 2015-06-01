@@ -1,0 +1,58 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	xfce4-panel
+# Version:	4.8.1
+# Release:	n06.2
+# License:	GPLv2
+# Group:	XFCE Desktop
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64 arm arm64
+# Url:	http://www.xfce.org/
+# Description:	Panel for the Xfce desktop environment.
+# MD5:	040fe4c98d1d8232d69670aa7ef3600b  xfce4-panel-4.8.1.tar.xz
+
+
+# BuildDep:	/usr/share/xfce4/dev-tools/m4macros/xdt-xfce.m4	/usr/share/xfce4/dev-tools/m4macros/xdt-xfce.m4
+# BuildDep:	/usr/lib/libxfconf-0.so	/usr/lib/libxfconf-0.so
+# BuildDep:	/usr/lib/libgarcon-1.so	/usr/lib/libgarcon-1.so
+# BuildDep:	/usr/lib/libcairo.so	/usr/lib/libcairo.so
+# BuildDep:	/usr/lib/libglib-2.0.so	/usr/lib/libglib-2.0.so
+# BuildDep:	/usr/lib/perl5/site_perl/5.10.1/i686-linux/XML/Parser.pm	/usr/lib/perl5/site_perl/5.10.1/i686-linux/XML/Parser.pm
+# BuildDep:	/usr/share/icons/hicolor/index.theme	/usr/share/icons/hicolor/index.theme
+# BuildDep:	/usr/lib/libwnck-1.so	/usr/lib/libwnck-1.so
+# BuildDep:	/usr/lib/libexo-1.so	/usr/lib/libexo-1.so
+# BuildDep:	/usr/lib/libxfce4ui-1.so	/usr/lib/libxfce4ui-1.so
+# Dep(post):	/usr/share/xfce4/dev-tools/m4macros/xdt-xfce.m4	/usr/share/xfce4/dev-tools/m4macros/xdt-xfce.m4
+# Dep(post):	/usr/lib/libxfconf-0.so	/usr/lib/libxfconf-0.so
+# Dep(post):	/usr/lib/libgarcon-1.so	/usr/lib/libgarcon-1.so
+# Dep(post):	/usr/lib/libcairo.so	/usr/lib/libcairo.so
+# Dep(post):	/usr/lib/libglib-2.0.so	/usr/lib/libglib-2.0.so
+# Dep(post):	/usr/lib/perl5/site_perl/5.10.1/i686-linux/XML/Parser.pm	/usr/lib/perl5/site_perl/5.10.1/i686-linux/XML/Parser.pm
+# Dep(post):	/usr/share/icons/hicolor/index.theme	/usr/share/icons/hicolor/index.theme
+# Dep(post):	/usr/lib/libwnck-1.so	/usr/lib/libwnck-1.so
+# Dep(post):	/usr/lib/libexo-1.so	/usr/lib/libexo-1.so
+# Dep(post):	/usr/lib/libxfce4ui-1.so	/usr/lib/libxfce4ui-1.so
+
+nbuild() {
+make
+  ./configure --prefix=/usr \
+	--sysconfdir=/etc \
+	--libexecdir=/usr/lib \
+	--localstatedir=/var \
+	--disable-static \
+	--enable-gio-unix \
+	--disable-debug
+  make
+}
+
+ninstall() {
+make install
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

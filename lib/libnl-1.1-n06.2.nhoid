@@ -1,0 +1,32 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	libnl
+# Version:	1.1
+# Release:	n06.2
+# License:	GPL
+# Group:	Networking
+# Arch:	i486 i586 i686 x86_64 mips64 mips mips64el mipsel ppc ppc64
+# Url:	http://www.infradead.org/~tgr/libnl/
+# Description:	Library for applications dealing with netlink sockets.
+# MD5:	1ef423f4725695138a32ba1e45b66439  libnl-1.1.tar.xz
+
+
+
+nbuild() {
+patch -Np1 -i ../fix-compilation.patch
+./configure --prefix=/usr
+make
+}
+
+ninstall() {
+make install
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

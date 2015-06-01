@@ -1,0 +1,36 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sánchez <cargabsj175@gmail.com>
+
+# Name:	shared-mime-info
+# Version:	0.80
+# Release:	n06.2
+# License:	GPL
+# Group:	Core System
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64
+# Url:	http://freedesktop.org/Software/shared-mime-info
+# Description:	Freedesktop.org Shared MIME Info.
+# MD5:	8fce049293f91a5b06e376a300908f76  shared-mime-info-0.80.tar.xz
+
+
+# BuildDep:	/usr/lib/libxml2.so	/usr/lib/libxml2.so
+# BuildDep:	/usr/lib/libglib-2.0.so	/usr/lib/libglib-2.0.so
+# Dep(post):	/usr/lib/libxml2.so	/usr/lib/libxml2.so
+# Dep(post):	/usr/lib/libglib-2.0.so	/usr/lib/libglib-2.0.so
+
+nbuild() {
+patch -p1 -i "../pbm.patch"
+./configure --prefix=/usr --disable-update-mimedb
+make
+}
+
+ninstall() {
+make install
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

@@ -1,0 +1,58 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	libreoffice-sdk
+# Version:	3.5.2.2
+# Release:	n06.2
+# License:	LGPLv3
+# Group:	libreoffice
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64 arm arm64 armel
+# Url:	http://www.libreoffice.org/
+# Description:	Software Development Kit for LibreOffice.
+# MD5:	da81e63521bf975712738dd8da50e4a4  libreoffice-sdk-3.5.2.2.tar.xz
+
+
+# BuildDep:	/usr/bin/libreoffice	/usr/bin/libreoffice
+# BuildDep:	/bin/sh	/bin/sh
+# BuildDep:	/usr/bin/make	/usr/bin/make
+# BuildDep:	/usr/bin/zip	/usr/bin/zip
+# BuildDep:	/usr/bin/java	/usr/bin/java
+# Dep(post):	/usr/bin/libreoffice	/usr/bin/libreoffice
+# Dep(post):	/bin/sh	/bin/sh
+# Dep(post):	/usr/bin/make	/usr/bin/make
+# Dep(post):	/usr/bin/zip	/usr/bin/zip
+# Dep(post):	/usr/bin/java	/usr/bin/java
+
+nbuild() {
+./build.libreoffice
+}
+
+ninstall() {
+curdir=$(pwd)
+srcdir=/usr/src/nhopkg
+pkgdir=/tmp/libreoffice
+# create directories from *list.txt file
+for directory in `grep ^%dir ${srcdir}/libreoffice-core-3.5.2.2/file-lists/sdk_list.txt`; do
+install -dm755 ${pkgdir}/${directory/\%dir/}
+done
+# install files into the pkg from fakeinstall dir
+for file in `grep -v ^%dir $srcdir/libreoffice-core-3.5.2.2/file-lists/sdk_list.txt`; do
+dirname=`dirname $file`
+# check if directory has been already been created - some are missing like manpages
+[ -d ${pkgdir}/$dirname ] || install -dm755 ${pkgdir}/$dirname
+# mv file from fakeinstall to pkgdir
+cp -rv fakeinstall${file} ${pkgdir}$file
+done
+# fix environment path to keep compatibility with openjdk6 and openjdk7
+sed -i -e "s:\/usr\/lib\/jvm\/java-7-openjdk:\$J2SDKDIR:" ${pkgdir}/usr/lib/libreoffice/sdk/setsdkenv_unix.{sh,csh}
+cp -r ${pkgdir}/* /
+rm -r ${pkgdir}
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

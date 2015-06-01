@@ -1,0 +1,35 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	cmake
+# Version:	2.8.8
+# Release:	n06.2
+# License:	CMake
+# Group:	Programming
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64 arm arm64 armel
+# Url:	http://www.cmake.org/
+# Description:	Cross platform Make.
+# MD5:	559e55c81dc2eec06ebb1fd5d414a74a  cmake-2.8.8.tar.xz
+
+
+# OptionalBuildDep:	/usr/lib/libcurl.so	/usr/lib/libcurl.so
+# OptionalDep(post):	/usr/lib/libcurl.so	/usr/lib/libcurl.so
+
+nbuild() {
+./bootstrap --prefix=/usr \
+--docdir=/share/doc/cmake-2.6.4 --datadir=/share/cmake \
+--mandir=/share/man &&
+make
+}
+
+ninstall() {
+make install
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

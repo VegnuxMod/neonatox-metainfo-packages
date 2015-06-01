@@ -1,0 +1,54 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	libgphoto2
+# Version:	2.4.10.1
+# Release:	n06.2
+# License:	LGPL
+# Group:	System
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64 arm arm64
+# Url:	http://www.gphoto.org
+# Description:	The core library of gphoto2, designed to allow access to digital camera by external programs.
+# MD5:	0846c1962a3ca3c53b8c8ff5b6f8582b  libgphoto2-2.4.10.1.tar.xz
+
+
+# BuildDep:	/usr/lib/libexif.so	/usr/lib/libexif.so
+# BuildDep:	/usr/lib/libjpeg.so	/usr/lib/libjpeg.so
+# BuildDep:	/usr/lib/libgd.so	/usr/lib/libgd.so
+# BuildDep:	/usr/lib/libusb.so	/usr/lib/libusb.so
+# Dep(post):	/usr/lib/libusb.so	/usr/lib/libusb.so
+# Dep(post):	/usr/lib/libgd.so	/usr/lib/libgd.so
+# Dep(post):	/usr/lib/libjpeg.so	/usr/lib/libjpeg.so
+# Dep(post):	/usr/lib/libexif.so	/usr/lib/libexif.so
+
+nbuild() {
+udevscriptdir=/lib/udev ./configure --prefix=/usr --with-drivers=all --disable-static --disable-rpath
+LD_PRELOAD="" make
+}
+
+ninstall() {
+pkgdir=/tmp/libgphoto
+make DESTDIR="${pkgdir}" install
+rm -f ${pkgdir}/usr/lib/libgphoto2/${pkgver}/*.a
+install -m755 -d "${pkgdir}/usr/share/hal/fdi/information/20thirdparty"
+install -m755 -d "${pkgdir}/lib/udev/rules.d"
+LD_LIBRARY_PATH="${pkgdir}/usr/lib${LD_LIBRARY_PATH:+:}$LD_LIBRARY_PATH" \
+CAMLIBS="${pkgdir}/usr/lib/libgphoto2/${pkgver}" \
+"${pkgdir}/usr/lib/libgphoto2/print-camera-list" hal-fdi > \
+"${pkgdir}/usr/share/hal/fdi/information/20thirdparty/10-camera-libgphoto2.fdi"
+LD_LIBRARY_PATH="${pkgdir}/usr/lib${LD_LIBRARY_PATH:+:}$LD_LIBRARY_PATH" \
+CAMLIBS="${pkgdir}/usr/lib/libgphoto2/${pkgver}" \
+"${pkgdir}/usr/lib/libgphoto2/print-camera-list" udev-rules version 136 group camera mode 0660 > \
+"${pkgdir}/lib/udev/rules.d/40-gphoto.rules"
+rm -f "${pkgdir}/usr/include/gphoto2/gphoto2"
+cp -r ${pkgdir}/* /
+rm -r ${pkgdir}
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

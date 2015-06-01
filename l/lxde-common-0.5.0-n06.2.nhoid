@@ -1,0 +1,38 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sánchez <cargabsj175@gmail.com>
+
+# Name:	lxde-common
+# Version:	0.5.0
+# Release:	n06.2
+# License:	GPLv2
+# Group:	LXDE Desktop
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64
+# Url:	http://lxde.org/
+# Description:	Common files of the LXDE Desktop.
+# MD5:	9c4cc706da633f22186ae2d0840736f9  lxde-common-0.5.0.tar.xz
+
+
+# BuildDep:	/usr/lib/libX11.so	/usr/lib/libX11.so
+# BuildDep:	/usr/lib/libglib-2.0.so	/usr/lib/libglib-2.0.so
+# BuildDep:	/usr/share/icons/nuoveXT2/extra/Windows-HD.png	/usr/share/icons/nuoveXT2/extra/Windows-HD.png
+# Dep(post):	/usr/share/icons/nuoveXT2/extra/Windows-HD.png	/usr/share/icons/nuoveXT2/extra/Windows-HD.png
+# Dep(post):	/usr/lib/libglib-2.0.so	/usr/lib/libglib-2.0.so
+# Dep(post):	/usr/lib/libX11.so	/usr/lib/libX11.so
+
+nbuild() {
+patch -p1 -i ../lxde-common-arch.patch
+autoreconf
+./configure --sysconfdir=/etc --prefix=/usr
+}
+
+ninstall() {
+make install
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

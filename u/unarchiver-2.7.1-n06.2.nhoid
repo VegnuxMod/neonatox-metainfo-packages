@@ -1,0 +1,55 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	unarchiver
+# Version:	2.7.1
+# Release:	n06.2
+# License:	LGPLv2.1
+# Group:	Archivers
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64 arm arm64 armel
+# Url:	http://unarchiver.c3.cx
+# Description:	An Objective-C application for uncompressing archive files.
+# MD5:	674845e5b7069666e91c662e1585f96d  unarchiver-2.7.1.tar.xz
+
+
+# BuildDep:	/usr/lib/libgnustep-base.so	/usr/lib/libgnustep-base.so
+# BuildDep:	/usr/lib/libssl.so	/usr/lib/libssl.so
+# BuildDep:	/bin/bzip2	/bin/bzip2
+# BuildDep:	/usr/bin/icuinfo	/usr/bin/icuinfo
+# BuildDep:	/usr/lib/libz.so	/usr/lib/libz.so
+# Dep(post):	/usr/lib/libz.so	/usr/lib/libz.so
+# Dep(post):	/usr/bin/icuinfo	/usr/bin/icuinfo
+# Dep(post):	/bin/bzip2	/bin/bzip2
+# Dep(post):	/usr/lib/libssl.so	/usr/lib/libssl.so
+# Dep(post):	/usr/lib/libgnustep-base.so	/usr/lib/libgnustep-base.so
+
+nbuild() {
+curdir=$(pwd)
+patch -p1 < ../native_obj_exceptions.patch
+patch -p1 < ../libz.patch
+cd $curdir/XADMaster
+. /usr/share/GNUstep/Makefiles/GNUstep.sh
+make -f Makefile.linux
+}
+
+ninstall() {
+curdir=$(pwd)
+pkgdir=/tmp/unar
+cd "$curdir/XADMaster"
+install -d "${pkgdir}/usr/bin/"
+install -m755 unar lsar "${pkgdir}/usr/bin/"
+#cd "$curdir/Extra"
+#install -d "${pkgdir}/usr/share/man/man1"
+#gzip -c lsar.1 > "${pkgdir}/usr/share/man/man1"/lsar.1.gz
+#gzip -c unar.1 > "${pkgdir}/usr/share/man/man1"/unar.1.gz
+cp -r ${pkgdir}/* /
+rm -r ${pkgdir}
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

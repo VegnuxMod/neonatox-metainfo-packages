@@ -1,0 +1,59 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	pidgin
+# Version:	2.10.6
+# Release:	n06.2
+# License:	GPLv2
+# Group:	Networking
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64 arm arm64 armel
+# Url:	http://pidgin.im/
+# Description:	Pidgin is an instant messaging client that can connect with a wide range of networks including AIM, ICQ, MSN, Jabber, IRC, Napster, Gadu-Gadu, Zephyr and Yahoo!
+# MD5:	e299d739414b4db644b0ada215167139  pidgin-2.10.6.tar.xz
+
+
+# BuildDep:	/usr/lib/libstartup-notification-1.so	/usr/lib/libstartup-notification-1.so
+# BuildDep:	/usr/lib/libgtkspell.so	/usr/lib/libgtkspell.so
+# BuildDep:	/usr/lib/libXss.so	/usr/lib/libXss.so
+# BuildDep:	/usr/lib/libnss3.so	/usr/lib/libnss3.so
+# BuildDep:	/usr/lib/libsasl2.so	/usr/lib/libsasl2.so
+# BuildDep:	/usr/bin/python	/usr/bin/python
+# BuildDep:	/usr/share/icons/hicolor/index.theme	/usr/share/icons/hicolor/index.theme
+# BuildDep:	/usr/lib/libsilc.so	/usr/lib/libsilc.so
+# BuildDep:	/usr/lib/libgstreamer-0.10.so	/usr/lib/libgstreamer-0.10.so
+# BuildDep:	/usr/lib/libgstfarsight-0.10.so	/usr/lib/libgstfarsight-0.10.so
+# BuildDep:	/usr/lib/libavahi-core.so	/usr/lib/libavahi-core.so
+# BuildDep:	/usr/lib/libtk8.5.so	/usr/lib/libtk8.5.so
+# Dep(post):	/usr/lib/libstartup-notification-1.so	/usr/lib/libstartup-notification-1.so
+# Dep(post):	/usr/lib/libgtkspell.so	/usr/lib/libgtkspell.so
+# Dep(post):	/usr/lib/libXss.so	/usr/lib/libXss.so
+# Dep(post):	/usr/lib/libnss3.so	/usr/lib/libnss3.so
+# Dep(post):	/usr/lib/libsasl2.so	/usr/lib/libsasl2.so
+# Dep(post):	/usr/bin/python	/usr/bin/python
+# Dep(post):	/usr/share/icons/hicolor/index.theme	/usr/share/icons/hicolor/index.theme
+# Dep(post):	/usr/lib/libsilc.so	/usr/lib/libsilc.so
+# Dep(post):	/usr/lib/libgstreamer-0.10.so	/usr/lib/libgstreamer-0.10.so
+# Dep(post):	/usr/lib/libgstfarsight-0.10.so	/usr/lib/libgstfarsight-0.10.so
+# Dep(post):	/usr/lib/libavahi-core.so	/usr/lib/libavahi-core.so
+# Dep(post):	/usr/lib/libtk8.5.so	/usr/lib/libtk8.5.so
+
+nbuild() {
+./configure --prefix=/usr --sysconfdir=/etc \
+--disable-schemas-install --disable-meanwhile \
+--disable-gnutls --disable-nm \
+--disable-doxygen --enable-cyrus-sasl \
+--with-system-ssl-certs=/etc/ssl/certs --disable-dependency-tracking
+make
+}
+
+ninstall() {
+make install
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

@@ -1,0 +1,31 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sánchez <cargabsj175@gmail.com>
+
+# Name:	libdatrie
+# Version:	0.2.4
+# Release:	n06.2
+# License:	LGPL
+# Group:	Programming
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64
+# Url:	http://linux.thai.net/~thep/datrie/datrie.html
+# Description:	Implementation of double-array structure for representing trie, as proposed by Junichi Aoe.
+# MD5:	56d73fb6d9110c50074fc02daf9e9042  libdatrie-0.2.4.tar.xz
+
+
+
+nbuild() {
+./configure --prefix=/usr --disable-static
+make
+}
+
+ninstall() {
+make install
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

@@ -1,0 +1,38 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	alsa-oss
+# Version:	1.0.17
+# Release:	n06.2
+# License:	GPLv2
+# Group:	Multimedia
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64
+# Url:	http://www.alsa-project.org/
+# Description:	ALSA OSS is a package that makes is possible for programs that use OSS to use ALSA. It uses a different means of providing OSS emulation (the other being the kernel level OSS emu). It is done via a userspace lib that tweaks the open(), write(), etc.., system calls to do the right thing.
+# MD5:	15e4b576922150e4e516e467bea1196c  alsa-oss-1.0.17.tar.xz
+
+
+# BuildDep:	/usr/lib/libasound.so	/usr/lib/libasound.so
+# Dep(post):	/usr/lib/libasound.so	/usr/lib/libasound.so
+
+nbuild() {
+./configure --prefix=/usr
+make
+}
+
+ninstall() {
+make install
+install -m 755 ../oss.sh  /usr/bin
+install -m 754 ../oss  /etc/rc.d/init.d/
+ln -sf  /etc/rc.d/init.d/oss /etc/rc.d/rc3.d/S83oss
+ln -sf  /etc/rc.d/init.d/oss /etc/rc.d/rc4.d/S83oss
+ln -sf  /etc/rc.d/init.d/oss /etc/rc.d/rc5.d/S83oss
+}
+
+npostinstall() {
+/etc/rc.d/init.d/oss start
+}
+
+npostremove() {
+rm -rv  /etc/rc.d/rc{3,4,5}.d/*oss
+}

@@ -1,0 +1,40 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	aria2
+# Version:	1.12.0
+# Release:	n06.2
+# License:	GPL
+# Group:	Networking
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64 arm arm64
+# Url:	http://aria2.sourceforge.net/
+# Description:	Download utility that supports HTTP(S), FTP, BitTorrent, and Metalink.
+# MD5:	cccad2055aa9c81a5e2f186fa2d76bd3  aria2-1.12.0.tar.xz
+
+
+# BuildDep:	/usr/lib/libgnutls.so	/usr/lib/libgnutls.so
+# BuildDep:	/usr/lib/libxml2.so	/usr/lib/libxml2.so
+# BuildDep:	/usr/lib/libsqlite3.so	/usr/lib/libsqlite3.so
+# BuildDep:	/usr/lib/libcares.so	/usr/lib/libcares.so
+# Dep(post):	/usr/lib/libcares.so	/usr/lib/libcares.so
+# Dep(post):	/usr/lib/libsqlite3.so	/usr/lib/libsqlite3.so
+# Dep(post):	/usr/lib/libxml2.so	/usr/lib/libxml2.so
+# Dep(post):	/usr/lib/libgnutls.so	/usr/lib/libgnutls.so
+
+nbuild() {
+./configure \
+--prefix=/usr
+make
+}
+
+ninstall() {
+make install
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

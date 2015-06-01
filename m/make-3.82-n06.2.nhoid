@@ -1,0 +1,33 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	make
+# Version:	3.82
+# Release:	n06.2
+# License:	GPL
+# Group:	Core System
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64 arm arm64
+# Url:	http://www.gnu.org/software/make
+# Description:	GNU make utility to maintain groups of programs.
+# MD5:	03326d1fed7abaf1ef1d1da14395423b  make-3.82.tar.xz
+
+
+
+nbuild() {
+patch -Np1 -i ../bug30612.patch
+patch -Np1 -i ../bug30723.patch
+./configure --prefix=/usr
+make
+}
+
+ninstall() {
+make install
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

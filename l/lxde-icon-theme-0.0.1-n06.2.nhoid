@@ -1,0 +1,31 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sánchez <cargabsj175@gmail.com>
+
+# Name:	lxde-icon-theme
+# Version:	0.0.1
+# Release:	n06.2
+# License:	GPL
+# Group:	LXDE Desktop
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64
+# Url:	http://www.lxde.org
+# Description:	LXDE default default icon theme based on nuoveXT2.
+# MD5:	d055acaac26c91d24b755182dd684141  lxde-icon-theme-0.0.1.tar.xz
+
+
+
+nbuild() {
+./configure --prefix=/usr
+make
+}
+
+ninstall() {
+make install
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

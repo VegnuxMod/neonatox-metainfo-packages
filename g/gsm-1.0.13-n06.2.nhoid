@@ -1,0 +1,41 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	gsm
+# Version:	1.0.13
+# Release:	n06.2
+# License:	custom
+# Group:	Multimedia
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64 arm arm64
+# Url:	http://www.quut.com/gsm/
+# Description:	Shared libraries for GSM 06.10 lossy speech compression.
+# MD5:	7a0181c76a17d85173b429c621c2339d  gsm-1.0.13.tar.xz
+
+
+
+nbuild() {
+patch -Np0 -i "../gsm.patch"
+CFLAGS="${CFLAGS} -fPIC"
+make CCFLAGS="-c ${CFLAGS}"
+}
+
+ninstall() {
+pkgdir=/tmp/gsm
+install -m755 -d "${pkgdir}"/usr/{bin,lib,include/gsm,share/{licenses/${pkgname},man/man{1,3}}}
+make -j1 INSTALL_ROOT="${pkgdir}/usr" \
+GSM_INSTALL_INC="${pkgdir}/usr/include/gsm" \
+GSM_INSTALL_MAN="${pkgdir}/usr/share/man/man3" \
+TOAST_INSTALL_MAN="${pkgdir}/usr/share/man/man1" \
+install
+install -m644 COPYRIGHT ${pkgdir}/usr/share/licenses/gsm/license.txt
+cp -r ${pkgdir}/* /
+rm -r ${pkgdir}
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

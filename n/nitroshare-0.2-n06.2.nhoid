@@ -1,0 +1,41 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	nitroshare
+# Version:	0.2
+# Release:	n06.2
+# License:	GPLv3
+# Group:	Networking
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64 arm arm64 armel
+# Url:	https://launchpad.net/nitroshare
+# Description:	Makes sending a file to another machine on the local network as easy as dragging-and-dropping.
+# MD5:	b43505d0960defd0c3407a9efc66ba21  nitroshare-0.2.tar.xz
+
+
+# BuildDep:	/usr/lib/libqjson.so	/usr/lib/libqjson.so
+# BuildDep:	/usr/lib/libQtCore.so	/usr/lib/libQtCore.so
+# BuildDep:	/usr/lib/libqxmlrpc.so	/usr/lib/libqxmlrpc.so
+# Dep(post):	/usr/lib/libQtCore.so	/usr/lib/libQtCore.so
+# Dep(post):	/usr/lib/libqjson.so	/usr/lib/libqjson.so
+# Dep(post):	/usr/lib/libqxmlrpc.so	/usr/lib/libqxmlrpc.so
+
+nbuild() {
+sed -i "s_target.path = /opt/extras.ubuntu.com/nitroshare_target.path = /usr/bin_g" nitroshare.pro
+sed -i "s_Exec=/opt/extras.ubuntu.com/nitroshare/nitroshare_Exec=/usr/bin/nitroshare_g" resource/other/extras-nitroshare.desktop
+qmake
+make
+}
+
+ninstall() {
+make install
+install -Dm644 resource/other/extras-nitroshare.desktop /usr/share/applications/
+install -Dm644 resource/images/logo.png /usr/share/pixmaps/nitroshare.png
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

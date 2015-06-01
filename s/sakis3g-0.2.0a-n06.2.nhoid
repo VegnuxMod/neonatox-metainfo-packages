@@ -1,0 +1,36 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com.>
+
+# Name:	sakis3g
+# Version:	0.2.0a
+# Release:	n06.2
+# License:	GPLv2
+# Group:	Networking
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64 arm arm64 armel
+# Url:	http://www.sakis3g.org/
+# Description:	An all-in-one script for connecting with 3G.
+# MD5:	23fd1fb9827391422dfd4dd9a44886b9  sakis3g-0.2.0a.tar.xz
+
+
+# BuildDep:	/usr/sbin/pppd	/usr/sbin/pppd
+# BuildDep:	/sbin/ifconfig	/sbin/ifconfig
+# Dep(post):	/sbin/ifconfig	/sbin/ifconfig
+# Dep(post):	/usr/sbin/pppd	/usr/sbin/pppd
+
+nbuild() {
+./compile
+}
+
+ninstall() {
+cd build
+cp sakis3gz /usr/bin/sakis3g
+chmod 755 /usr/bin/sakis3g
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

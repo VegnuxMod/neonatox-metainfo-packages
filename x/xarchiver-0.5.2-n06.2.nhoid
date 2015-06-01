@@ -1,0 +1,46 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	xarchiver
+# Version:	0.5.2
+# Release:	n06.2
+# License:	GPL
+# Group:	XFCE Desktop
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64
+# Url:	http://xarchiver.xfce.org/
+# Description:	GTK+ frontend to various command line archivers.
+# MD5:	ba87be8efb03719af5b451652ddc990d  xarchiver-0.5.2.tar.xz
+
+
+# BuildDep:	/usr/lib/libgtk-x11-2.0.so	/usr/lib/libgtk-x11-2.0.so
+# BuildDep:	/usr/share/icons/hicolor/index.theme	/usr/share/icons/hicolor/index.theme
+# BuildDep:	/usr/bin/desktop-file-install	/usr/bin/desktop-file-install
+# Dep(post):	/usr/bin/desktop-file-install	/usr/bin/desktop-file-install
+# Dep(post):	/usr/share/icons/hicolor/index.theme	/usr/share/icons/hicolor/index.theme
+# Dep(post):	/usr/lib/libgtk-x11-2.0.so	/usr/lib/libgtk-x11-2.0.so
+
+nbuild() {
+cd src
+patch -p0 -i ../../xarchiver-0.5.2-assume_name.patch
+patch -p0 -i ../../xarchiver-0.5.2-explicit_extension.patch
+cd ..
+patch -Np1 -i ../xarchiver-0.5.2-fix_7z_support.patch
+patch -Np1 -i ../xarchiver-0.5.2-rpm2cpio.patch
+patch -Np1 -i ../xarchiver-0.5.2-segfault-open-with.patch
+patch -uNp1 -i ../xarchiver-0.5.2-add_xz_support.patch
+patch -uNp1 -i ../xarchiver-0.5.2-xz-extract.patch
+./configure --prefix=/usr --libexecdir=/usr/lib/xfce4
+make
+}
+
+ninstall() {
+make install
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

@@ -1,0 +1,97 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	avidemux
+# Version:	2.5.5
+# Release:	n06.2
+# License:	GPL
+# Group:	Multimedia
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64 arm arm64 armel
+# Url:	http://fixounet.free.fr/avidemux/
+# Description:	A graphical tool to edit video (filter/re-encode/split).
+# MD5:	b96ab72b6ab52666152d6152042bde94  avidemux-2.5.5.tar.xz
+
+
+# BuildDep:	/usr/bin/cmake	/usr/bin/cmake
+# BuildDep:	/usr/lib/libexslt.so	/usr/lib/libexslt.so
+# BuildDep:	/usr/lib/libjack.so	/usr/lib/libjack.so
+# BuildDep:	/usr/lib/libvorbis.so	/usr/lib/libvorbis.so
+# BuildDep:	/usr/lib/libSDL.so	/usr/lib/libSDL.so
+# BuildDep:	/usr/lib/libXv.so	/usr/lib/libXv.so
+# BuildDep:	/usr/lib/libasound.so	/usr/lib/libasound.so
+# BuildDep:	/usr/lib/libmp3lame.so	/usr/lib/libmp3lame.so
+# BuildDep:	/usr/lib/libxvidcore.so	/usr/lib/libxvidcore.so
+# BuildDep:	/usr/lib/libfaad.so	/usr/lib/libfaad.so
+# BuildDep:	/usr/lib/libx264.so	/usr/lib/libx264.so
+# BuildDep:	/usr/lib/libsamplerate.so	/usr/lib/libsamplerate.so
+# BuildDep:	/usr/lib/libopencore-amrwb.so	/usr/lib/libopencore-amrwb.so
+# BuildDep:	/usr/bin/yasm	/usr/bin/yasm
+# BuildDep:	/usr/lib/libGL.so	/usr/lib/libGL.so
+# BuildDep:	/usr/lib/libvpx.so	/usr/lib/libvpx.so
+# Dep(post):	/usr/lib/libexslt.so	/usr/lib/libexslt.so
+# Dep(post):	/usr/lib/libjack.so	/usr/lib/libjack.so
+# Dep(post):	/usr/lib/libvorbis.so	/usr/lib/libvorbis.so
+# Dep(post):	/usr/lib/libSDL.so	/usr/lib/libSDL.so
+# Dep(post):	/usr/lib/libXv.so	/usr/lib/libXv.so
+# Dep(post):	/usr/lib/libasound.so	/usr/lib/libasound.so
+# Dep(post):	/usr/lib/libmp3lame.so	/usr/lib/libmp3lame.so
+# Dep(post):	/usr/lib/libxvidcore.so	/usr/lib/libxvidcore.so
+# Dep(post):	/usr/lib/libfaad.so	/usr/lib/libfaad.so
+# Dep(post):	/usr/lib/libx264.so	/usr/lib/libx264.so
+# Dep(post):	/usr/lib/libsamplerate.so	/usr/lib/libsamplerate.so
+# Dep(post):	/usr/lib/libopencore-amrwb.so	/usr/lib/libopencore-amrwb.so
+# Dep(post):	/usr/bin/yasm	/usr/bin/yasm
+# Dep(post):	/usr/lib/libGL.so	/usr/lib/libGL.so
+# Dep(post):	/usr/lib/libvpx.so	/usr/lib/libvpx.so
+
+nbuild() {
+wdir=/usr/src/nhopkg
+patch -Np1 -i "../avidemux-2.5.4-x264-build115.patch"
+cd avidemux/ADM_libraries
+ln -sf ffmpeg-0.7-rc1 ffmpeg
+cd ../..
+mkdir build
+cd build
+cmake -D CMAKE_INSTALL_PREFIX=/usr -D CMAKE_BUILD_TYPE=Release -D CMAKE_SKIP_RPATH=ON -D GTK=1 -D QT4=1 ..
+make
+mkdir -p lib
+cd lib
+find ../avidemux -name '*.so*' | xargs ln -sft .
+cd ../../plugins
+mkdir build
+cd build
+cmake -D CMAKE_INSTALL_PREFIX=/usr -D AVIDEMUX_SOURCE_DIR="${wdir}/avidemux-2.5.5" \
+    -D AVIDEMUX_CORECONFIG_DIR="${wdir}/avidemux-2.5.5/build/config" \
+    -D AVIDEMUX_INSTALL_PREFIX="${wdir}/avidemux-2.5.5/build" \
+    -D CMAKE_BUILD_TYPE=Release -D CMAKE_SKIP_RPATH=ON ..
+make
+}
+
+ninstall() {
+wdir=/usr/src/nhopkg
+pkgdir=/tmp/avidemux
+cd build
+make DESTDIR="${pkgdir}" install
+cd "${wdir}/avidemux-2.5.5/plugins/build"
+make DESTDIR="${pkgdir}" install
+rm -r "${pkgdir}"/usr/share/avidemux
+rm "${pkgdir}"/usr/bin/avidemux2_{gtk,qt4}
+rm "${pkgdir}"/usr/lib/*{_gtk,_qt4,Gtk,QT4}.so
+rm "${pkgdir}"/usr/lib/ADM_plugins/videoEncoder/x264/*{Gtk,Qt}.so
+rm "${pkgdir}"/usr/lib/ADM_plugins/videoEncoder/xvid/*{Gtk,Qt}.so
+rm "${pkgdir}"/usr/lib/ADM_plugins/videoFilter/*{_gtk,_qt4}.so
+ln -sf /usr/lib/ADM_plugins/videoEncoder/libADM_vidEnc_xvid.so "${pkgdir}/usr/lib/libADM_vidEnc_xvid.so"
+ln -sf /usr/lib/ADM_plugins/videoEncoder/libADM_vidEnc_x264.so "${pkgdir}/usr/lib/libADM_vidEnc_x264.so"
+install -D -m644 ../../avidemux_icon.png "${pkgdir}/usr/share/pixmaps/avidemux.png"
+install -D -m644 ../../man/avidemux.1 "${pkgdir}/usr/share/man/man1/avidemux.1"
+cp -r ${pkgdir}/* /
+rm -r ${pkgdir}
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

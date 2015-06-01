@@ -1,0 +1,33 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	jasper
+# Version:	1.900.1
+# Release:	n06.2
+# License:	JasPer License Version 2.0
+# Group:	Graphics Library
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64 arm arm64
+# Url:	http://www.ece.uvic.ca/~mdadams/jasper/
+# Description:	JasPer The JasPer Project is an open-source initiative to provide a free software-based reference implementation of the codec specified in the JPEG-2000 Part-1 standard (i.e., ISO/IEC 15444-1).
+# MD5:	4a9240e8bb568864c50d1d8c2b564e57  jasper-1.900.1.tar.xz
+
+
+# OptionalBuildDep:	/usr/lib/libjpeg.so	/usr/lib/libjpeg.so
+# OptionalDep(post):	/usr/lib/libjpeg.so	/usr/lib/libjpeg.so
+
+nbuild() {
+./configure --prefix=/usr --enable-shared &&
+make
+}
+
+ninstall() {
+make install
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

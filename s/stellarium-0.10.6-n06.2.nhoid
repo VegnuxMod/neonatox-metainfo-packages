@@ -1,0 +1,43 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	stellarium
+# Version:	0.10.6
+# Release:	n06.2
+# License:	GPLv2
+# Group:	Science
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64 arm arm64
+# Url:	http://stellarium.free.fr/
+# Description:	A stellarium with great graphics and a nice database of sky-objects.
+# MD5:	07914ee172c5b838b222340811e3e230  stellarium-0.10.6.tar.xz
+
+
+# BuildDep:	/usr/lib/libpng.so	/usr/lib/libpng.so
+# BuildDep:	/usr/lib/libGL.so	/usr/lib/libGL.so
+# BuildDep:	/usr/lib/libfreetype.so	/usr/lib/libfreetype.so
+# BuildDep:	/usr/lib/libQtCore.so	/usr/lib/libQtCore.so
+# BuildDep:	/usr/lib/libssl.so	/usr/lib/libssl.so
+# Dep(post):	/usr/lib/libssl.so	/usr/lib/libssl.so
+# Dep(post):	/usr/lib/libQtCore.so	/usr/lib/libQtCore.so
+# Dep(post):	/usr/lib/libfreetype.so	/usr/lib/libfreetype.so
+# Dep(post):	/usr/lib/libGL.so	/usr/lib/libGL.so
+# Dep(post):	/usr/lib/libpng.so	/usr/lib/libpng.so
+
+nbuild() {
+cmake . -DCMAKE_INSTALL_PREFIX=/usr -DCMAKE_BUILD_TYPE=RELEASE
+make
+}
+
+ninstall() {
+make install
+install -Dm644 ../stellarium.desktop /usr/share/applications/stellarium.desktop
+install -Dm644 ../stellarium.png /usr/share/pixmaps/stellarium.png
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

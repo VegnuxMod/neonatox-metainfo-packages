@@ -1,0 +1,31 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	pth
+# Version:	2.0.7
+# Release:	n06.2
+# License:	LGPL
+# Group:	Programming
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64 arm arm64
+# Url:	http://www.gnu.org/software/pth/
+# Description:	The GNU Portable Threads.
+# MD5:	8183f985e8a6caf3b067985b7d40e639  pth-2.0.7.tar.xz
+
+
+
+nbuild() {
+./configure --prefix=/usr --sysconfdir=/etc --localstatedir=/var --mandir=/usr/share/man
+make
+}
+
+ninstall() {
+make install
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

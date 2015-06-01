@@ -1,0 +1,37 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	pycups
+# Version:	1.9.51
+# Release:	n06.2
+# License:	GPL
+# Group:	System
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64 arm arm64
+# Url:	http://cyberelk.net/tim/software/pycups/
+# Description:	Python CUPS Bindings.
+# MD5:	4b5c17c1fc876bb56047d564ede41f96  pycups-1.9.51.tar.xz
+
+
+# BuildDep:	/usr/lib/libcups.so	/usr/lib/libcups.so
+# BuildDep:	/usr/bin/python	/usr/bin/python
+# Dep(post):	/usr/bin/python	/usr/bin/python
+# Dep(post):	/usr/lib/libcups.so	/usr/lib/libcups.so
+
+nbuild() {
+python setup.py build
+}
+
+ninstall() {
+pkgdir=/tmp/pycups
+python setup.py install --root="${pkgdir}"
+cp -r ${pkgdir}/* /
+rm -r ${pkgdir}
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

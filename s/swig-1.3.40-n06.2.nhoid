@@ -1,0 +1,31 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	swig
+# Version:	1.3.40
+# Release:	n06.2
+# License:	as-is
+# Group:	System
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64 arm arm64
+# Url:	http://www.swig.org/
+# Description:	Simplified Wrapper and Interface Generator.
+# MD5:	771a618eb3304a21a3cbe2a5aef31fc6  swig-1.3.40.tar.xz
+
+
+
+nbuild() {
+./configure --prefix=/usr
+make
+}
+
+ninstall() {
+make install
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

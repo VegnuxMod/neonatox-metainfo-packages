@@ -1,0 +1,34 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com.>
+
+# Name:	qrencode
+# Version:	3.3.1
+# Release:	n06.2
+# License:	GPL
+# Group:	Programming
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64
+# Url:	http://megaui.net/fukuchi/works/qrencode/index.en.html
+# Description:	C library for encoding data in a QR Code symbol.
+# MD5:	bb8fb27f598cca6f1c8bf8c2fccfdebe  qrencode-3.3.1.tar.xz
+
+
+# BuildDep:	/usr/lib/libpng.so	/usr/lib/libpng.so
+# Dep(post):	/usr/lib/libpng.so	/usr/lib/libpng.so
+
+nbuild() {
+#./autogen.sh
+./configure --prefix=/usr
+make
+}
+
+ninstall() {
+make install
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

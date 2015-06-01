@@ -1,0 +1,34 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	cppunit
+# Version:	1.12.1
+# Release:	n06.2
+# License:	LGPL
+# Group:	Programming
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64 arm arm64 armel
+# Url:	http://cppunit.sourceforge.net
+# Description:	A C++ unit testing framework.
+# MD5:	2dba6e4900214c52a82abb34753956d6  cppunit-1.12.1.tar.xz
+
+
+# BuildDep:	/bin/sh	/bin/sh
+# Dep(post):	/bin/sh	/bin/sh
+
+nbuild() {
+export LDFLAGS+=" -ldl"
+./configure --prefix=/usr
+make
+}
+
+ninstall() {
+make install
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

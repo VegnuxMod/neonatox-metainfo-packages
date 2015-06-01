@@ -1,0 +1,31 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	libdaemon
+# Version:	0.14
+# Release:	n06.2
+# License:	LGPL
+# Group:	Programming
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64 arm arm64
+# Url:	http://0pointer.de/lennart/projects/libdaemon/
+# Description:	A lightweight C library which eases the writing of UNIX daemons.
+# MD5:	2a903685b9d056515dc0329aa98d81d5  libdaemon-0.14.tar.xz
+
+
+
+nbuild() {
+./configure --prefix=/usr --localstatedir=/var --disable-lynx
+make
+}
+
+ninstall() {
+make install
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

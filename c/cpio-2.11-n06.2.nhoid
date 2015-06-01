@@ -1,0 +1,39 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	cpio
+# Version:	2.11
+# Release:	n06.2
+# License:	GPL
+# Group:	Core System
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64 arm arm64
+# Url:	http://www.gnu.org/software/cpio
+# Description:	A tool to copy files into or out of a cpio or tar archive.
+# MD5:	6ce80ed8b10ecaf49f181d0ad18aef17  cpio-2.11.tar.xz
+
+
+
+nbuild() {
+./configure --prefix=/usr --mandir=/usr/share/man
+make
+}
+
+ninstall() {
+pkgdir=/tmp/cpio
+make DESTDIR=${pkgdir} install
+rm -f ${pkgdir}/usr/bin/mt ${pkgdir}/pkg/usr/share/man/man1/mt.1
+mv ${pkgdir}/usr/bin ${pkgdir}/bin
+rm -rf ${pkgdir}/usr/libexec
+rm $pkgdir/usr/share/man/man1/mt.1
+rm $pkgdir/usr/share/info/dir
+cp -r $pkgdir/* /
+rm -r $pkgdir/
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

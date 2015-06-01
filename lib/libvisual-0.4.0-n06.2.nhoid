@@ -1,0 +1,31 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	libvisual
+# Version:	0.4.0
+# Release:	n06.2
+# License:	LGPLv2.1
+# Group:	Multimedia
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64
+# Url:	http://localhost.nl/~synap/libvisual-wiki/index.php/Main_Page
+# Description:	Libvisual is a framework that delivers audio visualization to multimedia applications.
+# MD5:	477b109384f0acf040635750feab463f  libvisual-0.4.0.tar.xz
+
+
+
+nbuild() {
+./configure --prefix=/usr
+make
+}
+
+ninstall() {
+make install
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

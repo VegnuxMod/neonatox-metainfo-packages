@@ -1,0 +1,55 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sánchez <cargabsj175@gmail.com>
+
+# Name:	totem
+# Version:	2.32.0
+# Release:	n06.2
+# License:	GPLv2
+# Group:	Gnome Desktop
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64
+# Url:	http://www.hadess.net/totem.php3
+# Description:	A GNOME2 integrated movie player based on Gstreamer.
+# MD5:	247f52c74083ba7ca7021eccdeb879e4  totem-2.32.0.tar.xz
+
+
+# BuildDep:	/usr/lib/libgstaudio-0.10.so.0	/usr/lib/libgstaudio-0.10.so.0
+# BuildDep:	/usr/lib/gstreamer-0.10/libgstossaudio.so	/usr/lib/gstreamer-0.10/libgstossaudio.so
+# BuildDep:	/usr/lib/libtotem-plparser.so	/usr/lib/libtotem-plparser.so
+# BuildDep:	/usr/lib/libXxf86vm.so	/usr/lib/libXxf86vm.so
+# BuildDep:	/usr/bin/update-desktop-database	/usr/bin/update-desktop-database
+# BuildDep:	/usr/lib/pkgconfig/iso-codes.pc	/usr/lib/pkgconfig/iso-codes.pc
+# BuildDep:	/usr/bin/python	/usr/bin/python
+# BuildDep:	/usr/bin/pkg-config	/usr/bin/pkg-config
+# BuildDep:	/usr/bin/gnome-doc-tool	/usr/bin/gnome-doc-tool
+# BuildDep:	/usr/lib/python2.7/site-packages/gtk-2.0/gtk/_gtk.so	/usr/lib/python2.7/site-packages/gtk-2.0/gtk/_gtk.so
+# Dep(post):	/usr/lib/python2.7/site-packages/gtk-2.0/gtk/_gtk.so	/usr/lib/python2.7/site-packages/gtk-2.0/gtk/_gtk.so
+# Dep(post):	/usr/bin/gnome-doc-tool	/usr/bin/gnome-doc-tool
+# Dep(post):	/usr/bin/pkg-config	/usr/bin/pkg-config
+# Dep(post):	/usr/bin/python	/usr/bin/python
+# Dep(post):	/usr/lib/pkgconfig/iso-codes.pc	/usr/lib/pkgconfig/iso-codes.pc
+# Dep(post):	/usr/bin/update-desktop-database	/usr/bin/update-desktop-database
+# Dep(post):	/usr/lib/libXxf86vm.so	/usr/lib/libXxf86vm.so
+# Dep(post):	/usr/lib/libtotem-plparser.so	/usr/lib/libtotem-plparser.so
+# Dep(post):	/usr/lib/gstreamer-0.10/libgstossaudio.so	/usr/lib/gstreamer-0.10/libgstossaudio.so
+# Dep(post):	/usr/lib/libgstaudio-0.10.so.0	/usr/lib/libgstaudio-0.10.so.0
+
+nbuild() {
+./configure --prefix=/usr --sysconfdir=/etc --libexecdir=/usr/lib/totem \
+--localstatedir=/var --disable-static --enable-python --with-dbus
+make
+}
+
+ninstall() {
+make GCONF_DISABLE_MAKEFILE_SCHEMA_INSTALL=1 install
+rm -f /usr/share/totem/vanity.*
+rm -f "/usr/share/pixmaps/vanity.png"
+gconf-merge-schema "${pkgdir}/usr/share/gconf/schemas/totem.schemas" --domain totem /etc/gconf/schemas/*.schemas
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

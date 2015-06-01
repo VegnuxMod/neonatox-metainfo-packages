@@ -1,0 +1,36 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	ogmtools
+# Version:	1.5
+# Release:	n06.2
+# License:	GPL
+# Group:	Multimedia
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64 arm arm64 armel
+# Url:	http://www.bunkus.org/videotools/ogmtools
+# Description:	Information, extraction or creation for OGG media streams.
+# MD5:	f838800440bff9b891d8a88202c899c5  ogmtools-1.5.tar.xz
+
+
+# BuildDep:	/usr/lib/libvorbis.so	/usr/lib/libvorbis.so
+# BuildDep:	/usr/lib/libdvdread.so	/usr/lib/libdvdread.so
+# Dep(post):	/usr/lib/libvorbis.so	/usr/lib/libvorbis.so
+# Dep(post):	/usr/lib/libdvdread.so	/usr/lib/libdvdread.so
+
+nbuild() {
+./configure --prefix=/usr \
+--mandir=/usr/share/man
+make
+}
+
+ninstall() {
+make install
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

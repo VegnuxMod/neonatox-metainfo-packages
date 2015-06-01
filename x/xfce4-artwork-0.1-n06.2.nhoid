@@ -1,0 +1,32 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	xfce4-artwork
+# Version:	0.1
+# Release:	n06.2
+# License:	GPLv2
+# Group:	Xfce Desktop
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64 arm arm64
+# Url:	http://xfce-goodies.berlios.de/
+# Description:	Backdrops for the Xfce4 desktop.
+# MD5:	a2abb40a220822f4af075ee41b25cc92  xfce4-artwork-0.1.tar.xz
+
+
+
+nbuild() {
+noemptyfuncs
+}
+
+ninstall() {
+cd backdrops
+install -d "/usr/share/xfce4/backdrops"
+install -t "/usr/share/xfce4/backdrops" *.{png,jpg}
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

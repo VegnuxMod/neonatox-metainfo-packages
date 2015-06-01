@@ -1,0 +1,39 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	gtk-sharp
+# Version:	2.12.11
+# Release:	n06.2
+# License:	LGPL
+# Group:	Gnome Desktop
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64 arm arm64
+# Url:	http://gtk-sharp.sourceforge.net
+# Description:	gtk2 bindings for C#.
+# MD5:	06dba0aafb3bcd459cbed8ad885ebd0c  gtk-sharp-2.12.11.tar.xz
+
+
+# BuildDep:	/usr/lib/libmono-2.0.so	/usr/lib/libmono-2.0.so
+# BuildDep:	/usr/lib/libglade-2.0.so	/usr/lib/libglade-2.0.so
+# BuildDep:	/usr/lib/libgtk-x11-2.0.so	/usr/lib/libgtk-x11-2.0.so
+# Dep(post):	/usr/lib/libgtk-x11-2.0.so	/usr/lib/libgtk-x11-2.0.so
+# Dep(post):	/usr/lib/libglade-2.0.so	/usr/lib/libglade-2.0.so
+# Dep(post):	/usr/lib/libmono-2.0.so	/usr/lib/libmono-2.0.so
+
+nbuild() {
+export MONO_SHARED_DIR="${pwd}/.wapi"
+mkdir -p "${MONO_SHARED_DIR}"
+./configure --prefix=/usr --sysconfdir=/etc --disable-static
+make
+}
+
+ninstall() {
+make install
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

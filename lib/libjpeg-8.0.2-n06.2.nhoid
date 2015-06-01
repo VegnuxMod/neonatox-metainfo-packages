@@ -1,0 +1,32 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sánchez <cargabsj175@gmail.com>
+
+# Name:	libjpeg
+# Version:	8.0.2
+# Release:	n06.2
+# License:	custom
+# Group:	Graphic Library
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64
+# Url:	http://www.ijg.org/
+# Description:	Library of JPEG support functions
+# MD5:	2c9b7da05f66fc0b1b6ce3c31d215c2c  libjpeg-8.0.2.tar.xz
+
+
+
+nbuild() {
+./configure --prefix=/usr --enable-shared --enable-static
+make
+}
+
+ninstall() {
+make prefix=/usr mandir=/usr/share/man install
+install -m644 jpegint.h /usr/include
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

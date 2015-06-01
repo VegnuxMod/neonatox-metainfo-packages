@@ -1,0 +1,39 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	perl-file-listing
+# Version:	6.04
+# Release:	n06.2
+# License:	GPL
+# Group:	Programming
+# Arch:	noarch
+# Url:	http://search.cpan.org/dist/File-Listing
+# Description:	parse directory listing.
+# MD5:	8275e504e8faffbc85234203fd9adac1  perl-file-listing-6.04.tar.xz
+
+# BuildDep:	/usr/bin/perl	/usr/bin/perl
+# BuildDep:	/usr/lib/perl5/vendor_perl/5.12.1/HTTP/Date.pm	/usr/lib/perl5/vendor_perl/5.12.1/HTTP/Date.pm
+# Dep(post):	/usr/bin/perl	/usr/bin/perl
+# Dep(post):	/usr/lib/perl5/vendor_perl/5.12.1/HTTP/Date.pm	/usr/lib/perl5/vendor_perl/5.12.1/HTTP/Date.pm
+
+nbuild() {
+export PERL_MM_USE_DEFAULT=1 PERL5LIB=""
+export PERL_AUTOINSTALL=--skipdeps
+export PERL_MM_OPT="INSTALLDIRS=vendor"
+export PERL_MB_OPT="--installdirs vendor"
+export MODULEBUILDRC=/dev/null
+perl Makefile.PL
+make
+}
+
+ninstall() {
+make install
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

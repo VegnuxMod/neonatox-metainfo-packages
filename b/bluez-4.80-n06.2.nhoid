@@ -1,0 +1,77 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	bluez
+# Version:	4.80
+# Release:	n06.2
+# License:	GPLv2
+# Group:	System
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64 arm arm64
+# Url:	http://www.bluez.org/
+# Description:	Libraries and tools for the Bluetooth protocol stack.
+# MD5:	26df4944ca719b7686ccb4dc84d56f84  bluez-4.80.tar.xz
+
+
+# BuildDep:	/usr/lib/libgstcdda-0.10.so	/usr/lib/libgstcdda-0.10.so
+# BuildDep:	/usr/lib/libusb.so	/usr/lib/libusb.so
+# BuildDep:	/usr/lib/libnl.so	/usr/lib/libnl.so
+# BuildDep:	/usr/lib/libsndfile.so	/usr/lib/libsndfile.so
+# BuildDep:	/usr/lib/libasound.so	/usr/lib/libasound.so
+# BuildDep:	/usr/lib/pkgconfig/dbus-python.pc	/usr/lib/pkgconfig/dbus-python.pc
+# BuildDep:	/usr/lib/libcups.so	/usr/lib/libcups.so
+# BuildDep:	/usr/lib/libpyglib-2.0-python.so	/usr/lib/libpyglib-2.0-python.so
+# Dep(post):	/usr/lib/libpyglib-2.0-python.so	/usr/lib/libpyglib-2.0-python.so
+# Dep(post):	/usr/lib/libcups.so	/usr/lib/libcups.so
+# Dep(post):	/usr/lib/pkgconfig/dbus-python.pc	/usr/lib/pkgconfig/dbus-python.pc
+# Dep(post):	/usr/lib/libasound.so	/usr/lib/libasound.so
+# Dep(post):	/usr/lib/libsndfile.so	/usr/lib/libsndfile.so
+# Dep(post):	/usr/lib/libnl.so	/usr/lib/libnl.so
+# Dep(post):	/usr/lib/libusb.so	/usr/lib/libusb.so
+# Dep(post):	/usr/lib/libgstcdda-0.10.so	/usr/lib/libgstcdda-0.10.so
+
+nbuild() {
+./configure --prefix=/usr \
+--sysconfdir=/etc \
+--localstatedir=/var \
+--libexecdir=/lib \
+--enable-gstreamer \
+--enable-alsa \
+--enable-usb \
+--enable-tools \
+--enable-bccmd \
+--enable-dfutool \
+--enable-hidd \
+--enable-pand \
+--enable-dund \
+--enable-cups \
+--enable-udevrules \
+--enable-configfiles
+make
+}
+
+ninstall() {
+pkgdir=/tmp/bluez
+make DESTDIR=${pkgdir} install
+install -Dm755 ../bluetooth ${pkgdir}/etc/rc.d/init.d/bluetooth
+install -d ${pkgdir}/etc/bluetooth
+install -m644 network/network.conf input/input.conf audio/audio.conf serial/serial.conf  ${pkgdir}/etc/bluetooth/
+install -Dm644 ${srcdir}/bluetooth.conf.d  ${pkgdir}/etc/conf.d/bluetooth
+install -Dm755 test/simple-agent ${pkgdir}/usr/bin/bluez-simple-agent
+cp -r ${pkgdir}/* /
+rm -r ${pkgdir}
+ln -sf  ../init.d/bluetooth /etc/rc.d/rc0.d/K80bluetooth
+ln -sf  ../init.d/bluetooth /etc/rc.d/rc1.d/K80bluetooth
+ln -sf  ../init.d/bluetooth /etc/rc.d/rc2.d/K80bluetooth
+ln -sf  ../init.d/bluetooth /etc/rc.d/rc3.d/S83bluetooth
+ln -sf  ../init.d/bluetooth /etc/rc.d/rc4.d/S83bluetooth
+ln -sf  ../init.d/bluetooth /etc/rc.d/rc5.d/S83bluetooth
+ln -sf  ../init.d/bluetooth /etc/rc.d/rc6.d/K80bluetooth
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

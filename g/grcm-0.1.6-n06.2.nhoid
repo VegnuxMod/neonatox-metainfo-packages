@@ -1,0 +1,73 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	grcm
+# Version:	0.1.6
+# Release:	n06.2
+# License:	GPL
+# Group:	Networking
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64 arm arm64 armel
+# Url:	http://grcm.sourceforge.net
+# Description:	GUI program to launch applications like telnet, shh, or rdesktop.
+# MD5:	60358b0584cb9a4a9be7c319f71dacc0  grcm-0.1.6.tar.xz
+
+
+# BuildDep:	/usr/lib/libart_lgpl_2.so	/usr/lib/libart_lgpl_2.so
+# BuildDep:	/usr/lib/libatk-1.0.so	/usr/lib/libatk-1.0.so
+# BuildDep:	/usr/lib/libbonoboui-2.so	/usr/lib/libbonoboui-2.so
+# BuildDep:	/usr/lib/libglib-2.0.so	/usr/lib/libglib-2.0.so
+# BuildDep:	/usr/lib/libgconf-2.so	/usr/lib/libgconf-2.so
+# BuildDep:	/usr/lib/libgnome-2.so	/usr/lib/libgnome-2.so
+# BuildDep:	/usr/lib/libgnomecanvas-2.so	/usr/lib/libgnomecanvas-2.so
+# BuildDep:	/usr/lib/libgnomevfs-2.so	/usr/lib/libgnomevfs-2.so
+# BuildDep:	/usr/lib/libgtk-x11-2.0.so	/usr/lib/libgtk-x11-2.0.so
+# BuildDep:	/usr/lib/libICE.so	/usr/lib/libICE.so
+# BuildDep:	/usr/lib/libORBit-2.so	/usr/lib/libORBit-2.so
+# BuildDep:	/usr/lib/libpango-1.0.so	/usr/lib/libpango-1.0.so
+# BuildDep:	/usr/lib/libpopt.so	/usr/lib/libpopt.so
+# BuildDep:	/usr/lib/libSM.so	/usr/lib/libSM.so
+# BuildDep:	/usr/lib/libxml2.so	/usr/lib/libxml2.so
+# BuildDep:	/usr/lib/libz.so	/usr/lib/libz.so
+# Dep(post):	/usr/bin/ssh	/usr/bin/ssh
+# Dep(post):	/usr/bin/grdesktop	/usr/bin/grdesktop
+# Dep(post):	/usr/lib/libz.so	/usr/lib/libz.so
+# Dep(post):	/usr/lib/libxml2.so	/usr/lib/libxml2.so
+# Dep(post):	/usr/lib/libSM.so	/usr/lib/libSM.so
+# Dep(post):	/usr/lib/libpopt.so	/usr/lib/libpopt.so
+# Dep(post):	/usr/lib/libpango-1.0.so	/usr/lib/libpango-1.0.so
+# Dep(post):	/usr/lib/libORBit-2.so	/usr/lib/libORBit-2.so
+# Dep(post):	/usr/lib/libICE.so	/usr/lib/libICE.so
+# Dep(post):	/usr/lib/libgtk-x11-2.0.so	/usr/lib/libgtk-x11-2.0.so
+# Dep(post):	/usr/lib/libgnomevfs-2.so	/usr/lib/libgnomevfs-2.so
+# Dep(post):	/usr/lib/libgnomecanvas-2.so	/usr/lib/libgnomecanvas-2.so
+# Dep(post):	/usr/lib/libgnome-2.so	/usr/lib/libgnome-2.so
+# Dep(post):	/usr/lib/libgconf-2.so	/usr/lib/libgconf-2.so
+# Dep(post):	/usr/lib/libglib-2.0.so	/usr/lib/libglib-2.0.so
+# Dep(post):	/usr/lib/libbonoboui-2.so	/usr/lib/libbonoboui-2.so
+# Dep(post):	/usr/lib/libatk-1.0.so	/usr/lib/libatk-1.0.so
+# Dep(post):	/usr/lib/libart_lgpl_2.so	/usr/lib/libart_lgpl_2.so
+
+nbuild() {
+./configure --prefix=/usr
+make
+}
+
+ninstall() {
+pkgdir=/tmp/grcm
+make DESTDIR=${pkgdir} install
+# fix *desktop & help path
+install -Ddm755 ${pkgdir}/usr/share/applications
+mv ${pkgdir}/usr/share/gnome/help ${pkgdir}/usr/share
+mv ${pkgdir}/usr/share/gnome/apps/Internet/grcm.desktop ${pkgdir}/usr/share/applications
+rm -r ${pkgdir}/usr/share/gnome
+cp -r ${pkgdir}/* /
+rm -r ${pkgdir}
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

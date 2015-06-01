@@ -1,0 +1,34 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	soundtouch
+# Version:	1.5.0
+# Release:	n06.2
+# License:	LGPL
+# Group:	Multimedia
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64 arm arm64
+# Url:	http://www.surina.net/soundtouch/
+# Description:	An audio processing library.
+# MD5:	7699c68d55d3cc907668323b09c7550d  soundtouch-1.5.0.tar.xz
+
+
+
+nbuild() {
+patch -Np1 -i "../soundtouch-1.4.0-mmx-sse-compile-fix.patch"
+patch -Np1 -i "../soundtouch-1.4.0-x86_64-asm-broken.patch"
+./configure --prefix=/usr --enable-shared
+make
+}
+
+ninstall() {
+make pkgdocdir=/usr/share/doc/soundtouch install
+ln -sf soundtouch-1.4.pc "/usr/lib/pkgconfig/soundtouch-1.0.pc"
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

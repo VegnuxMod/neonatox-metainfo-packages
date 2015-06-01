@@ -1,0 +1,31 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	vegnux-installer
+# Version:	06.1
+# Release:	n06.2
+# License:	GPLv3
+# Group:	System
+# Arch:	any
+# Url:	http://www.gmail.com
+# Description:	The VegnuX project Installer for multiple distros.
+# MD5:	1c2b7013d766542c02edba504402c3ab  vegnux-installer-06.1.tar.xz
+
+
+
+nbuild() {
+./configure
+make
+}
+
+ninstall() {
+make install
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

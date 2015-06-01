@@ -1,0 +1,30 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	xbitmaps
+# Version:	1.1.1
+# Release:	n06.2
+# License:	X11 license
+# Group:	X Window System
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64 arm arm64 armel
+# Url:	http://www.x.org/wiki/
+# Description:	Xbitmaps provides static graphics needed by Xorg applications to draw screen elements.
+# MD5:	736b10a41d105d43e95c7461812c82f3  xbitmaps-1.1.1.tar.xz
+
+
+nbuild() {
+./configure --prefix=/usr
+make
+}
+
+ninstall() {
+make install
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

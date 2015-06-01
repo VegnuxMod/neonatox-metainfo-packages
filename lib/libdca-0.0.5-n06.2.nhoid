@@ -1,0 +1,33 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	libdca
+# Version:	0.0.5
+# Release:	n06.2
+# License:	GPL
+# Group:	Multimedia
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64 arm arm64
+# Url:	http://www.videolan.org/developers/libdca.html
+# Description:	Free library for decoding DTS Coherent Acoustics streams.
+# MD5:	15c0e2794114a2fbf2e946ee7ee7a223  libdca-0.0.5.tar.xz
+
+
+
+nbuild() {
+./configure --prefix=/usr --mandir=/usr/share/man
+make
+}
+
+ninstall() {
+pkgdir=/tmp/dca
+make DESTDIR=$pkgdir install
+cp -r $pkgdir/* /
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

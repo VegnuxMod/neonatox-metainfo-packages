@@ -1,0 +1,78 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	hplip
+# Version:	3.13.2
+# Release:	n06.2
+# License:	GPL
+# Group:	System
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64 arm arm64
+# Url:	http://hplipopensource.com
+# Description:	Drivers for HP DeskJet, OfficeJet, Photosmart, Business Inkjet and some LaserJet.
+# MD5:	c83143824a9f8680b58ce91d6e1be769  hplip-3.13.2.tar.xz
+
+
+# BuildDep:	/usr/lib/python2.7/site-packages/PyQt4/QtCore.so	/usr/lib/python2.7/site-packages/PyQt4/QtCore.so
+# BuildDep:	/usr/lib/libcups.so	/usr/lib/libcups.so
+# BuildDep:	/usr/lib/libsane.so	/usr/lib/libsane.so
+# BuildDep:	/usr/bin/python	/usr/bin/python
+# BuildDep:	/usr/lib/python2.7/site-packages/_dbus_bindings.so	/usr/lib/python2.7/site-packages/_dbus_bindings.so
+# BuildDep:	/usr/lib/libpyglib-2.0-python.so	/usr/lib/libpyglib-2.0-python.so
+# BuildDep:	/usr/lib/libgs.so	/usr/lib/libgs.so
+# BuildDep:	/usr/bin/foomatic-datafile	/usr/bin/foomatic-datafile
+# BuildDep:	/usr/lib/libsnmp.so	/usr/lib/libsnmp.so
+# BuildDep:	/usr/bin/rpcbind	/usr/bin/rpcbind
+# Dep(post):	/usr/lib/libsnmp.so	/usr/lib/libsnmp.so
+# Dep(post):	/usr/bin/foomatic-datafile	/usr/bin/foomatic-datafile
+# Dep(post):	/usr/lib/libgs.so	/usr/lib/libgs.so
+# Dep(post):	/usr/lib/libpyglib-2.0-python.so	/usr/lib/libpyglib-2.0-python.so
+# Dep(post):	/usr/lib/python2.7/site-packages/_dbus_bindings.so	/usr/lib/python2.7/site-packages/_dbus_bindings.so
+# Dep(post):	/usr/bin/python	/usr/bin/python
+# Dep(post):	/usr/lib/libsane.so	/usr/lib/libsane.so
+# Dep(post):	/usr/lib/libcups.so	/usr/lib/libcups.so
+# Dep(post):	/usr/lib/python2.7/site-packages/PyQt4/QtCore.so	/usr/lib/python2.7/site-packages/PyQt4/QtCore.so
+# Dep(post):	/usr/bin/rpcbind	/usr/bin/rpcbind
+
+nbuild() {
+patch -p1 -i "../cups-1.6-buildfix.diff"
+local i
+for i in ppd/hpijs/*.ppd.gz ; do
+rm -f ${i}.temp
+gunzip -c ${i} | sed 's/foomatic-rip-hplip/foomatic-rip/g' | \
+gzip > ${i}.temp || return 1
+mv ${i}.temp ${i}
+done
+export AUTOMAKE='automake --foreign'
+autoreconf --force --install
+./configure --prefix=/usr \
+--enable-qt4 \
+--enable-foomatic-rip-hplip-install \
+--enable-foomatic-ppd-install \
+--enable-hpcups-install \
+--enable-cups-drv-install \
+--enable-hpijs-install \
+--enable-foomatic-drv-install \
+--enable-pp-build \
+--enable-udev-acl-rules
+make
+}
+
+ninstall() {
+pkgdir=/tmp/hplip
+cd "$srcdir/$pkgname-${pkgver/.a/a}"
+make rulesdir=/usr/lib/udev/rules.d DESTDIR="$pkgdir/" install
+rm -rf "$pkgdir"/etc/{sane.d,xdg}
+rm -rf "$pkgdir"/usr/share/hal
+chmod 775 "$pkgdir"/var/log/hp{,/tmp}
+rm -rf "$pkgdir"/etc/init.d
+cp -r $pkgdir/* /
+rm -r $pkgdir
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

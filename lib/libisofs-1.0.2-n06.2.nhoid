@@ -1,0 +1,36 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	libisofs
+# Version:	1.0.2
+# Release:	n06.2
+# License:	GPL
+# Group:	Multimedia
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64 arm arm64
+# Url:	http://libburnia.pykix.org/
+# Description:	Library to pack up hard disk files and directories into a ISO 9660 disk image.
+# MD5:	ef3a6af8a583747aa6bb05051ff6eaad  libisofs-1.0.2.tar.xz
+
+
+# BuildDep:	/usr/lib/libacl.so	/usr/lib/libacl.so
+# BuildDep:	/usr/lib/libz.so	/usr/lib/libz.so
+# Dep(post):	/usr/lib/libacl.so	/usr/lib/libacl.so
+# Dep(post):	/usr/lib/libz.so	/usr/lib/libz.so
+
+nbuild() {
+./configure --prefix=/usr \
+--enable-libacl --enable-xattr --disable-static
+make
+}
+
+ninstall() {
+make install
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

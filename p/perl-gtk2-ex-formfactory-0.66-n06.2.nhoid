@@ -1,0 +1,35 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	perl-gtk2-ex-formfactory
+# Version:	0.66
+# Release:	n06.2
+# License:	LGPL
+# Group:	System
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64 arm arm64 armel
+# Url:	http://www.exit1.org/Gtk2-Ex-FormFactory
+# Description:	Framework for perl-gtk2 development.
+# MD5:	ce6d0bc95c7279bea19e82351f23288b  perl-gtk2-ex-formfactory-0.66.tar.xz
+
+
+# BuildDep:	/usr/lib/perl5/vendor_perl/5.12.1/i686-linux/auto/Gtk2/Gtk2.so	/usr/lib/perl5/vendor_perl/5.12.1/i686-linux/auto/Gtk2/Gtk2.so
+# BuildDep:	/usr/bin/perl	/usr/bin/perl
+# Dep(post):	/usr/bin/perl	/usr/bin/perl
+# Dep(post):	/usr/lib/perl5/vendor_perl/5.12.1/i686-linux/auto/Gtk2/Gtk2.so	/usr/lib/perl5/vendor_perl/5.12.1/i686-linux/auto/Gtk2/Gtk2.so
+
+nbuild() {
+perl Makefile.PL INSTALLDIRS=vendor
+make
+}
+
+ninstall() {
+make install
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

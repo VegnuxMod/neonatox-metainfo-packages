@@ -1,0 +1,33 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	xz
+# Version:	5.0.0
+# Release:	n06.2
+# License:	GPL LGPL custom
+# Group:	System
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64 arm arm64
+# Url:	http://tukaani.org/xz/
+# Description:	Library and command line tools for XZ and LZMA compressed files.
+# MD5:	1a871f81c7df8572667ef9f120a11039  xz-5.0.0.tar.xz
+
+
+
+nbuild() {
+./configure --prefix=/usr --disable-rpath --enable-werror
+sed -i 's|^hardcode_libdir_flag_spec=.*|hardcode_libdir_flag_spec=""|g' libtool
+sed -i 's|^runpath_var=LD_RUN_PATH|runpath_var=DIE_RPATH_DIE|g' libtool
+make
+}
+
+ninstall() {
+make install
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

@@ -1,0 +1,31 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	libwpd
+# Version:	0.9.4
+# Release:	n06.2
+# License:	LGPL
+# Group:	System
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64 arm arm64 armel
+# Url:	http://libwpd.sourceforge.net/
+# Description:	Library for importing WordPerfect (tm) documents.
+# MD5:	360f90ca0fce6e3e515a9fc65367499d  libwpd-0.9.4.tar.xz
+
+
+
+nbuild() {
+./configure --prefix=/usr --disable-static
+make
+}
+
+ninstall() {
+make install
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

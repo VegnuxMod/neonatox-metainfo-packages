@@ -1,0 +1,35 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	mousepad
+# Version:	0.2.16
+# Release:	n06.2
+# License:	GPLv2
+# Group:	XFCE Desktop
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64 arm arm64
+# Url:	http://www.xfce.org/~benny/apps.html
+# Description:	Simple Text Editor for Xfce4 (based on Gedit).
+# MD5:	ac8f2230b1363677e08cfc1b04570984  mousepad-0.2.16.tar.xz
+
+
+# BuildDep:	/usr/lib/libxfcegui4.so	/usr/lib/libxfcegui4.so
+# Dep(post):	/usr/lib/libxfcegui4.so	/usr/lib/libxfcegui4.so
+
+nbuild() {
+patch -Np1 -i ../resensitize-find-button.patch
+./configure --prefix=/usr --sysconfdir=/etc --libexecdir=/usr/lib/xfce4 \
+--localstatedir=/var --disable-static
+make
+}
+
+ninstall() {
+make install
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

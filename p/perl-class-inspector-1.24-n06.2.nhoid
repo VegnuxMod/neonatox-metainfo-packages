@@ -1,0 +1,34 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	perl-class-inspector
+# Version:	1.24
+# Release:	n06.2
+# License:	GPL PerlArtistic
+# Group:	System
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64 arm arm64 armel
+# Url:	http://search.cpan.org/~adamk/Class-Inspector
+# Description:	Get information about a class and its structure.
+# MD5:	492ac3a1dc994e8a6cf67fbe8d6a7672  perl-class-inspector-1.24.tar.xz
+
+
+# BuildDep:	/usr/bin/perl	/usr/bin/perl
+# Dep(post):	/usr/bin/perl	/usr/bin/perl
+
+nbuild() {
+PERL_MM_USE_DEFAULT=1 perl Makefile.PL INSTALLDIRS=vendor
+make
+make test
+}
+
+ninstall() {
+make install
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

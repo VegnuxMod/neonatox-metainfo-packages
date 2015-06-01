@@ -1,0 +1,33 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	fastjar
+# Version:	0.98
+# Release:	n06.2
+# License:	GPL
+# Group:	System
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64 arm arm64
+# Url:	http://savannah.nongnu.org/projects/fastjar
+# Description:	Sun java jar compatible archiver.
+# MD5:	3c9ca9a58e06e9d6a3781151cfee970a  fastjar-0.98.tar.xz
+
+
+# BuildDep:	/usr/lib/libz.so	/usr/lib/libz.so
+# Dep(post):	/usr/lib/libz.so	/usr/lib/libz.so
+
+nbuild() {
+./configure --prefix=/usr
+make
+}
+
+ninstall() {
+make install
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

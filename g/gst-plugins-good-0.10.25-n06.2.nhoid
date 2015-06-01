@@ -1,0 +1,67 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	gst-plugins-good
+# Version:	0.10.25
+# Release:	n06.2
+# License:	LGPLv2.1
+# Group:	Multimedia
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64
+# Url:	http://www.gstreamer.net/
+# Description:	GStreamer Good Plugins is a set of plugins considered by the GStreamer developers to have good quality code, correct functionality, and the preferred license (LGPL for the plug-in code, LGPL or LGPL-compatible for the supporting library). A wide range of video and audio decoders, encoders, and filters are included.
+# MD5:	3d7ba5f7e8eb697933a13a70c45ba9a9  gst-plugins-good-0.10.25.tar.xz
+
+
+# BuildDep:	/usr/lib/pkgconfig/gstreamer-plugins-base-0.10.pc	/usr/lib/pkgconfig/gstreamer-plugins-base-0.10.pc
+# BuildDep:	/usr/lib/libaa.so	/usr/lib/libaa.so
+# BuildDep:	/usr/lib/libcdio.so	/usr/lib/libcdio.so
+# BuildDep:	/usr/lib/libavc1394.so	/usr/lib/libavc1394.so
+# BuildDep:	/usr/lib/libiec61883.so	/usr/lib/libiec61883.so
+# BuildDep:	/usr/lib/libdv.so	/usr/lib/libdv.so
+# BuildDep:	/usr/lib/libesd.so	/usr/lib/libesd.so
+# BuildDep:	/usr/lib/libFLAC.so	/usr/lib/libFLAC.so
+# BuildDep:	/usr/lib/libgtk-x11-2.0.so	/usr/lib/libgtk-x11-2.0.so
+# BuildDep:	/usr/lib/libhal.so	/usr/lib/libhal.so
+# BuildDep:	/usr/lib/ladspa/delay.so	/usr/lib/ladspa/delay.so
+# BuildDep:	/usr/lib/libcaca.a	/usr/lib/libcaca.a
+# BuildDep:	/usr/lib/libshout.so	/usr/lib/libshout.so
+# BuildDep:	/usr/lib/libspeex.so	/usr/lib/libspeex.so
+# BuildDep:	/usr/lib/libtag.so	/usr/lib/libtag.so
+# BuildDep:	/usr/lib/libX11.so	/usr/lib/libX11.so
+# BuildDep:	/usr/lib/libgconf-2.so	/usr/lib/libgconf-2.so
+# BuildDep:	/usr/lib/libsoup-gnome-2.4.so	/usr/lib/libsoup-gnome-2.4.so
+# Dep(post):	/usr/lib/pkgconfig/gstreamer-plugins-base-0.10.pc	/usr/lib/pkgconfig/gstreamer-plugins-base-0.10.pc
+# Dep(post):	/usr/lib/libaa.so	/usr/lib/libaa.so
+# Dep(post):	/usr/lib/libcdio.so	/usr/lib/libcdio.so
+# Dep(post):	/usr/lib/libavc1394.so	/usr/lib/libavc1394.so
+# Dep(post):	/usr/lib/libiec61883.so	/usr/lib/libiec61883.so
+# Dep(post):	/usr/lib/libdv.so	/usr/lib/libdv.so
+# Dep(post):	/usr/lib/libesd.so	/usr/lib/libesd.so
+# Dep(post):	/usr/lib/libFLAC.so	/usr/lib/libFLAC.so
+# Dep(post):	/usr/lib/libgtk-x11-2.0.so	/usr/lib/libgtk-x11-2.0.so
+# Dep(post):	/usr/lib/libhal.so	/usr/lib/libhal.so
+# Dep(post):	/usr/lib/ladspa/delay.so	/usr/lib/ladspa/delay.so
+# Dep(post):	/usr/lib/libcaca.a	/usr/lib/libcaca.a
+# Dep(post):	/usr/lib/libshout.so	/usr/lib/libshout.so
+# Dep(post):	/usr/lib/libspeex.so	/usr/lib/libspeex.so
+# Dep(post):	/usr/lib/libtag.so	/usr/lib/libtag.so
+# Dep(post):	/usr/lib/libX11.so	/usr/lib/libX11.so
+# Dep(post):	/usr/lib/libgconf-2.so	/usr/lib/libgconf-2.so
+# Dep(post):	/usr/lib/libsoup-gnome-2.4.so	/usr/lib/libsoup-gnome-2.4.so
+
+nbuild() {
+./configure --prefix=/usr
+make
+}
+
+ninstall() {
+make install
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

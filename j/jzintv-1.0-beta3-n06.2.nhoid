@@ -1,0 +1,42 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	jzintv
+# Version:	1.0-beta3
+# Release:	n06.2
+# License:	GPL
+# Group:	Games
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64 arm arm64 armel
+# Url:	http://spatula-city.org/~im14u2c/intv/
+# Description:	Mattel Intellivision™ console emulator.
+# MD5:	522e6c08be2d33dbad3dc895d6d0ae87  jzintv-1.0-beta3.tar.xz
+
+
+# BuildDep:	/usr/bin/nasm	/usr/bin/nasm
+
+nbuild() {
+patch -p1 < ../jzintv_dprintf.patch
+patch -p1 < ../jzintv_rompath.patch
+cd src
+make
+}
+
+ninstall() {
+pkgdir=/tmp/jzintv
+rm -f bin/README* bin/*.dll
+strip bin/*
+mkdir -p $pkgdir/usr/bin
+cp -a bin/* $pkgdir/usr/bin
+mkdir -p $pkgdir/usr/share/jzintv/rom
+touch $pkgdir/usr/share/jzintv/rom/.empty
+cp -r $pkgdir/* /
+rm -r $pkgdir/
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

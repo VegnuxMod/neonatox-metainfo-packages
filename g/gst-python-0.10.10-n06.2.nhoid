@@ -1,0 +1,37 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	gst-python
+# Version:	0.10.10
+# Release:	n06.2
+# License:	LGPLv2.1
+# Group:	Multimedia
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64
+# Url:	http://www.gstreamer.net/
+# Description:	GStreamer is a media processing framework with support for a wide variety of data sources, sinks, and formats through the use of dynamically loaded plugins. This package contains bindings to access GStreamer from within the Python programming language.
+# MD5:	6043ca5cdf9bb2ad1d468b8936c37585  gst-python-0.10.10.tar.xz
+
+
+# BuildDep:	/usr/lib/libpyglib-2.0-python.so	/usr/lib/libpyglib-2.0-python.so
+# BuildDep:	/usr/lib/libxml2.so	/usr/lib/libxml2.so
+# BuildDep:	/usr/lib/libgstreamer-0.10.so	/usr/lib/libgstreamer-0.10.so
+# Dep(post):	/usr/lib/libpyglib-2.0-python.so	/usr/lib/libpyglib-2.0-python.so
+# Dep(post):	/usr/lib/libxml2.so	/usr/lib/libxml2.so
+# Dep(post):	/usr/lib/libgstreamer-0.10.so	/usr/lib/libgstreamer-0.10.so
+
+nbuild() {
+./configure --prefix=/usr
+make
+}
+
+ninstall() {
+make install
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

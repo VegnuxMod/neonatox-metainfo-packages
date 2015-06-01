@@ -1,0 +1,36 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	bc
+# Version:	1.06
+# Release:	n06.2
+# License:	GPL
+# Group:	Programming
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64 arm arm64 armel
+# Url:	http://www.gnu.org/software/bc/
+# Description:	An arbitrary precision calculator language.
+# MD5:	e17fcff40d4f1e40b7acb900abd494c9  bc-1.06.tar.xz
+
+
+# BuildDep:	/usr/lib/libreadline.so	/usr/lib/libreadline.so
+# Dep(post):	/usr/lib/libreadline.so	/usr/lib/libreadline.so
+
+nbuild() {
+patch -p1 -i ../build-fix.patch
+patch -p1 -i ../bc-1.06-info-dir-entry.patch
+./configure --prefix=/usr --mandir=/usr/share/man \
+--infodir=/usr/share/info --with-readline
+make LEX="flex -I"
+}
+
+ninstall() {
+make install
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

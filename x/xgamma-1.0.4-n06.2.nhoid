@@ -1,0 +1,33 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	xgamma
+# Version:	1.0.4
+# Release:	n06.2.1
+# License:	X11 license
+# Group:	X Window System
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64 arm arm64
+# Url:	http://www.x.org/wiki/
+# Description:	Alter a monitor's gamma correction through the X server.
+# MD5:	432e9ae4f7f00aedbceb2ce681d69e11  xgamma-1.0.4.tar.xz
+
+
+# BuildDep:	/usr/lib/libXxf86vm.so	/usr/lib/libXxf86vm.so
+# Dep(post):	/usr/lib/libXxf86vm.so	/usr/lib/libXxf86vm.so
+
+nbuild() {
+./configure --prefix=/usr --sysconfdir=/etc --mandir=/usr/share/man --localstatedir=/var
+make
+}
+
+ninstall() {
+make install
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

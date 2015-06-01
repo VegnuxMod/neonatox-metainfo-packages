@@ -1,0 +1,39 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	gstreamermm
+# Version:	0.10.8
+# Release:	n06.2
+# License:	LGPL
+# Group:	Multimefdia
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64 arm arm64 armel
+# Url:	http://gstreamer.freedesktop.org/bindings/cplusplus.html
+# Description:	C++ interface for GStreamer.
+# MD5:	29b6221161fa65adfd9c041021d4ca5c  gstreamermm-0.10.8.tar.xz
+
+
+# BuildDep:	/usr/lib/libglibmm-2.4.so	/usr/lib/libglibmm-2.4.so
+# BuildDep:	/usr/lib/libgstreamer-0.10.so	/usr/lib/libgstreamer-0.10.so
+# BuildDep:	/usr/lib/libsigc-2.0.so	/usr/lib/libsigc-2.0.so
+# BuildDep:	/usr/lib/libxml++-2.6.so	/usr/lib/libxml++-2.6.so
+# Dep(post):	/usr/lib/libxml++-2.6.so	/usr/lib/libxml++-2.6.so
+# Dep(post):	/usr/lib/libsigc-2.0.so	/usr/lib/libsigc-2.0.so
+# Dep(post):	/usr/lib/libgstreamer-0.10.so	/usr/lib/libgstreamer-0.10.so
+# Dep(post):	/usr/lib/libglibmm-2.4.so	/usr/lib/libglibmm-2.4.so
+
+nbuild() {
+./configure --prefix=/usr
+make
+}
+
+ninstall() {
+make install
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

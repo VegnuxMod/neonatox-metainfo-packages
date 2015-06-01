@@ -1,0 +1,82 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	ffmpeg
+# Version:	20120317
+# Release:	n06.2
+# License:	GPLv3
+# Group:	Multimedia
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64 arm arm64 armel
+# Url:	http://ffmpeg.org/
+# Description:	Complete solution to record, convert and stream audio and video. Includes libavcodec.
+# MD5:	46de0a8408fc577563b41fec2b9de9c2  ffmpeg-20120317.tar.xz
+
+
+# BuildDep:	/usr/bin/yasm	/usr/bin/yasm
+# BuildDep:	/usr/lib/libmp3lame.so	/usr/lib/libmp3lame.so
+# BuildDep:	/usr/lib/libspeex.so	/usr/lib/libspeex.so
+# BuildDep:	/usr/lib/libtheora.so	/usr/lib/libtheora.so
+# BuildDep:	/usr/lib/libvorbis.so	/usr/lib/libvorbis.so
+# BuildDep:	/usr/lib/libx264.so	/usr/lib/libx264.so
+# BuildDep:	/usr/lib/libxvidcore.so	/usr/lib/libxvidcore.so
+# BuildDep:	/usr/lib/libopencore-amrwb.so	/usr/lib/libopencore-amrwb.so
+# BuildDep:	/usr/lib/libdc1394.so	/usr/lib/libdc1394.so
+# BuildDep:	/usr/lib/libopenjpeg.so.2	/usr/lib/libopenjpeg.so.2
+# BuildDep:	/usr/lib/libSDL.so	/usr/lib/libSDL.so
+# BuildDep:	/usr/lib/libvpx.a	/usr/lib/libvpx.a
+# BuildDep:	/usr/lib/libschroedinger-1.0.so	/usr/lib/libschroedinger-1.0.so
+# BuildDep:	/usr/lib/libvdpau.so	/usr/lib/libvdpau.so
+# BuildDep:	/usr/lib/librtmp.so	/usr/lib/librtmp.so
+# Dep(post):	/usr/lib/libschroedinger-1.0.so	/usr/lib/libschroedinger-1.0.so
+# Dep(post):	/usr/lib/libvpx.a	/usr/lib/libvpx.a
+# Dep(post):	/usr/lib/libSDL.so	/usr/lib/libSDL.so
+# Dep(post):	/usr/lib/libopenjpeg.so.2	/usr/lib/libopenjpeg.so.2
+# Dep(post):	/usr/lib/libdc1394.so	/usr/lib/libdc1394.so
+# Dep(post):	/usr/lib/libopencore-amrwb.so	/usr/lib/libopencore-amrwb.so
+# Dep(post):	/usr/lib/libxvidcore.so	/usr/lib/libxvidcore.so
+# Dep(post):	/usr/lib/libx264.so	/usr/lib/libx264.so
+# Dep(post):	/usr/lib/libvorbis.so	/usr/lib/libvorbis.so
+# Dep(post):	/usr/lib/libtheora.so	/usr/lib/libtheora.so
+# Dep(post):	/usr/lib/libspeex.so	/usr/lib/libspeex.so
+# Dep(post):	/usr/lib/libmp3lame.so	/usr/lib/libmp3lame.so
+# Dep(post):	/usr/lib/libvdpau.so	/usr/lib/libvdpau.so
+# Dep(post):	/usr/lib/librtmp.so	/usr/lib/librtmp.so
+
+nbuild() {
+./configure \
+--prefix=/usr \
+--enable-gpl \
+--enable-libmp3lame \
+--enable-libvorbis \
+--enable-libxvid \
+--enable-libx264 \
+--enable-libvpx \
+--enable-libtheora \
+--enable-postproc \
+--enable-shared \
+--enable-x11grab \
+--enable-libopencore_amrnb \
+--enable-libopencore_amrwb \
+--enable-libschroedinger \
+--enable-libopenjpeg \
+--enable-librtmp \
+--enable-version3 \
+--enable-runtime-cpudetect \
+--disable-debug
+make
+make tools/qt-faststart
+make doc/ff{mpeg,play,server}.1
+}
+
+ninstall() {
+make install install-man
+install -D -m755 tools/qt-faststart "/usr/bin/qt-faststart"
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

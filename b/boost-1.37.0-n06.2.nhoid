@@ -1,0 +1,36 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sánchez <cargabsj175@gmail.com>
+
+# Name:	boost
+# Version:	1.37.0
+# Release:	n06.2
+# License:	Boost 1.0
+# Group:	Programming
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64 arm arm64 armel
+# Url:	http://www.boost.org/
+# Description:	Boost Libraries for C++.
+# MD5:	9ca35aa86d4c6dc9c44ffab9f71354f8  boost-1.37.0.tar.xz
+
+
+# BuildDep:	/usr/bin/bjam	/usr/bin/bjam
+# Dep(post):	/usr/bin/bjam	/usr/bin/bjam
+
+nbuild() {
+patch -p0 -i "../exceptions.patch"
+cflags="-fno-strict-aliasing -fno-exceptions" ./configure --prefix=/usr --with-toolset=gcc --with-bjam=/usr/bin/bjam
+make
+}
+
+ninstall() {
+make install
+mkdir -p /usr/include/boost/function/
+cp ../function_template.hpp /usr/include/boost/function/function_template.hpp
+}
+
+npostinstall() {
+ln -sfnv boost-1_37/boost /usr/include/boost
+}
+
+npostremove() {
+rm -r /usr/include/boost
+}

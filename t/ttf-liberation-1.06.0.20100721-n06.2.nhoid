@@ -1,0 +1,34 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	ttf-liberation
+# Version:	1.06.0.20100721
+# Release:	n06.2
+# License:	GPLv2
+# Group:	X Window System
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64 arm arm64
+# Url:	https://www.redhat.com/promo/fonts/
+# Description:	Red Hat's Liberation fonts.
+# MD5:	a9e0a78273740eacd60f1cfe96506ba5  ttf-liberation-1.06.0.20100721.tar.xz
+
+
+# BuildDep:	/usr/lib/libfontconfig.so	/usr/lib/libfontconfig.so
+# BuildDep:	/usr/bin/fontforge	/usr/bin/fontforge
+# Dep(post):	/usr/lib/libfontconfig.so	/usr/lib/libfontconfig.so
+
+nbuild() {
+make
+}
+
+ninstall() {
+cd liberation-fonts-ttf-1.06.0.$(date +%Y%m%d)
+install -m644 *.ttf $pkgdir/usr/share/fonts/X11/TTF/
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

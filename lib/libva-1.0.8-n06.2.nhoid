@@ -1,0 +1,41 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	libva
+# Version:	1.0.8
+# Release:	n06.2
+# License:	MIT
+# Group:	System
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64 arm arm64
+# Url:	http://freedesktop.org/wiki/Software/vaapi
+# Description:	Video Acceleration (VA) API for Linux.
+# MD5:	ba4df46eae001bc3997cda2e8e56c187  libva-1.0.8.tar.xz
+
+
+# BuildDep:	/usr/lib/libGL.so	/usr/lib/libGL.so
+# BuildDep:	/usr/lib/libdrm.so	/usr/lib/libdrm.so
+# BuildDep:	/usr/lib/libXfixes.so	/usr/lib/libXfixes.so
+# Dep(post):	/usr/lib/libXfixes.so	/usr/lib/libXfixes.so
+# Dep(post):	/usr/lib/libdrm.so	/usr/lib/libdrm.so
+# Dep(post):	/usr/lib/libGL.so	/usr/lib/libGL.so
+
+nbuild() {
+patch -Np0 -i ../libva-dont-install-tests.patch
+./autogen.sh
+./configure --prefix=/usr  \
+--enable-i965-driver \
+--enable-glx
+make
+}
+
+ninstall() {
+make install
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

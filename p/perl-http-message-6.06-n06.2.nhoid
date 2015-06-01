@@ -1,0 +1,47 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	perl-http-message
+# Version:	6.06
+# Release:	n06.2
+# License:	GPL
+# Group:	Programming
+# Arch:	noarch
+# Url:	http://search.cpan.org/dist/HTTP-Message
+# Description:	HTTP style messages.
+# MD5:	802975006c34f33482e36fabfdbe9e1a  perl-http-message-6.06.tar.xz
+
+# BuildDep:	/usr/bin/perl	/usr/bin/perl
+# BuildDep:	/usr/lib/perl5/vendor_perl/5.12.1/Encode/Locale.pm	/usr/lib/perl5/vendor_perl/5.12.1/Encode/Locale.pm
+# BuildDep:	/usr/lib/perl5/5.12.1/x86_64-linux/perllocal.pod	/usr/lib/perl5/5.12.1/x86_64-linux/perllocal.pod
+# BuildDep:	/usr/lib/perl5/vendor_perl/5.12.1/HTTP/Date.pm	/usr/lib/perl5/vendor_perl/5.12.1/HTTP/Date.pm
+# BuildDep:	/usr/lib/perl5/site_perl/5.12.1/LWP/MediaTypes.pm	/usr/lib/perl5/site_perl/5.12.1/LWP/MediaTypes.pm
+# BuildDep:	/usr/lib/perl5/vendor_perl/5.12.1/URI/https.pm	/usr/lib/perl5/vendor_perl/5.12.1/URI/https.pm
+# Dep(post):	/usr/lib/perl5/vendor_perl/5.12.1/URI/https.pm	/usr/lib/perl5/vendor_perl/5.12.1/URI/https.pm
+# Dep(post):	/usr/lib/perl5/site_perl/5.12.1/LWP/MediaTypes.pm	/usr/lib/perl5/site_perl/5.12.1/LWP/MediaTypes.pm
+# Dep(post):	/usr/lib/perl5/vendor_perl/5.12.1/HTTP/Date.pm	/usr/lib/perl5/vendor_perl/5.12.1/HTTP/Date.pm
+# Dep(post):	/usr/lib/perl5/5.12.1/x86_64-linux/perllocal.pod	/usr/lib/perl5/5.12.1/x86_64-linux/perllocal.pod
+# Dep(post):	/usr/lib/perl5/vendor_perl/5.12.1/Encode/Locale.pm	/usr/lib/perl5/vendor_perl/5.12.1/Encode/Locale.pm
+# Dep(post):	/usr/bin/perl	/usr/bin/perl
+
+nbuild() {
+export PERL_MM_USE_DEFAULT=1 PERL5LIB=""
+export PERL_AUTOINSTALL=--skipdeps
+export PERL_MM_OPT="INSTALLDIRS=vendor"
+export PERL_MB_OPT="--installdirs vendor"
+export MODULEBUILDRC=/dev/null
+perl Makefile.PL
+make
+}
+
+ninstall() {
+make install
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

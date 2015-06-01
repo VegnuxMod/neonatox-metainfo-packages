@@ -1,0 +1,33 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	unixodbc
+# Version:	2.3.0
+# Release:	n06.2
+# License:	GPL LGPLv2.1
+# Group:	Data Base
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64 arm arm64
+# Url:	http://www.unixodbc.org/
+# Description:	ODBC is an open specification for providing application developers with a predictable API with which to access Data Sources.
+# MD5:	7961f8f4ac4a69d583e31adf3f446cf3  unixodbc-2.3.0.tar.xz
+
+
+# BuildDep:	/usr/lib/libreadline.so	/usr/lib/libreadline.so
+# Dep(post):	/usr/lib/libreadline.so	/usr/lib/libreadline.so
+
+nbuild() {
+./configure --prefix=/usr --sysconfdir=/etc
+make
+}
+
+ninstall() {
+make install
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

@@ -1,0 +1,38 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	qgit
+# Version:	2.3
+# Release:	n06.2
+# License:	GPL
+# Group:	Programming
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64 arm arm64 armel
+# Url:	http://digilander.libero.it/mcostalba/
+# Description:	A GIT GUI viewer built on Qt/C++.
+# MD5:	98f8caa5cad59a7c01456fd5cb3eb4c4  qgit-2.3.tar.xz
+
+
+# BuildDep:	/usr/bin/git	/usr/bin/git
+# BuildDep:	/usr/lib/libQtCore.so	/usr/lib/libQtCore.so
+# Dep(post):	/usr/lib/libQtCore.so	/usr/lib/libQtCore.so
+# Dep(post):	/usr/bin/git	/usr/bin/git
+
+nbuild() {
+patch -Np1 < ../0001-Cause-qgit-to-use-git-config-everywhere.patch
+qmake qgit.pro
+make
+}
+
+ninstall() {
+install -Dm755 bin/qgit /usr/bin/qgit
+install -Dm644 ../qgit.desktop /usr/share/applications/qgit.desktop
+install -Dm644 ../qgit.png /usr/share/pixmaps/qgit.png
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

@@ -1,0 +1,41 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	apache-ant
+# Version:	1.8.2
+# Release:	n06.2
+# License:	APACHE
+# Group:	Programming
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64 arm arm64
+# Url:	http://ant.apache.org/
+# Description:	A java-based build tool.
+# MD5:	0099111a9cc81a739b50356456a06114  apache-ant-1.8.2.tar.xz
+
+
+
+nbuild() {
+noemptyfuncs
+}
+
+ninstall() {
+pkgdir=/tmp/ant
+install -dm755 "${pkgdir}"/etc/profile.d
+install -m755 ../apache-ant.{csh,sh} "${pkgdir}"/etc/profile.d/
+source ../apache-ant.sh
+install -dm755 "${pkgdir}"/${ANT_HOME}/{bin,lib}
+install -m644 ./lib/*.jar "${pkgdir}"/${ANT_HOME}/lib
+cp -Rp ./etc "${pkgdir}"/${ANT_HOME}
+find ./bin -type f -a ! -name \*.bat -a ! -name \*.cmd \
+-exec install -m755 {} "${pkgdir}"/${ANT_HOME}/bin \;
+ln -sf /usr/share/java/junit.jar "${pkgdir}"/usr/share/java/apache-ant/lib/
+cp -r $pkgdir/* /
+rm -r $pkgdir
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

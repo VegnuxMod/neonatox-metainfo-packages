@@ -1,0 +1,34 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	xalan-java
+# Version:	2.7.1
+# Release:	n06.2
+# License:	APACHE
+# Group:	Develop
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64 arm arm64 armel
+# Url:	http://xml.apache.org/xalan-j
+# Description:	XSLT processor for transforming XML documents into HTML, text, or other XML document types.
+# MD5:	b6023b5abf871dda5724c72e483e5f4c  xalan-java-2.7.1.tar.xz
+
+
+# BuildDep:	/usr/share/java/xml-apis.jar	/usr/share/java/xml-apis.jar
+# Dep(post):	/usr/share/java/xml-apis.jar	/usr/share/java/xml-apis.jar
+
+nbuild() {
+noemptyfuncs
+}
+
+ninstall() {
+install -m755 -d /usr/share/java
+install -m644 xalan.jar /usr/share/java/
+install -m644 xsltc.jar /usr/share/java/
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

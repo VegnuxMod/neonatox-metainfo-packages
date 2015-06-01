@@ -1,0 +1,41 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	prozilla-venenux
+# Version:	2.0.4
+# Release:	n06.2
+# License:	GPLv2
+# Group:	Networking
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64 arm arm64 armel
+# Url:	http://www.venenux.org
+# Description:	A multi-threaded download accelerator,this version has been optimized by Victor Diaz Devera for VENENUX GNU/Linux.
+# MD5:	dcf0b722bdf92780c6fcde9871132ad5  prozilla-venenux-2.0.4.tar.xz
+
+# BuildDep:	/usr/bin/gcc	/usr/bin/gcc
+# BuildDep:	/usr/bin/bison	/usr/bin/bison
+# BuildDep:	/usr/bin/gettext	/usr/bin/gettext
+# BuildDep:	/usr/bin/pkg-config	/usr/bin/pkg-config
+# OptionalBuildDep:	/usr/bin/libtoolize	/usr/bin/libtoolize
+# Dep(post):	/usr/bin/bison	/usr/bin/bison
+# Dep(post):	/usr/bin/gettext	/usr/bin/gettext
+# Dep(post):	/usr/bin/pkg-config	/usr/bin/pkg-config
+# OptionalDep(post):	/usr/bin/libtoolize	/usr/bin/libtoolize
+
+nbuild() {
+sed -i 's/DL_Window:://' src/download_win.h
+./configure --prefix=/usr --mandir=/usr/share/man \
+--enable-shared --disable-static
+make
+}
+
+ninstall() {
+make install
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

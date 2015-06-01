@@ -1,0 +1,39 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	gadmin-samba
+# Version:	0.3.3
+# Release:	n06.2
+# License:	GPL
+# Group:	Networking
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64 arm arm64 armel
+# Url:	http://gadmintools.flippedweb.com/index.php?option=com_content&task=view&id=16&Itemid=30
+# Description:	An easy to use GTK+ frontend for the SAMBA file and print server.
+# MD5:	d069a80bc74213af65b5c24a29a344d9  gadmin-samba-0.3.3.tar.xz
+
+
+# BuildDep:	/usr/lib/libgtk-x11-2.0.so	/usr/lib/libgtk-x11-2.0.so
+# BuildDep:	/usr/bin/smbpasswd	/usr/bin/smbpasswd
+# Dep(post):	/usr/bin/smbpasswd	/usr/bin/smbpasswd
+# Dep(post):	/usr/lib/libgtk-x11-2.0.so	/usr/lib/libgtk-x11-2.0.so
+
+nbuild() {
+./configure --prefix=/usr --sysconfdir=/etc \
+--localstatedir=/var --sbindir=/usr/sbin
+make
+}
+
+ninstall() {
+make install
+install -D -m644 desktop/gadmin-samba.desktop /usr/share/applications/gadmin-samba.desktop
+sed -i 's@Exec=gadmin-samba@Exec=gksu PATH=$PATH:/usr/sbin:/sbin /usr/sbin/gadmin-samba@g' /usr/share/applications/gadmin-samba.desktop
+sed -i 's@Network;X-Red-Hat-ServerConfig;X-Red-Hat-Base@System@g' /usr/share/applications/gadmin-samba.desktop
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

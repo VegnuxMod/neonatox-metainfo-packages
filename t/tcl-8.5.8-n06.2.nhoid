@@ -1,0 +1,39 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	tcl
+# Version:	8.5.8
+# Release:	n06.2
+# License:	custom
+# Group:	Core System
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64 arm arm64
+# Url:	http://tcl.sourceforge.net/
+# Description:	The Tcl scripting language.
+# MD5:	59f9c6035e059b7549d82f9adb0a2d5c  tcl-8.5.8.tar.xz
+
+
+
+nbuild() {
+cd unix
+CARCH=$(uname -m)
+if [ "$CARCH" = "x86_64" ]; then
+./configure --prefix=/usr --mandir=/usr/share/man --enable-threads --enable-64bit
+else
+./configure --prefix=/usr --mandir=/usr/share/man --enable-threads --disable-64bit
+fi
+make
+}
+
+ninstall() {
+cd unix
+make install install-private-headers
+ln -sf tclsh8.5 /usr/bin/tclsh
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

@@ -1,0 +1,50 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	consolekit
+# Version:	0.4.3
+# Release:	n06.2
+# License:	GPL
+# Group:	System
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64 arm arm64 armel
+# Url:	http://www.freedesktop.org/wiki/Software/ConsoleKit
+# Description:	A framework for defining and tracking users, login sessions, and seats.
+# MD5:	37bab31632dadaf47bbc8e8dbd978452  consolekit-0.4.3.tar.xz
+
+# BuildDep:	/usr/lib/libpolkit-agent-1.so	/usr/lib/libpolkit-agent-1.so
+# BuildDep:	/usr/lib/libz.so	/usr/lib/libz.so
+# BuildDep:	/usr/lib/libX11.so	/usr/lib/libX11.so
+# BuildDep:	/usr/lib/libdbus-glib-1.so	/usr/lib/libdbus-glib-1.so
+# BuildDep:	/usr/bin/xmlto	/usr/bin/xmlto
+# BuildDep:	/etc/xml/docbook	/etc/xml/docbook
+# BuildDep:	/usr/bin/pkg-config	/usr/bin/pkg-config
+# Dep(post):	/usr/bin/pkg-config	/usr/bin/pkg-config
+# Dep(post):	/etc/xml/docbook	/etc/xml/docbook
+# Dep(post):	/usr/bin/xmlto	/usr/bin/xmlto
+# Dep(post):	/usr/lib/libdbus-glib-1.so	/usr/lib/libdbus-glib-1.so
+# Dep(post):	/usr/lib/libX11.so	/usr/lib/libX11.so
+# Dep(post):	/usr/lib/libz.so	/usr/lib/libz.so
+# Dep(post):	/usr/lib/libpolkit-agent-1.so	/usr/lib/libpolkit-agent-1.so
+
+nbuild() {
+./configure --prefix=/usr \
+--sysconfdir=/etc \
+--localstatedir=/var \
+--libexecdir=/usr/lib/ConsoleKit \
+--enable-pam-module \
+--enable-docbook-docs
+make
+}
+
+ninstall() {
+make install
+install -m755 "../pam-foreground-compat.ck" "/usr/lib/ConsoleKit/run-session.d/"
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

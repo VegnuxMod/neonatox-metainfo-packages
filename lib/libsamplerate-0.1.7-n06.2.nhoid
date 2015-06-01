@@ -1,0 +1,35 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sánchez <cargabsj175@gmail.com>
+
+# Name:	libsamplerate
+# Version:	0.1.7
+# Release:	n06.2
+# License:	GPL
+# Group:	Multimedia
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64
+# Url:	http://www.mega-nerd.com/SRC/index.html
+# Description:	Secret Rabbit Code - aka Sample Rate Converter for audio.
+# MD5:	fa2cd88e1b22bd14843dcdf6ea201763  libsamplerate-0.1.7.tar.xz
+
+
+# BuildDep:	/usr/lib/libsndfile.so	/usr/lib/libsndfile.so
+# BuildDep:	/usr/lib/libFLAC.so	/usr/lib/libFLAC.so
+# Dep(post):	/usr/lib/libsndfile.so	/usr/lib/libsndfile.so
+# Dep(post):	/usr/lib/libFLAC.so	/usr/lib/libFLAC.so
+
+nbuild() {
+./configure --prefix=/usr
+make
+}
+
+ninstall() {
+make install
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

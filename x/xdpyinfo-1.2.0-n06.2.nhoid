@@ -1,0 +1,51 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	xdpyinfo
+# Version:	1.2.0
+# Release:	n06.2
+# License:	X11 license
+# Group:	X Window System
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64 arm arm64
+# Url:	http://www.x.org/wiki
+# Description:	display information utility for X.
+# MD5:	e9974c830a5282d19f3cf002a70394a9  xdpyinfo-1.2.0.tar.xz
+
+
+# BuildDep:	/usr/lib/libXext.so	/usr/lib/libXext.so
+# BuildDep:	/usr/lib/libX11.so	/usr/lib/libX11.so
+# BuildDep:	/usr/lib/libXtst.so	/usr/lib/libXtst.so
+# BuildDep:	/usr/lib/libXxf86vm.so	/usr/lib/libXxf86vm.so
+# BuildDep:	/usr/lib/libXxf86misc.so	/usr/lib/libXxf86misc.so
+# BuildDep:	/usr/lib/libXi.so	/usr/lib/libXi.so
+# BuildDep:	/usr/lib/libXrender.so	/usr/lib/libXrender.so
+# OptionalBuildDep:	/usr/lib/libXxf86dga.so	/usr/lib/libXxf86dga.so
+# OptionalBuildDep:	/usr/lib/libXinerama.so	/usr/lib/libXinerama.so
+# OptionalBuildDep:	/usr/lib/libdmx.so	/usr/lib/libdmx.so
+# Dep(post):	/usr/lib/libXrender.so	/usr/lib/libXrender.so
+# Dep(post):	/usr/lib/libXi.so	/usr/lib/libXi.so
+# Dep(post):	/usr/lib/libXxf86misc.so	/usr/lib/libXxf86misc.so
+# Dep(post):	/usr/lib/libXxf86vm.so	/usr/lib/libXxf86vm.so
+# Dep(post):	/usr/lib/libXtst.so	/usr/lib/libXtst.so
+# Dep(post):	/usr/lib/libX11.so	/usr/lib/libX11.so
+# Dep(post):	/usr/lib/libXext.so	/usr/lib/libXext.so
+# OptionalDep(post):	/usr/lib/libdmx.so	/usr/lib/libdmx.so
+# OptionalDep(post):	/usr/lib/libXinerama.so	/usr/lib/libXinerama.so
+# OptionalDep(post):	/usr/lib/libXxf86dga.so	/usr/lib/libXxf86dga.so
+
+nbuild() {
+./configure --prefix=/usr --sysconfdir=/etc --mandir=/usr/share/man --localstatedir=/var
+make
+}
+
+ninstall() {
+make install
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

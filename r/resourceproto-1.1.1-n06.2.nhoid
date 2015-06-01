@@ -1,0 +1,33 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	resourceproto
+# Version:	1.1.1
+# Release:	n06.2
+# License:	X11 license
+# Group:	X Window System
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64 arm arm64
+# Url:	http://www.x.org/wiki/
+# Description:	X.Org Resource protocol headers.
+# MD5:	920aeead304d9d0c0b9fea3f912e6606  resourceproto-1.1.1.tar.xz
+
+
+# BuildDep:	/usr/bin/pkg-config	/usr/bin/pkg-config
+# Dep(post):	/usr/bin/pkg-config	/usr/bin/pkg-config
+
+nbuild() {
+./configure --prefix=/usr --sysconfdir=/etc --mandir=/usr/share/man --localstatedir=/var
+make
+}
+
+ninstall() {
+make install
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

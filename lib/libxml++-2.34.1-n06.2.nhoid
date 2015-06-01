@@ -1,0 +1,35 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	libxml++
+# Version:	2.34.1
+# Release:	n06.2
+# License:	LGPL
+# Group:	Programming
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64 arm arm64
+# Url:	http://libxmlplusplus.sourceforge.net/
+# Description:	C++ bindings to libxml2.
+# MD5:	ceea1ca9967837abe92a137f8c479e34  libxml++-2.34.1.tar.xz
+
+
+# BuildDep:	/usr/lib/libxml2.so	/usr/lib/libxml2.so
+# BuildDep:	/usr/lib/libglibmm-2.4.so	/usr/lib/libglibmm-2.4.so
+# Dep(post):	/usr/lib/libglibmm-2.4.so	/usr/lib/libglibmm-2.4.so
+# Dep(post):	/usr/lib/libxml2.so	/usr/lib/libxml2.so
+
+nbuild() {
+./configure --prefix=/usr --disable-documentation
+make
+}
+
+ninstall() {
+make install
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

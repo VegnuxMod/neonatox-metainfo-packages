@@ -1,0 +1,45 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	gnome-python-desktop
+# Version:	2.32.0
+# Release:	n06.2
+# License:	GPL LGPL
+# Group:	Gnome Desktop
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64 arm arm64
+# Url:	http://www.gnome.org
+# Description:	Python bindings for the GNOME desktop environment.
+# MD5:	096f6e35214dcbd696324f32f34432ee  gnome-python-desktop-2.32.0.tar.xz
+
+
+# BuildDep:	/usr/lib/python2.7/site-packages/gtk-2.0/gtk/_gtk.so	/usr/lib/python2.7/site-packages/gtk-2.0/gtk/_gtk.so
+# BuildDep:	/usr/lib/libtotem-plparser.so	/usr/lib/libtotem-plparser.so
+# BuildDep:	/usr/lib/libwnck-1.so	/usr/lib/libwnck-1.so
+# BuildDep:	/usr/lib/libgtop-2.0.so	/usr/lib/libgtop-2.0.so
+# BuildDep:	/usr/lib/libbrasero-burn.so	/usr/lib/libbrasero-burn.so
+# BuildDep:	/usr/lib/librsvg-2.so	/usr/lib/librsvg-2.so
+# BuildDep:	/usr/lib/libgnome-keyring.so	/usr/lib/libgnome-keyring.so
+# Dep(post):	/usr/lib/libgnome-keyring.so	/usr/lib/libgnome-keyring.so
+# Dep(post):	/usr/lib/librsvg-2.so	/usr/lib/librsvg-2.so
+# Dep(post):	/usr/lib/libbrasero-burn.so	/usr/lib/libbrasero-burn.so
+# Dep(post):	/usr/lib/libgtop-2.0.so	/usr/lib/libgtop-2.0.so
+# Dep(post):	/usr/lib/libwnck-1.so	/usr/lib/libwnck-1.so
+# Dep(post):	/usr/lib/libtotem-plparser.so	/usr/lib/libtotem-plparser.so
+# Dep(post):	/usr/lib/python2.7/site-packages/gtk-2.0/gtk/_gtk.so	/usr/lib/python2.7/site-packages/gtk-2.0/gtk/_gtk.so
+
+nbuild() {
+./configure --prefix=/usr
+make
+}
+
+ninstall() {
+make install
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

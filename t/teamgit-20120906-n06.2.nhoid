@@ -1,0 +1,35 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	teamgit
+# Version:	20120906
+# Release:	n06.2
+# License:	GPLv2
+# Group:	Programming
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64 arm arm64 armel
+# Url:	http://www.devslashzero.com/teamgit
+# Description:	A visual git client tool.
+# MD5:	526dcace6b41e0df7e2d90488455c996  teamgit-20120906.tar.xz
+
+
+# BuildDep:	/usr/bin/git	/usr/bin/git
+# BuildDep:	/usr/lib/libQtCore.so	/usr/lib/libQtCore.so
+# Dep(post):	/usr/lib/libQtCore.so	/usr/lib/libQtCore.so
+# Dep(post):	/usr/bin/git	/usr/bin/git
+
+nbuild() {
+qmake teamgit.pro
+make
+}
+
+ninstall() {
+make install
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

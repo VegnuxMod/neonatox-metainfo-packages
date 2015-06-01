@@ -1,0 +1,37 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	geany
+# Version:	0.19.1
+# Release:	n06.2
+# License:	GPL
+# Group:	Programming
+# Arch:	i486 i586 i686 x86_64 mips mips64 mips64el ppc ppc64
+# Url:	http://www.geany.org
+# Description:	Geany is a Gtk2-based IDE that is not "tied" to a desktop environment like KDevelop (KDE) and Anjuta (GNOME). It only requires Gtk runtime libraries. Geany supports C, C++, Java, PHP, XML, HTML, Python, Perl, and Pascal.
+# MD5:	d2de3ca50bf31aaf29db86a4c0c04162  geany-0.19.1.tar.xz
+
+
+# BuildDep:	/usr/lib/libgtk-x11-2.0.so	/usr/lib/libgtk-x11-2.0.so
+# BuildDep:	/usr/lib/libvte.so	/usr/lib/libvte.so
+# Dep(post):	/usr/lib/libgtk-x11-2.0.so	/usr/lib/libgtk-x11-2.0.so
+# Dep(post):	/usr/lib/libvte.so	/usr/lib/libvte.so
+
+nbuild() {
+./configure --prefix=/usr --enable-the-force
+make
+}
+
+ninstall() {
+sed -i 's|MimeType=text/plain;|MimeType=|' geany.desktop
+sed -i 's|Sh=|Sh=*nhoid;*PKGBUILD;nhoid;|' data/filetype_extensions.conf
+make install
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

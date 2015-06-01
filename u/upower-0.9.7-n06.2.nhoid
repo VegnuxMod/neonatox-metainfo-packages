@@ -1,0 +1,42 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	upower
+# Version:	0.9.7
+# Release:	n06.2
+# License:	GPL
+# Group:	System
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64 arm arm64
+# Url:	http://upower.freedesktop.org
+# Description:	Abstraction for enumerating power devices, listening to device events and querying history and statistics.
+# MD5:	88d370c700d7b6bf650869bf2d12611e  upower-0.9.7.tar.xz
+
+
+# BuildDep:	/usr/lib/libgudev-1.0.so	/usr/lib/libgudev-1.0.so
+# BuildDep:	/usr/lib/libusb-1.0.so	/usr/lib/libusb-1.0.so
+# BuildDep:	/usr/lib/libpolkit-agent-1.so	/usr/lib/libpolkit-agent-1.so
+# BuildDep:	/usr/lib/libdbus-glib-1.so	/usr/lib/libdbus-glib-1.so
+# BuildDep:	/usr/bin/xmlto	/usr/bin/xmlto
+# Dep(post):	/usr/lib/libdbus-glib-1.so	/usr/lib/libdbus-glib-1.so
+# Dep(post):	/usr/lib/libpolkit-agent-1.so	/usr/lib/libpolkit-agent-1.so
+# Dep(post):	/usr/lib/libusb-1.0.so	/usr/lib/libusb-1.0.so
+# Dep(post):	/usr/lib/libgudev-1.0.so	/usr/lib/libgudev-1.0.so
+# Dep(post):	/usr/bin/xmlto	/usr/bin/xmlto
+
+nbuild() {
+./configure --prefix=/usr --sysconfdir=/etc --localstatedir=/var \
+--libexecdir=/usr/lib/upower --disable-static
+make
+}
+
+ninstall() {
+make install
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

@@ -1,0 +1,47 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	gegl
+# Version:	0.1.6
+# Release:	n06.2
+# License:	GPLv3 LGPLv3
+# Group:	Graphics Library
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64 arm arm64 armel
+# Url:	http://www.gegl.org/
+# Description:	Graph based image processing framework.
+# MD5:	a5ff56bfa385c61cd3a9db7846e6ebbf  gegl-0.1.6.tar.xz
+
+
+# BuildDep:	/usr/lib/libbabl-0.1.so	/usr/lib/libbabl-0.1.so
+# BuildDep:	/usr/lib/libpng.so	/usr/lib/libpng.so
+# BuildDep:	/usr/lib/libjpeg.so	/usr/lib/libjpeg.so
+# BuildDep:	/usr/lib/libgtk-x11-2.0.so	/usr/lib/libgtk-x11-2.0.so
+# BuildDep:	/usr/bin/ruby	/usr/bin/ruby
+# BuildDep:	/usr/bin/ffmpeg	/usr/bin/ffmpeg
+# BuildDep:	/usr/lib/librsvg-2.so	/usr/lib/librsvg-2.so
+# Dep(post):	/usr/lib/librsvg-2.so	/usr/lib/librsvg-2.so
+# Dep(post):	/usr/bin/ffmpeg	/usr/bin/ffmpeg
+# Dep(post):	/usr/lib/libIlmImf.so	/usr/lib/libIlmImf.so
+# Dep(post):	/usr/bin/ruby	/usr/bin/ruby
+# Dep(post):	/usr/lib/libgtk-x11-2.0.so	/usr/lib/libgtk-x11-2.0.so
+# Dep(post):	/usr/lib/libjpeg.so	/usr/lib/libjpeg.so
+# Dep(post):	/usr/lib/libpng.so	/usr/lib/libpng.so
+# Dep(post):	/usr/lib/libbabl-0.1.so	/usr/lib/libbabl-0.1.so
+
+nbuild() {
+./configure  --prefix=/usr  --with-sdl --with-openexr --with-librsvg \
+--with-libavformat --disable-docs
+make
+}
+
+ninstall() {
+make install
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

@@ -1,0 +1,35 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	python-setuptools
+# Version:	0.6c11
+# Release:	n06.2
+# License:	PSF
+# Group:	System
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64 arm arm64 armel
+# Url:	http://peak.telecommunity.com/DevCenter/setuptools
+# Description:	A collection of enhancements to the Python distutils.
+# MD5:	5321ef501601cf23f39589bfb78a2ccf  python-setuptools-0.6c11.tar.xz
+
+
+# BuildDep:	/usr/bin/python	/usr/bin/python
+# Dep(post):	/usr/bin/python	/usr/bin/python
+
+nbuild() {
+noemptyfuncs
+}
+
+ninstall() {
+pkgdir=/tmp/setuptools
+python setup.py install --root=${pkgdir} --prefix=/usr
+cp -r $pkgdir/* /
+rm -r $pkgdir
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

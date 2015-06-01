@@ -1,0 +1,33 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	libusb
+# Version:	0.1.12
+# Release:	n06.2
+# License:	LGPLv2.1
+# Group:	Core System
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64
+# Url:	http://libusb.sourceforge.net/
+# Description:	libusb is a library which allows userspace application access to USB devices.
+# MD5:	921a3b15850976cdbf4288cac7f1a574  libusb-0.1.12.tar.xz
+
+
+# BuildDep:	/usr/bin/pkg-config	/usr/bin/pkg-config
+# Dep(post):	/usr/bin/pkg-config	/usr/bin/pkg-config
+
+nbuild() {
+./configure --prefix=/usr --disable-build-docs &&
+make
+}
+
+ninstall() {
+make install
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

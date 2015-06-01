@@ -1,0 +1,39 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	popt
+# Version:	1.16
+# Release:	n06.2
+# License:	custom
+# Group:	Programming
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64 arm arm64
+# Url:	http://rpm5.org
+# Description:	A commandline option parser.
+# MD5:	c12527f713fded5e4fcba7d27eb20ba1  popt-1.16.tar.xz
+
+
+
+nbuild() {
+./configure --prefix=/usr
+make
+}
+
+ninstall() {
+pkgdir=/tmp/popt
+make DESTDIR="${pkgdir}" install
+install -Dm755 ${pkgdir}/usr/lib/libpopt.so.0.0.0 ${pkgdir}/lib/libpopt.so.0.0.0
+rm ${pkgdir}/usr/lib/libpopt.so*
+ln -sf /lib/libpopt.so ${pkgdir}/usr/lib/libpopt.so
+ln -sf libpopt.so.0 ${pkgdir}/lib/libpopt.so
+ln -sf libpopt.so.0.0.0 ${pkgdir}/lib/libpopt.so.0
+cp -r ${pkgdir}/* /
+rm -r ${pkgdir}
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

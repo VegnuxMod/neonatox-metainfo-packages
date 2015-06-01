@@ -1,0 +1,38 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sánchez <cargabsj175@gmail.com>
+
+# Name:	testdisk
+# Version:	6.11
+# Release:	n06.2
+# License:	GPL
+# Group:	Core System
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64
+# Url:	http://www.cgsecurity.org/index.html?testdisk.html
+# Description:	Checks and undeletes partitions + PhotoRec, signature based recovery tool.
+# MD5:	c4f6625a38938ea9ee8c6838672de970  testdisk-6.11.tar.xz
+
+
+# BuildDep:	/usr/lib/libjpeg.so	/usr/lib/libjpeg.so
+# BuildDep:	/usr/lib/libssl.so	/usr/lib/libssl.so
+# BuildDep:	/sbin/mkfs.reiserfs	/sbin/mkfs.reiserfs
+# BuildDep:	/usr/lib/libntfs.so	/usr/lib/libntfs.so
+# Dep(post):	/usr/lib/libntfs.so	/usr/lib/libntfs.so
+# Dep(post):	/sbin/mkfs.reiserfs	/sbin/mkfs.reiserfs
+# Dep(post):	/usr/lib/libssl.so	/usr/lib/libssl.so
+
+nbuild() {
+./configure --prefix=/usr --without-ewf
+make
+}
+
+ninstall() {
+make install
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

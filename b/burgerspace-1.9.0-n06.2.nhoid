@@ -1,0 +1,33 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	burgerspace
+# Version:	1.9.0
+# Release:	n06.2
+# License:	GPL
+# Group:	Games
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64 arm arm64 armel
+# Url:	http://perso.b2b2c.ca/sarrazip/dev/$pkgname.html
+# Description:	A clone of the 1982 BurgerTime video game by Data East.
+# MD5:	14cc186b81ae9f8f4bfcc6b2d7167252  burgerspace-1.9.0.tar.xz
+
+
+# BuildDep:	/usr/lib/libflatzebra-0.1.so	/usr/lib/libflatzebra-0.1.so
+# Dep(post):	/usr/lib/libflatzebra-0.1.so	/usr/lib/libflatzebra-0.1.so
+
+nbuild() {
+./autogen.sh --prefix=/usr
+make
+}
+
+ninstall() {
+make install
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

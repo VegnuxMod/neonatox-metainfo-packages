@@ -1,0 +1,44 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	attr
+# Version:	2.4.43
+# Release:	n06.2
+# License:	LGPLv2.1
+# Group:	Programming
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64
+# Url:	http://oss.sgi.com/projects/xfs/
+# Description:	Extended attributes tools.
+# MD5:	a076620afdadc20d798b380f36506272  attr-2.4.43.tar.xz
+
+
+
+nbuild() {
+sed -i Makefile \
+-e '/autoconf/d' \
+-e 's@default: $(CONFIGURE)@default:@' &&
+sed -i "/AC_OUTPUT/i\AC_PROG_LIBTOOL" configure.in &&
+cp -v install-sh{,.orig} &&
+libtoolize -f -i &&
+cp -vf install-sh{.orig,} &&
+aclocal -I m4 &&
+autoconf &&
+./configure --prefix=/ --exec-prefix=/ --sbindir=/sbin \
+--bindir=/usr/sbin --libdir=/lib --libexecdir=/usr/lib --includedir=/usr/include \
+--mandir=/usr/share/man --datadir=/usr/share &&
+make DEBUG=-DNDEBUG LIBTOOL="$PWD/libtool"
+}
+
+ninstall() {
+make LIBTOOL=$PWD/libtool install install-dev install-lib &&
+chmod 755 -v /lib/libattr.so.1.1.0
+#rm -v /lib/libattr.{,l}a
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

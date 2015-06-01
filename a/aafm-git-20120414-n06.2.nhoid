@@ -1,0 +1,39 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	aafm
+# Version:	git-20120414
+# Release:	n06.2
+# License:	GPLv3
+# Group:	Programming
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64 arm armel arm64
+# Url:	https://github.com/sole/aafm
+# Description:	Android ADB File Manager.
+# MD5:	1c6b05b46caa8e2bf832fd0fb3ab6747  aafm-git-20120414.tar.xz
+
+
+# BuildDep:	/usr/bin/python	/usr/bin/python
+# BuildDep:	/usr/lib/python2.7/site-packages/gtk-2.0/gtk/_gtk.so	/usr/lib/python2.7/site-packages/gtk-2.0/gtk/_gtk.so
+# BuildDep:	/usr/bin/adb	/usr/bin/adb
+# Dep(post):	/usr/bin/adb	/usr/bin/adb
+# Dep(post):	/usr/lib/python2.7/site-packages/gtk-2.0/gtk/_gtk.so	/usr/lib/python2.7/site-packages/gtk-2.0/gtk/_gtk.so
+# Dep(post):	/usr/bin/python	/usr/bin/python
+
+nbuild() {
+noemptyfuncs
+}
+
+ninstall() {
+pkgdir=/tmp/aafm
+python setup.py install --root="$pkgdir/" --optimize=1
+cp -r $pkgdir/* /
+rm -r $pkgdir
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

@@ -1,0 +1,39 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	openobex
+# Version:	1.5
+# Release:	n06.2
+# License:	GPL LGPL
+# Group:	System
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64 arm arm64 armel
+# Url:	http://dev.zuckschwerdt.org/openobex/
+# Description:	Implementation of the OBject EXchange (OBEX) protocol.
+# MD5:	a5b9975f3965bbe0dc6ccd2708010393  openobex-1.5.tar.xz
+
+
+# BuildDep:	/usr/lib/libbluetooth.so	/usr/lib/libbluetooth.so
+# BuildDep:	/usr/lib/libusb.so	/usr/lib/libusb.so
+# Dep(post):	/usr/lib/libusb.so	/usr/lib/libusb.so
+# Dep(post):	/usr/lib/libbluetooth.so	/usr/lib/libbluetooth.so
+
+nbuild() {
+./configure --prefix=/usr \
+--enable-apps \
+--enable-irda \
+--enable-bluetooth \
+--enable-usb
+make
+}
+
+ninstall() {
+make install
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

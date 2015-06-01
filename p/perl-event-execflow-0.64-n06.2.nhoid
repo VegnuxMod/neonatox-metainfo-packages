@@ -1,0 +1,37 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	perl-event-execflow
+# Version:	0.64
+# Release:	n06.2
+# License:	PerlArtistic
+# Group:	System
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64 arm arm64 armel
+# Url:	http://www.exit1.org/Event-ExecFlow
+# Description:	Framework for perl-events.
+# MD5:	2160dd5e47bf269319d09de0fae5d539  perl-event-execflow-0.64.tar.xz
+
+
+# BuildDep:	/usr/lib/perl5/vendor_perl/5.12.1/i686-linux/AnyEvent.pm	/usr/lib/perl5/vendor_perl/5.12.1/i686-linux/AnyEvent.pm
+# BuildDep:	/usr/lib/perl5/vendor_perl/5.12.1/i686-linux/auto/Locale/gettext_xs/gettext_xs.so	/usr/lib/perl5/vendor_perl/5.12.1/i686-linux/auto/Locale/gettext_xs/gettext_xs.so
+# BuildDep:	/usr/bin/perl	/usr/bin/perl
+# Dep(post):	/usr/bin/perl	/usr/bin/perl
+# Dep(post):	/usr/lib/perl5/vendor_perl/5.12.1/i686-linux/auto/Locale/gettext_xs/gettext_xs.so	/usr/lib/perl5/vendor_perl/5.12.1/i686-linux/auto/Locale/gettext_xs/gettext_xs.so
+# Dep(post):	/usr/lib/perl5/vendor_perl/5.12.1/i686-linux/AnyEvent.pm	/usr/lib/perl5/vendor_perl/5.12.1/i686-linux/AnyEvent.pm
+
+nbuild() {
+PERL_MM_USE_DEFAULT=1 perl Makefile.PL INSTALLDIRS=vendor
+make
+}
+
+ninstall() {
+make install
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

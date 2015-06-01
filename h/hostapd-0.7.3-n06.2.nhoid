@@ -1,0 +1,63 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	hostapd
+# Version:	0.7.3
+# Release:	n06.2
+# License:	custom
+# Group:	Networking
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64 arm armel arm64
+# Url:	http://hostap.epitest.fi/hostapd/
+# Description:	Daemon for wireless software access points.
+# MD5:	a12ba6574c81eb60019c579752a9c9e6  hostapd-0.7.3.tar.xz
+
+
+# BuildDep:	/usr/lib/libnl.so	/usr/lib/libnl.so
+# BuildDep:	/usr/lib/libssl.so	/usr/lib/libssl.so
+# Dep(post):	/usr/lib/libssl.so	/usr/lib/libssl.so
+# Dep(post):	/usr/lib/libnl.so	/usr/lib/libnl.so
+
+nbuild() {
+tar xf ../madwifi-0.9.4.4133.tar.bz2 -C .
+cp -r madwifi/* src
+cd hostapd
+cp ../../config ./.config
+sed -i "s|/usr|$srcdir/madwifi|" .config
+sed -i "s|/usr/local/bin|$pkgdir/usr/bin|" Makefile
+pkgdir=/tmp/hostapd
+mkdir -p $pkgdir/usr/bin $pkgdir/etc/hostapd $pkgdir/etc/rc.d/init.d
+make
+}
+
+ninstall() {
+pkgdir=/tmp/hostapd
+cd hostapd
+make install
+list="hlr_auc_gw.milenage_db hostapd.accept hostapd.conf hostapd.deny hostapd.eap_user hostapd.radius_clients hostapd.sim_db hostapd.vlan hostapd.wpa_psk wired.conf"
+for copy in $list; do
+cp  $copy $pkgdir/etc/hostapd/$copy
+done
+cp hostapd.8 /usr/share/man/man8
+cp hostapd_cli.1 /usr/share/man/man1
+cp ../../hostapd $pkgdir/etc/rc.d/init.d
+ln -sf  ../init.d/hostapd /etc/rc.d/rc0.d/K82hostapd
+ln -sf  ../init.d/hostapd /etc/rc.d/rc1.d/K82hostapd
+ln -sf  ../init.d/hostapd /etc/rc.d/rc2.d/K82hostapd
+ln -sf  ../init.d/hostapd /etc/rc.d/rc3.d/S82hostapd
+ln -sf  ../init.d/hostapd /etc/rc.d/rc4.d/S82hostapd
+ln -sf  ../init.d/hostapd /etc/rc.d/rc5.d/S82hostapd
+ln -sf  ../init.d/hostapd /etc/rc.d/rc6.d/K82hostapd
+mkdir -p $pkgdir/etc/conf.d
+cp ../../hostapd.conf.d $pkgdir/etc/conf.d/hostapd
+sed -i 's#/etc/hostapd#/etc/hostapd/hostapd#' $pkgdir/etc/hostapd/hostapd.conf
+cp -r $pkgdir/* /
+rm -r $pkgdir/
+}
+
+npostinstall() {
+/etc/rc.d/init.d/hostapd start
+}
+
+npostremove() {
+rm -r /etc/rc.d/rc{0,1,2,3,4,5,6}.d/*hostapd
+}

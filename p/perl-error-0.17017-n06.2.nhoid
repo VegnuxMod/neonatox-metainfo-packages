@@ -1,0 +1,33 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	perl-error
+# Version:	0.17017
+# Release:	n06.2
+# License:	GPL
+# Group:	Programming
+# Arch:	any
+# Url:	http://search.cpan.org/dist/Error
+# Description:	Perl/CPAN Error module - Error/exception handling in an OO-ish way.
+# MD5:	3f8503c5880562aff1d7d2193c8ab9b5  perl-error-0.17017.tar.xz
+
+
+# BuildDep:	/usr/bin/perl	/usr/bin/perl
+# Dep(post):	/usr/bin/perl	/usr/bin/perl
+
+nbuild() {
+perl Makefile.PL INSTALLDIRS=vendor
+make
+}
+
+ninstall() {
+make install
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

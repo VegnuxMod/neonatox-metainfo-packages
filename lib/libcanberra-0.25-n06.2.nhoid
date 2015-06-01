@@ -1,0 +1,52 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sánchez <cargabsj175@gmail.com>
+
+# Name:	libcanberra
+# Version:	0.25
+# Release:	n06.2
+# License:	LGPL
+# Group:	Multimedia
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64
+# Url:	http://0pointer.de/lennart/projects/libcanberra
+# Description:	A small and lightweight implementation of the XDG Sound Theme Specification.
+# MD5:	434b9342c7c1849c2247dd9f3c74c51e  libcanberra-0.25.tar.xz
+
+
+# BuildDep:	/usr/lib/libvorbis.so	/usr/lib/libvorbis.so
+# BuildDep:	/usr/lib/pkgconfig/gstreamer-0.10.pc	/usr/lib/pkgconfig/gstreamer-0.10.pc
+# BuildDep:	/usr/lib/libgtk-x11-2.0.so	/usr/lib/libgtk-x11-2.0.so
+# BuildDep:	/usr/lib/libasound.so	/usr/lib/libasound.so
+# BuildDep:	/usr/lib/libtdb.so	/usr/lib/libtdb.so
+# Dep(post):	/usr/lib/libvorbis.so	/usr/lib/libvorbis.so
+# Dep(post):	/usr/lib/pkgconfig/gstreamer-0.10.pc	/usr/lib/pkgconfig/gstreamer-0.10.pc
+# Dep(post):	/usr/lib/libgtk-x11-2.0.so	/usr/lib/libgtk-x11-2.0.so
+# Dep(post):	/usr/lib/libasound.so	/usr/lib/libasound.so
+# Dep(post):	/usr/lib/libtdb.so	/usr/lib/libtdb.so
+
+nbuild() {
+./configure --sysconfdir=/etc --prefix=/usr --localstatedir=/var \
+--disable-static \
+--enable-alsa --enable-null --enable-gstreamer --disable-oss \
+--with-builtin=dso
+make
+}
+
+ninstall() {
+make -j1 DESTDIR="/tmp/libcanberra" install
+rm -f "/tmp/libcanberra/usr/lib/libcanberra-gtk.la"
+rm -f "/tmp/libcanberra/usr/lib/gtk-2.0/modules/"*.la
+install -m755 -d "/tmp/libcanberra/usr/share/gconf"
+mv "/tmp/libcanberra/etc/gconf/schemas" "/tmp/libcanberra/usr/share/gconf/"
+install -m755 -d "/tmp/libcanberra/etc/X11/xinit/xinitrc.d"
+install -m755 "../libcanberra-gtk-module.sh" "/tmp/libcanberra/etc/X11/xinit/xinitrc.d/40-libcanberra-gtk-module"
+cp -r /tmp/libcanberra/* /
+rm -r /tmp/libcanberra
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

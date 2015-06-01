@@ -1,0 +1,32 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	abootimg
+# Version:	git20130428
+# Release:	n06.2
+# License:	GPL
+# Group:	System
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64 arm arm64 armel
+# Url:	http://gitorious.org/ac100/abootimg
+# Description:	A tool to read/write/update android boot images.
+# MD5:	a3380b4a32def64c558e0fb0d716f2e9  abootimg-git20130428.tar.xz
+
+# Dep(post):	/bin/cpio	/bin/cpio
+
+nbuild() {
+make
+gzip debian/abootimg.1
+}
+
+ninstall() {
+install -t "$pkgdir/usr/bin" abootimg abootimg-pack-initrd abootimg-unpack-initrd
+install -t "$pkgdir/usr/share/man/man1/" debian/abootimg.1.gz
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

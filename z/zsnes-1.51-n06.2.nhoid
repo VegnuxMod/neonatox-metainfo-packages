@@ -1,0 +1,45 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <carlos@lugma.org.ve>
+
+# Name:	zsnes
+# Version:	1.51
+# Release:	n06.2
+# License:	GPL
+# Group:	Games
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64 arm arm64 armel
+# Url:	http://www.zsnes.com/
+# Description:	A Super Nintendo emulator.
+# MD5:	f32b2d28e165eeacbe1fd0897229ea96  zsnes-1.51.tar.xz
+
+
+# BuildDep:	/usr/lib/libGL.so	/usr/lib/libGL.so
+# BuildDep:	/usr/lib/libpng.so	/usr/lib/libpng.so
+# BuildDep:	/usr/lib/libncurses.so.5	/usr/lib/libncurses.so.5
+# BuildDep:	/usr/lib/libSDL.so	/usr/lib/libSDL.so
+# BuildDep:	/usr/bin/nasm	/usr/bin/nasm
+# Dep(post):	/usr/lib/libSDL.so	/usr/lib/libSDL.so
+# Dep(post):	/usr/lib/libncurses.so.5	/usr/lib/libncurses.so.5
+# Dep(post):	/usr/lib/libpng.so	/usr/lib/libpng.so
+# Dep(post):	/usr/lib/libGL.so	/usr/lib/libGL.so
+
+nbuild() {
+cd src
+patch -Np2 -i ../../zsnes.patch
+./autogen.sh --prefix=/usr x_libraries=/usr/lib force_arch=i686 --enable-release
+make
+}
+
+ninstall() {
+cd src
+make install
+install -Dm644 ../../zsnes.desktop /usr/share/applications/zsnes.desktop
+install -Dm644 ../../zsnes_icon.png /usr/share/pixmaps/zsnes_icon.png
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

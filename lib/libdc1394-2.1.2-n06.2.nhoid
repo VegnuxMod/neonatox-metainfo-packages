@@ -1,0 +1,33 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	libdc1394
+# Version:	2.1.2
+# Release:	n06.2
+# License:	LGPLv2.1
+# Group:	Multimedia
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64 arm arm64
+# Url:	http://sourceforge.net/projects/libdc1394/
+# Description:	Library to interface with IEEE 1394 cameras following the IIDC specification.
+# MD5:	20f3e82136137156ed84bb76d49dab34  libdc1394-2.1.2.tar.xz
+
+
+# BuildDep:	/usr/lib/libraw1394.so	/usr/lib/libraw1394.so
+# Dep(post):	/usr/lib/libraw1394.so	/usr/lib/libraw1394.so
+
+nbuild() {
+./configure --prefix=/usr
+make
+}
+
+ninstall() {
+make install
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

@@ -1,0 +1,38 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	xcursorgen
+# Version:	1.0.4
+# Release:	n06.2
+# License:	X11 license
+# Group:	X Window System
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64 arm arm64
+# Url:	http://www.x.org/wiki
+# Description:	create an X cursor file from PNG images.
+# MD5:	7f674ad79894ad0248d3734b81325ed0  xcursorgen-1.0.4.tar.xz
+
+
+# BuildDep:	/usr/lib/libX11.so	/usr/lib/libX11.so
+# BuildDep:	/usr/lib/libXcursor.so	/usr/lib/libXcursor.so
+# BuildDep:	/usr/lib/libpng.so	/usr/lib/libpng.so
+# Dep(post):	/usr/lib/libpng.so	/usr/lib/libpng.so
+# Dep(post):	/usr/lib/libXcursor.so	/usr/lib/libXcursor.so
+# Dep(post):	/usr/lib/libX11.so	/usr/lib/libX11.so
+
+nbuild() {
+patch -Np1 -i "../xcursorgen-1.0.3_libpng14.patch"
+./configure --prefix=/usr --sysconfdir=/etc --mandir=/usr/share/man --localstatedir=/var
+make
+}
+
+ninstall() {
+make install
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

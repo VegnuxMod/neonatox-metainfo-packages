@@ -1,0 +1,40 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	ttf-linux-libertine
+# Version:	5.3.0
+# Release:	n06.2
+# License:	GPL
+# Group:	font
+# Arch:	any
+# Url:	http://linuxlibertine.sourceforge.net/
+# Description:	Serif (Libertine) and Sans Serif (Biolinum) OpenType fonts with large Unicode coverage.
+# MD5:	7e7e6ffd3463d8b82153a5860b4fe411  ttf-linux-libertine-5.3.0.tar.xz
+
+# BuildDep:	/usr/lib/libfontconfig.so	/usr/lib/libfontconfig.so
+# Dep(post):	/usr/lib/libfontconfig.so	/usr/lib/libfontconfig.so
+
+nbuild() {
+noemptyfuncs
+}
+
+ninstall() {
+pkgdir=/tmp/font-ttf
+install -dm755 "${pkgdir}"/usr/share/fonts/{OTF,TTF}
+install -m644 *.ttf "${pkgdir}"/usr/share/fonts/TTF
+install -m644 *.otf "${pkgdir}"/usr/share/fonts/OTF
+cp -r ${pkgdir}/* /
+rm -r ${pkgdir}
+}
+
+npostinstall() {
+fc-cache -s -f > /dev/null
+mkfontscale /usr/share/fonts/TTF
+mkfontdir /usr/share/fonts/TTF
+mkfontscale /usr/share/fonts/OTF
+mkfontdir /usr/share/fonts/OTF
+}
+
+npostremove() {
+noemptyfuncs
+}

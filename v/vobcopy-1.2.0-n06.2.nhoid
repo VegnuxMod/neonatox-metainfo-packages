@@ -1,0 +1,34 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	vobcopy
+# Version:	1.2.0
+# Release:	n06.2
+# License:	GPLv2
+# Group:	Multimedia
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64 arm arm64 armel
+# Url:	http://www.vobcopy.org
+# Description:	Copies DVD .vob files to harddisk, decrypting them on the way.
+# MD5:	23e9643756e325e8f4e03c92b50bacda  vobcopy-1.2.0.tar.xz
+
+
+# BuildDep:	/usr/lib/libdvdread.so	/usr/lib/libdvdread.so
+# BuildDep:	/usr/lib/libdvdcss.so	/usr/lib/libdvdcss.so
+# Dep(post):	/usr/lib/libdvdcss.so	/usr/lib/libdvdcss.so
+# Dep(post):	/usr/lib/libdvdread.so	/usr/lib/libdvdread.so
+
+nbuild() {
+make
+}
+
+ninstall() {
+make PREFIX=/usr/ MANDIR=/usr/share/man install
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

@@ -1,0 +1,30 @@
+#%NHO-0.5
+# Package Maintainer:	Víctor Fernández Rico <vfrico@gmail.com>
+
+# Name:	gnhoi
+# Version:	0.2.1
+# Release:	3a
+# License:	GPLv3
+# Group:	Utility
+# Arch:	i686 x86_64
+# Url:	http://gnhoi.sf.net
+# Description:	UI for install nho packages
+# MD5:	7e3ad73f89f1332a951dae42922371fb  gnhoi-0.2.1.tar.xz
+
+
+
+nbuild() {
+noemptyfuncs
+}
+
+ninstall() {
+sudo python setup.py install
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

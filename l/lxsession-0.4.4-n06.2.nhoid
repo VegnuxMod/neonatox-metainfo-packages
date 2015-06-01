@@ -1,0 +1,35 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sánchez <cargabsj175@gmail.com>
+
+# Name:	lxsession
+# Version:	0.4.4
+# Release:	n06.2
+# License:	GPLv2
+# Group:	LXDE Desktop
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64
+# Url:	http://lxde.org/
+# Description:	Session manager of the LXDE Desktop.
+# MD5:	fba48a3a71451819aebbf41c1dcb2b67  lxsession-0.4.4.tar.xz
+
+
+# BuildDep:	/usr/lib/libgtk-x11-2.0.so	/usr/lib/libgtk-x11-2.0.so
+# BuildDep:	/usr/lib/libdbus-1.so	/usr/lib/libdbus-1.so
+# Dep(post):	/usr/lib/libdbus-1.so	/usr/lib/libdbus-1.so
+# Dep(post):	/usr/lib/libgtk-x11-2.0.so	/usr/lib/libgtk-x11-2.0.so
+
+nbuild() {
+./configure --sysconfdir=/etc --prefix=/usr
+make
+}
+
+ninstall() {
+make install
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

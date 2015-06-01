@@ -1,0 +1,37 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	libshout
+# Version:	2.2.2
+# Release:	n06.2
+# License:	LGPLv2.1
+# Group:	Multimedia
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64
+# Url:	http://www.icecast.org/
+# Description:	Libshout allows applications to easily communicate and broadcast to an Icecast streaming media server. It handles the socket connections, metadata communication, and data streaming for the calling application, and lets developers focus on feature sets instead of implementation details.
+# MD5:	a077dc3b269d25af45b8d57196b0df2f  libshout-2.2.2.tar.xz
+
+
+# BuildDep:	/usr/lib/libvorbis.so	/usr/lib/libvorbis.so
+# BuildDep:	/usr/bin/pkg-config	/usr/bin/pkg-config
+# OptionalBuildDep:	/usr/lib/libtheora.so	/usr/lib/libtheora.so
+# Dep(post):	/usr/lib/libvorbis.so	/usr/lib/libvorbis.so
+# Dep(post):	/usr/bin/pkg-config	/usr/bin/pkg-config
+# OptionalDep(post):	/usr/lib/libtheora.so	/usr/lib/libtheora.so
+
+nbuild() {
+./configure --prefix=/usr
+make
+}
+
+ninstall() {
+make install
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

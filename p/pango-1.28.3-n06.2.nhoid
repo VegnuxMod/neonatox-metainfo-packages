@@ -1,0 +1,48 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	pango
+# Version:	1.28.3
+# Release:	n06.2
+# License:	GPLv2
+# Group:	Graphics
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64
+# Url:	http://www.pango.org/
+# Description:	Pango is a library for laying out and rendering of text, with an emphasis on internationalization. Pango can be used anywhere that text layout is needed, though most of the work on Pango so far has been done in the context of the GTK+ widget toolkit. Pango forms the core of text and font handling for Gtk2.
+# MD5:	ae38fbb60f9465b84e29c7f3ee7b2391  pango-1.28.3.tar.xz
+
+
+# BuildDep:	/usr/lib/libglib-2.0.so	/usr/lib/libglib-2.0.so
+# BuildDep:	/usr/lib/libcairo.so	/usr/lib/libcairo.so
+# BuildDep:	/usr/lib/libXft.so	/usr/lib/libXft.so
+# BuildDep:	/usr/lib/libthai.so	/usr/lib/libthai.so
+# BuildDep:	/usr/lib/libXt.so	/usr/lib/libXt.so
+# BuildDep:	/usr/lib/libfreetype.so	/usr/lib/libfreetype.so
+# BuildDep:	/usr/lib/libgirepository-1.0.so	/usr/lib/libgirepository-1.0.so
+# Dep(post):	/usr/lib/libglib-2.0.so	/usr/lib/libglib-2.0.so
+# Dep(post):	/usr/lib/libcairo.so	/usr/lib/libcairo.so
+# Dep(post):	/usr/lib/libXft.so	/usr/lib/libXft.so
+# Dep(post):	/usr/lib/libthai.so	/usr/lib/libthai.so
+# Dep(post):	/usr/lib/libXt.so	/usr/lib/libXt.so
+# Dep(post):	/usr/lib/libfreetype.so	/usr/lib/libfreetype.so
+# Dep(post):	/usr/lib/libgirepository-1.0.so	/usr/lib/libgirepository-1.0.so
+
+
+
+
+nbuild() {
+./configure --prefix=/usr --sysconfdir=/etc --localstatedir=/var --with-included-modules=basic-fc
+make
+}
+
+ninstall() {
+make install
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

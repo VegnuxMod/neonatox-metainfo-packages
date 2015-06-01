@@ -1,0 +1,32 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sánchez <cargabsj175@gmail.com>
+
+# Name:	openjpeg
+# Version:	1.3
+# Release:	n06.2
+# License:	BSD
+# Group:	Graphic Library
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64
+# Url:	http://www.openjpeg.org
+# Description:	An open source JPEG 2000 codec.
+# MD5:	e7f62a020ec02c25b3063a6ff9908b33  openjpeg-1.3.tar.xz
+
+
+
+nbuild() {
+patch -Np1 -i ../30_fix_build_for_debian.dpatch
+make
+}
+
+ninstall() {
+make install
+ln -s libopenjpeg.so.2 /usr/lib/libopenjpeg.so
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

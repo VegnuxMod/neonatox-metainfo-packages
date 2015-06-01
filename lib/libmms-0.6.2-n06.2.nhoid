@@ -1,0 +1,31 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	libmms
+# Version:	0.6.2
+# Release:	n06.2
+# License:	LGPL
+# Group:	Multimedia
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64 arm arm64
+# Url:	http://sourceforge.net/projects/libmms/
+# Description:	MMS stream protocol library.
+# MD5:	94f2a69ad57f19694c9944ec3f842692  libmms-0.6.2.tar.xz
+
+
+
+nbuild() {
+./configure --prefix=/usr --disable-static
+make
+}
+
+ninstall() {
+make install
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

@@ -1,0 +1,37 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	xf86-video-s3
+# Version:	0.6.3
+# Release:	n06.2.1
+# License:	X11 license
+# Group:	X Window System
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64 arm arm64
+# Url:	http://www.x.org/wiki/
+# Description:	xf86-video-s3 Xorg driver.
+# MD5:	75410acdad90f1b929baeb6b5acadfe5  xf86-video-s3-0.6.3.tar.xz
+
+
+# BuildDep:	/usr/bin/X	/usr/bin/X
+# Dep(post):	/usr/bin/X	/usr/bin/X
+
+nbuild() {
+for file in `grep -Rl "xf86Version.h" *`
+    do
+        sed 's@xf86Version.h@xorgVersion.h@g' -i "$file"
+    done
+./configure --prefix=/usr --sysconfdir=/etc --mandir=/usr/share/man --localstatedir=/var --with-xorg-module-dir=/usr/lib/X11/modules
+make
+}
+
+ninstall() {
+make install
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

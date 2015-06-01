@@ -1,0 +1,41 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175vgmail.com>
+
+# Name:	pychess
+# Version:	0.10rc1
+# Release:	n06.2
+# License:	GPL
+# Group:	Games
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64 arm arm64
+# Url:	http://pychess.googlepages.com/
+# Description:	Chess client for the GNOME desktop.
+# MD5:	ce896997cf415354ec2e01b40d8bc6c6  pychess-0.10rc1.tar.xz
+
+
+# BuildDep:	/usr/share/icons/hicolor/index.theme	/usr/share/icons/hicolor/index.theme
+# BuildDep:	/usr/lib/python2.7/site-packages/gtk-2.0/rsvg.so	/usr/lib/python2.7/site-packages/gtk-2.0/rsvg.so
+# BuildDep:	/usr/lib/python2.7/site-packages/gtksourceview2.so	/usr/lib/python2.7/site-packages/gtksourceview2.so
+# BuildDep:	/usr/lib/python2.7/site-packages/gstoption.so	/usr/lib/python2.7/site-packages/gstoption.so
+# Dep(post):	/usr/lib/python2.7/site-packages/gstoption.so	/usr/lib/python2.7/site-packages/gstoption.so
+# Dep(post):	/usr/lib/python2.7/site-packages/gtksourceview2.so	/usr/lib/python2.7/site-packages/gtksourceview2.so
+# Dep(post):	/usr/lib/python2.7/site-packages/gtk-2.0/rsvg.so	/usr/lib/python2.7/site-packages/gtk-2.0/rsvg.so
+# Dep(post):	/usr/share/icons/hicolor/index.theme	/usr/share/icons/hicolor/index.theme
+
+nbuild() {
+noemptyfuncs
+}
+
+ninstall() {
+pkgdir=/tmp/pychess
+python setup.py install --prefix=/usr --root=$pkgdir
+cp -r $pkgdir/* /
+rm -r $pkgdir
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

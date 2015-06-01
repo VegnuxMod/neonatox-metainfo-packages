@@ -1,0 +1,42 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	ruby-gdkpixbuf2
+# Version:	0.90.8
+# Release:	n06.2
+# License:	LGPL
+# Group:	Programming
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64 arm arm64
+# Url:	http://ruby-gnome2.sourceforge.jp
+# Description:	Ruby bindings for gdkpixbuf2.
+# MD5:	ea5b856251486a7373f93499ea07d4d8  ruby-gdkpixbuf2-0.90.8.tar.xz
+
+
+# BuildDep:	/usr/lib/libgtk-x11-2.0.so	/usr/lib/libgtk-x11-2.0.so
+# BuildDep:	/usr/lib/ruby/site_ruby/1.9.1/i686-linux/glib2.so	/usr/lib/ruby/site_ruby/1.9.1/i686-linux/glib2.so
+# BuildDep:	/usr/lib/ruby/gems/1.9.1/cache/pkg-config-1.0.7.gem	/usr/lib/ruby/gems/1.9.1/cache/pkg-config-1.0.7.gem
+# Dep(post):	/usr/lib/ruby/gems/1.9.1/cache/pkg-config-1.0.7.gem	/usr/lib/ruby/gems/1.9.1/cache/pkg-config-1.0.7.gem
+# Dep(post):	/usr/lib/ruby/site_ruby/1.9.1/i686-linux/glib2.so	/usr/lib/ruby/site_ruby/1.9.1/i686-linux/glib2.so
+# Dep(post):	/usr/lib/libgtk-x11-2.0.so	/usr/lib/libgtk-x11-2.0.so
+
+nbuild() {
+pkgdir=/tmp/rgdk
+ruby extconf.rb gdk_pixbuf2 --topdir=$pkgdir
+make
+}
+
+ninstall() {
+pkgdir=/tmp/rgdk
+mkdir -p $pkgdir/usr/lib/pkgconfig
+make DESTDIR="$pkgdir" install
+cp -r $pkgdir/* /
+rm -r $pkgdir
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

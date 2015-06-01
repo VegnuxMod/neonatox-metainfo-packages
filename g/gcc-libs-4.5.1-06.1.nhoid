@@ -1,0 +1,54 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	gcc-libs
+# Version:	4.5.1
+# Release:	n06.2
+# License:	GPLv3
+# Group:	Programming
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64 arm arm64 armel
+# Url:	http://gcc.gnu.org
+# Description:	Runtime libraries shipped by GCC.
+# MD5:	df5553ce9d4c2f25b315990f33c4dc4d  gcc-libs-4.5.1.tar.xz
+
+
+
+nbuild() {
+./build.gcc-libs
+}
+
+ninstall() {
+_basedir=/usr/src/nhopkg/gcc-4.5.1
+pkgver="4.5.1"
+CHOST=$(uname -m)-pc-linux-gnu
+pkgdir="/tmp/gcc-libs"
+make -j1 -C ${CHOST}/libgcc DESTDIR=${pkgdir} install-shared
+for lib in libmudflap libgomp libstdc++-v3/src libitm; do
+make -j1 -C ${CHOST}/$lib DESTDIR=${pkgdir} install-toolexeclibLTLIBRARIES
+done
+make -j1 -C ${CHOST}/libstdc++-v3/po DESTDIR=${pkgdir} install
+make -j1 -C ${CHOST}/libgomp DESTDIR=${pkgdir} install-info
+make -j1 -C ${CHOST}/libitm DESTDIR=${pkgdir} install-info
+make -j1 DESTDIR=${pkgdir} install-target-libquadmath  
+make -j1 DESTDIR=${pkgdir} install-target-libgfortran
+make -j1 DESTDIR=${pkgdir} install-target-libobjc
+# remove unnecessary files installed by install-target-{libquadmath,libgfortran,libobjc}
+rm -r ${pkgdir}/usr/lib/{gcc/,libgfortran.spec}
+# remove static libraries
+find ${pkgdir} -name *.a -delete
+# Install Runtime Library Exception
+install -Dm644 ${_basedir}/COPYING.RUNTIME ${pkgdir}/usr/share/licenses/gcc-libs/RUNTIME.LIBRARY.EXCEPTION
+cp -r ${pkgdir}/* /
+rm -r ${pkgdir}
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}
+
+
+

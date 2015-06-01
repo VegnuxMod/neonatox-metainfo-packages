@@ -1,0 +1,32 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	iw
+# Version:	0.9.20
+# Release:	n06.2
+# License:	GPL
+# Group:	Networking
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64 arm arm64
+# Url:	http://wireless.kernel.org/en/users/Documentation/iw
+# Description:	nl80211 based CLI configuration utility for wireless devices.
+# MD5:	66c4d0dc49612db5b580dfd05c6b7da5  iw-0.9.20.tar.xz
+
+
+# BuildDep:	/usr/lib/libnl.so	/usr/lib/libnl.so
+# Dep(post):	/usr/lib/libnl.so	/usr/lib/libnl.so
+
+nbuild() {
+make
+}
+
+ninstall() {
+make install
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

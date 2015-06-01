@@ -1,0 +1,31 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	libidn
+# Version:	1.19
+# Release:	n06.2
+# License:	GPLv3 LGPL
+# Group:	Programming
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64 arm arm64
+# Url:	http://www.gnu.org/software/libidn/
+# Description:	Implementation of the Stringprep, Punycode and IDNA specifications.
+# MD5:	a66a0ec3997aba9d4a9b2fa4b5a731a1  libidn-1.19.tar.xz
+
+
+
+nbuild() {
+./configure --prefix=/usr
+make
+}
+
+ninstall() {
+make install
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

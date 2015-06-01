@@ -1,0 +1,36 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	libmikmod
+# Version:	3.1.12
+# Release:	n06.2
+# License:	GPL LGPL
+# Group:	Multimedia
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64 arm arm64 armel
+# Url:	http://sourceforge.net/projects/mikmod/
+# Description:	A portable sound library.
+# MD5:	360c983eb9f3acb8fe9b1fcb4c18b173  libmikmod-3.1.12.tar.xz
+
+
+
+nbuild() {
+patch -Np1 -i ../libmikmod-3.1.12-64bit-fix.diff
+patch -Np1 -i ../libmikmod-3.1.12-exitcrash-fix.diff
+patch -Np1 -i ../libmikmod-3.1.12-loopingvolume-fix.diff
+patch -Np1 -i ../libmikmod-3.1.12-md_sngchn-fix.diff
+patch -Np1 -i ../libmikmod-CVE-2009-0179.patch
+./configure --prefix=/usr --mandir=/usr/share/man --infodir=/usr/share/info
+make
+}
+
+ninstall() {
+make install
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

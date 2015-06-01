@@ -1,0 +1,55 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	gpm
+# Version:	1.20.6
+# Release:	n06.2
+# License:	GPL
+# Group:	System
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64 arm arm64 armel
+# Url:	http://www.nico.schottelius.org/software/gpm
+# Description:	A mouse server for the console and xterm.
+# MD5:	78d9784bd55566cd501bdc80eeb28750  gpm-1.20.6.tar.xz
+
+
+# BuildDep:	/usr/lib/libncurses.so	/usr/lib/libncurses.so
+# BuildDep:	/bin/bash	/bin/bash
+# Dep(post):	/bin/bash	/bin/bash
+# Dep(post):	/usr/lib/libncurses.so	/usr/lib/libncurses.so
+
+nbuild() {
+./configure --prefix=/usr --sysconfdir=/etc
+make
+}
+
+ninstall() {
+pkgdir=/tmp/gpm
+make DESTDIR="${pkgdir}" install
+install -D -m755 ../gpm "${pkgdir}/etc/rc.d/init.d/gpm"
+mkdir -p ${pkgdir}/etc/rc.d/rc{0,1,2,3,4,5,6}.d
+ln -sf  ../init.d/gpm ${pkgdir}/etc/rc.d/rc0.d/K10gpm
+ln -sf  ../init.d/gpm ${pkgdir}/etc/rc.d/rc1.d/K10gpm
+ln -sf  ../init.d/gpm ${pkgdir}/etc/rc.d/rc2.d/S70gpm
+ln -sf  ../init.d/gpm ${pkgdir}/etc/rc.d/rc3.d/S70gpm
+ln -sf  ../init.d/gpm ${pkgdir}/etc/rc.d/rc4.d/S70gpm
+ln -sf  ../init.d/gpm ${pkgdir}/etc/rc.d/rc5.d/S70gpm
+ln -sf  ../init.d/gpm ${pkgdir}/etc/rc.d/rc6.d/K10gpm
+install -D -m644 ../gpm.conf.d "${pkgdir}/etc/conf.d/gpm"
+install -D -m755 ../gpm.sh "${pkgdir}/etc/profile.d/gpm.sh"
+install -D -m644 ../gpm.service "${pkgdir}/usr/lib/systemd/system/gpm.service"
+mkdir -p ${pkgdir}/etc/sysconfig/
+install -D -m644 ../mouse "${pkgdir}/etc/sysconfig/"
+cd "${pkgdir}/usr/lib/"
+ln -s libgpm.so.2.* libgpm.so
+chmod 755 "${pkgdir}"/usr/lib/libgpm.so.*
+cp -r ${pkgdir}/* /
+rm -r ${pkgdir}
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

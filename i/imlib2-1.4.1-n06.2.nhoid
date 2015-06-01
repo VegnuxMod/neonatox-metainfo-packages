@@ -1,0 +1,42 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	imlib2
+# Version:	1.4.1
+# Release:	n06.2
+# License:	LGPLv2.1
+# Group:	Graphic Library
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64
+# Url:	http://www.enlightenment.org
+# Description:	A library that does image file loading and saving as well as rendering, manipulation, arbitrary polygon support, etc.
+# MD5:	e959f24d567044dd9e671f588d36d51c  imlib2-1.4.1.tar.xz
+
+
+# BuildDep:	/usr/lib/libfreetype.so	/usr/lib/libfreetype.so
+# BuildDep:	/usr/lib/libpng.so	/usr/lib/libpng.so
+# BuildDep:	/usr/lib/libjpeg.so	/usr/lib/libjpeg.so
+# Dep(post):	/usr/lib/libfreetype.so	/usr/lib/libfreetype.so
+# Dep(post):	/usr/lib/libpng.so	/usr/lib/libpng.so
+# Dep(post):	/usr/lib/libjpeg.so	/usr/lib/libjpeg.so
+# OptionalDep(post):	/usr/lib/libX11.so	/usr/lib/libX11.so
+
+nbuild() {
+CPPFLAGS="-I/usr/include" \
+./configure --prefix=/usr
+make
+}
+
+ninstall() {
+make install
+install -v -m755 -d /usr/share/doc/imlib2-1.4.1
+install -v -m644 doc/{*.gif,index.html} \
+/usr/share/doc/imlib2-1.4.1
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

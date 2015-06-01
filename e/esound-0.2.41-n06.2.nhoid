@@ -1,0 +1,36 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	esound
+# Version:	0.2.41
+# Release:	n06.2
+# License:	GPLv2
+# Group:	Multimedia
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64
+# Url:	http://www.tux.org/~ricdude/EsounD.html
+# Description:	The EsounD package contains the Enlightened Sound Daemon. This is useful for mixing together several digitized audio streams for playback by a single device.
+# MD5:	4975afed210e8bdb8c04f621abddbdd6  esound-0.2.41.tar.xz
+
+
+# BuildDep:	/usr/lib/libaudiofile.so	/usr/lib/libaudiofile.so
+# OptionalBuildDep:	/usr/lib/libasound.so	/usr/lib/libasound.so
+# Dep(post):	/usr/lib/libaudiofile.so	/usr/lib/libaudiofile.so
+# OptionalDep(post):	/usr/lib/libasound.so	/usr/lib/libasound.so
+
+nbuild() {
+sed -i 's@doc/esound@&-0.2.41@' configure &&
+./configure --prefix=/usr --sysconfdir=/etc &&
+make
+}
+
+ninstall() {
+make install
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

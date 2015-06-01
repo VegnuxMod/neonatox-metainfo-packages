@@ -1,0 +1,33 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	leafpad
+# Version:	0.8.17
+# Release:	n06.2
+# License:	GPL
+# Group:	LXDE Desktop
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64
+# Url:	http://tarot.freeshell.org/leafpad/
+# Description:	A notepad clone for GTK+ 2.0.
+# MD5:	cd7b0c4521e204970e370295ad095534  leafpad-0.8.17.tar.xz
+
+
+# BuildDep:	/usr/lib/libgtk-x11-2.0.so	/usr/lib/libgtk-x11-2.0.so
+# Dep(post):	/usr/lib/libgtk-x11-2.0.so	/usr/lib/libgtk-x11-2.0.so
+
+nbuild() {
+./configure --prefix=/usr --sysconfdir=/etc
+make
+}
+
+ninstall() {
+make install
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

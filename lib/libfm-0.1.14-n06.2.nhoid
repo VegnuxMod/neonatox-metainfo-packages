@@ -1,0 +1,38 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sánchez <cargabsj175@gmail.com>
+
+# Name:	libfm
+# Version:	0.1.14
+# Release:	n06.2
+# License:	GPLv2
+# Group:	LXDE Desktop
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64
+# Url:	http://lxde.org/
+# Description:	The core of next generation file manager PCManFM.
+# MD5:	29e093a264755ca245edbb02578aee2e  libfm-0.1.14.tar.xz
+
+
+# BuildDep:	/usr/lib/libgtk-x11-2.0.so	/usr/lib/libgtk-x11-2.0.so
+# BuildDep:	/usr/lib/libmenu-cache.so	/usr/lib/libmenu-cache.so
+# BuildDep:	/usr/bin/update-mime-database	/usr/bin/update-mime-database
+# Dep(post):	/usr/bin/update-mime-database	/usr/bin/update-mime-database
+# Dep(post):	/usr/lib/libmenu-cache.so	/usr/lib/libmenu-cache.so
+# Dep(post):	/usr/lib/libgtk-x11-2.0.so	/usr/lib/libgtk-x11-2.0.so
+
+nbuild() {
+patch -p1 -i ../0001-filename-with-spaces-not-supported.patch
+./configure --prefix=/usr --sysconfdir=/etc
+make
+}
+
+ninstall() {
+make install
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

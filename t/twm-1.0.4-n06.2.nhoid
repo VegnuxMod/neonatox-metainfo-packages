@@ -1,0 +1,38 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sánchez <cargabsj175@gmail.com>
+
+# Name:	twm
+# Version:	1.0.4
+# Release:	n06.2
+# License:	X11 license
+# Group:	X Window System
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64
+# Url:	http://www.x.org/wiki
+# Description:	The tabbed window manager.
+# MD5:	94c30bf596ac62f71cfae8a8f4e44ab3  twm-1.0.4.tar.xz
+
+
+# BuildDep:	/usr/lib/libX11.so	/usr/lib/libX11.so
+# BuildDep:	/usr/lib/libXt.so	/usr/lib/libXt.so
+# BuildDep:	/usr/lib/libXmu.so	/usr/lib/libXmu.so
+# Dep(post):	/usr/lib/libXmu.so	/usr/lib/libXmu.so
+# Dep(post):	/usr/lib/libXt.so	/usr/lib/libXt.so
+# Dep(post):	/usr/lib/libX11.so	/usr/lib/libX11.so
+
+nbuild() {
+sed -e '/^rcdir =/s,^\(rcdir = \).*,\1/etc/X11/app-defaults,' -i src/Makefile.in
+./configure --prefix=/usr --sysconfdir=/etc --mandir=/usr/share/man --localstatedir=/var
+make
+}
+
+ninstall() {
+make install
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

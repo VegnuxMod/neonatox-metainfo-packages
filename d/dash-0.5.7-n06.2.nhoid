@@ -1,0 +1,31 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	dash
+# Version:	0.5.7
+# Release:	n06.2
+# License:	BSD
+# Group:	Shell
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64 arm arm64 armel
+# Url:	http://gondor.apana.org.au/~herbert/dash
+# Description:	A POSIX compliant shell that aims to be as small as possible.
+# MD5:	67e2a716705ab1a2cf31f73d3ac8bd85  dash-0.5.7.tar.xz
+
+
+
+nbuild() {
+./configure --prefix=/usr --mandir=/usr/share/man --exec-prefix=""
+make
+}
+
+ninstall() {
+make install
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

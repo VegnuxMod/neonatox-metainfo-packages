@@ -1,0 +1,35 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	libksba
+# Version:	1.0.8
+# Release:	n06.2
+# License:	GPL
+# Group:	Programming
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64 arm arm64
+# Url:	ftp://ftp.gnupg.org/gcrypt/alpha/libksba
+# Description:	Libksba is a CMS and X.509 access library.
+# MD5:	915bf5d8bf0ef21233610636974b15b3  libksba-1.0.8.tar.xz
+
+
+# BuildDep:	/bin/bash	/bin/bash
+# BuildDep:	/usr/lib/libgpg-error.so	/usr/lib/libgpg-error.so
+# Dep(post):	/usr/lib/libgpg-error.so	/usr/lib/libgpg-error.so
+# Dep(post):	/bin/bash	/bin/bash
+
+nbuild() {
+./configure --prefix=/usr
+make
+}
+
+ninstall() {
+make install
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

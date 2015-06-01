@@ -1,0 +1,41 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	xf86-input-evtouch
+# Version:	0.8.8
+# Release:	n06.2
+# License:	GPL
+# Group:	X Window System
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64 arm arm64 armel
+# Url:	http://www.conan.de/touchscreen/evtouch.html
+# Description:	Input driver for Linux event touchscreens.
+# MD5:	3e7634e9109d88e4cdc59266bee8d5aa  xf86-input-evtouch-0.8.8.tar.xz
+
+
+# BuildDep:	/usr/lib/libX11.so	/usr/lib/libX11.so
+# Dep(post):	/usr/lib/libX11.so	/usr/lib/libX11.so
+
+nbuild() {
+patch -Np1 -i ../debian_patches.diff
+patch -Np0 -i ../calibrate_patch.diff
+patch -Np0 -i ../xorg1.7_patch.diff
+patch -Np1 -i ../buttonless_patch.diff
+./configure --prefix=/usr --sysconfdir=/etc \
+--with-xorg-module-dir=/usr/lib/X11/modules  \
+--mandir=/usr/share/man --localstatedir=/var \
+--enable-evcalibrate --enable-udevinstall
+make
+}
+
+ninstall() {
+make install
+install -m644 ../50-evtouch.conf /etc/X11/xorg.conf.d
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

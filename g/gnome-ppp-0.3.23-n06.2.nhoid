@@ -1,0 +1,37 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	gnome-ppp
+# Version:	0.3.23
+# Release:	n06.2
+# License:	GPLv2
+# Group:	Networking
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64 arm arm64
+# Url:	http://www.gnomefiles.org/app.php?soft_id=41
+# Description:	A GNOME 2 WvDial frontend.
+# MD5:	85bc32842448399013e07be0242f1684  gnome-ppp-0.3.23.tar.xz
+
+
+# BuildDep:	/usr/lib/libglade-2.0.so	/usr/lib/libglade-2.0.so
+# BuildDep:	/usr/bin/wvdial	/usr/bin/wvdial
+# Dep(post):	/usr/bin/wvdial	/usr/bin/wvdial
+# Dep(post):	/usr/lib/libglade-2.0.so	/usr/lib/libglade-2.0.so
+
+nbuild() {
+patch -Np0 -i ../gnome-ppp-0.3.23-implicit-decl.patch
+patch -Np0 -i ../gnome-ppp-0.3.23-wvdial-notify.patch
+./configure --prefix=/usr
+make
+}
+
+ninstall() {
+make install
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

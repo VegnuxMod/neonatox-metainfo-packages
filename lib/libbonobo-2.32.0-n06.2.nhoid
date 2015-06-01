@@ -1,0 +1,40 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	libbonobo
+# Version:	2.32.0
+# Release:	n06.2
+# License:	GPL LGPL
+# Group:	Gnome Desktop
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el
+# Url:	http://www.gnome.org
+# Description:	A set of language and system independant CORBA interfaces for creating reusable components.
+# MD5:	a700b6657f06f37c32bca37fa99bbdc3  libbonobo-2.32.0.tar.xz
+
+
+# BuildDep:	/usr/lib/libORBit-2.so	/usr/lib/libORBit-2.so
+# BuildDep:	/usr/lib/libxml2.so	/usr/lib/libxml2.so
+# BuildDep:	/usr/lib/libglib-2.0.so	/usr/lib/libglib-2.0.so
+# Dep(post):	/usr/lib/libglib-2.0.so	/usr/lib/libglib-2.0.so
+# Dep(post):	/usr/lib/libxml2.so	/usr/lib/libxml2.so
+# Dep(post):	/usr/lib/libORBit-2.so	/usr/lib/libORBit-2.so
+
+nbuild() {
+./configure --prefix=/usr --sysconfdir=/etc \
+--localstatedir=/var --disable-static \
+--libexecdir=/usr/lib/bonobo
+make
+}
+
+ninstall() {
+make install
+install -m644 "../bonobo-activation-config.xml" "/etc/bonobo-activation/"
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

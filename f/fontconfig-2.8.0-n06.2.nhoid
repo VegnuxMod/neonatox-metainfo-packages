@@ -1,0 +1,39 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sánchez <cargabsj175@gmail.com>
+
+# Name:	fontconfig
+# Version:	2.8.0
+# Release:	n06.2
+# License:	GPL
+# Group:	Core System
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64
+# Url:	http://www.fontconfig.org/release/
+# Description:	A library for configuring and customizing font access.
+# MD5:	b88d9a4884bf56085e7d54677a772477  fontconfig-2.8.0.tar.xz
+
+
+# BuildDep:	/usr/lib/libexpat.so	/usr/lib/libexpat.so
+# BuildDep:	/usr/lib/libfreetype.so	/usr/lib/libfreetype.so
+# Dep(post):	/usr/lib/libfreetype.so	/usr/lib/libfreetype.so
+# Dep(post):	/usr/lib/libexpat.so	/usr/lib/libexpat.so
+
+nbuild() {
+patch -Np1 -i ../30-urw-aliases.patch
+export CFLAGS="${CFLAGS} -fPIC"
+./configure --prefix=/usr --sysconfdir=/etc --localstatedir=/var
+make
+}
+
+ninstall() {
+make install
+install -m644 ../29-replace-bitmap-fonts.conf /etc/fonts/conf.avail
+rm -f /etc/fonts/conf.d/*.conf
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

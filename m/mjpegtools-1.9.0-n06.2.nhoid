@@ -1,0 +1,43 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	mjpegtools
+# Version:	1.9.0
+# Release:	n06.2
+# License:	GPL
+# Group:	Multimedia
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64 arm arm64
+# Url:	http://mjpeg.sourceforge.net/
+# Description:	Set of tools that can do recording of videos and playback, simple cut-and-paste editing and the MPEG compression of audio and video.
+# MD5:	9c395b62a647d19035e735d39dfca713  mjpegtools-1.9.0.tar.xz
+
+
+# BuildDep:	/usr/lib/libjpeg.so	/usr/lib/libjpeg.so
+# BuildDep:	/usr/lib/libpng.so	/usr/lib/libpng.so
+# BuildDep:	/usr/lib/libSDL.so	/usr/lib/libSDL.so
+# BuildDep:	/usr/lib/libdv.so	/usr/lib/libdv.so
+# Dep(post):	/usr/lib/libdv.so	/usr/lib/libdv.so
+# Dep(post):	/usr/lib/libSDL.so	/usr/lib/libSDL.so
+# Dep(post):	/usr/lib/libpng.so	/usr/lib/libpng.so
+# Dep(post):	/usr/lib/libjpeg.so	/usr/lib/libjpeg.so
+
+nbuild() {
+patch -Np1 -i "../mjpegtools-1.9.0-glibc-2.10.patch"
+patch -Np1 -i "../png2yuv-fix-memleak.patch"
+patch -Np0 -i "../mjpegtools-1.9.0-jpeg-7.patch"
+./configure --prefix=/usr --enable-largefile
+make
+}
+
+ninstall() {
+make install
+install -m644 mpeg2enc/mpeg2syntaxcodes.h "/usr/include/mjpegtools/mpeg2enc/"
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

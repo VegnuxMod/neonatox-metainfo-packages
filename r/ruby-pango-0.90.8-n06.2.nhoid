@@ -1,0 +1,43 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	ruby-pango
+# Version:	0.90.8
+# Release:	n06.2
+# License:	LGPL
+# Group:	Graphics library
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64 arm arm64
+# Url:	http://ruby-gnome2.sourceforge.jp
+# Description:	Ruby bindings for pango.
+# MD5:	420cbf67b4452cd7ba0b162f3f871260  ruby-pango-0.90.8.tar.xz
+
+
+# BuildDep:	/usr/lib/ruby/site_ruby/1.9.1/i686-linux/glib2.so	/usr/lib/ruby/site_ruby/1.9.1/i686-linux/glib2.so
+# BuildDep:	/usr/lib/ruby/site_ruby/1.9.1/i686-linux/cairo.so	/usr/lib/ruby/site_ruby/1.9.1/i686-linux/cairo.so
+# BuildDep:	/usr/lib/libpango-1.0.so	/usr/lib/libpango-1.0.so
+# BuildDep:	/usr/lib/ruby/gems/1.9.1/cache/pkg-config-1.0.7.gem	/usr/lib/ruby/gems/1.9.1/cache/pkg-config-1.0.7.gem
+# Dep(post):	/usr/lib/ruby/gems/1.9.1/cache/pkg-config-1.0.7.gem	/usr/lib/ruby/gems/1.9.1/cache/pkg-config-1.0.7.gem
+# Dep(post):	/usr/lib/libpango-1.0.so	/usr/lib/libpango-1.0.so
+# Dep(post):	/usr/lib/ruby/site_ruby/1.9.1/i686-linux/cairo.so	/usr/lib/ruby/site_ruby/1.9.1/i686-linux/cairo.so
+# Dep(post):	/usr/lib/ruby/site_ruby/1.9.1/i686-linux/glib2.so	/usr/lib/ruby/site_ruby/1.9.1/i686-linux/glib2.so
+
+nbuild() {
+pkgdir=/tmp/rpango
+ruby extconf.rb pango --topdir=$pkgdir
+make
+}
+
+ninstall() {
+pkgdir=/tmp/rpango
+make DESTDIR="$pkgdir" install
+cp -r $pkgdir/* /
+rm -r $pkgdir
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

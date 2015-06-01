@@ -1,0 +1,30 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	wireless-tools
+# Version:	30
+# Release:	n06.2
+# License:	GPLv2
+# Group:	Networking
+# Arch:	i486 i586 i686 x86_64 mips mips64 mips mips64 ppc ppc64 arm arm64 armel
+# Url:	http://www.hpl.hp.com/personal/Jean_Tourrilhes/Linux/Tools.html
+# Description:	The Wireless Extension (WE) is a generic API in the Linux kernel allowing a driver to expose configuration and statistics specific to common Wireless LANs to user space. A single set of tools can support all the variations of Wireless LANs, regardless of their type as long as the driver supports Wireless Extensions. WE parameters may also be changed on the fly without restarting the driver (or Linux).
+# MD5:	466d6a27effc3f3c44e3a00c50eddf75  wireless-tools-30.tar.xz
+
+
+
+nbuild() {
+make
+}
+
+ninstall() {
+make PREFIX=/usr install
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

@@ -1,0 +1,40 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	agg
+# Version:	2.5
+# Release:	n06.2
+# License:	GPLv2
+# Group:	Multimedia
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64 arm arm64
+# Url:	http://antigrain.com/
+# Description:	Anti-Grain Geometry - A High Quality Rendering Engine for C++
+# MD5:	95f35757c58b4d5a30a799c79b6cc2eb  agg-2.5.tar.xz
+
+
+# BuildDep:	/usr/lib/libSDL.so	/usr/lib/libSDL.so
+# BuildDep:	/usr/bin/X	/usr/bin/X
+# BuildDep:	/usr/lib/libfreetype.so	/usr/lib/libfreetype.so
+# Dep(post):	/usr/lib/libSDL.so	/usr/lib/libSDL.so
+# Dep(post):	/usr/bin/X	/usr/bin/X
+# Dep(post):	/usr/lib/libfreetype.so	/usr/lib/libfreetype.so
+
+nbuild() {
+patch -Np1 -i "../agg-2.4-depends.patch"
+patch -Np1 -i "../agg-2.5-pkgconfig.patch" 
+sh autogen.sh
+./configure --prefix=/usr --enable-ctrl --enable-sdltest --disable-examples --disable-dependency-tracking
+make
+}
+
+ninstall() {
+make install
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

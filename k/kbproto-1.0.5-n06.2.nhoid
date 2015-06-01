@@ -1,0 +1,33 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	kbproto
+# Version:	1.0.5
+# Release:	n06.2
+# License:	X11 license
+# Group:	X Window System
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64	arm arm64
+# Url:	http://www.x.org/wiki/
+# Description:	Keyboard protocol.
+# MD5:	fe27b4a4947c7adc2005d90dd86042ed  kbproto-1.0.5.tar.xz
+
+
+# BuildDep:	/usr/bin/pkg-config	/usr/bin/pkg-config
+# Dep(post):	/usr/bin/pkg-config	/usr/bin/pkg-config
+
+nbuild() {
+./configure --prefix=/usr --sysconfdir=/etc --mandir=/usr/share/man --localstatedir=/var
+make
+}
+
+ninstall() {
+make install
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

@@ -1,0 +1,93 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	mplayer
+# Version:	34799
+# Release:	n06.2
+# License:	GPLv2
+# Group:	Multimedia
+# Arch:	i686 i486 i586 x86_64 mips mips64 mipsel mips64el ppc ppc64 arm arm64 armel
+# Url:	http://www1.mplayerhq.hu/homepage/
+# Description:	The MPlayer package contains an audio/video player controlled via the command line or a graphical interface which is able to play almost every popular audio and video file format and codec. With supported video hardware and additional drivers, MPlayer can play video files without an X Window System installed.
+# MD5:	94ee87182b4cca46de01fa2cc61fc23e  mplayer-34799.tar.xz
+
+
+# BuildDep:	/usr/lib/libdvdcss.so	/usr/lib/libdvdcss.so
+# BuildDep:	/usr/lib/libdvdread.so	/usr/lib/libdvdread.so
+# BuildDep:	/usr/bin/pkg-config	/usr/bin/pkg-config
+# BuildDep:	/usr/lib/libcaca.a	/usr/lib/libcaca.a
+# BuildDep:	/usr/lib/libX11.so	/usr/lib/libX11.so
+# BuildDep:	/usr/lib/libpng.so	/usr/lib/libpng.so
+# BuildDep:	/usr/lib/libjpeg.so	/usr/lib/libjpeg.so
+# BuildDep:	/usr/lib/libSDL.so	/usr/lib/libSDL.so
+# BuildDep:	/usr/lib/libasound.so	/usr/lib/libasound.so
+# BuildDep:	/usr/lib/libfreetype.so	/usr/lib/libfreetype.so
+# BuildDep:	/usr/lib/libcdio.so	/usr/lib/libcdio.so
+# BuildDep:	/usr/lib/libcdda_paranoia.so	/usr/lib/libcdda_paranoia.so
+# BuildDep:	/usr/lib/libfontconfig.so	/usr/lib/libfontconfig.so
+# BuildDep:	/usr/lib/liba52.so	/usr/lib/liba52.so
+# BuildDep:	/usr/lib/libvorbis.so	/usr/lib/libvorbis.so
+# BuildDep:	/usr/lib/libxvidcore.so	/usr/lib/libxvidcore.so
+# BuildDep:	/usr/lib/libx264.so	/usr/lib/libx264.so
+# BuildDep:	/usr/lib/libdvdnav.so	/usr/lib/libdvdnav.so
+# BuildDep:	/usr/bin/ffmpeg	/usr/bin/ffmpeg
+# Dep(post):	/usr/bin/ffmpeg	/usr/bin/ffmpeg
+# Dep(post):	/usr/lib/libdvdnav.so	/usr/lib/libdvdnav.so
+# Dep(post):	/usr/lib/libx264.so	/usr/lib/libx264.so
+# Dep(post):	/usr/lib/libxvidcore.so	/usr/lib/libxvidcore.so
+# Dep(post):	/usr/lib/libvorbis.so	/usr/lib/libvorbis.so
+# Dep(post):	/usr/lib/liba52.so	/usr/lib/liba52.so
+# Dep(post):	/usr/lib/libfontconfig.so	/usr/lib/libfontconfig.so
+# Dep(post):	/usr/lib/libcdda_paranoia.so	/usr/lib/libcdda_paranoia.so
+# Dep(post):	/usr/lib/libcdio.so	/usr/lib/libcdio.so
+# Dep(post):	/usr/lib/libfreetype.so	/usr/lib/libfreetype.so
+# Dep(post):	/usr/lib/libasound.so	/usr/lib/libasound.so
+# Dep(post):	/usr/lib/libSDL.so	/usr/lib/libSDL.so
+# Dep(post):	/usr/lib/libjpeg.so	/usr/lib/libjpeg.so
+# Dep(post):	/usr/lib/libpng.so	/usr/lib/libpng.so
+# Dep(post):	/usr/lib/libX11.so	/usr/lib/libX11.so
+# Dep(post):	/usr/lib/libcaca.a	/usr/lib/libcaca.a
+# Dep(post):	/usr/bin/pkg-config	/usr/bin/pkg-config
+# Dep(post):	/usr/lib/libdvdread.so	/usr/lib/libdvdread.so
+# Dep(post):	/usr/lib/libdvdcss.so	/usr/lib/libdvdcss.so
+
+nbuild() {
+patch -Np0 -i "../live-media.patch"
+./configure --prefix=/usr \
+--enable-runtime-cpudetection \
+--disable-gui \
+--disable-arts \
+--disable-liblzo \
+--disable-speex \
+--disable-openal \
+--disable-fribidi \
+--disable-libdv \
+--disable-musepack \
+--disable-esd \
+--disable-mga \
+--enable-xvmc \
+--language=all \
+--confdir=/etc/mplayer \
+--enable-debug
+export ARCH=$(uname -m)
+if [ "$ARCH" = "i686" ]; then
+	sed 's|-march=i486|-march=i686|g' -i config.mak
+fi
+make
+}
+
+ninstall() {
+make -j1 install
+install -Dm644 etc/{codecs.conf,input.conf,example.conf} /etc/mplayer/
+install -dm755 /usr/share/mplayer/
+ln -s /usr/share/fonts/X11/TTF/GohaTibebZemen.ttf /usr/share/mplayer/subfont.ttf
+rm -rf /usr/share/mplayer/font
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

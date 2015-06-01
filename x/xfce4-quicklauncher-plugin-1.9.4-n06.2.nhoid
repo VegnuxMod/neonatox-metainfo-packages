@@ -1,0 +1,42 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	xfce4-quicklauncher-plugin
+# Version:	1.9.4
+# Release:	n06.2
+# License:	GPLv2
+# Group:	Xfce Desktop
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64 arm arm64
+# Url:	http://xfce-goodies.berlios.de/
+# Description:	Plugin that creates 4 little application launcher in the Xfce4 panel.
+# MD5:	dd135efee2c0a5b0fdb2cb304ecfb697  xfce4-quicklauncher-plugin-1.9.4.tar.xz
+
+
+# BuildDep:	/usr/lib/libxfce4panel-1.0.so	/usr/lib/libxfce4panel-1.0.so
+# BuildDep:	/usr/lib/libxfcegui4.so	/usr/lib/libxfcegui4.so
+# Dep(post):	/usr/lib/libxfcegui4.so	/usr/lib/libxfcegui4.so
+# Dep(post):	/usr/lib/libxfce4panel-1.0.so	/usr/lib/libxfce4panel-1.0.so
+
+nbuild() {
+patch -Np0 -i ../xfce4-quicklauncher-plugin-1.9.4-desktop-file.patch
+patch -Np0 -i ../xfce4-quicklauncher-plugin-1.9.4-fix-multiscreen.patch
+patch -Np1 -i ../xfce4-quicklauncher-plugin-1.9.4-save-settings.patch
+patch -Np1 -i ../xfce4-quicklauncher-plugin-1.9.4-fix-missing-english-translation.patch
+patch -Np0 -i ../xfce4-quicklauncher-plugin-1.9.4-xfce4-settings-manager.patch
+./configure --prefix=/usr --sysconfdir=/etc \
+--libexecdir=/usr/lib --localstatedir=/var \
+--disable-static --disable-debug
+make
+}
+
+ninstall() {
+make install
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

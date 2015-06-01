@@ -1,0 +1,33 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	gsl
+# Version:	1.14
+# Release:	n06.2
+# License:	GPL
+# Group:	Programming
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64 arm arm64
+# Url:	http://www.gnu.org/software/gsl/gsl.html
+# Description:	The GNU Scientific Library (GSL) is a modern numerical library for C and C++ programmers.
+# MD5:	e28be48714ba8442b4094c4d95c1a44e  gsl-1.14.tar.xz
+
+
+# BuildDep:	/bin/bash	/bin/bash
+# Dep(post):	/bin/bash	/bin/bash
+
+nbuild() {
+./configure --prefix=/usr
+make
+}
+
+ninstall() {
+make install
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

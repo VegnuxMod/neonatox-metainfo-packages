@@ -1,0 +1,41 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	sylpheed
+# Version:	3.1.0
+# Release:	n06.2
+# License:	GPL
+# Group:	Networking
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64 arm arm64
+# Url:	http://sylpheed.sraoss.jp/en/
+# Description:	Lightweight and user-friendly e-mail client.
+# MD5:	07407ef222a2837edecbb68fae960d09  sylpheed-3.1.0.tar.xz
+
+
+# BuildDep:	/usr/lib/libgpgme.so	/usr/lib/libgpgme.so
+# BuildDep:	/usr/lib/libgtkspell.so	/usr/lib/libgtkspell.so
+# BuildDep:	/usr/lib/libssl.so	/usr/lib/libssl.so
+# Dep(post):	/usr/lib/libssl.so	/usr/lib/libssl.so
+# Dep(post):	/usr/lib/libgtkspell.so	/usr/lib/libgtkspell.so
+# Dep(post):	/usr/lib/libgpgme.so	/usr/lib/libgpgme.so
+
+nbuild() {
+./configure --prefix=/usr --enable-ldap
+make
+cd plugin/attachment_tool
+make
+}
+
+ninstall() {
+make install
+cd plugin/attachment_tool
+make install-plugin
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

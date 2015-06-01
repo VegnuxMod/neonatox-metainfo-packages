@@ -1,0 +1,32 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	libcap
+# Version:	2.19
+# Release:	n06.2
+# License:	GPL
+# Group:	System
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64
+# Url:	http://www.kernel.org/pub/linux/libs/security/linux-privs/
+# Description:	POSIX 1003.1e capabilities
+# MD5:	31dbff4473d9393dadadded3ecc07772  libcap-2.19.tar.xz
+
+
+# BuildDep:	/usr/lib/libattr.so	/usr/lib/libattr.so
+# Dep(post):	/usr/lib/libattr.so	/usr/lib/libattr.so
+
+nbuild() {
+sed -i -e "s|LIBDIR=\$(FAKEROOT)\$(lib_prefix)/\$(lib)|LIBDIR=\$(FAKEROOT)/\$(lib)|g" Make.Rules
+}
+
+ninstall() {
+make prefix=/usr install
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

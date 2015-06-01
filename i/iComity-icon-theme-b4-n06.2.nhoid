@@ -1,0 +1,45 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	iComity-icon-theme
+# Version:	b4
+# Release:	n06.2
+# License:	custom
+# Group:	Neonatox Desktop
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64 arm arm64
+# Url:	http://xfce-look.org/content/show.php/iComity?content=54242
+# Description:	iComity is an icon theme based on public good designs from many sources.
+# MD5:	22c78385a99ecd028b0d198825a7c5d3  iComity-icon-theme-b4.tar.xz
+
+
+# BuildDep:	/usr/lib/libMagick++.so	/usr/lib/libMagick++.so
+# Dep(post):	/usr/lib/libMagick++.so	/usr/lib/libMagick++.so
+
+nbuild() {
+noemptyfuncs
+}
+
+ninstall() {
+pkgdir=/tmp/icomity
+install -dm755 "${pkgdir}"/usr/share/icons/iComity/{16x16,22x22,24x24,32x32,36x36,48x48,64x64,96x96,128x128}
+cd src
+for copy in 16x16 22x22 24x24 32x32 36x36 48x48 64x64 96x96 128x128; do
+	cp -r * "${pkgdir}"/usr/share/icons/iComity/${copy}
+done
+for i in 16x16 22x22 24x24 32x32 36x36 48x48 64x64 96x96; do
+	mogrify -resize ${i} "${pkgdir}"/usr/share/icons/iComity/${i}/*/*
+done
+cd ..
+install -m755 index.theme "${pkgdir}"/usr/share/icons/iComity/
+install -Dm755 copyright.notice "${pkgdir}"/usr/share/licenses/iComity/LICENSE
+cp -r ${pkgdir}/* /
+rm -r ${pkgdir}
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

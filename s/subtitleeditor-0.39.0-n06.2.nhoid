@@ -1,0 +1,53 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sánchez <cargabsj175@gmail.com>
+
+# Name:	subtitleeditor
+# Version:	0.39.0
+# Release:	n06.2
+# License:	GPLv3
+# Group:	Multimedia
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64 arm arm64 armel
+# Url:	http://home.gna.org/subtitleeditor/
+# Description:	A GTK+2 tool to edit subtitles for GNU/Linux/*BSD.
+# MD5:	93d255ea0830fa46ed78bf886a720e28  subtitleeditor-0.39.0.tar.xz
+
+
+# BuildDep:	/usr/lib/libenchant.so	/usr/lib/libenchant.so
+# BuildDep:	/usr/lib/libgstvideo-0.10.so	/usr/lib/libgstvideo-0.10.so
+# BuildDep:	/usr/lib/gstreamer-0.10/libgstmatroska.so	/usr/lib/gstreamer-0.10/libgstmatroska.so
+# BuildDep:	/usr/lib/libgstreamermm-0.10.so	/usr/lib/libgstreamermm-0.10.so
+# BuildDep:	/usr/lib/libgtkmm-2.4.so	/usr/lib/libgtkmm-2.4.so
+# BuildDep:	/usr/share/icons/hicolor/index.theme	/usr/share/icons/hicolor/index.theme
+# BuildDep:	/usr/lib/libsigc-2.0.so	/usr/lib/libsigc-2.0.so
+# BuildDep:	/usr/lib/libxml++-2.6.so	/usr/lib/libxml++-2.6.so
+# BuildDep:	/usr/bin/xdg-mime	/usr/bin/xdg-mime
+# BuildDep:	/usr/lib/gstreamer-0.10/libgstffmpeg.so	/usr/lib/gstreamer-0.10/libgstffmpeg.so
+# BuildDep:	/usr/lib/gstreamer-0.10/libgstasf.so	/usr/lib/gstreamer-0.10/libgstasf.so
+# Dep(post):	/usr/lib/gstreamer-0.10/libgstasf.so	/usr/lib/gstreamer-0.10/libgstasf.so
+# Dep(post):	/usr/lib/gstreamer-0.10/libgstffmpeg.so	/usr/lib/gstreamer-0.10/libgstffmpeg.so
+# Dep(post):	/usr/bin/xdg-mime	/usr/bin/xdg-mime
+# Dep(post):	/usr/lib/libxml++-2.6.so	/usr/lib/libxml++-2.6.so
+# Dep(post):	/usr/lib/libsigc-2.0.so	/usr/lib/libsigc-2.0.so
+# Dep(post):	/usr/share/icons/hicolor/index.theme	/usr/share/icons/hicolor/index.theme
+# Dep(post):	/usr/lib/libgtkmm-2.4.so	/usr/lib/libgtkmm-2.4.so
+# Dep(post):	/usr/lib/libgstreamermm-0.10.so	/usr/lib/libgstreamermm-0.10.so
+# Dep(post):	/usr/lib/gstreamer-0.10/libgstmatroska.so	/usr/lib/gstreamer-0.10/libgstmatroska.so
+# Dep(post):	/usr/lib/libgstvideo-0.10.so	/usr/lib/libgstvideo-0.10.so
+# Dep(post):	/usr/lib/libenchant.so	/usr/lib/libenchant.so
+
+nbuild() {
+./configure --prefix=/usr
+make
+}
+
+ninstall() {
+make install
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

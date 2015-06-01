@@ -1,0 +1,33 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	libpaper
+# Version:	1.1.24
+# Release:	n06.2
+# License:	GPL
+# Group:	System
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64 arm arm64
+# Url:	http://packages.debian.org/unstable/source/libpaper
+# Description:	Library for handling paper characteristics
+# MD5:	d2c42c88e892a5e668b9e141a65214af  libpaper-1.1.24.tar.xz
+
+
+
+nbuild() {
+./configure --prefix=/usr \
+--mandir=/usr/share/man \
+--sysconfdir=/etc
+make
+}
+
+ninstall() {
+make install
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

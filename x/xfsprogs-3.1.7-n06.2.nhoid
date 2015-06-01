@@ -1,0 +1,41 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	xfsprogs
+# Version:	3.1.7
+# Release:	n06.2
+# License:	LGPL
+# Group:	Core System
+# Arch:	i686 x86_64 mips mips64 mipsel mips64el ppc ppc64 arm arm64 armel
+# Url:	http://oss.sgi.com/projects/xfs/
+# Description:	XFS filesystem utilities.
+# MD5:	bf2cfb5c27b2fc493477b91811c617f2  xfsprogs-3.1.7.tar.xz
+
+
+
+nbuild() {
+if [ x86_64 = $(uname -m) ]; then
+export OPTIMIZER="-march=x86-64 -O1"
+else
+export OPTIMIZER="-march=i686 -O1"
+fi
+export DEBUG=-DNDEBUG
+make
+}
+
+ninstall() {
+pkgdir=/tmp/xfs
+make DIST_ROOT="${pkgdir}" install install-dev
+chown -R root $pkgdir
+chgrp -R root $pkgdir
+cp -r ${pkgdir}/* /
+rm -r ${pkgdir}
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

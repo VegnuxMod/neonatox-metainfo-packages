@@ -1,0 +1,34 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	frei0r-plugins
+# Version:	1.2.1
+# Release:	n06.2
+# License:	GPL
+# Group:	Multimedia
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64 arm arm64
+# Url:	http://www.piksel.org/frei0r
+# Description:	frei0r is a minimalistic plugin API for video sources and filters.
+# MD5:	53f5ebb4743893c2abf799f7ffbdf16f  frei0r-plugins-1.2.1.tar.xz
+
+
+nbuild() {
+./configure --prefix=/usr
+make
+}
+
+ninstall() {
+pkgdir=/tmp/frei0r
+make DESTDIR=$pkgdir install
+rm -rf $pkgdir/home
+cp -r /tmp/frei0r/* /
+rm -r /tmp/frei0r
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

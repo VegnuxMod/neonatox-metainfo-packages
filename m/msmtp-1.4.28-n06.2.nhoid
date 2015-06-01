@@ -1,0 +1,40 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	msmtp
+# Version:	1.4.28
+# Release:	n06.2
+# License:	GPLv3
+# Group:	Networking
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64 arm arm64 armel
+# Url:	http://msmtp.sourceforge.net
+# Description:	A mini smtp client.
+# MD5:	9e64d297574b585d47498003ce36927b  msmtp-1.4.28.tar.xz
+
+
+# BuildDep:	/usr/lib/libgsasl.so	/usr/lib/libgsasl.so
+# BuildDep:	/usr/lib/libgnome-keyring.so	/usr/lib/libgnome-keyring.so
+# Dep(post):	/usr/lib/libgnome-keyring.so	/usr/lib/libgnome-keyring.so
+# Dep(post):	/usr/lib/libgsasl.so	/usr/lib/libgsasl.so
+
+nbuild() {
+./configure --prefix=/usr --sysconfdir=/etc --with-ssl=gnutls
+make
+}
+
+ninstall() {
+pkgdir=/tmp/msmtp
+make DESTDIR="${pkgdir}" install
+mkdir -p "${pkgdir}/usr/sbin/"
+ln -svf /usr/bin/msmtp "${pkgdir}/usr/sbin/sendmail"
+cp -r ${pkgdir}/* /
+rm -r ${pkgdir}
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

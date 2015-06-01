@@ -1,0 +1,31 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sánchez <cargabsj175@gmail.com>
+
+# Name:	pm-quirks
+# Version:	20100619
+# Release:	n06.2
+# License:	GPL
+# Group:	Core System
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64
+# Url:	http://pm-utils.freedesktop.org/wiki/
+# Description:	Quirks data for pm-utils.
+# MD5:	ce03ee5d28d6ac89039ff63b7cd6718b  pm-quirks-20100619.tar.xz
+
+
+
+nbuild() {
+noemptyfuncs
+}
+
+ninstall() {
+install -m755 -d "/usr/lib/pm-utils/video-quirks"
+install -m644 *.quirkdb "/usr/lib/pm-utils/video-quirks/"
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

@@ -1,0 +1,31 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	gnet
+# Version:	2.0.8
+# Release:	n06.2
+# License:	LGPL
+# Group:	Network
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64 arm arm64
+# Url:	http://live.gnome.org/GNetLibrary
+# Description:	A simple network library.
+# MD5:	a0ff4ef9619ca2588c502229326e25f7  gnet-2.0.8.tar.xz
+
+
+
+nbuild() {
+./configure --prefix=/usr
+make
+}
+
+ninstall() {
+make install
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

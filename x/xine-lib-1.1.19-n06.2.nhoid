@@ -1,0 +1,70 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	xine-lib
+# Version:	1.1.19
+# Release:	n06.2
+# License:	LGPL GPL
+# Group:	Multimedia
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64 arm arm64
+# Url:	http://www.xine-project.org
+# Description:	A multimedia playback engine.
+# MD5:	7057ea337657800f49f379c0a5598444  xine-lib-1.1.19.tar.xz
+
+
+# BuildDep:	/usr/lib/libGL.so	/usr/lib/libGL.so
+# BuildDep:	/usr/lib/libXvMC.so	/usr/lib/libXvMC.so
+# BuildDep:	/usr/lib/libFLAC.so	/usr/lib/libFLAC.so
+# BuildDep:	/usr/bin/ffmpeg	/usr/bin/ffmpeg
+# BuildDep:	/usr/lib/libXinerama.so	/usr/lib/libXinerama.so
+# BuildDep:	/usr/lib/libwavpack.so	/usr/lib/libwavpack.so
+# BuildDep:	/usr/lib/libfaad.so	/usr/lib/libfaad.so
+# BuildDep:	/usr/lib/libmng.so	/usr/lib/libmng.so
+# BuildDep:	/usr/lib/libMagick++.so	/usr/lib/libMagick++.so
+# BuildDep:	/usr/lib/libmodplug.so	/usr/lib/libmodplug.so
+# BuildDep:	/usr/lib/libv4l2.so	/usr/lib/libv4l2.so
+# BuildDep:	/usr/lib/libvcdinfo.so	/usr/lib/libvcdinfo.so
+# BuildDep:	/usr/lib/libjack.so	/usr/lib/libjack.so
+# BuildDep:	/usr/lib/libgdk_pixbuf-2.0.so	/usr/lib/libgdk_pixbuf-2.0.so
+# BuildDep:	/usr/lib/libspeex.so	/usr/lib/libspeex.so
+# BuildDep:	/usr/lib/libaa.so	/usr/lib/libaa.so
+# Dep(post):	/usr/lib/libaa.so	/usr/lib/libaa.so
+# Dep(post):	/usr/lib/libspeex.so	/usr/lib/libspeex.so
+# Dep(post):	/usr/lib/libgdk_pixbuf-2.0.so	/usr/lib/libgdk_pixbuf-2.0.so
+# Dep(post):	/usr/lib/libjack.so	/usr/lib/libjack.so
+# Dep(post):	/usr/lib/libvcdinfo.so	/usr/lib/libvcdinfo.so
+# Dep(post):	/usr/lib/libv4l2.so	/usr/lib/libv4l2.so
+# Dep(post):	/usr/lib/libmodplug.so	/usr/lib/libmodplug.so
+# Dep(post):	/usr/lib/libMagick++.so	/usr/lib/libMagick++.so
+# Dep(post):	/usr/lib/libmng.so	/usr/lib/libmng.so
+# Dep(post):	/usr/lib/libfaad.so	/usr/lib/libfaad.so
+# Dep(post):	/usr/lib/libwavpack.so	/usr/lib/libwavpack.so
+# Dep(post):	/usr/lib/libXinerama.so	/usr/lib/libXinerama.so
+# Dep(post):	/usr/bin/ffmpeg	/usr/bin/ffmpeg
+# Dep(post):	/usr/lib/libFLAC.so	/usr/lib/libFLAC.so
+# Dep(post):	/usr/lib/libXvMC.so	/usr/lib/libXvMC.so
+# Dep(post):	/usr/lib/libGL.so	/usr/lib/libGL.so
+
+nbuild() {
+patch -p0 < ../xine-lib-1.1.1-configure-no-mcpu-march.patch
+patch -p0 < ../xine-lib-1.1.19-xvmc.patch
+sed -i 's|linux/videodev.h|libv4l1-videodev.h|' configure.ac src/input/input_v4l.c src/video_out/video_out_syncfb.h
+libtoolize --force --copy
+aclocal -I m4
+autoconf
+automake --add-missing
+./configure --prefix=/usr --with-wavpack --with-external-ffmpeg --with-external-libfaad
+make
+}
+
+ninstall() {
+make install
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

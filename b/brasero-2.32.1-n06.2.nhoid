@@ -1,0 +1,64 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	brasero
+# Version:	2.32.1
+# Release:	n06.2
+# License:	GPL
+# Group:	Multimedia
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64 arm arm64
+# Url:	http://www.gnome.org/projects/brasero
+# Description:	A disc burning application for Gnome.
+# MD5:	829e088b1df3290bdaac25b97e365e72  brasero-2.32.1.tar.xz
+
+
+# BuildDep:	/usr/lib/libgstaudio-0.10.so	/usr/lib/libgstaudio-0.10.so
+# BuildDep:	/usr/lib/libtotem-plparser.so	/usr/lib/libtotem-plparser.so
+# BuildDep:	/usr/lib/libbeagle.so	/usr/lib/libbeagle.so
+# BuildDep:	/usr/bin/mkisofs	/usr/bin/mkisofs
+# BuildDep:	/usr/bin/toc2cddb	/usr/bin/toc2cddb
+# BuildDep:	/usr/bin/update-desktop-database	/usr/bin/update-desktop-database
+# BuildDep:	/usr/share/icons/hicolor/index.theme	/usr/share/icons/hicolor/index.theme
+# BuildDep:	/usr/lib/libunique-1.0.so	/usr/lib/libunique-1.0.so
+# BuildDep:	/usr/lib/libcanberra-gtk.so	/usr/lib/libcanberra-gtk.so
+# BuildDep:	/usr/bin/growisofs	/usr/bin/growisofs
+# BuildDep:	/usr/lib/libdconf.so	/usr/lib/libdconf.so
+# BuildDep:	/usr/bin/dvdunauthor	/usr/bin/dvdunauthor
+# BuildDep:	/usr/lib/libisofs.so	/usr/lib/libisofs.so
+# Dep(post):	/usr/lib/libdconf.so	/usr/lib/libdconf.so
+# Dep(post):	/usr/bin/growisofs	/usr/bin/growisofs
+# Dep(post):	/usr/lib/libcanberra-gtk.so	/usr/lib/libcanberra-gtk.so
+# Dep(post):	/usr/lib/libunique-1.0.so	/usr/lib/libunique-1.0.so
+# Dep(post):	/usr/share/icons/hicolor/index.theme	/usr/share/icons/hicolor/index.theme
+# Dep(post):	/usr/bin/update-desktop-database	/usr/bin/update-desktop-database
+# Dep(post):	/usr/bin/toc2cddb	/usr/bin/toc2cddb
+# Dep(post):	/usr/bin/mkisofs	/usr/bin/mkisofs
+# Dep(post):	/usr/lib/libbeagle.so	/usr/lib/libbeagle.so
+# Dep(post):	/usr/lib/libtotem-plparser.so	/usr/lib/libtotem-plparser.so
+# Dep(post):	/usr/lib/libgstaudio-0.10.so	/usr/lib/libgstaudio-0.10.so
+# Dep(post):	/usr/bin/dvdunauthor	/usr/bin/dvdunauthor
+# Dep(post):	/usr/lib/libisofs.so	/usr/lib/libisofs.so
+
+nbuild() {
+./configure --prefix=/usr --sysconfdir=/etc \
+--localstatedir=/var --disable-caches --disable-schemas-compile
+make
+}
+
+ninstall() {
+pkgdir=/tmp/brasero
+make DESTDIR=${pkgdir} install
+cp -r ${pkgdir}/* /
+rm -r ${pkgdir} 
+}
+
+npostinstall() {
+glib-compile-schemas /usr/share/glib-2.0/schemas
+gtk-update-icon-cache -q -t -f /usr/share/icons/hicolor
+update-desktop-database -q
+update-mime-database /usr/share/mime > /dev/null
+}
+
+npostremove() {
+noemptyfuncs
+}

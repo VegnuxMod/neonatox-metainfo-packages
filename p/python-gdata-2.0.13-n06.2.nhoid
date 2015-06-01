@@ -1,0 +1,34 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	python-gdata
+# Version:	2.0.13
+# Release:	n06.2
+# License:	APACHE
+# Group:	Programming
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64 arm arm64 armel
+# Url:	http://code.google.com/p/gdata-python-client/
+# Description:	Python client library for Google data APIs.
+# MD5:	e0e91619c832a8b4b27bbc3b6c0156f6  python-gdata-2.0.13.tar.xz
+
+
+# BuildDep:	/usr/bin/python	/usr/bin/python
+# Dep(post):	/usr/bin/python	/usr/bin/python
+
+nbuild() {
+noemptyfuncs
+}
+
+ninstall() {
+python setup.py install --prefix=/usr --root /tmp/gdata
+cp -r /tmp/gdata/* /
+rm -r /tmp/gdata
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

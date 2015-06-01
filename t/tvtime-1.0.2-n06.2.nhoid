@@ -1,0 +1,51 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sánchez <cargabsj175@gmail.com>
+
+# Name:	tvtime
+# Version:	1.0.2
+# Release:	n06.2
+# License:	GPL LGPL
+# Group:	Multimedia
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64
+# Url:	http://tvtime.sourceforge.net/
+# Description:	A high quality television application for use with video capture cards.
+# MD5:	64c6a0f09b86203c5dd985e2029442c9  tvtime-1.0.2.tar.xz
+
+
+# BuildDep:	/usr/lib/libpng.so	/usr/lib/libpng.so
+# BuildDep:	/usr/lib/libxml2.so	/usr/lib/libxml2.so
+# BuildDep:	/usr/lib/libfreetype.so	/usr/lib/libfreetype.so
+# BuildDep:	/usr/lib/libXinerama.so	/usr/lib/libXinerama.so
+# BuildDep:	/usr/lib/libXv.so	/usr/lib/libXv.so
+# BuildDep:	/usr/lib/libSM.so	/usr/lib/libSM.so
+# BuildDep:	/usr/lib/libXxf86vm.so	/usr/lib/libXxf86vm.so
+# BuildDep:	/usr/lib/libXt.so	/usr/lib/libXt.so
+# Dep(post):	/usr/lib/libXt.so	/usr/lib/libXt.so
+# Dep(post):	/usr/lib/libXxf86vm.so	/usr/lib/libXxf86vm.so
+# Dep(post):	/usr/lib/libSM.so	/usr/lib/libSM.so
+# Dep(post):	/usr/lib/libXv.so	/usr/lib/libXv.so
+# Dep(post):	/usr/lib/libXinerama.so	/usr/lib/libXinerama.so
+# Dep(post):	/usr/lib/libfreetype.so	/usr/lib/libfreetype.so
+# Dep(post):	/usr/lib/libxml2.so	/usr/lib/libxml2.so
+# Dep(post):	/usr/lib/libpng.so	/usr/lib/libpng.so
+
+nbuild() {
+patch -p1 < ../tvtime-1.0.2+linux-headers-2.6.18.patch
+patch -p1 < ../tvtime-1.0.2-gcc41.patch
+patch -p1 < ../tvtime-1.0.2-locale_t.patch
+./configure --prefix=/usr --mandir=/usr/share/man --localstatedir=/var --sysconfdir=/etc
+make
+}
+
+ninstall() {
+make install
+install -D -m644 docs/html/default.tvtime.xml /usr/share/tvtime/default.tvtime.xml
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

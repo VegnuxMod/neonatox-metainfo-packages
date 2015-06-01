@@ -1,0 +1,38 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com.>
+
+# Name:	grantlee
+# Version:	0.2.0
+# Release:	n06.2
+# License:	LGPLv3
+# Group:	Programming
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64
+# Url:	http://www.gitorious.org/grantlee/pages/Home
+# Description:	A string template engine based on the Django template system and written in Qt.
+# MD5:	fcb56e36d2ab6752235d511f493fa425  grantlee-0.2.0.tar.xz
+
+
+# BuildDep:	/usr/lib/libQtCore.so	/usr/lib/libQtCore.so
+# Dep(post):	/usr/lib/libQtCore.so	/usr/lib/libQtCore.so
+
+nbuild() {
+mkdir -p build
+cd build
+cmake ../ \
+-DCMAKE_INSTALL_PREFIX=/usr \
+-DCMAKE_BUILD_TYPE=Release
+make
+}
+
+ninstall() {
+cd build
+make install
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

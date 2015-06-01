@@ -1,0 +1,37 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	graphite
+# Version:	1.1.0
+# Release:	n06.2
+# License:	custom_SIL Dual license
+# Group:	System
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64 arm arm64 armel
+# Url:	http://graphite.sil.org
+# Description:	Reimplementation of the SIL Graphite text processing engine.
+# MD5:	27564741eb1d96dac100f272037e7862  graphite-1.1.0.tar.xz
+
+
+# BuildDep:	/usr/lib/libfreetype.so	/usr/lib/libfreetype.so
+# Dep(post):	/usr/lib/libfreetype.so	/usr/lib/libfreetype.so
+
+nbuild() {
+mkdir ../build
+cd ../build
+cmake -G "Unix Makefiles" ../graphite-1.1.0 \
+-DCMAKE_INSTALL_PREFIX=/usr
+make
+}
+
+ninstall() {
+cd ../build
+make install
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

@@ -1,0 +1,56 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	gst-plugins-ugly
+# Version:	0.10.16
+# Release:	n06.2
+# License:	LGPL
+# Group:	Multimedia
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64 arm arm64
+# Url:	http://gstreamer.freedesktop.org/
+# Description:	GStreamer Multimedia Framework Ugly plugin libraries.
+# MD5:	fbf828931b821f12d833af634e286690  gst-plugins-ugly-0.10.16.tar.xz
+
+
+# BuildDep:	/usr/lib/libdvdread.so	/usr/lib/libdvdread.so
+# BuildDep:	/usr/lib/libmp3lame.so	/usr/lib/libmp3lame.so
+# BuildDep:	/usr/lib/libmpeg2.so	/usr/lib/libmpeg2.so
+# BuildDep:	/usr/lib/liba52.so	/usr/lib/liba52.so
+# BuildDep:	/usr/lib/libid3tag.so	/usr/lib/libid3tag.so
+# BuildDep:	/usr/lib/libmad.so	/usr/lib/libmad.so
+# BuildDep:	/usr/lib/libcdio.so	/usr/lib/libcdio.so
+# BuildDep:	/usr/lib/libx264.so	/usr/lib/libx264.so
+# BuildDep:	/usr/lib/libopencore-amrnb.so	/usr/lib/libopencore-amrnb.so
+# BuildDep:	/usr/lib/libgstaudio-0.10.so	/usr/lib/libgstaudio-0.10.so
+# Dep(post):	/usr/lib/libgstaudio-0.10.so	/usr/lib/libgstaudio-0.10.so
+# Dep(post):	/usr/lib/libopencore-amrnb.so	/usr/lib/libopencore-amrnb.so
+# Dep(post):	/usr/lib/libx264.so	/usr/lib/libx264.so
+# Dep(post):	/usr/lib/libcdio.so	/usr/lib/libcdio.so
+# Dep(post):	/usr/lib/libmad.so	/usr/lib/libmad.so
+# Dep(post):	/usr/lib/libid3tag.so	/usr/lib/libid3tag.so
+# Dep(post):	/usr/lib/liba52.so	/usr/lib/liba52.so
+# Dep(post):	/usr/lib/libmpeg2.so	/usr/lib/libmpeg2.so
+# Dep(post):	/usr/lib/libmp3lame.so	/usr/lib/libmp3lame.so
+# Dep(post):	/usr/lib/libdvdread.so	/usr/lib/libdvdread.so
+
+nbuild() {
+./configure --prefix=/usr --sysconfdir=/etc --localstatedir=/var \
+--disable-static --enable-experimental \
+--with-package-name="GStreamer Ugly Plugins (NeonatoX)" \
+--with-package-origin="http://vegnux.nhopkg.org"
+make
+sed -e 's/gst-libs gst ext/gst-libs gst/' -i Makefile
+}
+
+ninstall() {
+make  install
+make -C ext  install
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

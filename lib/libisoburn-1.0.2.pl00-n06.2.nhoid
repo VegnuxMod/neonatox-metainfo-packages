@@ -1,0 +1,37 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	libisoburn
+# Version:	1.0.2.pl00
+# Release:	n06.2
+# License:	GPLv2
+# Group:	Multimedia
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64 arm arm64
+# Url:	http://libburnia.pykix.org/wiki/Libisoburn
+# Description:	Frontend for libraries libburn and libisofs.
+# MD5:	5ec998118a94ac59e411c72d80de55b2  libisoburn-1.0.2.pl00.tar.xz
+
+
+# BuildDep:	/usr/lib/libburn.so	/usr/lib/libburn.so
+# BuildDep:	/usr/lib/libisofs.so	/usr/lib/libisofs.so
+# BuildDep:	/usr/lib/libreadline.so	/usr/lib/libreadline.so
+# Dep(post):	/usr/lib/libreadline.so	/usr/lib/libreadline.so
+# Dep(post):	/usr/lib/libisofs.so	/usr/lib/libisofs.so
+# Dep(post):	/usr/lib/libburn.so	/usr/lib/libburn.so
+
+nbuild() {
+./configure --prefix=/usr
+make
+}
+
+ninstall() {
+make install
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

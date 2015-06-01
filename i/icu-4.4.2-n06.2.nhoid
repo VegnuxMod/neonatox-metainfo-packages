@@ -1,0 +1,33 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	icu
+# Version:	4.4.2
+# Release:	n06.2
+# License:	custom
+# Group:	System
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64 arm arm64
+# Url:	http://www.icu-project.org/
+# Description:	International Components for Unicode library.
+# MD5:	f0735221a60c06126694b51881532579  icu-4.4.2.tar.xz
+
+
+
+nbuild() {
+cd source
+./configure --prefix=/usr --sysconfdir=/etc --mandir=/usr/share/man
+make
+}
+
+ninstall() {
+cd source
+make -j1 install
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

@@ -1,0 +1,44 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	rhino
+# Version:	1.7R3
+# Release:	n06.2
+# License:	GPLv2 MPL
+# Group:	Programming
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64 arm arm64
+# Url:	http://www.mozilla.org/rhino/
+# Description:	Open-source implementation of JavaScript written entirely in Java.
+# MD5:	316744d11ae986016f5514be2dad6970  rhino-1.7R3.tar.xz
+
+
+# BuildDep:	/usr/share/java/apache-ant/bin/ant	/usr/share/java/apache-ant/bin/ant
+# Dep(post):	/usr/share/java/apache-ant/bin/ant	/usr/share/java/apache-ant/bin/ant
+
+nbuild() {
+noemptyfuncs
+}
+
+ninstall() {
+curdir=$(pwd)
+pkgdir=/tmp/rhino
+cd ../
+tar xf xmlbeans-2.5.0.tgz
+cd ${curdir}
+/usr/share/java/apache-ant/bin/ant -Dxbean.jar="../xmlbeans-2.5.0/lib/xbean.jar" -Djsr173.jar="../xmlbeans-2.5.0/lib/jsr173_1.0_api.jar" jar javadoc
+cd build/rhino1_7R3
+install -Dm644 js.jar ${pkgdir}/usr/share/java/js-1.7R3.jar
+ln -s js-1.7R3.jar ${pkgdir}/usr/share/java/js.jar
+install -m755 -d ${pkgdir}/usr/share/rhino
+cp -r javadoc ${pkgdir}/usr/share/rhino
+cp -r ${pkgdir}/* /
+rm -r ${pkgdir}
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

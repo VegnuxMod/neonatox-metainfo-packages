@@ -1,0 +1,47 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	qxmlrpc
+# Version:	20121807
+# Release:	n06.2
+# License:	GPLv3
+# Group:	Programing
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64 arm arm64 armel
+# Url:	https://code.google.com/p/qxmlrpc/
+# Description:	The QXML-RPC library is a full Qt4 based implementation of XML-RPC protocol.
+# MD5:	3eab87efcdd84d699c27c4e602bed586  qxmlrpc-20121807.tar.xz
+
+
+# BuildDep:	/usr/lib/libQtCore.so	/usr/lib/libQtCore.so
+# Dep(post):	/usr/lib/libQtCore.so	/usr/lib/libQtCore.so
+
+nbuild() {
+patch -p1 < ../01_build_targets.patch
+patch -p1 < ../02_staticlib_removed.patch
+patch -p1 < ../03_client.h_include_fix.patch
+patch -p1 < ../04_do_not_link_gui.patch
+qmake
+make
+}
+
+ninstall() {
+pkgdir=/tmp/qxmlrpc
+install -Dm 755 "libqxmlrpc.so" "$pkgdir/usr/lib/libqxmlrpc.so"
+install -Dm 755 "xmlrpc/client.h" "$pkgdir/usr/include/qxmlrpc/client.h"
+install -Dm 755 "xmlrpc/request.h" "$pkgdir/usr/include/qxmlrpc/request.h"
+install -Dm 755 "xmlrpc/response.h" "$pkgdir/usr/include/qxmlrpc/response.h"
+install -Dm 755 "xmlrpc/server.h" "$pkgdir/usr/include/qxmlrpc/server.h"
+install -Dm 755 "xmlrpc/serverintrospection.h" "$pkgdir/usr/include/qxmlrpc/serverintrospection.h"
+install -Dm 755 "xmlrpc/variant.h" "$pkgdir/usr/include/qxmlrpc/variant.h"
+ln -svf "libqxmlrpc.so" "$pkgdir/usr/lib/libqxmlrpc.so.1"
+cp -r $pkgdir/* /
+rm -r $pkgdir
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

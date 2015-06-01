@@ -1,0 +1,34 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	lsdvd
+# Version:	0.16
+# Release:	n06.2
+# License:	GPLv2
+# Group:	Multimedia
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64 arm arm64 armel
+# Url:	http://sourceforge.net/projects/lsdvd/
+# Description:	A C application for reading the contents of a DVD and printing the contents to your terminal.
+# MD5:	b2ee8f239fed4bdc895382d7cad27ad0  lsdvd-0.16.tar.xz
+
+
+# BuildDep:	/usr/lib/libdvdread.so	/usr/lib/libdvdread.so
+# Dep(post):	/usr/lib/libdvdread.so	/usr/lib/libdvdread.so
+
+nbuild() {
+patch -Np1 -i ../stdint_usage.patch
+./configure --prefix=/usr --mandir=/usr/share/man
+make
+}
+
+ninstall() {
+make install
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

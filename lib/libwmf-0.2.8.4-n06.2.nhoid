@@ -1,0 +1,40 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	libwmf
+# Version:	0.2.8.4
+# Release:	n06.2
+# License:	LGPL
+# Group:	System
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64 arm arm64 armel
+# Url:	http://wvware.sourceforge.net/libwmf.html
+# Description:	A library for reading vector images in Microsoft's native Windows Metafile Format (WMF).
+# MD5:	44828180d4272ac50cbb23ac91881273  libwmf-0.2.8.4.tar.xz
+
+
+nbuild() {
+patch -p1 -i "../libpng14.patch"
+patch -p1 -i "../libwmf-0.2.8.4-useafterfree.patch"
+./configure --prefix=/usr \
+--with-gsfontdir=/usr/share/fonts/Type1 \
+--with-fontdir=/usr/share/fonts/Type1 \
+--with-gsfontmap=/usr/share/ghostscript/8.15/lib/Fontmap.GS
+make
+}
+
+ninstall() {
+pkgdir=/tmp/wmf
+make DESTDIR="${pkgdir}" install
+rm -rf "${pkgdir}/usr/share/fonts"
+rm -f "${pkgdir}"/usr/lib/gtk-2.0/*/loaders/io-wmf.a
+cp -r ${pkgdir}/* /
+rm -r ${pkgdir}
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

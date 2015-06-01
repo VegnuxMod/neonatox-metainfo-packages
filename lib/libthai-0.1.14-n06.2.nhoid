@@ -1,0 +1,33 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sánchez <cargabsj175@gmail.com>
+
+# Name:	libthai
+# Version:	0.1.14
+# Release:	n06.2
+# License:	LGPL
+# Group:	Programming
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64
+# Url:	http://linux.thai.net/projects/libthai
+# Description:	Thai language support routines.
+# MD5:	8f7439160dbd1f79f301455b3830f67f  libthai-0.1.14.tar.xz
+
+
+# BuildDep:	/usr/lib/libdatrie.so	/usr/lib/libdatrie.so
+# Dep(post):	/usr/lib/libdatrie.so	/usr/lib/libdatrie.so
+
+nbuild() {
+./configure --prefix=/usr --disable-static
+make
+}
+
+ninstall() {
+make install
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

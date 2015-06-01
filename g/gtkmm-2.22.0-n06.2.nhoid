@@ -1,0 +1,37 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	gtkmm
+# Version:	2.22.0
+# Release:	n06.2
+# License:	LGPL
+# Group:	Graphic Library
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64 arm arm64
+# Url:	http://gtkmm.sourceforge.net/
+# Description:	C++ bindings for gtk2.
+# MD5:	a2406c32fa40401cf54fd37d61706d78  gtkmm-2.22.0.tar.xz
+
+
+# BuildDep:	/usr/lib/libgtk-x11-2.0.so	/usr/lib/libgtk-x11-2.0.so
+# BuildDep:	/usr/lib/libpangomm-1.4.so	/usr/lib/libpangomm-1.4.so
+# BuildDep:	/usr/lib/libatkmm-1.6.so	/usr/lib/libatkmm-1.6.so
+# Dep(post):	/usr/lib/libatkmm-1.6.so	/usr/lib/libatkmm-1.6.so
+# Dep(post):	/usr/lib/libpangomm-1.4.so	/usr/lib/libpangomm-1.4.so
+# Dep(post):	/usr/lib/libgtk-x11-2.0.so	/usr/lib/libgtk-x11-2.0.so
+
+nbuild() {
+./configure --prefix=/usr --disable-documentation
+make
+}
+
+ninstall() {
+make install
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

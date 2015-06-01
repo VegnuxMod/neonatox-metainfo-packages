@@ -1,0 +1,30 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	adb
+# Version:	4.1
+# Release:	n06.2
+# License:	Apache
+# Group:	Programming
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64 arm armel arm64
+# Url:	http://www.android.com
+# Description:	adb host for Linux.
+# MD5:	af703b473664a46671d6f03d5e221b29  adb-4.1.tar.xz
+
+
+
+nbuild() {
+./auto.sh --prefix=/usr
+}
+
+ninstall() {
+make install
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

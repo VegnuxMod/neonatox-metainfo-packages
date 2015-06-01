@@ -1,0 +1,39 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	libtirpc
+# Version:	0.2.2
+# Release:	n06.2
+# License:	BSD
+# Group:	Networking
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64 arm armel arm64
+# Url:	http://libtirpc.sourceforge.net/
+# Description:	Transport Independent RPC library (SunRPC replacement).
+# MD5:	c39109738bab4d1d06aa6149fb50d38e  libtirpc-0.2.2.tar.xz
+
+
+# BuildDep:	/usr/lib/libgssglue.so	/usr/lib/libgssglue.so
+# Dep(post):	/usr/lib/libgssglue.so	/usr/lib/libgssglue.so
+
+nbuild() {
+patch -Np1 -i ../libtirpc-0.2.1-fortify.patch
+patch -Np1 -i ../libtirpc-0.2.3rc1.patch
+patch -Np1 -i ../libtirpc-fix-segfault-0.2.2.patch
+sh autogen.sh
+autoreconf -fisv
+./configure --prefix=/usr --enable-gss
+make
+}
+
+ninstall() {
+make install
+install -D -m644 doc/etc_netconfig /etc/netconfig
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

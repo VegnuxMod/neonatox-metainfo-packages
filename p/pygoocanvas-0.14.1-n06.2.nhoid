@@ -1,0 +1,37 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	pygoocanvas
+# Version:	0.14.1
+# Release:	n06.2
+# License:	LGPL
+# Group:	System
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64 arm arm64
+# Url:	http://developer.berlios.de/projects/pygoocanvas
+# Description:	GooCanvas python bindings.
+# MD5:	f018aa6c5d28afd85e2882e208cdf7bc  pygoocanvas-0.14.1.tar.xz
+
+
+# BuildDep:	/usr/bin/python	/usr/bin/python
+# BuildDep:	/usr/lib/libgoocanvas.so	/usr/lib/libgoocanvas.so
+# BuildDep:	/usr/lib/python2.7/site-packages/gtk-2.0/gtk/_gtk.so	/usr/lib/python2.7/site-packages/gtk-2.0/gtk/_gtk.so
+# Dep(post):	/usr/lib/python2.7/site-packages/gtk-2.0/gtk/_gtk.so	/usr/lib/python2.7/site-packages/gtk-2.0/gtk/_gtk.so
+# Dep(post):	/usr/lib/libgoocanvas.so	/usr/lib/libgoocanvas.so
+# Dep(post):	/usr/bin/python	/usr/bin/python
+
+nbuild() {
+./configure --prefix=/usr --disable-docs
+make
+}
+
+ninstall() {
+make install
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

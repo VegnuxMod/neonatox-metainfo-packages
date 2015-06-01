@@ -1,0 +1,41 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	supertuxkart
+# Version:	0.7
+# Release:	n06.2
+# License:	GPLv2
+# Group:	Games
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64 arm arm64 armel
+# Url:	http://supertuxkart.sourceforge.net/
+# Description:	A kart racing game featuring Tux and his friends.
+# MD5:	b335d0bb1b651c53c914e0f03824ee03  supertuxkart-0.7.tar.xz
+
+
+# BuildDep:	/usr/lib/libIrrlicht.so	/usr/lib/libIrrlicht.so
+# BuildDep:	/usr/lib/libopenal.so	/usr/lib/libopenal.so
+# BuildDep:	/usr/lib/libvorbis.so	/usr/lib/libvorbis.so
+# Dep(post):	/usr/lib/libvorbis.so	/usr/lib/libvorbis.so
+# Dep(post):	/usr/lib/libopenal.so	/usr/lib/libopenal.so
+# Dep(post):	/usr/lib/libIrrlicht.so	/usr/lib/libIrrlicht.so
+
+nbuild() {
+./configure --prefix=/usr --datadir=/usr/share
+sed -i "s#/usr/local#/usr#" src/io/file_manager.cpp
+sed -i "s#/games##" $(grep -Rl "/games" *)
+make
+}
+
+ninstall() {
+make install
+mv /usr/supertuxkart /usr/bin/supertuxkart
+sed -i "s#usr/supertuxkart#usr/bin/supertuxkart#" /usr/share/applications/supertuxkart.desktop
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

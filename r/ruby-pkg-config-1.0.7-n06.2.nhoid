@@ -1,0 +1,36 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	ruby-pkg-config
+# Version:	1.0.7
+# Release:	n06.2
+# License:	LGPL
+# Group:	Programming
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64 arm arm64
+# Url:	http://github.com/rcairo/pkg-config
+# Description:	A pkg-config implementation by Ruby.
+# MD5:	c9009166f4e394af517c3b07ed8b17e2  ruby-pkg-config-1.0.7.tar.xz
+
+
+# BuildDep:	/usr/bin/ruby	/usr/bin/ruby
+# Dep(post):	/usr/bin/ruby	/usr/bin/ruby
+
+nbuild() {
+noemptyfuncs
+}
+
+ninstall() {
+_gemdir="$(ruby -rubygems -e'puts Gem.default_dir')"
+pkgdir=/tmp/rubypkgconfig
+gem install --ignore-dependencies -i "$pkgdir$_gemdir" pkg-config-1.0.7.gem
+cp -r $pkgdir/* /
+rm -r $pkgdir
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

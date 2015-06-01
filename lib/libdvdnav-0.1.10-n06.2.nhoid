@@ -1,0 +1,32 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	libdvdnav
+# Version:	0.1.10
+# Release:	n06.2
+# License:	GPL
+# Group:	Multimedia
+# Arch:	i486 i586 i686 x86_64 mips mips64 mips mips64 ppc ppc64
+# Url:	http://dvd.sourceforge.net/
+# Description:	Libdvdnav is a library for developers of multimedia applications. It allows easy use of sophisticated DVD navigation features such as DVD menus, multiangle playback and even interactive DVD games.
+# MD5:	770456ba2b47b86186f3620a2aa75265  libdvdnav-0.1.10.tar.xz
+
+
+
+nbuild() {
+./autogen.sh
+./configure --prefix=/usr
+make
+}
+
+ninstall() {
+make install
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

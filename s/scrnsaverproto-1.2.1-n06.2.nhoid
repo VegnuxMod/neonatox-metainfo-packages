@@ -1,0 +1,33 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	scrnsaverproto
+# Version:	1.2.1
+# Release:	n06.2
+# License:	X11 license
+# Group:	X Window System
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64 arm arm64
+# Url:	http://www.x.org/wiki/
+# Description:	X.Org ScrnSaver protocol headers.
+# MD5:	568a0dbebe0dee70f39efbb9745589dd  scrnsaverproto-1.2.1.tar.xz
+
+
+# BuildDep:	/usr/bin/pkg-config	/usr/bin/pkg-config
+# Dep(post):	/usr/bin/pkg-config	/usr/bin/pkg-config
+
+nbuild() {
+./configure --prefix=/usr --sysconfdir=/etc --mandir=/usr/share/man --localstatedir=/var
+make
+}
+
+ninstall() {
+make install
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

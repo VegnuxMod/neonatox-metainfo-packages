@@ -1,0 +1,66 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	jdk7-openjdk
+# Version:	7.b147_2.1
+# Release:	n06.2
+# License:	GPLv2
+# Group:	Programming
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64 arm arm64 armel
+# Url:	http:/icedtea.classpath.org
+# Description:	Free Java environment based on OpenJDK 7.0 with IcedTea7 replacing binary plugs - SDK.
+# MD5:	223bb8da882e9fc3687f53059e135578  jdk7-openjdk-7.b147_2.1.tar.xz
+
+
+# BuildDep:	/usr/lib/jvm/java-7-openjdk/jre/bin/java	/usr/lib/jvm/java-7-openjdk/jre/bin/java
+# Dep(post):	/usr/lib/jvm/java-7-openjdk/jre/bin/java	/usr/lib/jvm/java-7-openjdk/jre/bin/java
+
+nbuild() {
+./build.openjdk
+}
+
+ninstall() {
+curdir=$(pwd)
+pkgdir=/tmp/jre7-openjdk
+cd "openjdk.build/j2sdk-image"
+# Main files
+mkdir ${pkgdir}
+install -m755 -d ${pkgdir}/usr/lib/jvm/java-7-openjdk/
+cp -a demo include lib sample ${pkgdir}/usr/lib/jvm/java-7-openjdk
+# 'bin' files
+pushd bin
+install -m755 -d ${pkgdir}/usr/lib/jvm/java-7-openjdk/bin/ ${pkgdir}/usr/bin/ ${pkgdir}/usr/share/man/{,ja/}man1/
+# 'java-rmi.cgi' will be handled separately as it should not be in the PATH and has no man page
+for b in $(ls | grep -v java-rmi.cgi); do
+if [ -e ../jre/bin/${b} ]; then
+# Provide a link of the jre binary in the jdk/bin/ directory
+ln -s ../jre/bin/${b} ${pkgdir}/usr/lib/jvm/java-7-openjdk/bin/${b}
+else
+# Copy binary to jdk/bin/
+install -m755 ${b} ${pkgdir}/usr/lib/jvm/java-7-openjdk/bin/${b}
+# Copy man page
+install -m644 ../man/man1/${b}.1 ${pkgdir}/usr/share/man/man1/${b}.1
+install -m644 ../man/ja/man1/${b}.1 ${pkgdir}/usr/share/man/ja/man1/${b}.1
+# Link from /bin/
+ln -s /usr/lib/jvm/java-7-openjdk/bin/${b} ${pkgdir}/usr/bin/${b}
+fi
+done
+popd
+# Handling 'java-rmi.cgi' separately
+install -m755 -D bin/java-rmi.cgi ${pkgdir}/usr/lib/jvm/java-7-openjdk/bin/java-rmi.cgi
+# Set some variables
+cd $curdir
+install -m755 -d ${pkgdir}/etc/profile.d/
+install -m755 ../jdk7-openjdk.profile ${pkgdir}/etc/profile.d/jdk.sh
+install -m755 ../jdk7-openjdk.profile.csh ${pkgdir}/etc/profile.d/jdk.csh
+cp -r ${pkgdir}/* /
+rm -r ${pkgdir}
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

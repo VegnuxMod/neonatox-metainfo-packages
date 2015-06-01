@@ -1,0 +1,54 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	gst-plugins-base
+# Version:	0.10.30
+# Release:	n06.2
+# License:	GPLv2 & LGPLv2.1
+# Group:	Multimedia
+# Arch:	i686 i486 i586 x86_64 mips mips64 mipsel mips64el ppc ppc64
+# Url:	http://www.gstreamer.net/
+# Description:	GStreamer Base Plugins is a well-groomed and well-maintained collection of GStreamer plugins and elements, spanning the range of possible types of elements one would want to write for GStreamer. It also contains helper libraries and base classes useful for writing elements. A wide range of video and audio decoders, encoders, and filters are included.
+# MD5:	ab1aa0cd29d8095f572d424d9199a729  gst-plugins-base-0.10.30.tar.xz
+
+
+# BuildDep:	/usr/lib/libgstreamer-0.10.so	/usr/lib/libgstreamer-0.10.so
+# BuildDep:	/usr/lib/liboil-0.3.so	/usr/lib/liboil-0.3.so
+# BuildDep:	/usr/lib/libgtk-x11-2.0.so	/usr/lib/libgtk-x11-2.0.so
+# OptionalBuildDep:	/usr/lib/libasound.so	/usr/lib/libasound.so
+# OptionalBuildDep:	/usr/lib/libogg.so	/usr/lib/libogg.so
+# OptionalBuildDep:	/usr/lib/libvorbis.so	/usr/lib/libvorbis.so
+# OptionalBuildDep:	/usr/lib/libtheora.so	/usr/lib/libtheora.so
+# OptionalBuildDep:	/usr/lib/libcdda_paranoia.so	/usr/lib/libcdda_paranoia.so
+# OptionalBuildDep:	/usr/lib/libfreetype.so	/usr/lib/libfreetype.so
+# OptionalBuildDep:	/usr/bin/X	/usr/bin/X
+# OptionalBuildDep:	/usr/lib/libvisual-0.4.so	/usr/lib/libvisual-0.4.so
+# Dep(post):	/usr/lib/libgstreamer-0.10.so	/usr/lib/libgstreamer-0.10.so
+# Dep(post):	/usr/lib/liboil-0.3.so	/usr/lib/liboil-0.3.so
+# Dep(post):	/usr/lib/libgtk-x11-2.0.so	/usr/lib/libgtk-x11-2.0.so
+# OptionalDep(post):	/usr/lib/libasound.so	/usr/lib/libasound.so
+# OptionalDep(post):	/usr/lib/libogg.so	/usr/lib/libogg.so
+# OptionalDep(post):	/usr/lib/libvorbis.so	/usr/lib/libvorbis.so
+# OptionalDep(post):	/usr/lib/libtheora.so	/usr/lib/libtheora.so
+# OptionalDep(post):	/usr/lib/libcdda_paranoia.so	/usr/lib/libcdda_paranoia.so
+# OptionalDep(post):	/usr/lib/libfreetype.so	/usr/lib/libfreetype.so
+# OptionalDep(post):	/usr/bin/X	/usr/bin/X
+# OptionalDep(post):	/usr/lib/libvisual-0.4.so	/usr/lib/libvisual-0.4.so
+
+nbuild() {
+./configure --prefix=/usr
+sed -i 's:        :\t:g' docs/*/Makefile
+make
+}
+
+ninstall() {
+make install
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

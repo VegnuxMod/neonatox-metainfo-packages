@@ -1,0 +1,36 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	gadmin-control-panel
+# Version:	0.0.5
+# Release:	n06.2
+# License:	GPL
+# Group:	Networking
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64 arm arm64 armel
+# Url:	http://gadmintools.flippedweb.com/index.php?option=com_content&task=view&id=16&Itemid=30
+# Description:	Control Panel for Gadmin Tools.
+# MD5:	6bffb55a348d64871edceab058bf1a81  gadmin-control-panel-0.0.5.tar.xz
+
+
+# BuildDep:	/usr/lib/libgtk-x11-2.0.so	/usr/lib/libgtk-x11-2.0.so
+# Dep(post):	/usr/lib/libgtk-x11-2.0.so	/usr/lib/libgtk-x11-2.0.so
+
+nbuild() {
+# replaces the ugly original logo.
+cp ../gadmin-control-panel.png pixmaps/gadmin-control-panel.png
+./configure --prefix=/usr
+make
+}
+
+ninstall() {
+make install
+install -D -m644 ../gadmin-control-panel.desktop /usr/share/applications/gadmin-control-panel.desktop
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

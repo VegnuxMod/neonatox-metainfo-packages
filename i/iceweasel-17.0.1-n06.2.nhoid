@@ -1,0 +1,122 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	iceweasel
+# Version:	17.0.1
+# Release:	n06.2
+# License:	MPL GPL LGPL
+# Group:	Networking
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64 arm arm64 armel
+# Url:	http://www.geticeweasel.org/
+# Description:	A libre version of Debian Iceweasel, the Browser based on Mozilla Firefox.
+# MD5:	7a6b11d28298f7c7cde762debb81e71b  iceweasel-17.0.1.tar.xz
+
+
+# BuildDep:	/usr/lib/libasound.so	/usr/lib/libasound.so
+# BuildDep:	/usr/lib/libdbus-glib-1.so	/usr/lib/libdbus-glib-1.so
+# BuildDep:	/usr/bin/desktop-file-install	/usr/bin/desktop-file-install
+# BuildDep:	/usr/lib/libgtk-x11-2.0.so	/usr/lib/libgtk-x11-2.0.so
+# BuildDep:	/usr/share/icons/hicolor/index.theme	/usr/share/icons/hicolor/index.theme
+# BuildDep:	/usr/lib/libhunspell-1.2.so	/usr/lib/libhunspell-1.2.so
+# BuildDep:	/usr/lib/libevent.so	/usr/lib/libevent.so
+# BuildDep:	/usr/lib/libnotify.so	/usr/lib/libnotify.so
+# BuildDep:	/usr/lib/libXt.so	/usr/lib/libXt.so
+# BuildDep:	/etc/mime.types	/etc/mime.types
+# BuildDep:	/etc/profile.d/mozilla-common.sh	/etc/profile.d/mozilla-common.sh
+# BuildDep:	/usr/lib/libsqlite3.so	/usr/lib/libsqlite3.so
+# BuildDep:	/usr/lib/libstartup-notification-1.so	/usr/lib/libstartup-notification-1.so
+# BuildDep:	/usr/lib/mozilla/searchplugins/wikipedia.xml	/usr/lib/mozilla/searchplugins/wikipedia.xml
+# BuildDep:	/usr/lib/libnss3.so	/usr/lib/libnss3.so
+# BuildDep:	/usr/bin/diff	/usr/bin/diff
+# BuildDep:	/usr/lib/libIDL-2.so	/usr/lib/libIDL-2.so
+# BuildDep:	/usr/bin/pkg-config	/usr/bin/pkg-config
+# BuildDep:	/usr/bin/python	/usr/bin/python
+# BuildDep:	/usr/local/bin/unzip	/usr/local/bin/unzip
+# BuildDep:	/usr/bin/yasm	/usr/bin/yasm
+# BuildDep:	/usr/bin/zip	/usr/bin/zip
+# BuildDep:	/usr/lib/libGL.so	/usr/lib/libGL.so
+# BuildDep:	/usr/sbin/iwconfig	/usr/sbin/iwconfig
+# BuildDep:	/usr/bin/autoconf-2.13	/usr/bin/autoconf-2.13
+# Dep(post):	/usr/lib/libnss3.so	/usr/lib/libnss3.so
+# Dep(post):	/usr/lib/mozilla/searchplugins/wikipedia.xml	/usr/lib/mozilla/searchplugins/wikipedia.xml
+# Dep(post):	/usr/lib/libstartup-notification-1.so	/usr/lib/libstartup-notification-1.so
+# Dep(post):	/usr/lib/libsqlite3.so	/usr/lib/libsqlite3.so
+# Dep(post):	/etc/profile.d/mozilla-common.sh	/etc/profile.d/mozilla-common.sh
+# Dep(post):	/etc/mime.types	/etc/mime.types
+# Dep(post):	/usr/lib/libXt.so	/usr/lib/libXt.so
+# Dep(post):	/usr/lib/libnotify.so	/usr/lib/libnotify.so
+# Dep(post):	/usr/lib/libevent.so	/usr/lib/libevent.so
+# Dep(post):	/usr/lib/libhunspell-1.2.so	/usr/lib/libhunspell-1.2.so
+# Dep(post):	/usr/share/icons/hicolor/index.theme	/usr/share/icons/hicolor/index.theme
+# Dep(post):	/usr/lib/libgtk-x11-2.0.so	/usr/lib/libgtk-x11-2.0.so
+# Dep(post):	/usr/bin/desktop-file-install	/usr/bin/desktop-file-install
+# Dep(post):	/usr/lib/libdbus-glib-1.so	/usr/lib/libdbus-glib-1.so
+# Dep(post):	/usr/lib/libasound.so	/usr/lib/libasound.so
+
+nbuild() {
+srcdir=$(pwd)
+tar xf ../iceweasel_17.0-1.debian.tar.gz -C ${srcdir}
+export QUILT_PATCHES=debian/patches
+export QUILT_REFRESH_ARGS='-p ab --no-timestamps --no-index'
+export QUILT_DIFF_ARGS='--no-timestamps'
+export LDFLAGS="$LDFLAGS -Wl,-rpath,/usr/lib/iceweasel"
+export PYTHON="/usr/bin/python"
+export DEBIAN_BUILD="mozilla-release"
+cp -R debian "${srcdir}/${DEBIAN_BUILD}"
+rm -R debian
+cd "${srcdir}/${DEBIAN_BUILD}"
+rm -v debian/patches/l10n/Place-google-and-gmail-before-yandex.patch
+rm -v debian/patches/debian-hacks/Bug-756390-Make-the-Reset-Firefox-feature-more-gener.patch
+patch -Np1 -i "../../Bug-756390-Make-the-Reset-Firefox-feature-more-gener.patch"
+patch -Np1 -i "../../iceweasel-install-dir.patch"
+patch -Np1 -i "../../xulrunner-copy-stub.patch"
+patch -Np1 -i "../../libre.patch"
+patch -Np1 -i "../../shared-libs.patch"
+patch -Np1 -i "../../ff2iceweasel-bin.patch"
+cp "../../iceweasel.mozconfig" .mozconfig
+sed -i '/^PRE_RELEASE_SUFFIX := ""/s/ ""//' browser/base/Makefile.in
+LD_PRELOAD="" make -j1 -f client.mk build MOZ_MAKE_FLAGS="$MAKEFLAGS"
+}
+
+ninstall() {
+export pkgdir=/tmp/iceweasel
+export srcdir=$(pwd)
+export DEBIAN_BUILD="mozilla-release"
+cd "${srcdir}/${DEBIAN_BUILD}"
+make -j1 -f client.mk DESTDIR="${pkgdir}" install
+install -Dm644 ../../vendor.js "${pkgdir}/usr/lib/iceweasel/defaults/preferences/vendor.js"
+_brandingdir=${srcdir}/${DEBIAN_BUILD}/debian/branding
+brandingdir=$_brandingdir
+icondir="${pkgdir}/usr/share/icons/hicolor"
+for i in 16x16 32x32 48x48 64x64; do
+install -Dm644 "$brandingdir/default${i/x*/}.png" "$icondir/$i/apps/iceweasel.png"
+done
+install -Dm644 "$brandingdir/mozicon128.png" "$icondir/128x128/apps/iceweasel.png"
+install -Dm644 "$_brandingdir/iceweasel_icon.svg" "$icondir/scalable/apps/iceweasel.svg"
+install -d "${pkgdir}/usr/share/applications"
+install -m644 debian/iceweasel.desktop      "${pkgdir}/usr/share/applications"
+rm -rf "${pkgdir}/usr/lib/iceweasel/"{dictionaries,hyphenation,searchplugins,plugins}
+ln -sf /usr/share/hunspell "${pkgdir}/usr/lib/iceweasel/dictionaries"
+ln -sf /usr/share/hyphen "${pkgdir}/usr/lib/iceweasel/hyphenation"
+ln -sf /usr/lib/mozilla/plugins "${pkgdir}/usr/lib/iceweasel/plugins"
+ln -sf /usr/lib/mozilla/searchplugins "${pkgdir}/usr/lib/iceweasel/searchplugins"
+rm -rf "${pkgdir}"/usr/lib/firefox-devel-17.0
+rm -rf "${pkgdir}"/usr/lib/firefox-17.0/searchplugins
+rm -rf "${pkgdir}"/usr/lib/firefox-17.0/firefox-bin
+cp -r "${pkgdir}"/usr/lib/firefox-17.0/* ${pkgdir}/usr/lib/iceweasel/
+rm -rf "${pkgdir}"/usr/lib/firefox-17.0
+rm -rf ${pkgdir}"/usr/bin/firefox"
+mv ${pkgdir}/usr/lib/iceweasel/firefox ${pkgdir}/usr/lib/iceweasel/iceweasel
+ln -sf iceweasel "${pkgdir}/usr/lib/iceweasel/iceweasel-bin"
+ln -sf  ../lib/iceweasel/iceweasel ${pkgdir}"/usr/bin/iceweasel"
+cp -R ${pkgdir}/* /
+rm -R ${pkgdir}
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

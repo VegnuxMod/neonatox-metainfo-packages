@@ -1,0 +1,36 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	hunspell
+# Version:	1.2.12
+# Release:	n06.2
+# License:	GPL LGPL MPL
+# Group:	System
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64 arm arm64
+# Url:	http://hunspell.sourceforge.net/
+# Description:	Spell checker and morphological analyzer library and program.
+# MD5:	048189c0e5b6a8a49d9d5c901dcc3a35  hunspell-1.2.12.tar.xz
+
+
+# BuildDep:	/usr/lib/libreadline.so	/usr/lib/libreadline.so
+# BuildDep:	/usr/bin/perl	/usr/bin/perl
+# Dep(post):	/usr/bin/perl	/usr/bin/perl
+# Dep(post):	/usr/lib/libreadline.so	/usr/lib/libreadline.so
+
+nbuild() {
+./configure --prefix=/usr --disable-static \
+--with-ui --with-readline --with-experimental
+make
+}
+
+ninstall() {
+make install
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

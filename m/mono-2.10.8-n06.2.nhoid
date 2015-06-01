@@ -1,0 +1,44 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	mono
+# Version:	2.10.8
+# Release:	n06.2
+# License:	GPL LGPLv2 MPL MIT
+# Group:	Framework
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64 arm arm64
+# Url:	http://www.mono-project.com/
+# Description:	Free implementation of the .NET platform including runtime and compiler.
+# MD5:	1bcea66af0636c1d45bad1752d941b73  mono-2.10.8.tar.xz
+
+
+# BuildDep:	/usr/lib/libz.so	/usr/lib/libz.so
+# BuildDep:	/usr/lib/libgdiplus.so	/usr/lib/libgdiplus.so
+# BuildDep:	/bin/sh	/bin/sh
+# Dep(post):	/bin/sh	/bin/sh
+# Dep(post):	/usr/lib/libgdiplus.so	/usr/lib/libgdiplus.so
+# Dep(post):	/usr/lib/libz.so	/usr/lib/libz.so
+
+nbuild() {
+./configure --prefix=/usr --sysconfdir=/etc \
+--with-libgdiplus=installed
+make
+cd mcs/jay
+make
+}
+
+ninstall() {
+make install
+cd mcs/jay
+make prefix=/usr INSTALL=../../install-sh install
+install -m755 ../mono /etc/rc.d/init.d/mono
+sed -i -e "s:#Requires:Requires:" /usr/lib/pkgconfig/mono.pc
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

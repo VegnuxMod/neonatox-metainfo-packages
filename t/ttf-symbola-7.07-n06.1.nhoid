@@ -1,0 +1,33 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	ttf-symbola
+# Version:	7.07
+# Release:	n06.1
+# License:	custom
+# Group:	font
+# Arch:	any
+# Url:	http://users.teilar.gr/~g1951d/
+# Description:	Font for unicode symbols (part of Unicode Fonts for Ancient Scripts).
+# MD5:	b224a615d30465117ee1bf13edee7ee7  ttf-symbola-7.07.tar.xz
+
+# BuildDep:	/usr/lib/libfontconfig.so	/usr/lib/libfontconfig.so
+# Dep(post):	/usr/lib/libfontconfig.so	/usr/lib/libfontconfig.so
+
+nbuild() {
+noemptyfuncs
+}
+
+ninstall() {
+install -Dm644 "Symbola.ttf" "/usr/share/fonts/TTF/Symbola.ttf"
+}
+
+npostinstall() {
+fc-cache -fs
+mkfontscale /usr/share/fonts/TTF
+mkfontdir /usr/share/fonts/TTF
+}
+
+npostremove() {
+noemptyfuncs
+}

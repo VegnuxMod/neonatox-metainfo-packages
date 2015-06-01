@@ -1,0 +1,33 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	perl-locale-maketext-lexicon
+# Version:	0.86
+# Release:	n06.2
+# License:	GPL PerlArtistic
+# Group:	System
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64 arm arm64 armel
+# Url:	http://search.cpan.org/dist/Locale-Maketext-Lexicon
+# Description:	Perl/CPAN Module Locale::Maketext::Lexicon : Use other catalog formats in Maketext.
+# MD5:	81d9f86cecf58f7212b7112f50e96bfb  perl-locale-maketext-lexicon-0.86.tar.xz
+
+
+# BuildDep:	/usr/bin/perl	/usr/bin/perl
+# Dep(post):	/usr/bin/perl	/usr/bin/perl
+
+nbuild() {
+PERL_MM_USE_DEFAULT=1 perl Makefile.PL INSTALLDIRS=vendor
+make
+}
+
+ninstall() {
+make install
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

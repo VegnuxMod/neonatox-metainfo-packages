@@ -1,0 +1,64 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	imagemagick
+# Version:	6.6.4.10
+# Release:	n06.2
+# License:	custom
+# Group:	Graphics Library
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64 arm arm64
+# Url:	An image viewing/manipulation program.
+# Description:	An image viewing/manipulation program.
+# MD5:	ecb2a7efc7559dd3448224e038662bc8  imagemagick-6.6.4.10.tar.xz
+
+
+# BuildDep:	/usr/lib/liblcms.so	/usr/lib/liblcms.so
+# BuildDep:	/bin/bzip2	/bin/bzip2
+# BuildDep:	/usr/lib/libfreetype.so	/usr/lib/libfreetype.so
+# BuildDep:	/usr/lib/libfontconfig.so	/usr/lib/libfontconfig.so
+# BuildDep:	/usr/lib/libXext.so	/usr/lib/libXext.so
+# BuildDep:	/usr/lib/libIlmImf.so	/usr/lib/libIlmImf.so
+# BuildDep:	/usr/lib/libwmf.so	/usr/lib/libwmf.so
+# BuildDep:	/usr/lib/librsvg-2.so	/usr/lib/librsvg-2.so
+# BuildDep:	/usr/lib/libxml2.so	/usr/lib/libxml2.so
+# BuildDep:	/usr/lib/libjasper.so	/usr/lib/libjasper.so
+# Dep(post):	/usr/lib/libjasper.so	/usr/lib/libjasper.so
+# Dep(post):	/usr/lib/libxml2.so	/usr/lib/libxml2.so
+# Dep(post):	/usr/lib/librsvg-2.so	/usr/lib/librsvg-2.so
+# Dep(post):	/usr/lib/libwmf.so	/usr/lib/libwmf.so
+# Dep(post):	/usr/lib/libIlmImf.so	/usr/lib/libIlmImf.so
+# Dep(post):	/usr/lib/libXext.so	/usr/lib/libXext.so
+# Dep(post):	/usr/lib/libfontconfig.so	/usr/lib/libfontconfig.so
+# Dep(post):	/usr/lib/libfreetype.so	/usr/lib/libfreetype.so
+# Dep(post):	/bin/bzip2	/bin/bzip2
+# Dep(post):	/usr/lib/liblcms.so	/usr/lib/liblcms.so
+
+nbuild() {
+if [ "$(uname -m)" = 'x86_64' ]; then
+patch -Np1 < ../libpng_mmx_patch_x86_64.patch
+fi
+patch -p0 < ../perlmagick.rpath.patch
+./configure --prefix=/usr --with-modules --disable-static \
+--enable-openmp --with-x --with-wmf --with-openexr --with-xml \
+--with-gs-font-dir=/usr/share/fonts/X11/Type1 --without-dps \
+--with-perl --without-gvc --without-djvu --without-autotrace --with-jp2 \
+--without-jbig --without-fpx
+make
+}
+
+ninstall() {
+pkgdir=/tmp/imagemagick
+make DESTDIR="${pkgdir}" install
+find "${pkgdir}" -name '*.bs' -exec rm {} \;
+rm -f "${pkgdir}"/usr/lib/*.la
+cp -r /tmp/imagemagick/* /
+rm -r /tmp/imagemagick
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

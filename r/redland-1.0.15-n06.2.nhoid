@@ -1,0 +1,45 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	redland
+# Version:	1.0.15
+# Release:	n06.2
+# License:	GPL
+# Group:	System
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64 arm arm64
+# Url:	http://librdf.org/
+# Description:	Library that provides a high-level interface to RDF data.
+# MD5:	1a593b849794fadad09491bd389120ea  redland-1.0.15.tar.xz
+
+
+# BuildDep:	/usr/lib/librasqal.so	/usr/lib/librasqal.so
+# BuildDep:	/usr/lib/libraptor.so	/usr/lib/libraptor.so
+# BuildDep:	/usr/lib/libdb-4.so	/usr/lib/libdb-4.so
+# BuildDep:	/usr/lib/libsqlite3.so	/usr/lib/libsqlite3.so
+# Dep(post):	/usr/lib/libsqlite3.so	/usr/lib/libsqlite3.so
+# Dep(post):	/usr/lib/libdb-4.so	/usr/lib/libdb-4.so
+# Dep(post):	/usr/lib/libraptor.so	/usr/lib/libraptor.so
+# Dep(post):	/usr/lib/librasqal.so	/usr/lib/librasqal.so
+
+nbuild() {
+./configure --prefix=/usr \
+--enable-release \
+--disable-static \
+--with-raptor=system \
+--with-rasqal=system \
+--with-sqlite=3
+patch -Np0 -i ../rpath.diff
+make
+}
+
+ninstall() {
+make install
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

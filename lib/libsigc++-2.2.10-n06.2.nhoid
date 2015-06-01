@@ -1,0 +1,31 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	libsigc++
+# Version:	2.2.10
+# Release:	n06.2
+# License:	LGPL
+# Group:	Programming
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64 arm arm64 armel
+# Url:	http://libsigc.sourceforge.net/
+# Description:	Libsigc++ implements a full callback system for use in widget libraries - V2.
+# MD5:	8614fc4bdd14ad62ff4a49c8ebe959fd  libsigc++-2.2.10.tar.xz
+
+
+
+nbuild() {
+./configure --prefix=/usr --disable-documentation
+make
+}
+
+ninstall() {
+make install
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

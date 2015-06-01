@@ -1,0 +1,34 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	scons
+# Version:	1.2.0
+# Release:	n06.2
+# License:	MIT
+# Group:	Programming
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64 arm arm64
+# Url:	http://www.scons.org/
+# Description:	Scons is a Python-based build system with autotools-like functionality.
+# MD5:	048b80ad2fed45b675dd0fd63fbbd8a5  scons-1.2.0.tar.xz
+
+
+# BuildDep:	/usr/bin/python	/usr/bin/python
+# Dep(post):	/usr/bin/python	/usr/bin/python
+
+nbuild() {
+python setup.py build
+}
+
+ninstall() {
+python setup.py install --root=/tmp/scons
+cp -r /tmp/scons/* /
+rm -r /tmp/scons
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

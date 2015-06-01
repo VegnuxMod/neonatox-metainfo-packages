@@ -1,0 +1,33 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	libcdaudio
+# Version:	0.99.12
+# Release:	n06.2
+# License:	GPL
+# Group:	Multimedia
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64 arm arm64
+# Url:	http://libcdaudio.sourceforge.net/
+# Description:	Library for controlling Audio CDs and interacting with CDDB.
+# MD5:	8b0d67986da9935f2b6a51556e875674  libcdaudio-0.99.12.tar.xz
+
+
+
+nbuild() {
+patch -Np1 -i "../01-cddb-bufferoverflow.patch"
+patch -Np1 -i "../02-cddb-bufferoverflow.patch"
+./configure --prefix=/usr
+make
+}
+
+ninstall() {
+make install
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

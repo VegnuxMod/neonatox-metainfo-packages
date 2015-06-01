@@ -1,0 +1,39 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	aircrack-ng
+# Version:	r2230
+# Release:	n06.2
+# License:	GPLv2
+# Group:	Networking
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64 arm arm64 armel
+# Url:	http://www.aircrack-ng.org/
+# Description:	A key cracker for the 802.11 WEP and WPA-PSK protocols.
+# MD5:	486afb207ff8aefadebc8cbd0b4dfe0e  aircrack-ng-r2230.tar.xz
+
+
+# BuildDep:	/usr/lib/libssl.so	/usr/lib/libssl.so
+# BuildDep:	/usr/lib/libsqlite3.so	/usr/lib/libsqlite3.so
+# BuildDep:	/usr/sbin/iw	/usr/sbin/iw
+# BuildDep:	/sbin/ifconfig	/sbin/ifconfig
+# Dep(post):	/usr/lib/libssl.so	/usr/lib/libssl.so
+# Dep(post):	/usr/lib/libsqlite3.so	/usr/lib/libsqlite3.so
+# Dep(post):	/usr/sbin/iw	/usr/sbin/iw
+# Dep(post):	/sbin/ifconfig	/sbin/ifconfig
+
+nbuild() {
+make SQLITE=true unstable=true
+}
+
+ninstall() {
+make SQLITE=true unstable=true bindir=/usr/bin  \
+mandir=/usr/share/man/man1 sbindir=/usr/sbin install
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

@@ -1,0 +1,32 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	openjdk7-src
+# Version:	7.b147_2.1
+# Release:	n06.2
+# License:	GPLv2
+# Group:	Programming
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64 arm arm64 armel
+# Url:	http:/icedtea.classpath.org
+# Description:	Free Java environment based on OpenJDK 7.0 with IcedTea7 replacing binary plugs - sources.
+# MD5:	d163a8e15fbfec448ddc9788d2d2a246  openjdk7-src-7.b147_2.1.tar.xz
+
+
+# BuildDep:	/usr/lib/jvm/java-7-openjdk/jre/bin/java	/usr/lib/jvm/java-7-openjdk/jre/bin/java
+# Dep(post):	/usr/lib/jvm/java-7-openjdk/jre/bin/java	/usr/lib/jvm/java-7-openjdk/jre/bin/java
+
+nbuild() {
+./build.openjdk
+}
+
+ninstall() {
+install -D openjdk.build/j2sdk-image/src.zip /usr/lib/jvm/java-7-openjdk/src.zip
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

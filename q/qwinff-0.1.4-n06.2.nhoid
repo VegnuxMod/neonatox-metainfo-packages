@@ -1,0 +1,34 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	qwinff
+# Version:	0.1.4
+# Release:	n06.2
+# License:	GPLv3
+# Group:	Multimedia
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64 arm arm64 armel
+# Url:	https://code.google.com/p/qwinff/
+# Description:	Anatother frontend QT for ffmpeg.
+# MD5:	d8f55a6d9de9c099f5f192a0fcf9ce13  qwinff-0.1.4.tar.xz
+
+
+# BuildDep:	/usr/lib/libQtCore.so	/usr/lib/libQtCore.so
+# BuildDep:	/usr/bin/ffmpeg	/usr/bin/ffmpeg
+# Dep(post):	/usr/lib/libQtCore.so	/usr/lib/libQtCore.so
+# Dep(post):	/usr/bin/ffmpeg	/usr/bin/ffmpeg
+
+nbuild() {
+make
+}
+
+ninstall() {
+make install
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

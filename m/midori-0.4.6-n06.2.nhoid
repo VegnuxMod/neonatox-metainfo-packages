@@ -1,0 +1,60 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	midori
+# Version:	0.4.6
+# Release:	n06.2.1
+# License:	LGPLv2.1
+# Group:	Networking
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64 arm arm64 armel
+# Url:	http://www.twotoasts.de/index.php?/pages/midori_summary.html
+# Description:	A lightweight web browser based on Gtk WebKit.
+# MD5:	ad72718aa2767fd15e4efce7f088b871  midori-0.4.6.tar.xz
+
+
+# BuildDep:	/usr/lib/libwebkitgtk-1.0.so	/usr/lib/libwebkitgtk-1.0.so
+# BuildDep:	/usr/lib/libunique-1.0.so	/usr/lib/libunique-1.0.so
+# BuildDep:	/usr/share/icons/hicolor/index.theme	/usr/share/icons/hicolor/index.theme
+# BuildDep:	/usr/bin/desktop-file-validate	/usr/bin/desktop-file-validate
+# BuildDep:	/usr/lib/libnotify.so	/usr/lib/libnotify.so
+# BuildDep:	/usr/lib/libXss.so	/usr/lib/libXss.so
+# BuildDep:	/usr/lib/libsqlite3.so	/usr/lib/libsqlite3.so
+# BuildDep:	/usr/lib/libglib-2.0.so	/usr/lib/libglib-2.0.so
+# BuildDep:	/usr/lib/libxml2.so	/usr/lib/libxml2.so
+# BuildDep:	/usr/lib/librsvg-2.so	/usr/lib/librsvg-2.so
+# BuildDep:	/usr/bin/python	/usr/bin/python
+# BuildDep:	/usr/bin/vala	/usr/bin/vala
+# Dep(post):	/usr/bin/vala	/usr/bin/vala
+# Dep(post):	/usr/bin/python	/usr/bin/python
+# Dep(post):	/usr/lib/librsvg-2.so	/usr/lib/librsvg-2.so
+# Dep(post):	/usr/lib/libxml2.so	/usr/lib/libxml2.so
+# Dep(post):	/usr/lib/libglib-2.0.so	/usr/lib/libglib-2.0.so
+# Dep(post):	/usr/lib/libsqlite3.so	/usr/lib/libsqlite3.so
+# Dep(post):	/usr/lib/libXss.so	/usr/lib/libXss.so
+# Dep(post):	/usr/lib/libnotify.so	/usr/lib/libnotify.so
+# Dep(post):	/usr/bin/desktop-file-validate	/usr/bin/desktop-file-validate
+# Dep(post):	/usr/share/icons/hicolor/index.theme	/usr/share/icons/hicolor/index.theme
+# Dep(post):	/usr/lib/libunique-1.0.so	/usr/lib/libunique-1.0.so
+# Dep(post):	/usr/lib/libwebkitgtk-1.0.so	/usr/lib/libwebkitgtk-1.0.so
+
+nbuild() {
+./configure --prefix=/usr \
+--enable-addons \
+--disable-hildon \
+--enable-unique \
+--enable-nls \
+--disable-apidocs
+make
+}
+
+ninstall() {
+make install
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

@@ -1,0 +1,42 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	libgdiplus
+# Version:	2.10
+# Release:	n06.2
+# License:	MPL LGPL
+# Group:	System
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64 arm arm64
+# Url:	http://www.mono-project.com
+# Description:	An Open Source Implementation of the GDI+ API.
+# MD5:	771f13ef3e763c4b5abb6ef4ab644791  libgdiplus-2.10.tar.xz
+
+
+# BuildDep:	/usr/lib/libtiff.so	/usr/lib/libtiff.so
+# BuildDep:	/usr/lib/libcairo.so	/usr/lib/libcairo.so
+# BuildDep:	/usr/lib/libgif.so	/usr/lib/libgif.so
+# BuildDep:	/usr/lib/libglib-2.0.so	/usr/lib/libglib-2.0.so
+# BuildDep:	/usr/lib/libexif.so	/usr/lib/libexif.so
+# Dep(post):	/usr/lib/libexif.so	/usr/lib/libexif.so
+# Dep(post):	/usr/lib/libglib-2.0.so	/usr/lib/libglib-2.0.so
+# Dep(post):	/usr/lib/libgif.so	/usr/lib/libgif.so
+# Dep(post):	/usr/lib/libcairo.so	/usr/lib/libcairo.so
+# Dep(post):	/usr/lib/libtiff.so	/usr/lib/libtiff.so
+
+nbuild() {
+patch -p0 <../libpng15.patch
+./configure --prefix=/usr --with-cairo=system
+make
+}
+
+ninstall() {
+make install
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

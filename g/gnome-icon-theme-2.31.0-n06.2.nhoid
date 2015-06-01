@@ -1,0 +1,37 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	gnome-icon-theme
+# Version:	2.31.0
+# Release:	n06.2
+# License:	GPLv2
+# Group:	Gnome Desktop
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64
+# Url:	http://www.gnome.org/
+# Description:	Gnome Icon Theme.
+# MD5:	66da5a103421e520397a8c0436ea1186  gnome-icon-theme-2.31.0.tar.xz
+
+
+# BuildDep:	/usr/lib/perl5/site_perl/5.10.1/i686-linux/XML/Parser.pm	/usr/lib/perl5/site_perl/5.10.1/i686-linux/XML/Parser.pm
+# BuildDep:	/usr/share/pkgconfig/icon-naming-utils.pc	/usr/share/pkgconfig/icon-naming-utils.pc
+# BuildDep:	/usr/share/icons/hicolor/index.theme	/usr/share/icons/hicolor/index.theme
+# Dep(post):	/usr/lib/perl5/site_perl/5.10.1/i686-linux/XML/Parser.pm	/usr/lib/perl5/site_perl/5.10.1/i686-linux/XML/Parser.pm
+# Dep(post):	/usr/share/pkgconfig/icon-naming-utils.pc	/usr/share/pkgconfig/icon-naming-utils.pc
+# Dep(post):	/usr/share/icons/hicolor/index.theme	/usr/share/icons/hicolor/index.theme
+
+nbuild() {
+./configure --prefix=/usr
+make
+}
+
+ninstall() {
+make install
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

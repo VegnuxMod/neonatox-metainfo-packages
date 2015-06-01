@@ -1,0 +1,40 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	xfce4-notifyd
+# Version:	0.2.1
+# Release:	n06.2
+# License:	GPLv2
+# Group:	Xfce Desktop
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64 arm arm64
+# Url:	http://goodies.xfce.org/projects/applications/xfce4-notifyd
+# Description:	Notification daemon for the xfce desktop.
+# MD5:	20e400e929a6d29a9ff2cc905b5399d3  xfce4-notifyd-0.2.1.tar.xz
+
+
+# BuildDep:	/usr/lib/libxfce4ui-1.so	/usr/lib/libxfce4ui-1.so
+# BuildDep:	/usr/share/icons/hicolor/index.theme	/usr/share/icons/hicolor/index.theme
+# Dep(post):	/usr/lib/libxfce4ui-1.so	/usr/lib/libxfce4ui-1.so
+# Dep(post):	/usr/share/icons/hicolor/index.theme	/usr/share/icons/hicolor/index.theme
+
+nbuild() {
+./configure --prefix=/usr \
+--sysconfdir=/etc \
+--libexecdir=/usr/lib \
+--localstatedir=/var \
+--disable-static \
+--disable-debug
+make
+}
+
+ninstall() {
+make install
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

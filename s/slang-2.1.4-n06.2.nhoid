@@ -1,0 +1,35 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	slang
+# Version:	2.1.4
+# Release:	n06.2
+# License:	GPLv2
+# Group:	Core System
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64
+# Url:	http://www.s-lang.org/
+# Description:	S-Lang is a multi-platform programmer's library designed to allow a developer to create robust multi-platform software. It provides facilities required by interactive applications such as display/screen management, keyboard input, keymaps, and so on. The most exciting feature of the library is the slang interpreter that may be easily embedded into a program to make it extensible.
+# MD5:	6839e34c8fee876b1bfddb7a3e5bddcf  slang-2.1.4.tar.xz
+
+
+# BuildDep:	/usr/lib/libpcre.so	/usr/lib/libpcre.so
+# Dep(post):	/usr/lib/libpcre.so	/usr/lib/libpcre.so
+
+nbuild() {
+LDFLAGS=-lncurses ./configure --prefix=/usr --sysconfdir=/etc --with-readline=gnu
+make
+make elf
+}
+
+ninstall() {
+make install-elf
+chmod -v 755 /usr/lib/libslang.so.2.1.4
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

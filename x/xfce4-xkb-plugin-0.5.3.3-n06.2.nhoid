@@ -1,0 +1,43 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	xfce4-xkb-plugin
+# Version:	0.5.3.3
+# Release:	n06.2
+# License:	custom
+# Group:	Xfce Desktop
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64 arm arm64
+# Url:	http://goodies.xfce.org/projects/panel-plugins/xfce4-xkb-plugin
+# Description:	Plugin to switch keyboard layouts for the Xfce4 panel.
+# MD5:	b96e7b693c55757e957a0b596f0401fb  xfce4-xkb-plugin-0.5.3.3.tar.xz
+
+
+# BuildDep:	/usr/lib/libxfce4panel-1.0.so	/usr/lib/libxfce4panel-1.0.so
+# BuildDep:	/usr/lib/libxfcegui4.so	/usr/lib/libxfcegui4.so
+# BuildDep:	/usr/lib/libxklavier.so	/usr/lib/libxklavier.so
+# BuildDep:	/usr/lib/librsvg-2.so	/usr/lib/librsvg-2.so
+# Dep(post):	/usr/lib/librsvg-2.so	/usr/lib/librsvg-2.so
+# Dep(post):	/usr/lib/libxklavier.so	/usr/lib/libxklavier.so
+# Dep(post):	/usr/lib/libxfcegui4.so	/usr/lib/libxfcegui4.so
+# Dep(post):	/usr/lib/libxfce4panel-1.0.so	/usr/lib/libxfce4panel-1.0.so
+
+nbuild() {
+patch -Np1 -i "../xfce4-xkb-plugin-0.5.3.3-libxklavier.patch"
+patch -Np1 -i "../crashfix.diff"
+./configure --prefix=/usr --sysconfdir=/etc \
+--libexecdir=/usr/lib --localstatedir=/var \
+--disable-static --disable-debug
+make
+}
+
+ninstall() {
+make install
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

@@ -1,0 +1,35 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	gnuchess
+# Version:	6.0.2
+# Release:	n06.2
+# License:	GPL
+# Group:	Games
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64 arm arm64
+# Url:	http://www.gnu.org/software/chess/chess.html
+# Description:	Lets most modern computers play a full game of chess.
+# MD5:	28e4c68fe1c9571cf9d497d09098b7e0  gnuchess-6.0.2.tar.xz
+
+
+# BuildDep:	/usr/lib/libncurses.so	/usr/lib/libncurses.so
+# BuildDep:	/usr/lib/libreadline.so	/usr/lib/libreadline.so
+# Dep(post):	/usr/lib/libreadline.so	/usr/lib/libreadline.so
+# Dep(post):	/usr/lib/libncurses.so	/usr/lib/libncurses.so
+
+nbuild() {
+./configure --prefix=/usr
+make
+}
+
+ninstall() {
+make install
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

@@ -1,0 +1,31 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sánchez <cargabsj175@gmail.com>
+
+# Name:	iso-codes
+# Version:	3.14
+# Release:	n06.2
+# License:	LGPL
+# Group:	System
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64
+# Url:	http://pkg-isocodes.alioth.debian.org/
+# Description:	Lists of the country, language, and currency names
+# MD5:	052b1fa7bbd127df6c620daa394a182f  iso-codes-3.14.tar.xz
+
+
+
+nbuild() {
+./configure --prefix=/usr
+make
+}
+
+ninstall() {
+make pkgconfigdir=/usr/lib/pkgconfig install
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

@@ -1,0 +1,36 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	gconf-sharp
+# Version:	2.24.2
+# Release:	n06.2
+# License:	LGPL
+# Group:	Programming
+# Arch:	i486 i586 i686 x86_64 mips mips64 mips mips64el ppc ppc64 arm arm64 armel
+# Url:	http://gtk-sharp.sourceforge.net
+# Description:	Mono bindings for GConf.
+# MD5:	dc9a60ad20ef7b5719cf43d04da79209  gconf-sharp-2.24.2.tar.xz
+
+
+# BuildDep:	/usr/lib/libgtksharpglue-2.so	/usr/lib/libgtksharpglue-2.so
+# BuildDep:	/usr/lib/libgconf-2.so	/usr/lib/libgconf-2.so
+# Dep(post):	/usr/lib/libgconf-2.so	/usr/lib/libgconf-2.so
+# Dep(post):	/usr/lib/libgtksharpglue-2.so	/usr/lib/libgtksharpglue-2.so
+
+nbuild() {
+./build.gnomesharp
+}
+
+ninstall() {
+make -C gconf/GConf install
+make -C gconf/tools install
+make -C gconf/GConf.PropertyEditors install
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

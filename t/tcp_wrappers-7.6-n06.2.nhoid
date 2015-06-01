@@ -1,0 +1,47 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sánchez <cargabsj175@gmail.com>
+
+# Name:	tcp_wrappers
+# Version:	7.6
+# Release:	n06.2
+# License:	custom
+# Group:	Core System
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64
+# Url:	ftp://ftp.porcupine.org/pub/security/index.html
+# Description:	Monitors and Controls incoming TCP connections.
+# MD5:	5d27e52e9872e95f865f78c59fe4c34c  tcp_wrappers-7.6.tar.xz
+
+
+# BuildDep:	/bin/bash	/bin/bash
+# Dep(post):	/bin/bash	/bin/bash
+
+nbuild() {
+patch -Np1 -i ../shared_lib_plus_plus-1.patch
+patch -Np1 -i ../01_all_redhat-bug11881.patch
+patch -Np0 -i ../02_all_redhat-bug17795.patch
+patch -Np0 -i ../03_all_wildcard.patch
+patch -Np1 -i ../04_all_fixgethostbyname.patch
+patch -Np1 -i ../07_all_sig.patch
+patch -Np1 -i ../09_all_gcc-3.4.patch
+patch -Np1 -i ../10_all_more-headers.patch
+patch -Np0 -i ../11_inet6_fixes.patch
+patch -Np2 -i ../tcp-wrappers-7.6-ipv6-1.14.patch
+make REAL_DAEMON_DIR=/usr/sbin STYLE=-DPROCESS_OPTIONS linux
+}
+
+ninstall() {
+make install
+install -D -m644 ../hosts.allow /etc/hosts.allow
+install -D -m644 ../hosts.deny /etc/hosts.deny
+cd /usr/share/man/man5
+ln -s hosts_access.5.gz hosts.allow.5.gz
+ln -s hosts_access.5.gz hosts.deny.5.gz
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

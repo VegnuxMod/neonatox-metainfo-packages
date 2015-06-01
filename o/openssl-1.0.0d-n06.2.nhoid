@@ -1,0 +1,37 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	openssl
+# Version:	1.0.0d
+# Release:	n06.2
+# License:	BSD custom
+# Group:	Core System
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64 arm arm64 armel
+# Url:	https://www.openssl.org
+# Description:	The Open Source toolkit for Secure Sockets Layer and Transport Layer Security.
+# MD5:	ea10419b2ea359a44d8e2675ef7049ce  openssl-1.0.0d.tar.xz
+
+
+# BuildDep:	/usr/bin/perl	/usr/bin/perl
+# Dep(post):	/usr/bin/perl	/usr/bin/perl
+
+nbuild() {
+patch -p1 -i ../fix-manpages.patch
+patch -p0 -i ../no-rpath.patch
+patch -p0 -i ../ca-dir.patch
+./config --prefix=/usr --openssldir=/etc/ssl --libdir=lib \
+shared zlib enable-md2 -Wa,--noexecstack
+make
+}
+
+ninstall() {
+make MANDIR=/usr/share/man install
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

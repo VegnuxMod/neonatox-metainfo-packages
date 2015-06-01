@@ -1,0 +1,52 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	dsniff
+# Version:	2.4b1
+# Release:	n06.2
+# License:	BSD
+# Group:	Networking
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64 arm arm64
+# Url:	http://www.monkey.org/~dugsong/dsniff/
+# Description:	Collection of tools for network auditing and penetration testing.
+# MD5:	ab3de43b90b238a012cac006301a5e05  dsniff-2.4b1.tar.xz
+
+
+# BuildDep:	/usr/lib/libpcap.so	/usr/lib/libpcap.so
+# BuildDep:	/usr/lib/libssl.so	/usr/lib/libssl.so
+# BuildDep:	/usr/lib/libXmu.so	/usr/lib/libXmu.so
+# BuildDep:	/usr/lib/libglib-2.0.so	/usr/lib/libglib-2.0.so
+# BuildDep:	/usr/lib/libnet.so	/usr/lib/libnet.so
+# BuildDep:	/usr/lib/libnids.so	/usr/lib/libnids.so
+# Dep(post):	/usr/lib/libnids.so	/usr/lib/libnids.so
+# Dep(post):	/usr/lib/libnet.so	/usr/lib/libnet.so
+# Dep(post):	/usr/lib/libglib-2.0.so	/usr/lib/libglib-2.0.so
+# Dep(post):	/usr/lib/libXmu.so	/usr/lib/libXmu.so
+# Dep(post):	/usr/lib/libssl.so	/usr/lib/libssl.so
+# Dep(post):	/usr/lib/libpcap.so	/usr/lib/libpcap.so
+
+nbuild() {
+patch -N < ../dsniff_2.4b1+debian-18.diff
+for i in *.dpatch; do
+patch -N < "$i"
+done
+LDFLAGS="-lresolv -lglib-2.0 -lgthread-2.0 $LDFLAGS" ./configure --prefix=/usr
+make
+}
+
+ninstall() {
+pkgdir=/tmp/dsniff
+make prefix="$pkgdir"/usr install
+install -d "$pkgdir"/usr/share
+mv "$pkgdir"/usr/man "$pkgdir"/usr/share/
+cp -r $pkgdir/* /
+rm -r $pkgdir
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

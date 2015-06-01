@@ -1,0 +1,46 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	avidemux-gtk
+# Version:	2.5.5
+# Release:	n06.2
+# License:	GPL
+# Group:	Multimedia
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64 arm arm64 armel
+# Url:	http://fixounet.free.fr/avidemux/
+# Description:	A graphical tool to edit video (filter/re-encode/split) GTK GUI.
+# MD5:	67dabd6bc27dd80ca99b8298292d7d0e  avidemux-gtk-2.5.5.tar.xz
+
+
+# BuildDep:	/usr/bin/avidemux2_cli	/usr/bin/avidemux2_cli
+# BuildDep:	/usr/lib/libgtk-x11-2.0.so	/usr/lib/libgtk-x11-2.0.so
+# Dep(post):	/usr/bin/avidemux2_cli	/usr/bin/avidemux2_cli
+# Dep(post):	/usr/lib/libgtk-x11-2.0.so	/usr/lib/libgtk-x11-2.0.so
+
+nbuild() {
+chmod 755 buildGUI.sh
+./buildGUI.sh
+}
+
+ninstall() {
+pkgdir=/tmp/avidemux-gtk
+install -D -m755 build/avidemux/avidemux2_gtk "${pkgdir}/usr/bin/avidemux2_gtk"
+install -d "${pkgdir}"/usr/lib/ADM_plugins/videoEncoder/{x264,xvid}
+install -d "${pkgdir}"/usr/lib/ADM_plugins/videoFilter
+install -D -m755 build/lib/*{_gtk,Gtk}.so "${pkgdir}/usr/lib"
+install -D -m755 plugins/build/ADM_videoEncoder/ADM_vidEnc_x264/gtk/*Gtk.so "${pkgdir}/usr/lib/ADM_plugins/videoEncoder/x264"
+install -D -m755 plugins/build/ADM_videoEncoder/ADM_vidEnc_xvid/gtk/*Gtk.so "${pkgdir}/usr/lib/ADM_plugins/videoEncoder/xvid"
+install -D -m755 plugins/build/ADM_videoFilters/*/*_gtk.so "${pkgdir}/usr/lib/ADM_plugins/videoFilter"
+install -D -m644 avidemux2-gtk.desktop "${pkgdir}/usr/share/applications/avidemux-gtk.desktop"
+sed -i "s|\[\$e\]||" "${pkgdir}/usr/share/applications/avidemux-gtk.desktop"
+cp -r ${pkgdir}/* /
+rm -r ${pkgdir}
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

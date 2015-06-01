@@ -1,0 +1,35 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sánchez <cargabsj175@gmail.com>
+
+# Name:	perl-extutils-depends
+# Version:	0.302
+# Release:	n06.2
+# License:	PerlArtistic
+# Group:	Programming
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64
+# Url:	http://gtk2-perl.sourceforge.net/
+# Description:	The Perl depends module.
+# MD5:	8acd88e6b70c2188dea33f42c0d503e9  perl-extutils-depends-0.302.tar.xz
+
+
+# BuildDep:	/usr/bin/perl	/usr/bin/perl
+# Dep(post):	/usr/bin/perl	/usr/bin/perl
+
+nbuild() {
+perl Makefile.PL INSTALLDIRS=vendor
+make
+}
+
+ninstall() {
+make install
+find /usr -name '.packlist' -delete
+find /usr -name 'perllocal.pod' -delete
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

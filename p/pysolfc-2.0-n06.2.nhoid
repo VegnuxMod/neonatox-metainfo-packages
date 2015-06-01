@@ -1,0 +1,42 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	pysolfc
+# Version:	2.0
+# Release:	n06.2
+# License:	GPLv3
+# Group:	Games
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64m arm arm64 armel
+# Url:	http://pysolfc.sourceforge.net/
+# Description:	PySol (Fan Club edition) is an exciting collection of more than 1000 solitaire games.
+# MD5:	5cc18e85958a45ecf70a9b089d7838fb  pysolfc-2.0.tar.xz
+
+
+# BuildDep:	/usr/bin/python	/usr/bin/python
+# BuildDep:	/usr/bin/wish	/usr/bin/wish
+# BuildDep:	/usr/bin/pilconvert	/usr/bin/pilconvert
+# BuildDep:	/usr/lib/python2.7/site-packages/pysolsoundserver.so	/usr/lib/python2.7/site-packages/pysolsoundserver.so
+# Dep(post):	/usr/lib/python2.7/site-packages/pysolsoundserver.so	/usr/lib/python2.7/site-packages/pysolsoundserver.so
+# Dep(post):	/usr/bin/pilconvert	/usr/bin/pilconvert
+# Dep(post):	/usr/bin/wish	/usr/bin/wish
+# Dep(post):	/usr/bin/python	/usr/bin/python
+
+nbuild() {
+noemptyfuncs
+}
+
+ninstall() {
+pkgdir=/tmp/pysol
+python setup.py install --root="${pkgdir}"
+ln -s pysol.py "${pkgdir}/usr/bin/pysol"
+cp -r ${pkgdir}/* /
+rm -r ${pkgdir}
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

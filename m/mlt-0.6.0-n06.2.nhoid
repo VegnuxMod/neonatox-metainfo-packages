@@ -1,0 +1,63 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	mlt
+# Version:	0.6.0
+# Release:	n06.2
+# License:	GPL
+# Group:	Multimedia
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64 arm arm64
+# Url:	http://www.mltframework.org
+# Description:	An open source multimedia framework.
+# MD5:	3817050a2570540901c51d2a25110c35  mlt-0.6.0.tar.xz
+
+
+# BuildDep:	/usr/lib/libSDL_image.so	/usr/lib/libSDL_image.so
+# BuildDep:	/usr/lib/libsamplerate.so	/usr/lib/libsamplerate.so
+# BuildDep:	/usr/lib/libdv.so	/usr/lib/libdv.so
+# BuildDep:	/usr/lib/libQtCore.so	/usr/lib/libQtCore.so
+# BuildDep:	/usr/bin/rec	/usr/bin/rec
+# BuildDep:	/usr/lib/libxml2.so	/usr/lib/libxml2.so
+# BuildDep:	/usr/lib/libgtk-x11-2.0.so	/usr/lib/libgtk-x11-2.0.so
+# BuildDep:	/usr/bin/ffmpeg	/usr/bin/ffmpeg
+# BuildDep:	/usr/lib/frei0r-1/sopsat.so	/usr/lib/frei0r-1/sopsat.so
+# BuildDep:	/usr/lib/libjack.so	/usr/lib/libjack.so
+# BuildDep:	/usr/lib/libexif.so	/usr/lib/libexif.so
+# BuildDep:	/usr/bin/swig	/usr/bin/swig
+# Dep(post):	/usr/lib/libexif.so	/usr/lib/libexif.so
+# Dep(post):	/usr/lib/libjack.so	/usr/lib/libjack.so
+# Dep(post):	/usr/lib/frei0r-1/sopsat.so	/usr/lib/frei0r-1/sopsat.so
+# Dep(post):	/usr/bin/ffmpeg	/usr/bin/ffmpeg
+# Dep(post):	/usr/lib/libgtk-x11-2.0.so	/usr/lib/libgtk-x11-2.0.so
+# Dep(post):	/usr/lib/libxml2.so	/usr/lib/libxml2.so
+# Dep(post):	/usr/bin/rec	/usr/bin/rec
+# Dep(post):	/usr/lib/libQtCore.so	/usr/lib/libQtCore.so
+# Dep(post):	/usr/lib/libdv.so	/usr/lib/libdv.so
+# Dep(post):	/usr/lib/libsamplerate.so	/usr/lib/libsamplerate.so
+# Dep(post):	/usr/lib/libSDL_image.so	/usr/lib/libSDL_image.so
+# Dep(post):	/usr/bin/swig	/usr/bin/swig
+
+
+nbuild() {
+./configure --prefix=/usr --enable-gpl \
+--qimage-libdir=/usr/lib/ --qimage-includedir=/usr/include/Qt \
+--avformat-swscale
+make
+}
+
+ninstall() {
+make install
+cd src/swig/python
+./build
+install -m755 mlt.py /usr/lib/python2.7/
+install -m755 _mlt.so /usr/lib/python2.7/
+install -m755 mlt_wrap.o /usr/lib/python2.7/
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

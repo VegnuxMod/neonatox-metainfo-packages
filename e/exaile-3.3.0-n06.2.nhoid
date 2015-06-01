@@ -1,0 +1,49 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	exaile
+# Version:	3.3.0
+# Release:	n06.2
+# License:	GPLv2
+# Group:	Multimedia
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64 arm arm64 armel
+# Url:	http://www.exaile.org/
+# Description:	Exaile is a media player aiming to be similar to KDE's Amarok, but for GTK+. It incorporates many of the cool things from Amarok (and other media players) like automatic fetching of album art, handling of large libraries, lyrics fetching, artist/album information via the wikipedia, last.fm support, optional iPod support (assuming you have python-gpod installed). In addition, Exaile also includes a built-in shoutcast directory browser, tabbed playlists (so you can have more than one playlist open at a time), blacklisting of tracks (so they don't get scanned into your library), downloading of guitar tablature from fretplay.com, and submitting played tracks on your iPod to last.fm.
+# MD5:	95ef56713245b8c291940cdbaac4dca3  exaile-3.3.0.tar.xz
+
+
+# BuildDep:	/usr/bin/python	/usr/bin/python
+# BuildDep:	/usr/bin/moggsplit	/usr/bin/moggsplit
+# BuildDep:	/usr/lib/python2.7/site-packages/_dbus_bindings.so	/usr/lib/python2.7/site-packages/_dbus_bindings.so
+# BuildDep:	/usr/lib/python2.7/site-packages/gtk-2.0/gtk/_gtk.so	/usr/lib/python2.7/site-packages/gtk-2.0/gtk/_gtk.so
+# BuildDep:	/usr/lib/librsvg-2.so	/usr/lib/librsvg-2.so
+# BuildDep:	/usr/lib/python2.7/site-packages/gst-0.10/gst/_gst.so	/usr/lib/python2.7/site-packages/gst-0.10/gst/_gst.so
+# BuildDep:	/usr/lib/gstreamer-0.10/libgstsmpte.so	/usr/lib/gstreamer-0.10/libgstsmpte.so
+# BuildDep:	/usr/lib/libhal.so	/usr/lib/libhal.so
+# BuildDep:	/usr/lib/python2.7/site-packages/PyCDDB.py	/usr/lib/python2.7/site-packages/PyCDDB.py	
+# Dep(post):	/usr/bin/python	/usr/bin/python
+# Dep(post):	/usr/bin/moggsplit	/usr/bin/moggsplit
+# Dep(post):	/usr/lib/python2.7/site-packages/_dbus_bindings.so	/usr/lib/python2.7/site-packages/_dbus_bindings.so
+# Dep(post):	/usr/lib/python2.7/site-packages/gtk-2.0/gtk/_gtk.so	/usr/lib/python2.7/site-packages/gtk-2.0/gtk/_gtk.so
+# Dep(post):	/usr/lib/librsvg-2.so	/usr/lib/librsvg-2.so
+# Dep(post):	/usr/lib/python2.7/site-packages/gst-0.10/gst/_gst.so	/usr/lib/python2.7/site-packages/gst-0.10/gst/_gst.so
+# Dep(post):	/usr/lib/gstreamer-0.10/libgstsmpte.so	/usr/lib/gstreamer-0.10/libgstsmpte.so
+# Dep(post):	/usr/lib/libhal.so	/usr/lib/libhal.so
+# Dep(post):	/usr/lib/python2.7/site-packages/PyCDDB.py	/usr/lib/python2.7/site-packages/PyCDDB.py	
+
+nbuild() {
+make
+}
+
+ninstall() {
+make install
+sed -i "s#%u#%f#" /usr/share/applications/exaile.desktop
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

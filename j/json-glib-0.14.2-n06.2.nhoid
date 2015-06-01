@@ -1,0 +1,35 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	json-glib
+# Version:	0.14.2
+# Release:	n06.2
+# License:	GPL
+# Group:	System
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64 arm arm64 armel
+# Url:	http://live.gnome.org/JsonGlib
+# Description:	JSON library built on GLib.
+# MD5:	fa09d17478dcbcc8a133aba7f6b978a7  json-glib-0.14.2.tar.xz
+
+
+# BuildDep:	/usr/lib/libglib-2.0.so	/usr/lib/libglib-2.0.so
+# BuildDep:	/usr/lib/libgobject-2.0.so	/usr/lib/libgobject-2.0.so
+# Dep(post):	/usr/lib/libgobject-2.0.so	/usr/lib/libgobject-2.0.so
+# Dep(post):	/usr/lib/libglib-2.0.so	/usr/lib/libglib-2.0.so
+
+nbuild() {
+./configure --prefix=/usr
+make
+}
+
+ninstall() {
+make install
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

@@ -1,0 +1,49 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	desmume
+# Version:	0.9.8
+# Release:	n06.2
+# License:	GPL
+# Group:	Games
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64 arm armel arm64
+# Url:	http://desmume.org/
+# Description:	Nintendo DS emulator.
+# MD5:	3c2750cf9324e6bc8fb864a653448363  desmume-0.9.8.tar.xz
+
+
+# BuildDep:	/usr/lib/libagg.so	/usr/lib/libagg.so
+# BuildDep:	/usr/lib/libgdkglext-x11-1.0.so	/usr/lib/libgdkglext-x11-1.0.so
+# BuildDep:	/usr/lib/libglade-2.0.so	/usr/lib/libglade-2.0.so
+# BuildDep:	/usr/bin/desktop-file-install	/usr/bin/desktop-file-install
+# BuildDep:	/usr/lib/libpcap.so	/usr/lib/libpcap.so
+# BuildDep:	/usr/lib/libSoundTouch.so	/usr/lib/libSoundTouch.so
+# BuildDep:	/usr/lib/libasound.so	/usr/lib/libasound.so
+# BuildDep:	/usr/lib/libzzip.so	/usr/lib/libzzip.so
+# BuildDep:	/usr/lib/libGLU.so	/usr/lib/libGLU.so
+# Dep(post):	/usr/lib/libGLU.so	/usr/lib/libGLU.so
+# Dep(post):	/usr/lib/libzzip.so	/usr/lib/libzzip.so
+# Dep(post):	/usr/lib/libasound.so	/usr/lib/libasound.so
+# Dep(post):	/usr/lib/libSoundTouch.so	/usr/lib/libSoundTouch.so
+# Dep(post):	/usr/lib/libpcap.so	/usr/lib/libpcap.so
+# Dep(post):	/usr/bin/desktop-file-install	/usr/bin/desktop-file-install
+# Dep(post):	/usr/lib/libglade-2.0.so	/usr/lib/libglade-2.0.so
+# Dep(post):	/usr/lib/libgdkglext-x11-1.0.so	/usr/lib/libgdkglext-x11-1.0.so
+# Dep(post):	/usr/lib/libagg.so	/usr/lib/libagg.so
+
+nbuild() {
+./configure --prefix=/usr --enable-wifi
+make
+}
+
+ninstall() {
+make install
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

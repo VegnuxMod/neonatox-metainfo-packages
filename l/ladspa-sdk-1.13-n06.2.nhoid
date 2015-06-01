@@ -1,0 +1,85 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	ladspa-sdk
+# Version:	1.13
+# Release:	n06.2
+# License:	BSD
+# Group:	Multimedia
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64
+# Url:	http://www.ladspa.org/
+# Description:	LADSPA is the "Linux Audio Developer's Simple Programming API," whose goal is to provide a versatile audio plug-in capability similar to VST. It is deliberately designed to be extremely simple. As described on the project web site, "The 'S' in 'LADSPA' is meant seriously." The LADSPA development "framework" consists of just one C header file, plus the development tools you will build here.
+# MD5:	218769b7f69114a507229b5b071240e5  ladspa-sdk-1.13.tar.xz
+
+
+
+nbuild() {
+cat > build.sh << "EOF"
+: ${CLFS_LIB32:="lib"}
+: ${CLFS_LIBN32:="lib32"}
+: ${CLFS_LIB64:="lib64"}
+: ${CLFS_LIB:="lib"}
+#
+eval CLFS_LIB='$'CLFS_LIB${USE_ARCH} &&
+eval BUILD='$'BUILD${USE_ARCH} &&
+eval LD_BUILD='$'LD_BUILD${USE_ARCH} &&
+#
+pushd src &&
+#
+if [ -e makefile-original ]; then
+#
+make clean
+mv -f -v makefile-original makefile
+#
+fi
+#
+CLFS_LIB=${CLFS_LIB} \
+sed -i-original \
+-e 's/$(INSTALL_PLUGINS_DIR)/$(DESTDIR)$(INSTALL_PLUGINS_DIR)/g' \
+-e 's/$(INSTALL_INCLUDE_DIR)/$(DESTDIR)$(INSTALL_INCLUDE_DIR)/g' \
+-e 's/$(INSTALL_BINARY_DIR)/$(DESTDIR)$(INSTALL_BINARY_DIR)/g' \
+-e "s|/usr/local|/usr|g" \
+-e "s|/lib/|/${CLFS_LIB}/|g" \
+makefile &&
+#
+make \
+DESTDIR=${DESTDIR} \
+CC="gcc ${BUILD}" \
+CPP="g++ ${BUILD}" \
+LD="ld ${LD_BUILD}" &&
+#
+make install &&
+#
+if [ "$USE_ARCH" != "" ]; then
+#
+mv -v ${DESTDIR}/usr/bin/analyseplugin ${DESTDIR}/usr/bin/analyseplugin-${USE_ARCH} &&
+mv -v ${DESTDIR}/usr/bin/applyplugin ${DESTDIR}/usr/bin/applyplugin-${USE_ARCH} &&
+mv -v ${DESTDIR}/usr/bin/listplugins ${DESTDIR}/usr/bin/listplugins-${USE_ARCH}
+#
+fi
+#
+if [ "${USE_ARCH}" == "64" ]; then
+#
+ln -sfv multiarch_wrapper ${DESTDIR}/usr/bin/analyseplugin &&
+ln -sfv multiarch_wrapper ${DESTDIR}/usr/bin/applyplugin &&
+ln -sfv multiarch_wrapper ${DESTDIR}/usr/bin/listplugins
+#
+fi
+#
+popd
+EOF
+#
+chmod +x build.sh
+}
+
+ninstall() {
+./build.sh
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

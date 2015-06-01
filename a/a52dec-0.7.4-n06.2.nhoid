@@ -1,0 +1,34 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	a52dec
+# Version:	0.7.4
+# Release:	n06.2
+# License:	GPLv2
+# Group:	Multimedia
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64 arm arm64 armel
+# Url:	http://liba52.sourceforge.net/
+# Description:	Liba52 is a free library for decoding ATSC A/52 (also known as AC-3) streams. The A/52 standard is used in a variety of applications, including digital television and DVD.
+# MD5:	bd80b4254646cb4ef744265c357d589d  a52dec-0.7.4.tar.xz
+
+
+
+nbuild() {
+patch -Np1 -i ../a52dec-0.7.4-build.patch
+./bootstrap
+./configure --prefix=/usr --enable-shared
+make
+}
+
+ninstall() {
+make install
+install -m644 liba52/a52_internal.h /usr/include/a52dec/
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

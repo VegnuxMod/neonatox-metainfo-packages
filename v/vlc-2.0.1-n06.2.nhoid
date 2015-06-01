@@ -1,0 +1,127 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	vlc
+# Version:	2.0.1
+# Release:	n06.2
+# License:	GPLv2
+# Group:	Multimedia
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64 arm arm64 armel
+# Url:	http://www.videolan.org/vlc/
+# Description:	VLC media player - Video player and streamer.
+# MD5:	0da001563512233a4191b9995c28d0b8  vlc-2.0.1.tar.xz
+
+
+# BuildDep:	/usr/bin/X	/usr/bin/X
+# BuildDep:	/usr/bin/ffmpeg	/usr/bin/ffmpeg
+# BuildDep:	/usr/bin/cacademo	/usr/bin/cacademo
+# BuildDep:	/usr/lib/libdvbpsi.so	/usr/lib/libdvbpsi.so
+# BuildDep:	/usr/lib/libfribidi.so	/usr/lib/libfribidi.so
+# BuildDep:	/usr/lib/libasound.so	/usr/lib/libasound.so
+# BuildDep:	/usr/lib/libQtCore.so	/usr/lib/libQtCore.so
+# BuildDep:	/usr/lib/libSDL.so	/usr/lib/libSDL.so
+# BuildDep:	/usr/lib/libavahi-common.so	/usr/lib/libavahi-common.so
+# BuildDep:	/usr/lib/libesd.so	/usr/lib/libesd.so
+# BuildDep:	/usr/lib/libgnutls.so	/usr/lib/libgnutls.so
+# BuildDep:	/usr/lib/libdbus-1.so	/usr/lib/libdbus-1.so
+# BuildDep:	/usr/lib/libhal.so	/usr/lib/libhal.so
+# BuildDep:	/usr/lib/libcdio++.so	/usr/lib/libcdio++.so
+# BuildDep:	/usr/lib/libdvdread.so	/usr/lib/libdvdread.so
+# BuildDep:	/usr/lib/libdvdcss.so	/usr/lib/libdvdcss.so
+# BuildDep:	/usr/lib/libdvdnav.so	/usr/lib/libdvdnav.so
+# BuildDep:	/usr/lib/libFLAC++.so	/usr/lib/libFLAC++.so
+# BuildDep:	/usr/lib/libraw1394.so	/usr/lib/libraw1394.so
+# BuildDep:	/usr/lib/libdc1394.so	/usr/lib/libdc1394.so
+# BuildDep:	/usr/lib/liba52.so	/usr/lib/liba52.so
+# BuildDep:	/usr/lib/libaa.so	/usr/lib/libaa.so
+# BuildDep:	/usr/lib/libid3.so	/usr/lib/libid3.so
+# BuildDep:	/usr/lib/libgcrypt.so	/usr/lib/libgcrypt.so
+# BuildDep:	/usr/lib/libnotify.so	/usr/lib/libnotify.so
+# BuildDep:	/usr/lib/libmodplug.so	/usr/lib/libmodplug.so
+# BuildDep:	/usr/lib/libmpeg2.so	/usr/lib/libmpeg2.so
+# BuildDep:	/usr/lib/libogg.so	/usr/lib/libogg.so
+# BuildDep:	/usr/lib/libshout.so	/usr/lib/libshout.so
+# BuildDep:	/usr/lib/libspeex.so	/usr/lib/libspeex.so
+# BuildDep:	/usr/lib/librsvg-2.so	/usr/lib/librsvg-2.so
+# BuildDep:	/usr/lib/libtheora.so	/usr/lib/libtheora.so
+# BuildDep:	/usr/lib/libv4l2.so	/usr/lib/libv4l2.so
+# BuildDep:	/usr/lib/libvorbis.so	/usr/lib/libvorbis.so
+# BuildDep:	/usr/lib/libx264.so	/usr/lib/libx264.so
+# BuildDep:	/usr/lib/libxml2.so	/usr/lib/libxml2.so
+# BuildDep:	/usr/lib/libSDL_image.so	/usr/lib/libSDL_image.so
+# BuildDep:	/usr/lib/libmad.so	/usr/lib/libmad.so
+# BuildDep:	/usr/lib/libdca.so	/usr/lib/libdca.so
+# BuildDep:	/usr/lib/libfaad.so	/usr/lib/libfaad.so
+# BuildDep:	/usr/lib/libmatroska.so	/usr/lib/libmatroska.so
+# BuildDep:	/usr/lib/libvdpau.so	/usr/lib/libvdpau.so
+# BuildDep:	/usr/lib/libschroedinger-1.0.so	/usr/lib/libschroedinger-1.0.so
+# BuildDep:	/usr/bin/lua	/usr/bin/lua
+# Dep(post):	/usr/bin/lua	/usr/bin/lua
+# Dep(post):	/usr/bin/X	/usr/bin/X
+# Dep(post):	/usr/bin/ffmpeg	/usr/bin/ffmpeg
+# Dep(post):	/usr/bin/cacademo	/usr/bin/cacademo
+# Dep(post):	/usr/lib/libdvbpsi.so	/usr/lib/libdvbpsi.so
+# Dep(post):	/usr/lib/libfribidi.so	/usr/lib/libfribidi.so
+# Dep(post):	/usr/lib/libasound.so	/usr/lib/libasound.so
+# Dep(post):	/usr/lib/libQtCore.so	/usr/lib/libQtCore.so
+# Dep(post):	/usr/lib/libSDL.so	/usr/lib/libSDL.so
+# Dep(post):	/usr/lib/libavahi-common.so	/usr/lib/libavahi-common.so
+# Dep(post):	/usr/lib/libesd.so	/usr/lib/libesd.so
+# Dep(post):	/usr/lib/libgnutls.so	/usr/lib/libgnutls.so
+# Dep(post):	/usr/lib/libdbus-1.so	/usr/lib/libdbus-1.so
+# Dep(post):	/usr/lib/libhal.so	/usr/lib/libhal.so
+# Dep(post):	/usr/lib/libcdio++.so	/usr/lib/libcdio++.so
+# Dep(post):	/usr/lib/libdvdread.so	/usr/lib/libdvdread.so
+# Dep(post):	/usr/lib/libdvdcss.so	/usr/lib/libdvdcss.so
+# Dep(post):	/usr/lib/libdvdnav.so	/usr/lib/libdvdnav.so
+# Dep(post):	/usr/lib/libFLAC++.so	/usr/lib/libFLAC++.so
+# Dep(post):	/usr/lib/libraw1394.so	/usr/lib/libraw1394.so
+# Dep(post):	/usr/lib/libdc1394.so	/usr/lib/libdc1394.so
+# Dep(post):	/usr/lib/liba52.so	/usr/lib/liba52.so
+# Dep(post):	/usr/lib/libaa.so	/usr/lib/libaa.so
+# Dep(post):	/usr/lib/libid3.so	/usr/lib/libid3.so
+# Dep(post):	/usr/lib/libgcrypt.so	/usr/lib/libgcrypt.so
+# Dep(post):	/usr/lib/libnotify.so	/usr/lib/libnotify.so
+# Dep(post):	/usr/lib/libmodplug.so	/usr/lib/libmodplug.so
+# Dep(post):	/usr/lib/libmpeg2.so	/usr/lib/libmpeg2.so
+# Dep(post):	/usr/lib/libogg.so	/usr/lib/libogg.so
+# Dep(post):	/usr/lib/libshout.so	/usr/lib/libshout.so
+# Dep(post):	/usr/lib/libspeex.so	/usr/lib/libspeex.so
+# Dep(post):	/usr/lib/librsvg-2.so	/usr/lib/librsvg-2.so
+# Dep(post):	/usr/lib/libtheora.so	/usr/lib/libtheora.so
+# Dep(post):	/usr/lib/libv4l2.so	/usr/lib/libv4l2.so
+# Dep(post):	/usr/lib/libvorbis.so	/usr/lib/libvorbis.so
+# Dep(post):	/usr/lib/libx264.so	/usr/lib/libx264.so
+# Dep(post):	/usr/lib/libxml2.so	/usr/lib/libxml2.so
+# Dep(post):	/usr/lib/libSDL_image.so	/usr/lib/libSDL_image.so
+# Dep(post):	/usr/lib/libmad.so	/usr/lib/libmad.so
+# Dep(post):	/usr/lib/libdca.so	/usr/lib/libdca.so
+# Dep(post):	/usr/lib/libfaad.so	/usr/lib/libfaad.so
+# Dep(post):	/usr/lib/libmatroska.so	/usr/lib/libmatroska.so
+# Dep(post):	/usr/lib/libvdpau.so	/usr/lib/libvdpau.so
+# Dep(post):	/usr/lib/libschroedinger-1.0.so	/usr/lib/libschroedinger-1.0.so
+
+nbuild() {
+sed -i -e 's:truetype/freefont:TTF:g' modules/misc/freetype.c
+./configure --prefix=/usr \
+--disable-rpath \
+--enable-oss \
+--enable-faad \
+--enable-nls \
+--enable-ncurses \
+--enable-nls \
+--enable-realrtsp
+make
+}
+
+ninstall() {
+make install
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

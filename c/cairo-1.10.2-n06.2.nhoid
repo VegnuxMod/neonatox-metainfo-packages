@@ -1,0 +1,42 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	cairo
+# Version:	1.10.2
+# Release:	n06.2
+# License:	LGPLv2.1
+# Group:	Graphics
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64 arm arm64 armel
+# Url:	http://cairographics.org/
+# Description:	Cairo is a 2D graphics library with support for multiple output devices. Currently supported output targets include the X Window System, Win32, image buffers, and PostScript, PDF, and SVG file output. Experimental backends include OpenGL (through Glitz), Quartz, and XCB.
+# MD5:	f8e73e1c1a0d2c9b3953b07797537723  cairo-1.10.2.tar.xz
+
+
+# BuildDep:	/usr/lib/libpng.so	/usr/lib/libpng.so
+# BuildDep:	/usr/lib/libXrender.so	/usr/lib/libXrender.so
+# BuildDep:	/usr/lib/libfontconfig.so	/usr/lib/libfontconfig.so
+# BuildDep:	/usr/lib/libpixman-1.so	/usr/lib/libpixman-1.so
+# BuildDep:	/usr/lib/libglib-2.0.so	/usr/lib/libglib-2.0.so
+# Dep(post):	/usr/lib/libglib-2.0.so	/usr/lib/libglib-2.0.so
+# Dep(post):	/usr/lib/libpixman-1.so	/usr/lib/libpixman-1.so
+# Dep(post):	/usr/lib/libfontconfig.so	/usr/lib/libfontconfig.so
+# Dep(post):	/usr/lib/libXrender.so	/usr/lib/libXrender.so
+# Dep(post):	/usr/lib/libpng.so	/usr/lib/libpng.so
+
+nbuild() {
+patch -Np1 -i "../cairo-1.10.0-buggy_gradients.patch"
+./configure --prefix=/usr --sysconfdir=/etc --localstatedir=/var --disable-static --enable-tee
+make
+}
+
+ninstall() {
+make install
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

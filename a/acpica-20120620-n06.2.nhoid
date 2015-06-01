@@ -1,0 +1,40 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	acpica
+# Version:	20120620
+# Release:	n06.2
+# License:	custom
+# Group:	Programming
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64 arm arm64 armel
+# Url:	http://acpica.org
+# Description:	Intel ACPI Source Language compiler.
+# MD5:	bc3fcf05ca3dbac03d6af259b9c54822  acpica-20120620.tar.xz
+
+
+
+nbuild() {
+cd source
+sed -i -e 's/-Werror//g' compiler/Makefile tools/acpisrc/Makefile
+cd compiler
+make
+cd ../tools/acpisrc
+make
+cd ../acpixtract
+make
+}
+
+ninstall() {
+cd source
+install -D -m755 compiler/iasl "/usr/bin/iasl"
+install -m755 tools/acpisrc/acpisrc "/usr/bin"
+install -m755 tools/acpixtract/acpixtract "/usr/bin"
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

@@ -1,0 +1,74 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	dhcp
+# Version:	4.2.4
+# Release:	n06.2
+# License:	GPL
+# Group:	Networking
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64 arm arm64 armel
+# Url:	https://www.isc.org/software/dhcp
+# Description:	A DHCP server, client, and relay agent.
+# MD5:	7812c2b83d655f56ae9b51f7280bd9ec  dhcp-4.2.4.tar.xz
+
+
+# BuildDep:	/sbin/route	/sbin/route
+# BuildDep:	/sbin/ip	/sbin/ip
+# BuildDep:	/bin/bash	/bin/bash
+# Dep(post):	/sbin/route	/sbin/route
+# Dep(post):	/sbin/ip	/sbin/ip
+# Dep(post):	/bin/bash	/bin/bash
+
+nbuild() {
+# Define _GNU_SOURCE to fix IPV6.
+sed '/^CFLAGS="$CFLAGS/ s/INGS"/INGS -D_GNU_SOURCE"/' -i configure
+# Make not having ipv6 non-fatal.
+patch -Np0 -i "../dhcp-4.1.1-missing-ipv6-not-fatal.patch"
+./configure --prefix=/usr --sysconfdir=/etc \
+--with-srv-lease-file=/var/state/dhcp/dhcpd.leases \
+--with-srv6-lease-file=/var/state/dhcp/dhcpd6.leases \
+--with-cli-lease-file=/var/state/dhclient/dhclient.leases \
+--with-cli6-lease-file=/var/state/dhclient/dhclient6.leases
+make
+patch -i "../dhclient-script-pathFixes.patch" client/scripts/linux
+}
+
+ninstall() {
+pkgdir=/tmp/dhcp
+make DESTDIR="${pkgdir}" install
+mkdir -p /etc/rc.d/rc{0,1,2,3,4,5,6}.d
+install -D -m755 "../dhcp4" "${pkgdir}/etc/rc.d/init.d/dhcp4"
+ln -sf  ../init.d/dhcp4 ${pkgdir}/etc/rc.d/rc0.d/K30dhcp4
+ln -sf  ../init.d/dhcp4 ${pkgdir}/etc/rc.d/rc1.d/K30dhcp4
+ln -sf  ../init.d/dhcp4 ${pkgdir}/etc/rc.d/rc2.d/K30dhcp4
+ln -sf  ../init.d/dhcp4 ${pkgdir}/etc/rc.d/rc3.d/S30dhcp4
+ln -sf  ../init.d/dhcp4 ${pkgdir}/etc/rc.d/rc4.d/S30dhcp4
+ln -sf  ../init.d/dhcp4 ${pkgdir}/etc/rc.d/rc5.d/S30dhcp4
+ln -sf  ../init.d/dhcp4 ${pkgdir}/etc/rc.d/rc6.d/K30dhcp4
+install -D -m755 "../dhcp6" "${pkgdir}/etc/rc.d/init.d/dhcp6"
+ln -sf  ../init.d/dhcp6 ${pkgdir}/etc/rc.d/rc0.d/K30dhcp6
+ln -sf  ../init.d/dhcp6 ${pkgdir}/etc/rc.d/rc1.d/K30dhcp6
+ln -sf  ../init.d/dhcp6 ${pkgdir}/etc/rc.d/rc2.d/K30dhcp6
+ln -sf  ../init.d/dhcp6 ${pkgdir}/etc/rc.d/rc3.d/S30dhcp6
+ln -sf  ../init.d/dhcp6 ${pkgdir}/etc/rc.d/rc4.d/S30dhcp6
+ln -sf  ../init.d/dhcp6 ${pkgdir}/etc/rc.d/rc5.d/S30dhcp6
+ln -sf  ../init.d/dhcp6 ${pkgdir}/etc/rc.d/rc6.d/K30dhcp6
+install -D -m644 "../dhcp" "${pkgdir}/etc/conf.d/${pkgbase}"
+install -d "${pkgdir}/var/state/dhcp"
+install -D -m644 "../dhcpd4.service" "${pkgdir}/usr/lib/systemd/system/dhcpd4.service"
+install -D -m644 "../dhcpd6.service" "${pkgdir}/usr/lib/systemd/system/dhcpd6.service"
+ln -s dhcpd4.service "${pkgdir}/usr/lib/systemd/system/dhcp4.service"
+ln -s dhcpd6.service "${pkgdir}/usr/lib/systemd/system/dhcp6.service"
+# Remove dhclient
+make -C client DESTDIR="${pkgdir}" uninstall
+cp -r ${pkgdir}/* /
+rm -r ${pkgdir}
+}
+
+npostinstall() {
+install -v -dm 755 /var/lib/dhcpd
+}
+
+npostremove() {
+noemptyfuncs
+}

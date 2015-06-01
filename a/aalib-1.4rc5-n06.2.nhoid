@@ -1,0 +1,35 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	aalib
+# Version:	1.4rc5
+# Release:	n06.2
+# License:	GPLv2
+# Group:	Graphic Library
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64
+# Url:	http://aa-project.sourceforge.net
+# Description:	AAlib is an portable ascii art GFX library.
+# MD5:	13848580b1a525c5bfb8a10dbde61c7f  aalib-1.4rc5.tar.xz
+
+
+# BuildDep:	/usr/lib/libX11.so	/usr/lib/libX11.so
+# BuildDep:	/usr/lib/libslang.so	/usr/lib/libslang.so
+# Dep(post):	/usr/lib/libslang.so	/usr/lib/libslang.so
+# Dep(post):	/usr/lib/libX11.so	/usr/lib/libX11.so
+
+nbuild() {
+./configure --prefix=/usr
+make
+}
+
+ninstall() {
+make install
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

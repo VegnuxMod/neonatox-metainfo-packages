@@ -1,0 +1,35 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	libwpg
+# Version:	0.2.1
+# Release:	n06.2
+# License:	LGPL
+# Group:	System
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64 arm arm64 armel
+# Url:	http://libwpg.sourceforge.net/
+# Description:	Library for importing and converting Corel WordPerfect(tm) Graphics images.
+# MD5:	7cff31dd307da78f570760f22b8f30aa  libwpg-0.2.1.tar.xz
+
+
+# BuildDep:	/usr/lib/libwpd-0.9.so	/usr/lib/libwpd-0.9.so
+# BuildDep:	/usr/bin/perl	/usr/bin/perl
+# Dep(post):	/usr/bin/perl	/usr/bin/perl
+# Dep(post):	/usr/lib/libwpd-0.9.so	/usr/lib/libwpd-0.9.so
+
+nbuild() {
+./configure --prefix=/usr
+make
+}
+
+ninstall() {
+make install
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

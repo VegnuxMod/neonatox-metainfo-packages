@@ -1,0 +1,33 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	perl-archive-zip
+# Version:	1.30
+# Release:	n06.2
+# License:	GPL
+# Group:	Programming
+# Arch:	any
+# Url:	http://search.cpan.org/dist/Archive-Zip
+# Description:	Provide a perl interface to ZIP archive files.
+# MD5:	ec686f7b407dfbbabb2c8c36da2ace1f  perl-archive-zip-1.30.tar.xz
+
+
+# BuildDep:	/usr/bin/perl	/usr/bin/perl
+# Dep(post):	/usr/bin/perl	/usr/bin/perl
+
+nbuild() {
+PERL_MM_USE_DEFAULT=1 perl Makefile.PL INSTALLDIRS=vendor
+make
+}
+
+ninstall() {
+make install
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

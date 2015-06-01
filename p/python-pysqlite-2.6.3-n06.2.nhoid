@@ -1,0 +1,39 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	python-pysqlite
+# Version:	2.6.3
+# Release:	n06.2
+# License:	custom
+# Group:	Programming
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64 arm arm64
+# Url:	http://code.google.com/p/pysqlite/
+# Description:	A Python DB-API 2.0 interface for the SQLite embedded relational database engine.
+# MD5:	4c0c38e7cf116a0b8a80393b0f32277c  python-pysqlite-2.6.3.tar.xz
+
+
+# BuildDep:	/usr/bin/python	/usr/bin/python
+# BuildDep:	/usr/lib/libsqlite3.so	/usr/lib/libsqlite3.so
+# Dep(post):	/usr/lib/libsqlite3.so	/usr/lib/libsqlite3.so
+# Dep(post):	/usr/bin/python	/usr/bin/python
+
+nbuild() {
+noemptyfuncs
+}
+
+ninstall() {
+cp ../setup.cfg .
+pkgdir=/tmp/pysqlite
+python setup.py install --root=${pkgdir}
+rm -r ${pkgdir}/usr/local/pysqlite2-doc
+cp -r ${pkgdir}/usr/local/* /usr/
+rm -r ${pkgdir}
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

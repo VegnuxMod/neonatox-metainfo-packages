@@ -1,0 +1,39 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	libpcap
+# Version:	1.1.1
+# Release:	n06.2
+# License:	BSD
+# Group:	Networking
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64
+# Url:	http://www.tcpdump.org/
+# Description:	A system-independent interface for user-level packet capture.
+# MD5:	4c6a4d78d8377c74da1b460e12d95c31  libpcap-1.1.1.tar.xz
+
+
+# BuildDep:	/usr/lib/libnl.so	/usr/lib/libnl.so
+# Dep(post):	/usr/lib/libnl.so	/usr/lib/libnl.so
+
+nbuild() {
+./configure --prefix=/usr --enable-ipv6
+make
+make shared
+}
+
+ninstall() {
+make install install-shared
+ln -s libpcap.so.1.0.0 /usr/lib/libpcap.so.1
+ln -s libpcap.so.1.0.0 /usr/lib/libpcap.so
+mkdir -p /usr/include/net
+cd /usr/include/net
+ln -s ../pcap-bpf.h bpf.h
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

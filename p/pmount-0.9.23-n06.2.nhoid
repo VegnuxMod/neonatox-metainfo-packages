@@ -1,0 +1,34 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	pmount
+# Version:	0.9.23
+# Release:	n06.2
+# License:	GPLv2
+# Group:	System
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64 arm arm64
+# Url:	http://pmount.alioth.debian.org/
+# Description:	Mount removable devices as normal user.
+# MD5:	63365e0bd7116e49f70473ef1e756c65  pmount-0.9.23.tar.xz
+
+
+# BuildDep:	/usr/sbin/hald	/usr/sbin/hald
+# Dep(post):	/usr/sbin/hald	/usr/sbin/hald
+
+nbuild() {
+./configure --prefix=/usr --with-cryptsetup-prog=/sbin/cryptsetup
+make
+}
+
+ninstall() {
+make install
+install -m 755 ../11-media-by-label-with-pmount.rules  /etc/udev/rules.d/11-media-by-label-with-pmount.rules
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

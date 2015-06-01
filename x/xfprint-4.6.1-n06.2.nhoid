@@ -1,0 +1,47 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	xfprint
+# Version:	4.6.1
+# Release:	n06.2
+# License:	GPLv2
+# Group:	Xfce Desktop
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64 arm arm64
+# Url:	http://www.xfce.org/
+# Description:	A print dialog and a printer manager for Xfce.
+# MD5:	a14321ff43bb5c3cba3fb0f7aba0f049  xfprint-4.6.1.tar.xz
+
+
+# BuildDep:	/usr/lib/libxfcegui4.so	/usr/lib/libxfcegui4.so
+# BuildDep:	/usr/lib/libxfconf-0.so	/usr/lib/libxfconf-0.so
+# BuildDep:	/usr/lib/libcups.so	/usr/lib/libcups.so
+# BuildDep:	/usr/bin/a2ps	/usr/bin/a2ps
+# BuildDep:	/usr/lib/libkrb5.so	/usr/lib/libkrb5.so
+# BuildDep:	/usr/lib/libgnutls.so	/usr/lib/libgnutls.so
+# BuildDep:	/usr/share/icons/hicolor/index.theme	/usr/share/icons/hicolor/index.theme
+# Dep(post):	/usr/share/icons/hicolor/index.theme	/usr/share/icons/hicolor/index.theme
+# Dep(post):	/usr/lib/libgnutls.so	/usr/lib/libgnutls.so
+# Dep(post):	/usr/lib/libkrb5.so	/usr/lib/libkrb5.so
+# Dep(post):	/usr/bin/a2ps	/usr/bin/a2ps
+# Dep(post):	/usr/lib/libcups.so	/usr/lib/libcups.so
+# Dep(post):	/usr/lib/libxfconf-0.so	/usr/lib/libxfconf-0.so
+# Dep(post):	/usr/lib/libxfcegui4.so	/usr/lib/libxfcegui4.so
+
+nbuild() {
+patch -Np0 -i ../xfprint-manager-fix.diff
+./configure --prefix=/usr --sysconfdir=/etc --libexecdir=/usr/lib \
+--localstatedir=/var --disable-static
+make
+}
+
+ninstall() {
+make install
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

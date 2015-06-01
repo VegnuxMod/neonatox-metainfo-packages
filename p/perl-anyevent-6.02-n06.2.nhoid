@@ -1,0 +1,37 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	perl-anyevent
+# Version:	6.02
+# Release:	n06.2
+# License:	GPL
+# Group:	System
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64 arm arm64 armel
+# Url:	http://search.cpan.org/dist/AnyEvent
+# Description:	Framework for multiple event loops.
+# MD5:	c94634ed604de3885afc42908e4351db  perl-anyevent-6.02.tar.xz
+
+
+# BuildDep:	/usr/bin/perl	/usr/bin/perl
+# BuildDep:	/usr/lib/perl5/vendor_perl/5.12.1/i686-linux/auto/Glib/Glib.so	/usr/lib/perl5/vendor_perl/5.12.1/i686-linux/auto/Glib/Glib.so
+# BuildDep:	/usr/lib/perl5/vendor_perl/5.12.1/i686-linux/auto/Event/Event.so	/usr/lib/perl5/vendor_perl/5.12.1/i686-linux/auto/Event/Event.so
+# Dep(post):	/usr/lib/perl5/vendor_perl/5.12.1/i686-linux/auto/Event/Event.so	/usr/lib/perl5/vendor_perl/5.12.1/i686-linux/auto/Event/Event.so
+# Dep(post):	/usr/lib/perl5/vendor_perl/5.12.1/i686-linux/auto/Glib/Glib.so	/usr/lib/perl5/vendor_perl/5.12.1/i686-linux/auto/Glib/Glib.so
+# Dep(post):	/usr/bin/perl	/usr/bin/perl
+
+nbuild() {
+perl Makefile.PL INSTALLDIRS=vendor
+make
+}
+
+ninstall() {
+make install
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

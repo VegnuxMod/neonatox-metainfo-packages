@@ -1,0 +1,42 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	gsoap
+# Version:	2.8
+# Release:	n06.2
+# License:	GPL custom
+# Group:	Programming
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64 arm arm64 armel
+# Url:	http://www.cs.fsu.edu/~engelen/soap.html
+# Description:	Offers an XML language binding to ease the development of SOAP/XML Web services in C and C/C++.
+# MD5:	0d48d7fc5a5bceecfea926a8e367d98d  gsoap-2.8.tar.xz
+
+
+# BuildDep:	/usr/lib/libssl.so	/usr/lib/libssl.so
+# BuildDep:	/usr/lib/libz.so	/usr/lib/libz.so
+# Dep(post):	/usr/lib/libz.so	/usr/lib/libz.so
+# Dep(post):	/usr/lib/libssl.so	/usr/lib/libssl.so
+
+nbuild() {
+[ -f Makefile ] || CXXFLAGS=-fPIC CFLAGS=-fPIC LDFLAGS=-fPIC ./configure --prefix=/usr
+make -j1
+}
+
+ninstall() {
+pkgdir=/tmp/gsoap
+make DESTDIR=$pkgdir install
+mkdir -p $pkgdir/usr/share/gsoap/import
+mkdir -p $pkgdir/usr/share/gsoap/WS
+cp -R gsoap/import $pkgdir/usr/share/gsoap/
+cp -R gsoap/WS $pkgdir/usr/share/gsoap/
+cp -r $pkgdir/* /
+rm -r $pkgdir
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

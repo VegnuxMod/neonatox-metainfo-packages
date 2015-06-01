@@ -1,0 +1,31 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	liblinebreak
+# Version:	2.0
+# Release:	n06.2
+# License:	zlib/libpng
+# Group:	System
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64 arm arm64
+# Url:	http://vimgadgets.sourceforge.net/liblinebreak
+# Description:	An implementation of the line breaking algorithm as described in Unicode 5.2.0 Standard Annex 14, Revision 24.
+# MD5:	74427efa65b4feec89dc17f80d690c7d  liblinebreak-2.0.tar.xz
+
+
+
+nbuild() {
+./configure --prefix=/usr
+make
+}
+
+ninstall() {
+make install
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

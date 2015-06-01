@@ -1,0 +1,37 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	gadmin-sshd
+# Version:	0.0.2
+# Release:	n06.2
+# License:	GPL
+# Group:	Networking
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64 arm arm64 armel
+# Url:	http://gadmintools.flippedweb.com/index.php?option=com_content&task=view&id=16&Itemid=30
+# Description:	A GTK+ gui to administer SSHD.
+# MD5:	14fffb6593988d78bcc56081c1bed00b  gadmin-sshd-0.0.2.tar.xz
+
+
+# BuildDep:	/usr/lib/libgtk-x11-2.0.so	/usr/lib/libgtk-x11-2.0.so
+# BuildDep:	/usr/sbin/sshd	/usr/sbin/sshd
+# Dep(post):	/usr/sbin/sshd	/usr/sbin/sshd
+# Dep(post):	/usr/lib/libgtk-x11-2.0.so	/usr/lib/libgtk-x11-2.0.so
+
+nbuild() {
+./configure --prefix=/usr --sysconfdir=/etc
+make
+}
+
+ninstall() {
+make install
+install -Dm755 ../gadmin-sshd-menu /usr/sbin/gadmin-sshd-menu
+install -Dm644 ../gadmin-sshd.desktop /usr/share/applications/gadmin-sshd.desktop
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

@@ -1,0 +1,35 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	sudo
+# Version:	1.8.1p2
+# Release:	n06.2
+# License:	custom
+# Group:	System
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64 arm arm64
+# Url:	http://www.sudo.ws/sudo/
+# Description:	Give certain users the ability to run some commands as root.
+# MD5:	086c5bd310126d7e836b68d8bb879e92  sudo-1.8.1p2.tar.xz
+
+
+# BuildDep:	/usr/lib/libpam.so	/usr/lib/libpam.so
+# Dep(post):	/usr/lib/libpam.so	/usr/lib/libpam.so
+
+nbuild() {
+./configure --prefix=/usr --with-pam --libexecdir=/usr/lib \
+--with-env-editor --with-all-insults --with-logfac=auth
+make
+}
+
+ninstall() {
+make install
+install -Dm644 ../sudo.pam /etc/pam.d/sudo
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

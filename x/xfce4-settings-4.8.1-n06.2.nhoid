@@ -1,0 +1,58 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sánchez <cargabsj175@gmail.com>
+
+# Name:	xfce4-settings
+# Version:	4.8.1
+# Release:	n06.2
+# License:	GPLv2
+# Group:	XFCE Desktop
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64 arm arm64
+# Url:	http://www.xfce.org/
+# Description:	xfce4-settings is the fXfce settings manager front-end.
+# MD5:	22763a73f0a991b71833f45acdabde52  xfce4-settings-4.8.1.tar.xz
+
+
+# BuildDep:	/usr/lib/libexo-1.so	/usr/lib/libexo-1.so
+# BuildDep:	/usr/lib/libgtk-x11-2.0.so	/usr/lib/libgtk-x11-2.0.so
+# BuildDep:	/usr/lib/libglade-2.0.so	/usr/lib/libglade-2.0.so
+# BuildDep:	/usr/lib/libxfcegui4.so	/usr/lib/libxfcegui4.so
+# BuildDep:	/usr/lib/libxfconf-0.so.2	/usr/lib/libxfconf-0.so.2
+# BuildDep:	/usr/lib/libnotify.so	/usr/lib/libnotify.so
+# BuildDep:	/usr/lib/libxklavier.so	/usr/lib/libxklavier.so
+# BuildDep:	/usr/lib/libcanberra.so	/usr/lib/libcanberra.so
+# Dep(post):	/usr/lib/libcanberra.so	/usr/lib/libcanberra.so
+# Dep(post):	/usr/lib/libxklavier.so	/usr/lib/libxklavier.so
+# Dep(post):	/usr/lib/libnotify.so	/usr/lib/libnotify.so
+# Dep(post):	/usr/lib/libxfconf-0.so.2	/usr/lib/libxfconf-0.so.2
+# Dep(post):	/usr/lib/libxfcegui4.so	/usr/lib/libxfcegui4.so
+# Dep(post):	/usr/lib/libglade-2.0.so	/usr/lib/libglade-2.0.so
+# Dep(post):	/usr/lib/libgtk-x11-2.0.so	/usr/lib/libgtk-x11-2.0.so
+# Dep(post):	/usr/lib/libexo-1.so	/usr/lib/libexo-1.so
+
+nbuild() {
+patch -Np1 -i ../xfce4-settings-4.6.0.patch
+  ./configure --prefix=/usr \
+	--sysconfdir=/etc \
+	--localstatedir=/var \
+	--disable-static \
+	--enable-xrandr \
+	--enable-xcursor \
+	--enable-libnotify \
+	--enable-libxklavier \
+	--enable-pluggable-dialogs \
+	--enable-sound-settings \
+	--disable-debug
+  make
+}
+
+ninstall() {
+make install
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

@@ -1,0 +1,30 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	lzip
+# Version:	1.14
+# Release:	n06.2
+# License:	GPLv3
+# Group:	System
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64 arm arm64 armel
+# Url:	http://www.nongnu.org/lzip/lzip.html
+# Description:	A lossless file compressor based on the LZMA algorithm.
+# MD5:	726c63e55ecc4a4a33a3f9fc25784c78  lzip-1.14.tar.xz
+
+
+nbuild() {
+./configure --prefix=/usr CXXFLAGS="$CXXFLAGS"
+make
+}
+
+ninstall() {
+make install{,-man}
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

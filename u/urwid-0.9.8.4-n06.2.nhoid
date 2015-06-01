@@ -1,0 +1,34 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	urwid
+# Version:	0.9.8.4
+# Release:	n06.2.1
+# License:	custom
+# Group:	System
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64 arm arm64
+# Url:	http://excess.org/urwid/
+# Description:	Urwid is a console user interface library that includes many features useful for text console application.
+# MD5:	4a18dd2fca31d6495d4db87ebb87690d  urwid-0.9.8.4.tar.xz
+
+
+# BuildDep:	/usr/bin/python	/usr/bin/python
+# Dep(post):	/usr/bin/python	/usr/bin/python
+
+nbuild() {
+python setup.py build
+}
+
+ninstall() {
+python setup.py install --root /tmp/urwid
+cp -r /tmp/urwid/* /
+rm -r /tmp/urwid
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

@@ -1,0 +1,38 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	turpial
+# Version:	1.6.9
+# Release:	n06.2
+# License:	GPLv3
+# Group:	Networking
+# Arch:	noarch
+# Url:	http://turpial.org.ve/
+# Description:	A multi-interface Twitter client written in Python.
+# MD5:	36a7ca5c88094622b6759b440c9fa29e  turpial-1.6.9.tar.xz
+
+# BuildDep:	/usr/lib/python2.7/site-packages/gst-0.10/gst/_gst.so	/usr/lib/python2.7/site-packages/gst-0.10/gst/_gst.so
+# BuildDep:	/usr/lib/python2.7/site-packages/gtk-2.0/pynotify/_pynotify.so	/usr/lib/python2.7/site-packages/gtk-2.0/pynotify/_pynotify.so
+# BuildDep:	/usr/lib/python2.7/site-packages/webkit/webkit.so	/usr/lib/python2.7/site-packages/webkit/webkit.so
+# Dep(post):	/usr/lib/python2.7/site-packages/webkit/webkit.so	/usr/lib/python2.7/site-packages/webkit/webkit.so
+# Dep(post):	/usr/lib/python2.7/site-packages/gtk-2.0/pynotify/_pynotify.so	/usr/lib/python2.7/site-packages/gtk-2.0/pynotify/_pynotify.so
+# Dep(post):	/usr/lib/python2.7/site-packages/gst-0.10/gst/_gst.so	/usr/lib/python2.7/site-packages/gst-0.10/gst/_gst.so
+
+nbuild() {
+noemptyfuncs
+}
+
+ninstall() {
+pkgdir=/tmp/turpial
+python setup.py install --root=$pkgdir
+cp -r $pkgdir/usr/local/{bin,lib,share} /usr/
+rm -r $pkgdir
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

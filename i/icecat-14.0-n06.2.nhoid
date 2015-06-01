@@ -1,0 +1,63 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	icecat
+# Version:	14.0
+# Release:	n06.2
+# License:	MPL GPL LGPL
+# Group:	Networking
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64 arm arm64 armel
+# Url:	http://www.gnu.org/software/gnuzilla
+# Description:	The goal of the IceCat project is to provide a completely free version of the popular mozilla source code.
+# MD5:	892dc1e9be6c7334c8918b3f0edf7a04  icecat-14.0.tar.xz
+
+
+# BuildDep:	/usr/bin/zip	/usr/bin/zip
+# BuildDep:	/usr/bin/diff	/usr/bin/diff
+# BuildDep:	/usr/bin/python	/usr/bin/python
+# BuildDep:	/usr/sbin/iwconfig	/usr/sbin/iwconfig
+# BuildDep:	/usr/lib/libGL.so	/usr/lib/libGL.so
+# BuildDep:	/usr/bin/desktop-file-install	/usr/bin/desktop-file-install
+# Dep(post):	/usr/bin/zip	/usr/bin/zip
+# Dep(post):	/usr/bin/diff	/usr/bin/diff
+# Dep(post):	/usr/bin/python	/usr/bin/python
+# Dep(post):	/usr/sbin/iwconfig	/usr/sbin/iwconfig
+# Dep(post):	/usr/lib/libGL.so	/usr/lib/libGL.so
+# Dep(post):	/usr/bin/desktop-file-install	/usr/bin/desktop-file-install
+
+nbuild() {
+patch -Np1 -i "../mozilla-firefox-1.0-lang.patch"
+patch -Np1 -i "../icecat-version.patch"
+patch -Np1 -i "../ff2icecat-bin.patch"
+patch -Np1 -i "../firefox-install-dir.patch"
+patch -Np1 -i "../shared-libs.patch"
+cp "../icecat.mozconfig" .mozconfig
+export CXXFLAGS="-fpermissive"
+export LDFLAGS="-Wl,-rpath,/usr/lib/icecat-14.0 -Wl,-O1,--sort-common,--hash-style=gnu,--as-needed"
+make -j1 -f client.mk build MOZ_MAKE_FLAGS="$MAKEFLAGS"
+}
+
+ninstall() {
+pkgdir=/tmp/icecat
+make -j1 -f client.mk DESTDIR="${pkgdir}" install
+install -m755 -d ${pkgdir}/usr/share/applications
+for i in 16x16 32x32 48x48; do
+install -d "$pkgdir/usr/share/icons/hicolor/$i/apps"
+cp browser/branding/unofficial/default${i/x*/}.png "$pkgdir/usr/share/icons/hicolor/$i/apps/icecat.png"
+done
+install -m644 ../icecat.desktop ${pkgdir}/usr/share/applications/
+install -m644 ../icecat-safe.desktop ${pkgdir}/usr/share/applications/
+rm -r ${pkgdir}/usr/include
+rm -r ${pkgdir}/usr/lib/icecat-devel
+cp -r ${pkgdir}/* /
+rm -r ${pkgdir}
+rm -r /usr/src/nhopkg/icecat-14.0/obj-i686-pc-linux-gnu/dist/icecat/extensions/*
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

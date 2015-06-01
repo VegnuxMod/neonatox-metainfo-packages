@@ -1,0 +1,36 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	libwps
+# Version:	0.2.2
+# Release:	n06.2
+# License:	LGPL
+# Group:	System
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64 arm arm64 armel
+# Url:	http://libwps.sourceforge.net/
+# Description:	A Microsoft Works file word processor format import filter library.
+# MD5:	bb86e00fd0de30b84c9d745d94f40e69  libwps-0.2.2.tar.xz
+
+
+# BuildDep:	/usr/lib/libwpd-0.9.so	/usr/lib/libwpd-0.9.so
+# Dep(post):	/usr/lib/libwpd-0.9.so	/usr/lib/libwpd-0.9.so
+
+nbuild() {
+sed -i -e 's: -Wall -Werror -pedantic::' configure.in
+touch NEWS AUTHORS ChangeLog
+autoreconf -fi
+./configure  --prefix=/usr
+make
+}
+
+ninstall() {
+make install
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

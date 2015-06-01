@@ -1,0 +1,34 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	art-sharp
+# Version:	2.24.2
+# Release:	n06.2
+# License:	LGPL
+# Group:	Programming
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64 arm arm64 armel
+# Url:	http://gtk-sharp.sourceforge.net
+# Description:	Mono bindings for libart.
+# MD5:	9716136626afcd14034724cfab294be5  art-sharp-2.24.2.tar.xz
+
+
+# BuildDep:	/usr/lib/libgtksharpglue-2.so	/usr/lib/libgtksharpglue-2.so
+# BuildDep:	/usr/lib/libart_lgpl_2.so	/usr/lib/libart_lgpl_2.so
+# Dep(post):	/usr/lib/libart_lgpl_2.so	/usr/lib/libart_lgpl_2.so
+# Dep(post):	/usr/lib/libgtksharpglue-2.so	/usr/lib/libgtksharpglue-2.so
+
+nbuild() {
+./build.gnomesharp
+}
+
+ninstall() {
+make -C art install
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

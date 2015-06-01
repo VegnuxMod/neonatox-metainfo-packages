@@ -1,0 +1,33 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	fping
+# Version:	2.4b2
+# Release:	n06.2
+# License:	custom
+# Group:	System
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64 arm arm64 armel
+# Url:	http://www.fping.com/
+# Description:	A utility to ping multiple hosts at once.
+# MD5:	662e82a373904ff53abb1737007e50be  fping-2.4b2.tar.xz
+
+
+
+nbuild() {
+./configure --prefix=/usr \
+--mandir=/usr/share/man
+make
+}
+
+ninstall() {
+make install
+chmod 4755 /usr/sbin/fping
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

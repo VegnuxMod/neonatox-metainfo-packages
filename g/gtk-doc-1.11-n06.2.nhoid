@@ -1,0 +1,39 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sánchez <cargabsj175@gmail.com>
+
+# Name:	gtk-doc
+# Version:	1.11
+# Release:	n06.2
+# License:	GPLv2
+# Group:	System
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64 arm arm64 armel
+# Url:	http://www.gtk.org/gtk-doc/
+# Description:	GTK+ Documentation Generator.
+# MD5:	72f1af3a686d22cea7cd3209a0b4fe97  gtk-doc-1.11.tar.xz
+
+
+# BuildDep:	/usr/lib/libxslt.so	/usr/lib/libxslt.so
+# BuildDep:	/usr/bin/xml2po	/usr/bin/xml2po
+# BuildDep:	/usr/share/xml/docbook/xml-dtd-4.5/docbookx.dtd	/usr/share/xml/docbook/xml-dtd-4.5/docbookx.dtd
+# BuildDep:	/usr/share/xml/docbook/xsl-stylesheets-1.74.0/website/rss.xsl	/usr/share/xml/docbook/xsl-stylesheets-1.74.0/website/rss.xsl
+# Dep(post):	/usr/lib/libxslt.so	/usr/lib/libxslt.so
+# Dep(post):	/usr/bin/xml2po	/usr/bin/xml2po
+# Dep(post):	/usr/share/xml/docbook/xml-dtd-4.5/docbookx.dtd	/usr/share/xml/docbook/xml-dtd-4.5/docbookx.dtd
+# Dep(post):	/usr/share/xml/docbook/xsl-stylesheets-1.74.0/website/rss.xsl	/usr/share/xml/docbook/xsl-stylesheets-1.74.0/website/rss.xsl
+
+nbuild() {
+./configure --prefix=/usr --localstatedir=/var/lib &&
+make
+}
+
+ninstall() {
+make install
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

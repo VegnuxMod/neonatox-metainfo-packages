@@ -1,0 +1,35 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	perl-libintl-perl
+# Version:	1.20
+# Release:	n06.2
+# License:	LGPL
+# Group:	System
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64 arm arm64 armel
+# Url:	http://search.cpan.org/dist/libintl-perl
+# Description:	Perl Module: Localization support.
+# MD5:	574ed94513fdd43cad10269bad44f0b8  perl-libintl-perl-1.20.tar.xz
+
+
+# BuildDep:	/usr/lib/libgettextlib.so	/usr/lib/libgettextlib.so
+# BuildDep:	/usr/bin/perl	/usr/bin/perl
+# Dep(post):	/usr/bin/perl	/usr/bin/perl
+# Dep(post):	/usr/lib/libgettextlib.so	/usr/lib/libgettextlib.so
+
+nbuild() {
+perl Makefile.PL INSTALLDIRS=vendor
+make
+}
+
+ninstall() {
+make install
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

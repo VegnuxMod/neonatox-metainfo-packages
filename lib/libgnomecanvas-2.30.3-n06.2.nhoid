@@ -1,0 +1,36 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	libgnomecanvas
+# Version:	2.30.3
+# Release:	n06.2
+# License:	LGPL
+# Group:	Gnome Desktop
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipse√l mips64el ppc ppc64 arm arm64
+# Url:	http://www.gnome.org
+# Description:	The GNOME Canvas library.
+# MD5:	e1639fe10182bdc113038557642d1bc8  libgnomecanvas-2.30.3.tar.xz
+
+
+# BuildDep:	/usr/lib/libglade-2.0.so	/usr/lib/libglade-2.0.so
+# BuildDep:	/usr/lib/libart_lgpl_2.so	/usr/lib/libart_lgpl_2.so
+# Dep(post):	/usr/lib/libart_lgpl_2.so	/usr/lib/libart_lgpl_2.so
+# Dep(post):	/usr/lib/libglade-2.0.so	/usr/lib/libglade-2.0.so
+
+nbuild() {
+./configure --prefix=/usr --disable-static \
+--enable-glade
+make
+}
+
+ninstall() {
+make install
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

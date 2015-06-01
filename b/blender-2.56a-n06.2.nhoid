@@ -1,0 +1,71 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	blender
+# Version:	2.56a
+# Release:	n06.2
+# License:	GPL
+# Group:	Graphics
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64 arm arm64
+# Url:	http://blender.org/
+# Description:	Blender beta version build from source.
+# MD5:	55c3ab19e640840af2c5a5aa91138133  blender-2.56a.tar.xz
+
+
+# BuildDep:	/usr/lib/libpng.so	/usr/lib/libpng.so
+# BuildDep:	/usr/lib/libGL.so	/usr/lib/libGL.so
+# BuildDep:	/usr/lib/libIlmImf.so	/usr/lib/libIlmImf.so
+# BuildDep:	/usr/bin/python3	/usr/bin/python3
+# BuildDep:	/usr/lib/libsamplerate.so	/usr/lib/libsamplerate.so
+# BuildDep:	/usr/bin/ffmpeg	/usr/bin/ffmpeg
+# BuildDep:	/usr/lib/libopenal.so	/usr/lib/libopenal.so
+# BuildDep:	/usr/lib/libfreetype.so	/usr/lib/libfreetype.so
+# BuildDep:	/usr/lib/libXi.so	/usr/lib/libXi.so
+# BuildDep:	/usr/bin/yasm	/usr/bin/yasm
+# BuildDep:	/usr/bin/cmake	/usr/bin/cmake
+# Dep(post):	/usr/bin/cmake	/usr/bin/cmake
+# Dep(post):	/usr/bin/yasm	/usr/bin/yasm
+# Dep(post):	/usr/lib/libXi.so	/usr/lib/libXi.so
+# Dep(post):	/usr/lib/libfreetype.so	/usr/lib/libfreetype.so
+# Dep(post):	/usr/lib/libopenal.so	/usr/lib/libopenal.so
+# Dep(post):	/usr/bin/ffmpeg	/usr/bin/ffmpeg
+# Dep(post):	/usr/lib/libsamplerate.so	/usr/lib/libsamplerate.so
+# Dep(post):	/usr/bin/python3	/usr/bin/python3
+# Dep(post):	/usr/lib/libIlmImf.so	/usr/lib/libIlmImf.so
+# Dep(post):	/usr/lib/libGL.so	/usr/lib/libGL.so
+# Dep(post):	/usr/lib/libpng.so	/usr/lib/libpng.so
+
+nbuild() {
+rm -r CMakeCache.txt
+srcdir=$(pwd)
+mkdir -p build
+cd build
+cmake -DWITH_CODEC_SNDFILE:BOOL=ON -DWITH_CODEC_FFMPEG:BOOL=ON -DCMAKE_INSTALL_PREFIX=/usr $srcdir
+make
+cp -rf $srcdir/release/plugins/* $srcdir/source/blender/blenpluginapi/
+cd $srcdir/source/blender/blenpluginapi
+chmod 755 bmake
+sed -i 's/\r$//' bmake
+make
+}
+
+ninstall() {
+srcdir=$(pwd)
+pkgdir=/tmp/blender
+cd build
+make DESTDIR="$pkgdir" install
+install -D -m644 ../../blender.desktop "$pkgdir"/usr/share/applications/blender.desktop
+install -d -m755 "$pkgdir"/usr/share/blender/2.56/plugins/{sequence,texture}
+cp $srcdir/source/blender/blenpluginapi/sequence/*.so $pkgdir/usr/share/blender/2.56/plugins/sequence/
+cp $srcdir/source/blender/blenpluginapi/texture/*.so $pkgdir/usr/share/blender/2.56/plugins/texture/
+cp -r $pkgdir/* /
+rm -r $pkgdir
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

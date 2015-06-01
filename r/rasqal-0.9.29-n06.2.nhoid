@@ -1,0 +1,38 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	rasqal
+# Version:	0.9.29
+# Release:	n06.2
+# License:	GPL LGPL
+# Group:	Programming
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64 arm arm64
+# Url:	http://librdf.org/rasqal
+# Description:	A free C library that handles Resource Description Framework (RDF) query syntaxes, query construction and query execution returning result bindings.
+# MD5:	67810a59b5b0747ac1736721090e2416  rasqal-0.9.29.tar.xz
+
+
+# BuildDep:	/usr/lib/libraptor.so	/usr/lib/libraptor.so
+# BuildDep:	/usr/lib/libmpfr.so	/usr/lib/libmpfr.so
+# Dep(post):	/usr/lib/libmpfr.so	/usr/lib/libmpfr.so
+# Dep(post):	/usr/lib/libraptor.so	/usr/lib/libraptor.so
+
+nbuild() {
+./configure --prefix=/usr \
+--disable-static \
+--enable-release \
+--with-raptor=system
+make
+}
+
+ninstall() {
+make install
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

@@ -1,0 +1,63 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	libmesa
+# Version:	7.10.0.git20110215
+# Release:	n06.2
+# License:	custom
+# Group:	X Window System
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64 arm arm64
+# Url:	http://mesa3d.sourceforge.net/
+# Description:	Mesa is an OpenGL compatible 3-D graphics library.
+# MD5:	48b47f7850d718b4f5222dbce3d86888  libmesa-7.10.0.git20110215.tar.xz
+
+
+# BuildDep:	/usr/include/GL/glxproto.h	/usr/include/GL/glxproto.h
+# BuildDep:	/usr/bin/pkg-config	/usr/bin/pkg-config
+# BuildDep:	/usr/lib/libdrm.so	/usr/lib/libdrm.so
+# BuildDep:	/usr/lib/libXxf86vm.so	/usr/lib/libXxf86vm.so
+# BuildDep:	/usr/lib/libXdamage.so	/usr/lib/libXdamage.so
+# BuildDep:	/usr/lib/libexpat.so	/usr/lib/libexpat.so
+# BuildDep:	/usr/lib/libX11.so	/usr/lib/libX11.so
+# BuildDep:	/usr/lib/libXt.so	/usr/lib/libXt.so
+# BuildDep:	/usr/include/X11/extensions/dri2proto.h	/usr/include/X11/extensions/dri2proto.h
+# BuildDep:	/usr/bin/python	/usr/bin/python
+# BuildDep:	/usr/lib/libtalloc.so.2.0.1	/usr/lib/libtalloc.so.2.0.1
+# Dep(post):	/usr/bin/python	/usr/bin/python
+# Dep(post):	/usr/include/X11/extensions/dri2proto.h	/usr/include/X11/extensions/dri2proto.h
+# Dep(post):	/usr/lib/libXt.so	/usr/lib/libXt.so
+# Dep(post):	/usr/lib/libX11.so	/usr/lib/libX11.so
+# Dep(post):	/usr/lib/libexpat.so	/usr/lib/libexpat.so
+# Dep(post):	/usr/lib/libXdamage.so	/usr/lib/libXdamage.so
+# Dep(post):	/usr/lib/libXxf86vm.so	/usr/lib/libXxf86vm.so
+# Dep(post):	/usr/lib/libdrm.so	/usr/lib/libdrm.so
+# Dep(post):	/usr/bin/pkg-config	/usr/bin/pkg-config
+# Dep(post):	/usr/include/GL/glxproto.h	/usr/include/GL/glxproto.h
+# Dep(post):	/usr/lib/libtalloc.so.2.0.1	/usr/lib/libtalloc.so.2.0.1
+
+nbuild() {
+autoreconf -vfi
+./autogen.sh  --prefix=/usr \
+    --with-dri-driverdir=/usr/lib/X11/modules/drivers \
+    --disable-egl \
+    --enable-gallium-radeon \
+    --enable-gallium-nouveau \
+    --enable-glx-tls \
+    --with-driver=dri \
+    --enable-xcb \
+    --with-state-trackers=dri,glx \
+    --disable-glut
+make
+}
+
+ninstall() {
+make install
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

@@ -1,0 +1,44 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	polkit
+# Version:	0.99
+# Release:	n06.2
+# License:	LGPL
+# Group:	Core System
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64 arm arm64 armel
+# Url:	http://www.freedesktop.org/wiki/Software/PolicyKit
+# Description:	Application development toolkit for controlling system-wide privileges.
+# MD5:	59d8482b5e300bdd8de8a397175e70a3  polkit-0.99.tar.xz
+
+
+# BuildDep:	/usr/lib/libglib-2.0.so	/usr/lib/libglib-2.0.so
+# BuildDep:	/usr/lib/libpam.so	/usr/lib/libpam.so
+# BuildDep:	/usr/lib/libexpat.so	/usr/lib/libexpat.so
+# BuildDep:	/usr/share/xml/docbook/xml-dtd-4.5/dbpoolx.mod	/usr/share/xml/docbook/xml-dtd-4.5/dbpoolx.mod
+# Dep(post):	/usr/lib/libexpat.so	/usr/lib/libexpat.so
+# Dep(post):	/usr/lib/libpam.so	/usr/lib/libpam.so
+# Dep(post):	/usr/lib/libglib-2.0.so	/usr/lib/libglib-2.0.so
+# Dep(post):	/usr/share/xml/docbook/xml-dtd-4.5/dbpoolx.mod	/usr/share/xml/docbook/xml-dtd-4.5/dbpoolx.mod
+
+nbuild() {
+./configure --prefix=/usr --sysconfdir=/etc \
+--localstatedir=/var --libexecdir=/usr/lib/polkit-1 \
+--disable-static --disable-man-pages
+make
+}
+
+ninstall() {
+make install
+install -m644 "../polkit.pam" "/etc/pam.d/polkit-1"
+}
+
+npostinstall() {
+groupadd -fg 27 polkituser
+useradd -c "Policy Kit Daemon User" -d /dev/null -u 27 -g polkituser -s /bin/false polkituser || [ $? == 9 ]
+}
+
+npostremove() {
+userdel polkituser
+groupdel polkituser
+}

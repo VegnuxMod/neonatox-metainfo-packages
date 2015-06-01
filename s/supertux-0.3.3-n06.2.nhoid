@@ -1,0 +1,127 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sánchez <cargabsj175@gmail.com>
+
+# Name:	supertux
+# Version:	0.3.3
+# Release:	n06.2
+# License:	GPL
+# Group:	Games
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64
+# Url:	http://super-tux.sourceforge.net/
+# Description:	A classic 2D jump'n run sidescroller game in a style similar to the original SuperMario games.
+# MD5:	711c864f0a7337c56934e85189f70fb8  supertux-0.3.3.tar.xz
+
+
+# BuildDep:	/usr/lib/libSDL_image.so	/usr/lib/libSDL_image.so
+# BuildDep:	/usr/lib/libcurl.so	/usr/lib/libcurl.so
+# BuildDep:	/usr/lib/libphysfs.so	/usr/lib/libphysfs.so
+# BuildDep:	/usr/lib/libopenal.so	/usr/lib/libopenal.so
+# BuildDep:	/usr/lib/libvorbis.so	/usr/lib/libvorbis.so
+# BuildDep:	/usr/lib/libGL.so	/usr/lib/libGL.so
+# BuildDep:	/usr/lib/libGLEW.so	/usr/lib/libGLEW.so
+# Dep(post):	/usr/lib/libGLEW.so	/usr/lib/libGLEW.so
+# Dep(post):	/usr/lib/libGL.so	/usr/lib/libGL.so
+# Dep(post):	/usr/lib/libvorbis.so	/usr/lib/libvorbis.so
+# Dep(post):	/usr/lib/libopenal.so	/usr/lib/libopenal.so
+# Dep(post):	/usr/lib/libphysfs.so	/usr/lib/libphysfs.so
+# Dep(post):	/usr/lib/libcurl.so	/usr/lib/libcurl.so
+# Dep(post):	/usr/lib/libSDL_image.so	/usr/lib/libSDL_image.so
+
+nbuild() {
+cmake -D CMAKE_INSTALL_PREFIX=/usr -D INSTALL_SUBDIR_BIN=bin .
+make
+}
+
+ninstall() {
+make install
+# using sdl instead opengl :P
+sed -i "s|Exec=supertux2|Exec=supertux2 --renderer sdl|g" "/usr/share/applications/supertux2.desktop"
+# fixing nhopkg namespacing
+mv "/usr/share/games/supertux2/levels/world1/01 - Welcome to Antarctica.stl" "/usr/share/games/supertux2/levels/world1/01_-_Welcome_to_Antarctica.stl"
+mv "/usr/share/games/supertux2/levels/world1/02 - The Journey Begins.stl" "/usr/share/games/supertux2/levels/world1/02_-_The_Journey_Begins.stl"
+mv "/usr/share/games/supertux2/levels/world1/03 - Via Nostalgica.stl" "/usr/share/games/supertux2/levels/world1/03_-_Via_Nostalgica.stl"
+mv "/usr/share/games/supertux2/levels/world1/04 - Tobgle Road.stl" "/usr/share/games/supertux2/levels/world1/04_-_Tobgle_Road.stl"
+mv "/usr/share/games/supertux2/levels/world1/05 - The Somewhat Smaller Bath.stl" "/usr/share/games/supertux2/levels/world1/05_-_The_Somewhat_Smaller_Bath.stl"
+mv "/usr/share/games/supertux2/levels/world1/06 - The Frosted Fields.stl" "/usr/share/games/supertux2/levels/world1/06_-_The_Frosted_Fields.stl"
+mv "/usr/share/games/supertux2/levels/world1/07 - Oh No More Snowballs.stl" "/usr/share/games/supertux2/levels/world1/07_-_Oh_No_More_Snowballs.stl"
+mv "/usr/share/games/supertux2/levels/world1/08 - Stone Cold.stl" "/usr/share/games/supertux2/levels/world1/08_-_Stone_Cold.stl"
+mv "/usr/share/games/supertux2/levels/world1/09 - Grumbels Sense of Snow.stl" "/usr/share/games/supertux2/levels/world1/09_-_Grumbels_Sense_of_Snow.stl"
+mv "/usr/share/games/supertux2/levels/world1/10 - 23rd Airborne.stl" "/usr/share/games/supertux2/levels/world1/10_-_23rd_Airborne.stl"
+mv "/usr/share/games/supertux2/levels/world1/11 - Night Chill.stl" "/usr/share/games/supertux2/levels/world1/11_-_Night_Chill.stl"
+mv "/usr/share/games/supertux2/levels/world1/12 - Into the Stars.stl" "/usr/share/games/supertux2/levels/world1/12_-_Into_the_Stars.stl"
+mv "/usr/share/games/supertux2/levels/world1/13 - Above the Arctic Skies.stl" "/usr/share/games/supertux2/levels/world1/13_-_Above_the_Arctic_Skies.stl"
+mv "/usr/share/games/supertux2/levels/world1/14 - Entrance to the Cave.stl" "/usr/share/games/supertux2/levels/world1/14_-_Entrance_to_the_Cave.stl"
+mv "/usr/share/games/supertux2/levels/world1/15 - Under the Ice.stl" "/usr/share/games/supertux2/levels/world1/15_-_Under_the_Ice.stl"
+mv "/usr/share/games/supertux2/levels/world1/16 - Living in a Fridge.stl" "/usr/share/games/supertux2/levels/world1/16_-_Living_in_a_Fridge.stl"
+mv "/usr/share/games/supertux2/levels/world1/17 - Or is it just me.stl" "/usr/share/games/supertux2/levels/world1/17_-_Or_is_it_just_me.stl"
+mv "/usr/share/games/supertux2/levels/world1/18 - Ice in the Hole.stl" "/usr/share/games/supertux2/levels/world1/18_-_Ice_in_the_Hole.stl"
+mv "/usr/share/games/supertux2/levels/world1/19 - Miyamoto Monument.stl" "/usr/share/games/supertux2/levels/world1/19_-_Miyamoto_Monument.stl"
+mv "/usr/share/games/supertux2/levels/world1/20 - End of the Tunnel.stl" "/usr/share/games/supertux2/levels/world1/20_-_End_of_the_Tunnel.stl"
+mv "/usr/share/games/supertux2/levels/world1/21 - A Path in the Clouds.stl" "/usr/share/games/supertux2/levels/world1/21_-_A_Path_in_the_Clouds.stl"
+mv "/usr/share/games/supertux2/levels/world1/22 - A Mysterious House of Ice.stl" "/usr/share/games/supertux2/levels/world1/22_-_A_Mysterious_House_of_Ice.stl"
+mv "/usr/share/games/supertux2/levels/world1/23 - The Escape.stl" "/usr/share/games/supertux2/levels/world1/23_-_The_Escape.stl"
+mv "/usr/share/games/supertux2/levels/world1/24 - The Shattered Bridge.stl" "/usr/share/games/supertux2/levels/world1/24_-_The_Shattered_Bridge.stl"
+mv "/usr/share/games/supertux2/levels/world1/25 - Arctic Ruins.stl" "/usr/share/games/supertux2/levels/world1/25_-_Arctic_Ruins.stl"
+mv "/usr/share/games/supertux2/levels/world1/26 - The Castle of Nolok.stl" "/usr/share/games/supertux2/levels/world1/26_-_The_Castle_of_Nolok.stl"
+mv "/usr/share/games/supertux2/levels/world1/27 - No More Mr Ice Guy.stl" "/usr/share/games/supertux2/levels/world1/27_-_No_More_Mr_Ice_Guy.stl"
+}
+
+npostinstall() {
+mv "/usr/share/games/supertux2/levels/world1/01_-_Welcome_to_Antarctica.stl" "/usr/share/games/supertux2/levels/world1/01 - Welcome to Antarctica.stl"
+mv "/usr/share/games/supertux2/levels/world1/02_-_The_Journey_Begins.stl" "/usr/share/games/supertux2/levels/world1/02 - The Journey Begins.stl"
+mv "/usr/share/games/supertux2/levels/world1/03_-_Via_Nostalgica.stl" "/usr/share/games/supertux2/levels/world1/03 - Via Nostalgica.stl"
+mv "/usr/share/games/supertux2/levels/world1/04_-_Tobgle_Road.stl" "/usr/share/games/supertux2/levels/world1/04 - Tobgle Road.stl"
+mv "/usr/share/games/supertux2/levels/world1/05_-_The_Somewhat_Smaller_Bath.stl" "/usr/share/games/supertux2/levels/world1/05 - The Somewhat Smaller Bath.stl"
+mv "/usr/share/games/supertux2/levels/world1/06_-_The_Frosted_Fields.stl" "/usr/share/games/supertux2/levels/world1/06 - The Frosted Fields.stl"
+mv "/usr/share/games/supertux2/levels/world1/07_-_Oh_No_More_Snowballs.stl" "/usr/share/games/supertux2/levels/world1/07 - Oh No More Snowballs.stl"
+mv "/usr/share/games/supertux2/levels/world1/08_-_Stone_Cold.stl" "/usr/share/games/supertux2/levels/world1/08 - Stone Cold.stl"
+mv "/usr/share/games/supertux2/levels/world1/09_-_Grumbels_Sense_of_Snow.stl" "/usr/share/games/supertux2/levels/world1/09 - Grumbels Sense of Snow.stl"
+mv "/usr/share/games/supertux2/levels/world1/10_-_23rd_Airborne.stl" "/usr/share/games/supertux2/levels/world1/10 - 23rd Airborne.stl"
+mv "/usr/share/games/supertux2/levels/world1/11_-_Night_Chill.stl" "/usr/share/games/supertux2/levels/world1/11 - Night Chill.stl"
+mv "/usr/share/games/supertux2/levels/world1/12_-_Into_the_Stars.stl" "/usr/share/games/supertux2/levels/world1/12 - Into the Stars.stl"
+mv "/usr/share/games/supertux2/levels/world1/13_-_Above_the_Arctic_Skies.stl" "/usr/share/games/supertux2/levels/world1/13 - Above the Arctic Skies.stl"
+mv "/usr/share/games/supertux2/levels/world1/14_-_Entrance_to_the_Cave.stl" "/usr/share/games/supertux2/levels/world1/14 - Entrance to the Cave.stl"
+mv "/usr/share/games/supertux2/levels/world1/15_-_Under_the_Ice.stl" "/usr/share/games/supertux2/levels/world1/15 - Under the Ice.stl"
+mv "/usr/share/games/supertux2/levels/world1/16_-_Living_in_a_Fridge.stl" "/usr/share/games/supertux2/levels/world1/16 - Living in a Fridge.stl"
+mv "/usr/share/games/supertux2/levels/world1/17_-_Or_is_it_just_me.stl" "/usr/share/games/supertux2/levels/world1/17 - Or is it just me.stl"
+mv "/usr/share/games/supertux2/levels/world1/18_-_Ice_in_the_Hole.stl" "/usr/share/games/supertux2/levels/world1/18 - Ice in the Hole.stl"
+mv "/usr/share/games/supertux2/levels/world1/19_-_Miyamoto_Monument.stl" "/usr/share/games/supertux2/levels/world1/19 - Miyamoto Monument.stl"
+mv "/usr/share/games/supertux2/levels/world1/20_-_End_of_the_Tunnel.stl" "/usr/share/games/supertux2/levels/world1/20 - End of the Tunnel.stl"
+mv "/usr/share/games/supertux2/levels/world1/21_-_A_Path_in_the_Clouds.stl" "/usr/share/games/supertux2/levels/world1/21 - A Path in the Clouds.stl"
+mv "/usr/share/games/supertux2/levels/world1/22_-_A_Mysterious_House_of_Ice.stl" "/usr/share/games/supertux2/levels/world1/22 - A Mysterious House of Ice.stl"
+mv "/usr/share/games/supertux2/levels/world1/23_-_The_Escape.stl" "/usr/share/games/supertux2/levels/world1/23 - The Escape.stl"
+mv "/usr/share/games/supertux2/levels/world1/24_-_The_Shattered_Bridge.stl" "/usr/share/games/supertux2/levels/world1/24 - The Shattered Bridge.stl"
+mv "/usr/share/games/supertux2/levels/world1/25_-_Arctic_Ruins.stl" "/usr/share/games/supertux2/levels/world1/25 - Arctic Ruins.stl"
+mv "/usr/share/games/supertux2/levels/world1/26_-_The_Castle_of_Nolok.stl" "/usr/share/games/supertux2/levels/world1/26 - The Castle of Nolok.stl"
+mv "/usr/share/games/supertux2/levels/world1/27_-_No_More_Mr_Ice_Guy.stl" "/usr/share/games/supertux2/levels/world1/27 - No More Mr Ice Guy.stl"
+}
+
+npostremove() {
+rm -r "/usr/share/games/supertux2/levels/world1/01 - Welcome to Antarctica.stl"
+rm -r "/usr/share/games/supertux2/levels/world1/02 - The Journey Begins.stl"
+rm -r "/usr/share/games/supertux2/levels/world1/03 - Via Nostalgica.stl"
+rm -r "/usr/share/games/supertux2/levels/world1/04 - Tobgle Road.stl"
+rm -r "/usr/share/games/supertux2/levels/world1/05 - The Somewhat Smaller Bath.stl"
+rm -r "/usr/share/games/supertux2/levels/world1/06 - The Frosted Fields.stl"
+rm -r "/usr/share/games/supertux2/levels/world1/07 - Oh No More Snowballs.stl"
+rm -r "/usr/share/games/supertux2/levels/world1/08 - Stone Cold.stl"
+rm -r "/usr/share/games/supertux2/levels/world1/09 - Grumbels Sense of Snow.stl"
+rm -r "/usr/share/games/supertux2/levels/world1/10 - 23rd Airborne.stl"
+rm -r "/usr/share/games/supertux2/levels/world1/11 - Night Chill.stl"
+rm -r "/usr/share/games/supertux2/levels/world1/12 - Into the Stars.stl"
+rm -r "/usr/share/games/supertux2/levels/world1/13 - Above the Arctic Skies.stl"
+rm -r "/usr/share/games/supertux2/levels/world1/14 - Entrance to the Cave.stl"
+rm -r "/usr/share/games/supertux2/levels/world1/15 - Under the Ice.stl"
+rm -r "/usr/share/games/supertux2/levels/world1/16 - Living in a Fridge.stl"
+rm -r "/usr/share/games/supertux2/levels/world1/17 - Or is it just me.stl"
+rm -r "/usr/share/games/supertux2/levels/world1/18 - Ice in the Hole.stl"
+rm -r "/usr/share/games/supertux2/levels/world1/19 - Miyamoto Monument.stl"
+rm -r "/usr/share/games/supertux2/levels/world1/20 - End of the Tunnel.stl"
+rm -r "/usr/share/games/supertux2/levels/world1/21 - A Path in the Clouds.stl"
+rm -r "/usr/share/games/supertux2/levels/world1/22 - A Mysterious House of Ice.stl"
+rm -r "/usr/share/games/supertux2/levels/world1/23 - The Escape.stl"
+rm -r "/usr/share/games/supertux2/levels/world1/24 - The Shattered Bridge.stl"
+rm -r "/usr/share/games/supertux2/levels/world1/25 - Arctic Ruins.stl"
+rm -r "/usr/share/games/supertux2/levels/world1/26 - The Castle of Nolok.stl"
+rm -r "/usr/share/games/supertux2/levels/world1/27 - No More Mr Ice Guy.stl"
+}

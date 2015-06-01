@@ -1,0 +1,33 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sánchez <cargabsj175@gmail.com>
+
+# Name:	pcre
+# Version:	8.10
+# Release:	n06.2
+# License:	BSD
+# Group:	Programming
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64
+# Url:	http://www.pcre.org/
+# Description:	Perl-compatible regular expression library.
+# MD5:	f529480a9eaf043f1cc4c566690794c1  pcre-8.10.tar.xz
+
+
+
+nbuild() {
+./configure --prefix=/usr --enable-utf8 --enable-unicode-properties
+make
+}
+
+ninstall() {
+make install
+mv /usr/lib/libpcre.so.* /lib/
+ln -sf ../../lib/libpcre.so.0 /usr/lib/libpcre.so
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

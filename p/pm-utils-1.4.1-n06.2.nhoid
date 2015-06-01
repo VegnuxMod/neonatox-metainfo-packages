@@ -1,0 +1,45 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sánchez <cargabsj175@gmail.com>
+
+# Name:	pm-utils
+# Version:	1.4.1
+# Release:	n06.2
+# License:	GPL
+# Group:	Core System
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64
+# Url:	http://pm-utils.freedesktop.org
+# Description:	Utilities and scripts for suspend and hibernate power management.
+# MD5:	dc806a9ca1e6673ae962b5a6d1560586  pm-utils-1.4.1.tar.xz
+
+
+# BuildDep:	/bin/bash	/bin/bash
+# BuildDep:	/lib/libproc-3.2.8.so	/lib/libproc-3.2.8.so
+# BuildDep:	/usr/lib/pm-utils/video-quirks/20-video-quirk-pm-lenovo.quirkdb	/usr/lib/pm-utils/video-quirks/20-video-quirk-pm-lenovo.quirkdb
+# BuildDep:	/usr/bin/xmlto	/usr/bin/xmlto
+# BuildDep:	/usr/share/xml/docbook/xml-dtd-4.5/docbook.cat	/usr/share/xml/docbook/xml-dtd-4.5/docbook.cat
+# BuildDep:	/usr/share/xml/docbook/xsl-stylesheets-1.74.0/xhtml/onechunk.xsl	/usr/share/xml/docbook/xsl-stylesheets-1.74.0/xhtml/onechunk.xsl
+# Dep(post):	/usr/share/xml/docbook/xsl-stylesheets-1.74.0/xhtml/onechunk.xsl	/usr/share/xml/docbook/xsl-stylesheets-1.74.0/xhtml/onechunk.xsl
+# Dep(post):	/usr/share/xml/docbook/xml-dtd-4.5/docbook.cat	/usr/share/xml/docbook/xml-dtd-4.5/docbook.cat
+# Dep(post):	/usr/bin/xmlto	/usr/bin/xmlto
+# Dep(post):	/usr/lib/pm-utils/video-quirks/20-video-quirk-pm-lenovo.quirkdb	/usr/lib/pm-utils/video-quirks/20-video-quirk-pm-lenovo.quirkdb
+# Dep(post):	/lib/libproc-3.2.8.so	/lib/libproc-3.2.8.so
+# Dep(post):	/bin/bash	/bin/bash
+
+nbuild() {
+./configure --prefix=/usr --sysconfdir=/etc --localstatedir=/var
+make
+}
+
+ninstall() {
+make install
+install -m755 "../11netcfg" "/usr/lib/pm-utils/sleep.d/"
+rm -f "/usr/lib/pm-utils/sleep.d/55NetworkManager"
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

@@ -1,0 +1,34 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	libcdio
+# Version:	0.80
+# Release:	n06.2
+# License:	GPLv2
+# Group:	Multimedia
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64
+# Url:	http://www.gnu.org/software/libcdio/
+# Description:	The Compact Disc Input and Control library (libcdio) contains a library for CD-ROM and CD image access. Applications wishing to be oblivious of the OS- and device-dependent properties of a CD-ROM or of the specific details of various CD-image formats may benefit from using this library.
+# MD5:	ebe36083a241ff5a4228063373f8e4a8  libcdio-0.80.tar.xz
+
+
+# BuildDep:	/usr/lib/libcdda_paranoia.so	/usr/lib/libcdda_paranoia.so
+# Dep(post):	/usr/lib/libcdda_paranoia.so	/usr/lib/libcdda_paranoia.so
+
+nbuild() {
+sed -i "s/libudf.pc$/& \$(paranoiapcs)/" Makefile.in
+./configure --prefix=/usr &&
+make
+}
+
+ninstall() {
+make install
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

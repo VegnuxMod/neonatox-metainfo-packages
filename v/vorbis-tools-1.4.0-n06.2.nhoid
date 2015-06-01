@@ -1,0 +1,41 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	vorbis-tools
+# Version:	1.4.0
+# Release:	n06.2
+# License:	GPLv2
+# Group:	Multimedia
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64 arm arm64
+# Url:	http://www.xiph.org/vorbis/
+# Description:	Extra tools for Ogg-Vorbis.
+# MD5:	c49b948e80f6e125de6a73dbd2fa045c  vorbis-tools-1.4.0.tar.xz
+
+
+# BuildDep:	/usr/lib/libao.so	/usr/lib/libao.so
+# BuildDep:	/usr/lib/libvorbis.so	/usr/lib/libvorbis.so
+# BuildDep:	/usr/lib/libcurl.so	/usr/lib/libcurl.so
+# BuildDep:	/usr/lib/libFLAC.so	/usr/lib/libFLAC.so
+# Dep(post):	/usr/lib/libFLAC.so	/usr/lib/libFLAC.so
+# Dep(post):	/usr/lib/libcurl.so	/usr/lib/libcurl.so
+# Dep(post):	/usr/lib/libvorbis.so	/usr/lib/libvorbis.so
+# Dep(post):	/usr/lib/libao.so	/usr/lib/libao.so
+
+nbuild() {
+./configure --prefix=/usr \
+--without-speex \
+--enable-vcut
+make
+}
+
+ninstall() {
+make install
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

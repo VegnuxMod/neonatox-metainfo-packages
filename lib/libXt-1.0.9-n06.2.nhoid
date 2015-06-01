@@ -1,0 +1,39 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sánchez <cargabsj175@gmail.com>
+
+# Name:	libXt
+# Version:	1.0.9
+# Release:	n06.2
+# License:	X11 license
+# Group:	X Window System
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64 arm arm64
+# Url:	http://www.x.org/wiki
+# Description:	libXt provides the X Toolkit Intrinsics, an abstract widget library upon which other toolkits are based. Xt is the basis for many toolkits, including the Athena widgets (Xaw), and LessTif (a Motif implementation).
+# MD5:	00be176d7c05b078804e24122f02f980  libXt-1.0.9.tar.xz
+
+
+# BuildDep:	/usr/lib/libX11.so	/usr/lib/libX11.so
+# BuildDep:	/usr/lib/libICE.so	/usr/lib/libICE.so
+# BuildDep:	/usr/lib/libpthread.so	/usr/lib/libpthread.so
+# BuildDep:	/usr/lib/libSM.so	/usr/lib/libSM.so
+# Dep(post):	/usr/lib/libX11.so	/usr/lib/libX11.so
+# Dep(post):	/usr/lib/libICE.so	/usr/lib/libICE.so
+# Dep(post):	/usr/lib/libpthread.so	/usr/lib/libpthread.so
+# Dep(post):	/usr/lib/libSM.so	/usr/lib/libSM.so
+
+nbuild() {
+./configure --prefix=/usr --sysconfdir=/etc --mandir=/usr/share/man --localstatedir=/var --with-appdefaultdir=/etc/X11/app-defaults
+make
+}
+
+ninstall() {
+make install
+}
+
+npostinstall() {
+ldconfig
+}
+
+npostremove() {
+noemptyfuncs
+}

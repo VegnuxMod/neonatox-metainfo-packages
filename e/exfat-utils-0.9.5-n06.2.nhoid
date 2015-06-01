@@ -1,0 +1,30 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	exfat-utils
+# Version:	0.9.5
+# Release:	n06.2
+# License:	GPLv3
+# Group:	File System
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64 arm arm64 armel
+# Url:	http://code.google.com/p/exfat
+# Description:	exFat utils.
+# MD5:	0b3005e47104ac09f8241682f7c551c3  exfat-utils-0.9.5.tar.xz
+
+
+
+nbuild() {
+scons
+}
+
+ninstall() {
+scons install
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

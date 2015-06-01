@@ -1,0 +1,56 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	udisks
+# Version:	1.0.1
+# Release:	n06.2
+# License:	GPL
+# Group:	Core System
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64 arm arm64
+# Url:	http://www.freedesktop.org/wiki/Software/udisks
+# Description:	Disk Management Service.
+# MD5:	2c8c14d45e872545430488aad1245d4a  udisks-1.0.1.tar.xz
+
+
+# BuildDep:	/usr/lib/libgudev-1.0.so	/usr/lib/libgudev-1.0.so
+# BuildDep:	/usr/lib/libsgutils2.la	/usr/lib/libsgutils2.la
+# BuildDep:	/usr/lib/libglib-2.0.so	/usr/lib/libglib-2.0.so
+# BuildDep:	/usr/lib/libdbus-glib-1.so	/usr/lib/libdbus-glib-1.so
+# BuildDep:	/usr/lib/libpolkit-agent-1.so	/usr/lib/libpolkit-agent-1.so
+# BuildDep:	/usr/lib/libparted.so	/usr/lib/libparted.so
+# BuildDep:	/usr/lib/libdevmapper.so	/usr/lib/libdevmapper.so
+# BuildDep:	/usr/lib/libatasmart.so	/usr/lib/libatasmart.so
+# BuildDep:	/usr/sbin/lsof	/usr/sbin/lsof
+# BuildDep:	/usr/lib/liblvm2app.so	/usr/lib/liblvm2app.so
+# Dep(post):	/usr/lib/liblvm2app.so	/usr/lib/liblvm2app.so
+# Dep(post):	/usr/sbin/lsof	/usr/sbin/lsof
+# Dep(post):	/usr/lib/libatasmart.so	/usr/lib/libatasmart.so
+# Dep(post):	/usr/lib/libdevmapper.so	/usr/lib/libdevmapper.so
+# Dep(post):	/usr/lib/libparted.so	/usr/lib/libparted.so
+# Dep(post):	/usr/lib/libpolkit-agent-1.so	/usr/lib/libpolkit-agent-1.so
+# Dep(post):	/usr/lib/libdbus-glib-1.so	/usr/lib/libdbus-glib-1.so
+# Dep(post):	/usr/lib/libglib-2.0.so	/usr/lib/libglib-2.0.so
+# Dep(post):	/usr/lib/libsgutils2.la	/usr/lib/libsgutils2.la
+# Dep(post):	/usr/lib/libgudev-1.0.so	/usr/lib/libgudev-1.0.so
+
+nbuild() {
+patch -Np1 -i "../lvm2_api_support.patch"
+patch -Np1 -i "../no-floppy.patch"
+export CFLAGS="$CFLAGS -fno-strict-aliasing"
+./configure --prefix=/usr --sysconfdir=/etc --localstatedir=/var \
+--libexecdir=/usr/lib/udisks --disable-static --disable-man-pages
+make
+}
+
+ninstall() {
+make install
+# sed -i 's:<allow_any>no</allow_any>:<allow_any>yes</allow_any>:g' /usr/share/polkit-1/actions/org.freedesktop.udisks.policy
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

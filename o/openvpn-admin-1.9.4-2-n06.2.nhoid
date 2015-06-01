@@ -1,0 +1,41 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	openvpn-admin
+# Version:	1.9.4-2
+# Release:	n06.2
+# License:	LGPL
+# Group:	Networking
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64 arm arm64 armel
+# Url:	http://sourceforge.net/projects/openvpn-admin
+# Description:	A GUI for OpenVPN that is written in Mono
+# MD5:	d13e3c5fab62ae7711ed227de3ca20fb  openvpn-admin-1.9.4-2.tar.xz
+
+
+# BuildDep:	/usr/bin/mono	/usr/bin/mono
+# BuildDep:	/usr/lib/libgtksharpglue-2.so	/usr/lib/libgtksharpglue-2.so
+# BuildDep:	/usr/sbin/openvpn	/usr/sbin/openvpn
+# Dep(post):	/usr/sbin/openvpn	/usr/sbin/openvpn
+# Dep(post):	/usr/lib/libgtksharpglue-2.so	/usr/lib/libgtksharpglue-2.so
+
+nbuild() {
+curdir=$(pwd)
+export MONO_SHARED_DIR=$curdir/.wabi
+mkdir -p $MONO_SHARED_DIR
+patch -p1 -i ../Configuration.cs.patch
+sed -i 's|-reference:Mono.Posix|-reference:Mono.Unix|g' src/Makefile.am
+./configure --prefix=/usr --sysconfdir=/etc
+make
+}
+
+ninstall() {
+make install
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

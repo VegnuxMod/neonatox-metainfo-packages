@@ -1,0 +1,32 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	perl-html-tagset
+# Version:	3.20
+# Release:	n06.2
+# License:	PerlArtistic
+# Group:	Programming
+# Arch:	noarch
+# Url:	http://search.cpan.org/dist/HTML-Tagset
+# Description:	Data tables useful in parsing HTML.
+# MD5:	460420bbb3aec5daa582e11ec5f77e9c  perl-html-tagset-3.20.tar.xz
+
+# BuildDep:	/usr/bin/perl	/usr/bin/perl
+# Dep(post):	/usr/bin/perl	/usr/bin/perl
+
+nbuild() {
+perl Makefile.PL INSTALLDIRS=vendor
+make
+}
+
+ninstall() {
+make install
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

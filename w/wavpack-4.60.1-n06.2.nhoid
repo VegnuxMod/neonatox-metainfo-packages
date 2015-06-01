@@ -1,0 +1,35 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	wavpack
+# Version:	4.60.1
+# Release:	n06.2
+# License:	custom
+# Group:	Multimedia
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64 arm arm64
+# Url:	http://www.wavpack.com/
+# Description:	Audio compression format with lossless, lossy, and hybrid compression modes.
+# MD5:	8ff8b9211a5f9ed658b5bc2661bee993  wavpack-4.60.1.tar.xz
+
+
+
+nbuild() {
+./configure --prefix=/usr --enable-mmx --disable-static
+make
+}
+
+ninstall() {
+pkgdir=/tmp/wavpack
+make DESTDIR=${pkgdir} install
+rm -f ${pkgdir}/usr/lib/*.a
+cp -r ${pkgdir}/* /
+rm -r ${pkgdir}
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

@@ -1,0 +1,38 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	autoconf2.13
+# Version:	2.13
+# Release:	n06.2
+# License:	GPLv2
+# Group:	System
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64 arm arm64
+# Url:	http://www.gnu.org/software/autoconf/
+# Description:	A GNU tool for automatically configuring source code (Legacy 2.1x version)
+# MD5:	36e99677fdb9b49bc80d635c1e5333b0  autoconf2.13-2.13.tar.xz
+
+
+# BuildDep:	/usr/bin/perl	/usr/bin/perl
+# Dep(post):	/usr/bin/perl	/usr/bin/perl
+
+nbuild() {
+./configure --prefix=/usr --infodir=/usr/share/info --program-suffix=-2.13
+make
+}
+
+ninstall() {
+pkgdir=/tmp/autoconf
+make prefix="${pkgdir}/usr" infodir="${pkgdir}/usr/share/info" install
+mv "${pkgdir}"/usr/share/info/autoconf{,-2.13}.info
+mv "${pkgdir}"/usr/share/info/standards{,-2.13}.info
+cp -r ${pkgdir}/* /
+rm -r ${pkgdir}
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

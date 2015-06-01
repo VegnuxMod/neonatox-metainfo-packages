@@ -1,0 +1,37 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	centerim
+# Version:	4.22.10
+# Release:	n06.2
+# License:	GPL
+# Group:	Networking
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64 arm arm64
+# Url:	http://www.centerim.org
+# Description:	Fork of CenterICQ - A text mode menu- and window-driven IM interface.
+# MD5:	24658370831786ad036f489dd1ba8b16  centerim-4.22.10.tar.xz
+
+
+# BuildDep:	/usr/bin/python	/usr/bin/python
+# BuildDep:	/usr/lib/libjpeg.so	/usr/lib/libjpeg.so
+# BuildDep:	/usr/lib/libgpgme.so	/usr/lib/libgpgme.so
+# Dep(post):	/usr/lib/libgpgme.so	/usr/lib/libgpgme.so
+# Dep(post):	/usr/lib/libjpeg.so	/usr/lib/libjpeg.so
+# Dep(post):	/usr/bin/python	/usr/bin/python
+
+nbuild() {
+./configure --prefix=/usr --with-ssl --with-openssl --enable-locales-fix
+make
+}
+
+ninstall() {
+make install
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

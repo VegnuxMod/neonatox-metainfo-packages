@@ -1,0 +1,31 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	libvdpau
+# Version:	0.4
+# Release:	n06.2
+# License:	custom
+# Group:	Multimedia
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64 arm arm64
+# Url:	http://cgit.freedesktop.org/~aplattner/libvdpau
+# Description:	Nvidia VDPAU library.
+# MD5:	a2ef67865f4a4ebb38f3314d6bd6d8d5  libvdpau-0.4.tar.xz
+
+
+
+nbuild() {
+./configure --prefix=/usr
+make
+}
+
+ninstall() {
+make install
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

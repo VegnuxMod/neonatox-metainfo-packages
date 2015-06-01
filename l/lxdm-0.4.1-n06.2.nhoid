@@ -1,0 +1,58 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	lxdm
+# Version:	0.4.1
+# Release:	n06.2
+# License:	GPLv2
+# Group:	LXDE Desktop
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64 arm arm64 armel
+# Url:	http://sourceforge.net/projects/lxdm/
+# Description:	Lightweight Display Manager (part of LXDE).
+# MD5:	db712cd16979b958c5673b69d8de8f8d  lxdm-0.4.1.tar.xz
+
+
+# BuildDep:	/usr/lib/libgtk-x11-2.0.so	/usr/lib/libgtk-x11-2.0.so
+# BuildDep:	/usr/bin/X	/usr/bin/X
+# BuildDep:	/usr/bin/ck-launch-session	/usr/bin/ck-launch-session
+# Dep(post):	/usr/bin/ck-launch-session	/usr/bin/ck-launch-session
+# Dep(post):	/usr/bin/X	/usr/bin/X
+# Dep(post):	/usr/lib/libgtk-x11-2.0.so	/usr/lib/libgtk-x11-2.0.so
+
+nbuild() {
+./configure --sysconfdir=/etc --prefix=/usr --libexecdir=/usr/lib/lxdm
+make
+patch -Np0 < ../lxdm.patch
+patch -Np0 < ../Xsession.patch
+}
+
+ninstall() {
+make install
+install -m644 ../lxdm-pam.patch /etc/pam.d/lxdm
+install -Dm755 ../lxdm /etc/rc.d/init.d/lxdm
+ln -sf  /etc/rc.d/init.d/lxdm /etc/rc.d/rc0.d/K80lxdm
+ln -sf  /etc/rc.d/init.d/lxdm /etc/rc.d/rc1.d/K80lxdm
+ln -sf  /etc/rc.d/init.d/lxdm /etc/rc.d/rc2.d/K80lxdm
+ln -sf  /etc/rc.d/init.d/lxdm /etc/rc.d/rc3.d/S83lxdm
+ln -sf  /etc/rc.d/init.d/lxdm /etc/rc.d/rc4.d/S83lxdm
+ln -sf  /etc/rc.d/init.d/lxdm /etc/rc.d/rc5.d/S83lxdm
+ln -sf  /etc/rc.d/init.d/lxdm /etc/rc.d/rc6.d/K80lxdm
+sed -i "s/# numlock=0/numlock=1/g" /etc/lxdm/lxdm.conf
+sed -i -e "s/local\/libexec/lib\/lxdm/" /etc/lxdm/lxdm.conf
+}
+
+npostinstall() {
+install -d /var/{lib,run}/lxdm
+groupadd -g 121 lxdm &> /dev/null
+useradd -s /sbin/nologin -c "LXDE Display Manager user" -d /var/lib/lxdm -u 121 -g lxdm -m -r lxdm &> /dev/null
+passwd -l lxdm > /dev/null
+chown root:lxdm /etc/lxdm/lxdm.conf > /dev/null
+chown -R root:lxdm /var/lib/lxdm > /dev/null
+chown -R root:lxdm /var/run/lxdm > /dev/null 
+}
+
+npostremove() {
+rm -r /var/{lib,run}/lxdm
+userdel lxdm
+groupdel lxdm
+}

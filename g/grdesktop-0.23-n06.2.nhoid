@@ -1,0 +1,37 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	grdesktop
+# Version:	0.23
+# Release:	n06.2
+# License:	GPL
+# Group:	Networking
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64 arm arm64 armel
+# Url:	http://www.nongnu.org/grdesktop/
+# Description:	An rdesktop client for the GNOME desktop.
+# MD5:	c76293269e582a32934dea009c917f11  grdesktop-0.23.tar.xz
+
+
+# BuildDep:	/usr/bin/rdesktop	/usr/bin/rdesktop
+# BuildDep:	/usr/lib/libgnomeui-2.so	/usr/lib/libgnomeui-2.so
+# BuildDep:	/usr/lib/librarian.so	/usr/lib/librarian.so
+# Dep(post):	/usr/lib/libgnomeui-2.so	/usr/lib/libgnomeui-2.so
+# Dep(post):	/usr/bin/rdesktop	/usr/bin/rdesktop
+
+nbuild() {
+./configure --prefix=/usr --mandir=/usr/share/man --with-keymap-path=/usr/share/rdesktop/keymaps --sysconfdir=/etc
+make
+}
+
+ninstall() {
+make install
+install -Dm644 pixmaps/icon.png "/usr/share/pixmaps/grdesktop.png"
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

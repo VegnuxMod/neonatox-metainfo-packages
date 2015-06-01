@@ -1,0 +1,41 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	aspell
+# Version:	0.60.6
+# Release:	n06.2
+# License:	LGPL
+# Group:	System
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64 arm arm64
+# Url:	http://aspell.net/
+# Description:	A spell checker designed to eventually replace Ispell.
+# MD5:	768e02df9addfeeff38d10751f4ded76  aspell-0.60.6.tar.xz
+
+
+# BuildDep:	/usr/lib/libncurses.so	/usr/lib/libncurses.so
+# BuildDep:	/usr/bin/perl	/usr/bin/perl
+# Dep(post):	/usr/bin/perl	/usr/bin/perl
+# Dep(post):	/usr/lib/libncurses.so	/usr/lib/libncurses.so
+
+nbuild() {
+./configure --prefix=/usr
+make
+}
+
+ninstall() {
+pkgdir=/tmp/aspell
+make DESTDIR=${pkgdir} install
+ln -s aspell-0.60 ${pkgdir}/usr/lib/aspell
+rm ${pkgdir}/usr/share/info/dir
+gzip ${pkgdir}/usr/share/info/*
+cp -r /tmp/aspell/* /
+rm -r /tmp/aspell
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

@@ -1,0 +1,43 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	iptables
+# Version:	1.4.12
+# Release:	n06.2
+# License:	GPLv2
+# Group:	Networking
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64 arm arm64
+# Url:	http://www.netfilter.org/projects/iptables/index.html
+# Description:	A Linux kernel packet control tool.
+# MD5:	a3399523da0d679abab0434183f75186  iptables-1.4.12.tar.xz
+
+
+# BuildDep:	/bin/bash	/bin/bash
+# Dep(post):	/bin/bash	/bin/bash
+
+nbuild() {
+sed -i '87 i libxt_RATEEST.so: libxt_RATEEST.oo' extensions/GNUmakefile.in
+sed -i '88 i \\t${AM_VERBOSE_CCLD} ${CCLD} ${AM_LDFLAGS} -lm -shared ${LDFLAGS} -o $@ $<;\n' extensions/GNUmakefile.in
+./configure --prefix=/usr \
+--libexecdir=/usr/lib/iptables --sysconfdir=/etc \
+--with-xtlibdir=/usr/lib/iptables \
+--enable-devel --enable-libipq
+make
+}
+
+ninstall() {
+make install
+install -D -m644 ../empty.rules /etc/iptables/empty.rules
+install -D -m644 ../simple_firewall.rules /etc/iptables/simple_firewall.rules
+install -D -m644 ../iptables.conf.d /etc/conf.d/iptables
+mkdir -p "/var/lib/iptables"
+install -m644 ../empty-{filter,mangle,nat,raw,security}.rules /var/lib/iptables/
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

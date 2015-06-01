@@ -1,0 +1,40 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	glib1
+# Version:	1.2.10
+# Release:	n06.2
+# License:	GPLv2
+# Group:	System
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64 arm arm64 armel
+# Url:	http://www.gtk.org
+# Description:	GLib is the low-level core library that forms the basis of GTK+ (Gtk1) and Gnome. It provides data structure handling for C, portability wrappers, and interfaces for such runtime functionality as an event loop, threads, dynamic loading, and an object system.
+# MD5:	b931e1353c2cd5c49ea11c24fc0c3562  glib1-1.2.10.tar.xz
+
+
+
+nbuild() {
+patch -Np1 -i ../glib-1.2.10-fixes-1.patch
+patch -Np1 -i ../glib-1.2.10-config_update-1.patch
+./configure --prefix=/opt/glib1
+make
+}
+
+ninstall() {
+make install
+chmod 755 /opt/glib1/lib/libgmodule-1.2.so.0.0.10
+cat > /etc/profile.d/18-glib1.sh << "EOF"
+export PATH="${PATH}:/opt/glib1/bin"
+export PKG_CONFIG_PATH="${PKG_CONFIG_PATH}${PKG_CONFIG_PATH+:}/opt/glib1/lib/pkgconfig"
+EOF
+}
+
+npostinstall() {
+echo "/opt/glib1/lib" >> /etc/ld.so.conf
+ldconfig
+}
+
+npostremove() {
+sed -i 's@/opt/glib1/lib@@g' /etc/ld.so.conf
+ldconfig
+}

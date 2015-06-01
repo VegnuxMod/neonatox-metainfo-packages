@@ -1,0 +1,37 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	gstreamer
+# Version:	0.10.30
+# Release:	n06.2
+# License:	GPLv2
+# Group:	Multimedia
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64 arm arm64 armel
+# Url:	http://www.gstreamer.net/
+# Description:	The GStreamer package contains a streaming media framework that enables applications to share a common set of plugins for things like video decoding and encoding, audio encoding and decoding, audio and video filters, audio visualisation, Web streaming and anything else that streams in real-time or otherwise. It is modelled after research software worked on at the Oregon Graduate Institute.
+# MD5:	472991e5b15a8ae10ceb922d36762bed  gstreamer-0.10.30.tar.xz
+
+
+# BuildDep:	/usr/lib/libglib-2.0.so	/usr/lib/libglib-2.0.so
+# BuildDep:	/usr/lib/libxml2.so	/usr/lib/libxml2.so
+# Dep(post):	/usr/lib/libglib-2.0.so	/usr/lib/libglib-2.0.so
+# Dep(post):	/usr/lib/libxml2.so	/usr/lib/libxml2.so
+
+nbuild() {
+./configure --prefix=/usr
+sed -i 's:\t       :\t:g' Makefile
+sed -i 's:        :\t:g' docs/*/Makefile
+make
+}
+
+ninstall() {
+make install
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

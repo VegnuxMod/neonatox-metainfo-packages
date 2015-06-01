@@ -1,0 +1,42 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sánchez <cargabsj175@gmail.com>
+
+# Name:	dosbox
+# Version:	0.74
+# Release:	n06.2
+# License:	GPL
+# Group:	Games
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64
+# Url:	http://dosbox.sourceforge.net/
+# Description:	An emulator with builtin DOS for running DOS Games.
+# MD5:	e22301e286e5874c58e6fa822568e337  dosbox-0.74.tar.xz
+
+
+# BuildDep:	/usr/lib/libSDL_net.so	/usr/lib/libSDL_net.so
+# BuildDep:	/usr/lib/libSDL_sound.so	/usr/lib/libSDL_sound.so
+# BuildDep:	/usr/lib/libpng.so	/usr/lib/libpng.so
+# BuildDep:	/usr/lib/libasound.so	/usr/lib/libasound.so
+# Dep(post):	/usr/lib/libSDL_net.so	/usr/lib/libSDL_net.so
+# Dep(post):	/usr/lib/libSDL_sound.so	/usr/lib/libSDL_sound.so
+# Dep(post):	/usr/lib/libpng.so	/usr/lib/libpng.so
+# Dep(post):	/usr/lib/libasound.so	/usr/lib/libasound.so
+
+nbuild() {
+sed -i 's/png_check_sig/png_sig_cmp/' configure
+./configure --prefix=/usr --sysconfdir=/etc/dosbox
+make
+}
+
+ninstall() {
+make install
+install -Dm644 ../dosbox.png /usr/share/pixmaps/dosbox.png
+install -Dm644 ../dosbox.desktop /usr/share/applications/dosbox.desktop
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

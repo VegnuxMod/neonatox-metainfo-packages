@@ -1,0 +1,36 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	freetype
+# Version:	2.4.4
+# Release:	n06.2
+# License:	GPL
+# Group:	System
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64 arm arm64
+# Url:	http://freetype.sourceforge.net
+# Description:	TrueType font rendering library.
+# MD5:	acc0d3891ea216080de6d7e295557b6d  freetype-2.4.4.tar.xz
+
+
+# BuildDep:	/usr/lib/libz.so	/usr/lib/libz.so
+# Dep(post):	/usr/lib/libz.so	/usr/lib/libz.so
+
+nbuild() {
+patch -Np1 -i "../freetype-2.3.0-enable-spr.patch"
+patch -Np1 -i "../freetype-2.2.1-enable-valid.patch"
+patch -Np1 -i "../allow-hlineto-vlineto-without-arguments.patch"
+./configure --prefix=/usr
+make
+}
+
+ninstall() {
+make install
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

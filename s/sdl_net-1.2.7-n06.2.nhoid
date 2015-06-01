@@ -1,0 +1,33 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sánchez <cargabsj175@gmail.com>
+
+# Name:	sdl_net
+# Version:	1.2.7
+# Release:	n06.2
+# License:	GPL
+# Group:	Multimedia
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64
+# Url:	http://www.libsdl.org/projects/SDL_net/
+# Description:	A small sample cross-platform networking library.
+# MD5:	ae18198b4ac5291b482e56d2f2bc23d0  sdl_net-1.2.7.tar.xz
+
+
+# BuildDep:	/usr/lib/libSDL.so	/usr/lib/libSDL.so
+# Dep(post):	/usr/lib/libSDL.so	/usr/lib/libSDL.so
+
+nbuild() {
+./configure --prefix=/usr
+make
+}
+
+ninstall() {
+make install
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

@@ -1,0 +1,63 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	wireshark
+# Version:	1.6.5
+# Release:	n06.2
+# License:	GPLv2
+# Group:	Core System
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64 arm arm64 armel
+# Url:	http://www.wireshark.org/
+# Description:	A free network protocol analyzer for Unix/Linux and Windows.
+# MD5:	afea798a46684c15c054c1231a440e9a  wireshark-1.6.5.tar.xz
+
+
+# BuildDep:	/usr/lib/libkrb5.so	/usr/lib/libkrb5.so
+# BuildDep:	/lib/libcap.so	/lib/libcap.so
+# BuildDep:	/usr/lib/libpcap.so	/usr/lib/libpcap.so
+# BuildDep:	/bin/bash	/bin/bash
+# BuildDep:	/usr/lib/libgnutls.so	/usr/lib/libgnutls.so
+# BuildDep:	/usr/lib/libgcrypt.so	/usr/lib/libgcrypt.so
+# BuildDep:	/usr/lib/libglib-2.0.so	/usr/lib/libglib-2.0.so
+# BuildDep:	/usr/bin/lua	/usr/bin/lua
+# BuildDep:	/usr/lib/libgtk-x11-2.0.so	/usr/lib/libgtk-x11-2.0.so
+# BuildDep:	/usr/bin/update-desktop-database	/usr/bin/update-desktop-database
+# BuildDep:	/usr/share/icons/hicolor/index.theme	/usr/share/icons/hicolor/index.theme
+# Dep(post):	/usr/bin/lua	/usr/bin/lua
+# Dep(post):	/usr/lib/libglib-2.0.so	/usr/lib/libglib-2.0.so
+# Dep(post):	/usr/lib/libgcrypt.so	/usr/lib/libgcrypt.so
+# Dep(post):	/usr/lib/libgnutls.so	/usr/lib/libgnutls.so
+# Dep(post):	/bin/bash	/bin/bash
+# Dep(post):	/usr/lib/libpcap.so	/usr/lib/libpcap.so
+# Dep(post):	/lib/libcap.so	/lib/libcap.so
+# Dep(post):	/usr/lib/libkrb5.so	/usr/lib/libkrb5.so
+# Dep(post):	/usr/lib/libgtk-x11-2.0.so	/usr/lib/libgtk-x11-2.0.so
+# Dep(post):	/usr/bin/update-desktop-database	/usr/bin/update-desktop-database
+# Dep(post):	/usr/share/icons/hicolor/index.theme	/usr/share/icons/hicolor/index.theme
+
+nbuild() {
+groupadd -g 150 wireshark &>/dev/null
+./configure --prefix=/usr --with-ssl --with-zlib=yes --with-lua
+make all
+}
+
+ninstall() {
+pkgdir=/tmp/ws
+make DESTDIR="$pkgdir" install
+chgrp 150 "$pkgdir/usr/bin/dumpcap"
+chmod 754 "$pkgdir/usr/bin/dumpcap"
+for d in 16 32 48; do
+install -Dm644 image/hi${d}-app-wireshark.png "$pkgdir/usr/share/icons/hicolor/${d}x${d}/apps/wireshark.png"
+done
+install -Dm644 wireshark.desktop "$pkgdir/usr/share/applications/wireshark.desktop"
+cp -r $pkgdir/* /
+rm -r $pkgdir
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+groupdel wireshark
+}

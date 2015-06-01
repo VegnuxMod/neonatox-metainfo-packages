@@ -1,0 +1,34 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	pyopenssl
+# Version:	0.13
+# Release:	n06.2
+# License:	LGPLv2.1
+# Group:	System
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64 arm armel arm64
+# Url:	http://pypi.python.org/pypi/pyOpenSSL
+# Description:	Python2 wrapper module around the OpenSSL library.
+# MD5:	42a4a1018ed83b32bf740d9e2326e2ea  pyopenssl-0.13.tar.xz
+
+
+# BuildDep:	/usr/bin/python	/usr/bin/python
+#	BuildDep:	/usr/lib/libssl.so	/usr/lib/libssl.so
+# Dep(post):	/usr/bin/python	/usr/bin/python
+#	Dep(post):	/usr/lib/libssl.so	/usr/lib/libssl.so
+
+nbuild() {
+noemptyfuncs
+}
+
+ninstall() {
+python setup.py install --optimize=1
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

@@ -1,0 +1,40 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	perl-alien-sdl
+# Version:	1.425
+# Release:	n06.2
+# License:	PerlArtistic GPL
+# Group:	System
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64 arm arm64 armel
+# Url:	http://search.cpan.org/dist/Alien-SDL/
+# Description:	Building, finding and using SDL binaries.
+# MD5:	c2753e8fe27e23f5d98264701a200a76  perl-alien-sdl-1.425.tar.xz
+
+
+# BuildDep:	/usr/lib/perl5/vendor_perl/5.12.1/Capture/Tiny.pm	/usr/lib/perl5/vendor_perl/5.12.1/Capture/Tiny.pm
+# BuildDep:	/usr/lib/perl5/vendor_perl/5.12.1/File/ShareDir.pm	/usr/lib/perl5/vendor_perl/5.12.1/File/ShareDir.pm
+# BuildDep:	/usr/lib/libSDL.so	/usr/lib/libSDL.so
+# BuildDep:	/usr/lib/perl5/vendor_perl/5.12.1/Text/Patch.pm	/usr/lib/perl5/vendor_perl/5.12.1/Text/Patch.pm
+# Dep(post):	/usr/lib/perl5/vendor_perl/5.12.1/File/ShareDir.pm	/usr/lib/perl5/vendor_perl/5.12.1/File/ShareDir.pm
+# Dep(post):	/usr/lib/perl5/vendor_perl/5.12.1/Capture/Tiny.pm	/usr/lib/perl5/vendor_perl/5.12.1/Capture/Tiny.pm
+# Dep(post):	/usr/lib/libSDL.so	/usr/lib/libSDL.so
+# Dep(post):	/usr/lib/perl5/vendor_perl/5.12.1/Text/Patch.pm	/usr/lib/perl5/vendor_perl/5.12.1/Text/Patch.pm
+
+nbuild() {
+noemptyfuncs
+}
+
+ninstall() {
+perl Build.PL installdirs=vendor --with-sdl-config
+perl Build
+perl Build install
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

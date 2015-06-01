@@ -1,0 +1,34 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	foomatic-db
+# Version:	4.0-20110312
+# Release:	n06.2
+# License:	GPL custom
+# Group:	System
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64 arm arm64
+# Url:	http://www.linuxprinting.org/foomatic.html
+# Description:	Foomatic - The collected knowledge about printers, drivers, and driver options in XML files, used by foomatic-db-engine to generate PPD files.
+# MD5:	8504c854245031a95c83d46ab25ed27c  foomatic-db-4.0-20110312.tar.xz
+
+
+# BuildDep:	/usr/bin/perl	/usr/bin/perl
+# BuildDep:	/usr/lib/libxml2.so	/usr/lib/libxml2.so
+# Dep(post):	/usr/lib/libxml2.so	/usr/lib/libxml2.so
+# Dep(post):	/usr/bin/perl	/usr/bin/perl
+
+nbuild() {
+./configure --prefix=/usr
+}
+
+ninstall() {
+make install
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

@@ -1,0 +1,38 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	obex-data-server
+# Version:	0.4.5
+# Release:	n06.2
+# License:	GPL
+# Group:	System
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64 arm arm64 armel
+# Url:	http://wiki.muiline.com/obex-data-server
+# Description:	A D-Bus service providing high-level OBEX client and server side functionality.
+# MD5:	04e4c8f81e03f9323c149585b6507211  obex-data-server-0.4.5.tar.xz
+
+
+# BuildDep:	/usr/lib/libdbus-glib-1.so	/usr/lib/libdbus-glib-1.so
+# BuildDep:	/usr/lib/libopenobex.so	/usr/lib/libopenobex.so
+# BuildDep:	/usr/lib/libMagick++.so	/usr/lib/libMagick++.so
+# Dep(post):	/usr/lib/libMagick++.so	/usr/lib/libMagick++.so
+# Dep(post):	/usr/lib/libopenobex.so	/usr/lib/libopenobex.so
+# Dep(post):	/usr/lib/libdbus-glib-1.so	/usr/lib/libdbus-glib-1.so
+
+nbuild() {
+./configure --prefix=/usr \
+--sysconfdir=/etc
+make
+}
+
+ninstall() {
+make install
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

@@ -1,0 +1,42 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	xfce4-appfinder
+# Version:	4.8.0
+# Release:	n06.2
+# License:	GPLv2
+# Group:	Xfce Desktop
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64 arm arm64
+# Url:	http://www.xfce.org/
+# Description:	Xfce application finder.
+# MD5:	7461d07ed7cafd1b81be5c6d2b1c14c4  xfce4-appfinder-4.8.0.tar.xz
+
+
+# BuildDep:	/usr/lib/libxfce4ui-1.so	/usr/lib/libxfce4ui-1.so
+# BuildDep:	/usr/lib/libgarcon-1.so	/usr/lib/libgarcon-1.so
+# BuildDep:	/usr/share/icons/hicolor/index.theme	/usr/share/icons/hicolor/index.theme
+# Dep(post):	/usr/share/icons/hicolor/index.theme	/usr/share/icons/hicolor/index.theme
+# Dep(post):	/usr/lib/libgarcon-1.so	/usr/lib/libgarcon-1.so
+# Dep(post):	/usr/lib/libxfce4ui-1.so	/usr/lib/libxfce4ui-1.so
+
+nbuild() {
+./configure --prefix=/usr \
+--sysconfdir=/etc \
+--libexecdir=/usr/lib \
+--localstatedir=/var \
+--disable-static \
+--disable-debug
+make
+}
+
+ninstall() {
+make install
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

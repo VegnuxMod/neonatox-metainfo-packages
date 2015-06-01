@@ -1,0 +1,35 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	pyorbit
+# Version:	2.24.0
+# Release:	n06.2
+# License:	LGPL
+# Group:	System
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64 arm arm64
+# Url:	http://www.pygtk.org
+# Description:	Python bindings for ORBit2.
+# MD5:	fcb15b791b61ff338519edef134b6f32  pyorbit-2.24.0.tar.xz
+
+
+# BuildDep:	/usr/bin/python	/usr/bin/python
+# BuildDep:	/usr/lib/libORBit-2.so	/usr/lib/libORBit-2.so
+# Dep(post):	/usr/lib/libORBit-2.so	/usr/lib/libORBit-2.so
+# Dep(post):	/usr/bin/python	/usr/bin/python
+
+nbuild() {
+./configure --prefix=/usr
+make
+}
+
+ninstall() {
+make install
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

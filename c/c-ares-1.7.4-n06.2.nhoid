@@ -1,0 +1,31 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	c-ares
+# Version:	1.7.4
+# Release:	n06.2
+# License:	custom
+# Group:	Networking
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64 arm arm64
+# Url:	http://c-ares.haxx.se/
+# Description:	C library that performs DNS requests and name resolves asynchronously.
+# MD5:	2bd09540ad01160659e1085418a1adb7  c-ares-1.7.4.tar.xz
+
+
+
+nbuild() {
+./configure --prefix=/usr --enable-shared
+make
+}
+
+ninstall() {
+make install
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

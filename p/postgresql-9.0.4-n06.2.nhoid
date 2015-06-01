@@ -1,0 +1,95 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	postgresql
+# Version:	9.0.4
+# Release:	n06.2
+# License:	GPLv2
+# Group:	Data Base Manager
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64 arm arm64 armel
+# Url:	http://www.postgresql.org
+# Description:	PostgreSQL is an advanced object-relational database management system (ORDBMS), derived from the Berkeley Postgres database management system.
+# MD5:	f718b45fd9a5d579f5d8c7b4aa817e45  postgresql-9.0.4.tar.xz
+
+
+# BuildDep:	/usr/lib/libxml2.so	/usr/lib/libxml2.so
+# BuildDep:	/usr/bin/python	/usr/bin/python
+# BuildDep:	/usr/bin/perl	/usr/bin/perl
+# BuildDep:	/usr/lib/libssl.so	/usr/lib/libssl.so
+# BuildDep:	/usr/lib/libreadline.so	/usr/lib/libreadline.so
+# Dep(post):	/usr/lib/libxml2.so	/usr/lib/libxml2.so
+# Dep(post):	/usr/bin/python	/usr/bin/python
+# Dep(post):	/usr/bin/perl	/usr/bin/perl
+# Dep(post):	/usr/lib/libssl.so	/usr/lib/libssl.so
+# Dep(post):	/usr/lib/libreadline.so	/usr/lib/libreadline.so
+
+nbuild() {
+patch -Np1 -i ../build.patch
+patch -Np1 -i ../perl-5.14-fix.patch
+./configure --prefix=/usr --mandir=/usr/share/man --with-libxml --with-openssl --with-perl \
+--with-python PYTHON=/usr/bin/python --with-pam --with-system-tzdata=/usr/share/zoneinfo --enable-nls \
+--datadir=/usr/share/postgresql --enable-thread-safety
+sed -i -e '/interfaces/d' src/Makefile
+make world
+for dir in src/interfaces src/bin/pg_config; do
+pushd ${dir}
+make
+popd
+done
+}
+
+ninstall() {
+pkgdir=/tmp/postgreSQL
+for dir in src/interfaces src/bin/pg_config; do
+pushd ${dir}
+make DESTDIR="${pkgdir}" install
+popd
+done
+install -D -m644 doc/src/sgml/man1/pg_config.1 "${pkgdir}/usr/share/man/man1/pg_config.1"
+cd src/include
+mkdir -p "${pkgdir}"/usr/include/{libpq,postgresql/internal/libpq}
+install -m644 pg_config.h "${pkgdir}/usr/include/"
+install -m644 pg_config_os.h "${pkgdir}/usr/include/"
+install -m644 postgres_ext.h "${pkgdir}/usr/include/"
+install -m644 libpq/libpq-fs.h "${pkgdir}/usr/include/libpq/"
+install -m644 pg_config_manual.h "${pkgdir}/usr/include/"
+install -m644 c.h "${pkgdir}/usr/include/postgresql/internal/"
+install -m644 port.h "${pkgdir}/usr/include/postgresql/internal/"
+install -m644 postgres_fe.h "${pkgdir}/usr/include/postgresql/internal/"
+install -m644 libpq/pqcomm.h "${pkgdir}/usr/include/postgresql/internal/libpq/"
+cd ../..
+make -C doc/src/sgml DESTDIR="${pkgdir}" install-html
+chown -R root:root "${pkgdir}/usr/share/doc/postgresql/html/"
+make DESTDIR="${pkgdir}" install
+make -C contrib DESTDIR="${pkgdir}" install
+make -C doc/src/sgml DESTDIR="${pkgdir}" install-man
+install -D -m644 COPYRIGHT "${pkgdir}/usr/share/licenses/postgresql/LICENSE"
+install -D -m644 ../postgresql.confd  "${pkgdir}/etc/conf.d/postgresql"
+install -D -m644 ../postgresql.pam "${pkgdir}/etc/pam.d/postgresql"
+install -D -m644 ../postgresql.logrotate "${pkgdir}/etc/logrotate.d/postgresql"
+install -D -m755 ../postgresql "${pkgdir}/etc/rc.d/init.d/postgresql"
+ln -sf  /etc/rc.d/init.d/postgresql /etc/rc.d/rc0.d/K30postgresql
+ln -sf  /etc/rc.d/init.d/postgresql /etc/rc.d/rc1.d/K30postgresql
+ln -sf  /etc/rc.d/init.d/postgresql /etc/rc.d/rc6.d/K30postgresql
+ln -sf  /etc/rc.d/init.d/postgresql /etc/rc.d/rc2.d/S20postgresql1
+ln -sf  /etc/rc.d/init.d/postgresql /etc/rc.d/rc3.d/S20postgresql1
+ln -sf  /etc/rc.d/init.d/postgresql /etc/rc.d/rc4.d/S20postgresql1
+ln -sf  /etc/rc.d/init.d/postgresql /etc/rc.d/rc5.d/S20postgresql1
+cp -r ${pkgdir}/* /
+rm -r ${pkgdir}
+}
+
+npostinstall() {
+install -v -m700 -d /srv/pgsql/data
+groupadd -g 41 postgres
+useradd -c "PostgreSQL Server" -g postgres -d /srv/pgsql/data -u 41 postgres
+chown -v postgres /srv/pgsql/data
+su - postgres -c '/usr/bin/initdb -D /srv/pgsql/data'
+su - postgres -c '/usr/bin/postmaster -D /srv/pgsql/data > /srv/pgsql/data/logfile 2>&1 &'
+}
+
+npostremove() {
+groupdel postgres
+userdel postgres
+rm -r /etc/rc.d/rc{0,1,2,3,4,5,6}.d/*postgresql*
+}

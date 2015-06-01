@@ -1,0 +1,51 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	libX11
+# Version:	1.4.0
+# Release:	n06.2
+# License:	X11 license
+# Group:	X Window System
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64 arm arm64
+# Url:	http://www.x.org/wiki
+# Description:	X11 client-side library.
+# MD5:	7bfcf797199e8c57c30dcb2d773f6a50  libX11-1.4.0.tar.xz
+
+
+# BuildDep:	/usr/lib/libxcb.so	/usr/lib/libxcb.so
+# BuildDep:	/usr/include/X11/extensions/XKB.h	/usr/include/X11/extensions/XKB.h
+# BuildDep:	/usr/include/X11/X.h	/usr/include/X11/X.h
+# BuildDep:	/usr/include/X11/extensions/lbx.h	/usr/include/X11/extensions/lbx.h
+# BuildDep:	/usr/include/X11/extensions/xf86bigfont.h	/usr/include/X11/extensions/xf86bigfont.h
+# BuildDep:	/usr/include/X11/Xtrans/Xtrans.h	/usr/include/X11/Xtrans/Xtrans.h
+# BuildDep:	/usr/include/X11/extensions/XIproto.h	/usr/include/X11/extensions/XIproto.h
+# BuildDep:	/usr/share/aclocal/xorg-macros.m4	/usr/share/aclocal/xorg-macros.m4
+# Dep(post):	/usr/lib/libxcb.so	/usr/lib/libxcb.so
+# Dep(post):	/usr/include/X11/extensions/XKB.h	/usr/include/X11/extensions/XKB.h
+# Dep(post):	/usr/include/X11/X.h	/usr/include/X11/X.h
+# Dep(post):	/usr/include/X11/extensions/lbx.h	/usr/include/X11/extensions/lbx.h
+# Dep(post):	/usr/include/X11/extensions/xf86bigfont.h	/usr/include/X11/extensions/xf86bigfont.h
+# Dep(post):	/usr/include/X11/Xtrans/Xtrans.h	/usr/include/X11/Xtrans/Xtrans.h
+# Dep(post):	/usr/include/X11/extensions/XIproto.h	/usr/include/X11/extensions/XIproto.h
+# Dep(post):	/usr/share/aclocal/xorg-macros.m4	/usr/share/aclocal/xorg-macros.m4
+
+nbuild() {
+./configure --prefix=/usr --sysconfdir=/etc \
+--mandir=/usr/share/man --localstatedir=/var \
+--disable-static
+make
+}
+
+ninstall() {
+make install
+install -m755 -d "/etc/profile.d"
+install -m755 "../xorg.sh" "/etc/profile.d/"
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

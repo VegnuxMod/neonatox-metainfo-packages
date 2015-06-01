@@ -1,0 +1,48 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	gtuxnes
+# Version:	0.75
+# Release:	n06.2
+# License:	GPLv2
+# Group:	Games
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc  ppc64 arm arm64 armel
+# Url:	http://www.scottweber.com/projects/gtuxnes/
+# Description:	GTK1 frontend for tuxnes, the emulator for the 8-bit Nintendo Entertainment System.
+# MD5:	0a7d8ff55887332239fb398a27b38055  gtuxnes-0.75.tar.xz
+
+
+# BuildDep:	/usr/bin/tuxnes	/usr/bin/tuxnes
+# BuildDep:	/etc/profile.d/18-gtk1.sh	/etc/profile.d/18-gtk1.sh
+# Dep(post):	/etc/profile.d/18-gtk1.sh	/etc/profile.d/18-gtk1.sh
+# Dep(post):	/usr/bin/tuxnes	/usr/bin/tuxnes
+
+nbuild() {
+patch -Np0 -i ../gtuxnes-0.75-rc.patch
+make
+}
+
+ninstall() {
+cp -r gtuxnes /usr/bin
+cp -r ../gtuxnes.png /usr/share/pixmaps
+cat > /usr/share/applications/gtuxnes.desktop << "EOF"
+[Desktop Entry]
+Encoding=UTF-8
+Name=Gtuxnes
+GenericName=NES Emulator
+Comment=Un emulador para los juegos de NES
+Exec=gtuxnes
+TryExec=gtuxnes
+Icon=gtuxnes
+Categories=Application;Game;Emulator
+Type=Application
+EOF
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

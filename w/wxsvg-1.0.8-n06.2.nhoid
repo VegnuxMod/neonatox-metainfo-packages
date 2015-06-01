@@ -1,0 +1,37 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	wxsvg
+# Version:	1.0.8
+# Release:	n06.2
+# License:	wxWindows
+# Group:	Graphics Library
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64 arm arm64
+# Url:	http://wxsvg.sourceforge.net/
+# Description:	C++ library to create, manipulate and render SVG files.
+# MD5:	160e7d4f7e2001c1669d10774e537a66  wxsvg-1.0.8.tar.xz
+
+
+# BuildDep:	/usr/lib/libwx_gtk2u_core-2.8.so	/usr/lib/libwx_gtk2u_core-2.8.so
+# BuildDep:	/usr/lib/libart_lgpl_2.so	/usr/lib/libart_lgpl_2.so
+# BuildDep:	/usr/bin/ffmpeg	/usr/bin/ffmpeg
+# Dep(post):	/usr/bin/ffmpeg	/usr/bin/ffmpeg
+# Dep(post):	/usr/lib/libart_lgpl_2.so	/usr/lib/libart_lgpl_2.so
+
+nbuild() {
+./autogen.sh
+./configure --prefix=/usr
+make
+}
+
+ninstall() {
+make install
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

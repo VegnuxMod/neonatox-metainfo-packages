@@ -1,0 +1,42 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com.>
+
+# Name:	prison
+# Version:	1.0
+# Release:	n06.2
+# License:	GPL
+# Group:	System
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64
+# Url:	https://projects.kde.org/projects/kdesupport/prison
+# Description:	A barcode API to produce QRCode barcodes and DataMatrix barcodes.
+# MD5:	5a0dcd1885e4ebbb352027a1439d3015  prison-1.0.tar.xz
+
+
+# BuildDep:	/usr/lib/libQtCore.so	/usr/lib/libQtCore.so
+# BuildDep:	/usr/lib/libqrencode.so	/usr/lib/libqrencode.so
+# BuildDep:	/usr/lib/libdmtx.so	/usr/lib/libdmtx.so
+# Dep(post):	/usr/lib/libdmtx.so	/usr/lib/libdmtx.so
+# Dep(post):	/usr/lib/libqrencode.so	/usr/lib/libqrencode.so
+# Dep(post):	/usr/lib/libQtCore.so	/usr/lib/libQtCore.so
+
+nbuild() {
+mkdir -p build
+cd build
+cmake ../ \
+-DCMAKE_BUILD_TYPE=Release \
+-DCMAKE_INSTALL_PREFIX=/usr
+make
+}
+
+ninstall() {
+cd build
+make install
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

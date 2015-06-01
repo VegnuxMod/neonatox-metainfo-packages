@@ -1,0 +1,37 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	qtemu
+# Version:	1.0.5
+# Release:	n06.2
+# License:	GPL
+# Group:	Emulator
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64 arm arm64 armel
+# Url:	http://qtemu.org
+# Description:	Graphical user interface for QEMU written in Qt4.
+# MD5:	636ebcdc0b1b1c2a1369267f41d0c241  qtemu-1.0.5.tar.xz
+
+
+# BuildDep:	/usr/lib/libQtCore.so	/usr/lib/libQtCore.so
+# BuildDep:	/usr/bin/qemu	/usr/bin/qemu
+# Dep(post):	/usr/lib/libQtCore.so	/usr/lib/libQtCore.so
+# Dep(post):	/usr/bin/qemu	/usr/bin/qemu
+
+nbuild() {
+cmake -DCMAKE_INSTALL_PREFIX=/opt/qtemu .
+make
+}
+
+ninstall() {
+make install
+ln -s /opt/qtemu/bin/qtemu "/usr/bin/qtemu"
+install -Dm0644 ../qtemu.desktop /usr/share/applications/qtemu.desktop
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

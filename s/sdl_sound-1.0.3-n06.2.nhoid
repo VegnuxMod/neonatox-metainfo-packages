@@ -1,0 +1,45 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sánchez <cargabsj175@gmail.com>
+
+# Name:	sdl_sound
+# Version:	1.0.3
+# Release:	n06.2
+# License:	LGPL
+# Group:	Multimedia
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64
+# Url:	http://icculus.org/SDL_sound/
+# Description:	A library to decode several popular sound file formats, such as .WAV and .MP3.
+# MD5:	21501a777b5d3839ec9d1ee63222ba7b  sdl_sound-1.0.3.tar.xz
+
+
+# BuildDep:	/usr/lib/libSDL.so	/usr/lib/libSDL.so
+# BuildDep:	/usr/lib/libmikmod.so	/usr/lib/libmikmod.so
+# BuildDep:	/usr/lib/libvorbis.so	/usr/lib/libvorbis.so
+# BuildDep:	/usr/lib/libFLAC.so	/usr/lib/libFLAC.so
+# BuildDep:	/usr/lib/libspeex.so	/usr/lib/libspeex.so
+# BuildDep:	/usr/lib/libsmpeg.so	/usr/lib/libsmpeg.so
+# Dep(post):	/usr/lib/libsmpeg.so	/usr/lib/libsmpeg.so
+# Dep(post):	/usr/lib/libspeex.so	/usr/lib/libspeex.so
+# Dep(post):	/usr/lib/libFLAC.so	/usr/lib/libFLAC.so
+# Dep(post):	/usr/lib/libvorbis.so	/usr/lib/libvorbis.so
+# Dep(post):	/usr/lib/libmikmod.so	/usr/lib/libmikmod.so
+# Dep(post):	/usr/lib/libSDL.so	/usr/lib/libSDL.so
+
+nbuild() {
+patch -Np1 -i ../flac.patch
+CFLAGS="$CFLAGS -I/usr/include/smpeg" CXXFLAGS="$CXXFLAGS -I/usr/include/smpeg" \
+./configure --prefix=/usr
+make
+}
+
+ninstall() {
+make install
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

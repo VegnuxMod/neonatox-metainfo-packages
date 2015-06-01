@@ -1,0 +1,40 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	poedit
+# Version:	1.4.6.1
+# Release:	n06.2
+# License:	custom
+# Group:	System
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64 arm arm64
+# Url:	http://www.poedit.net/
+# Description:	Cross-platform gettext catalogs (.po files) editor.
+# MD5:	42f969054cb89c1e633403be0084383e  poedit-1.4.6.1.tar.xz
+
+
+# BuildDep:	/usr/lib/libwx_gtk2u_core-2.8.so	/usr/lib/libwx_gtk2u_core-2.8.so
+# BuildDep:	/usr/lib/libgtkspell.so	/usr/lib/libgtkspell.so
+# BuildDep:	/usr/lib/libdb.so	/usr/lib/libdb.so
+# BuildDep:	/usr/bin/gettext	/usr/bin/gettext
+# BuildDep:	/usr/share/icons/hicolor/index.theme	/usr/share/icons/hicolor/index.theme
+# Dep(post):	/usr/share/icons/hicolor/index.theme	/usr/share/icons/hicolor/index.theme
+# Dep(post):	/usr/lib/libdb.so	/usr/lib/libdb.so
+# Dep(post):	/usr/lib/libgtkspell.so	/usr/lib/libgtkspell.so
+# Dep(post):	/usr/lib/libwx_gtk2u_core-2.8.so	/usr/lib/libwx_gtk2u_core-2.8.so
+
+nbuild() {
+./configure --prefix=/usr
+make
+}
+
+ninstall() {
+make install
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

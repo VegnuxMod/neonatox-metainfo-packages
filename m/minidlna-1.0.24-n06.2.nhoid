@@ -1,0 +1,60 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	minidlna
+# Version:	1.0.24
+# Release:	n06.2
+# License:	GPL
+# Group:	Networking
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64 arm arm64
+# Url:	http://sourceforge.net/projects/minidlna
+# Description:	A DLNA/UPnP-AV Media server.
+# MD5:	e346002b1f17c1181a7eb1fd6d98a70a  minidlna-1.0.24.tar.xz
+
+
+# BuildDep:	/usr/lib/libexif.so	/usr/lib/libexif.so
+# BuildDep:	/usr/lib/libjpeg.so	/usr/lib/libjpeg.so
+# BuildDep:	/usr/lib/libid3tag.so	/usr/lib/libid3tag.so
+# BuildDep:	/usr/lib/libFLAC.so	/usr/lib/libFLAC.so
+# BuildDep:	/usr/lib/libvorbis.so	/usr/lib/libvorbis.so
+# BuildDep:	/usr/bin/ffmpeg	/usr/bin/ffmpeg
+# BuildDep:	/usr/lib/libsqlite3.so	/usr/lib/libsqlite3.so
+# Dep(post):	/usr/lib/libexif.so	/usr/lib/libexif.so
+# Dep(post):	/usr/lib/libjpeg.so	/usr/lib/libjpeg.so
+# Dep(post):	/usr/lib/libid3tag.so	/usr/lib/libid3tag.so
+# Dep(post):	/usr/lib/libFLAC.so	/usr/lib/libFLAC.so
+# Dep(post):	/usr/lib/libvorbis.so	/usr/lib/libvorbis.so
+# Dep(post):	/usr/bin/ffmpeg	/usr/bin/ffmpeg
+# Dep(post):	/usr/lib/libsqlite3.so	/usr/lib/libsqlite3.so
+
+nbuild() {
+make
+}
+
+ninstall() {
+pkgdir=/tmp/minidlna
+DESTDIR=$pkgdir make install
+install -Dm644 minidlna.conf ${pkgdir}/etc/minidlna.conf
+mkdir -p $pkgdir/etc/conf.d
+echo 'MINIDLNA_USER=nobody' >$pkgdir/etc/conf.d/minidlna
+echo 'MINIDLNA_OPTS=""' >>$pkgdir/etc/conf.d/minidlna
+mkdir -p $pkgdir/etc/rc.d/init.d
+cp ../minidlna $pkgdir/etc/rc.d/init.d/minidlna
+cp -r $pkgdir/* /
+rm -r $pkgdir
+ln -svf  ../init.d/minidlna /etc/rc.d/rc0.d/K30minidlna
+ln -svf  ../init.d/minidlna /etc/rc.d/rc1.d/K30minidlna
+ln -svf  ../init.d/minidlna /etc/rc.d/rc6.d/K30minidlna
+ln -svf  ../init.d/minidlna /etc/rc.d/rc2.d/S20minidlna2
+ln -svf  ../init.d/minidlna /etc/rc.d/rc3.d/S20minidlna2
+ln -svf  ../init.d/minidlna /etc/rc.d/rc4.d/S20minidlna2
+ln -svf  ../init.d/minidlna /etc/rc.d/rc5.d/S20minidlna2
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+rm -r /etc/rc.d/rc{0,1,2,3,4,5,6}.d/*minidlna*
+}

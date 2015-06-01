@@ -1,0 +1,44 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	filezilla
+# Version:	3.3.5.1
+# Release:	n06.2
+# License:	GPL
+# Group:	Networking
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64 arm arm64
+# Url:	http://filezilla-project.org/
+# Description:	Fast and reliable FTP, FTPS and SFTP client.
+# MD5:	46826c1f61a98d8872b306ebd929c9a0  filezilla-3.3.5.1.tar.xz
+
+
+# BuildDep:	/usr/lib/libdbus-1.so	/usr/lib/libdbus-1.so
+# BuildDep:	/usr/bin/xdg-desktop-menu	/usr/bin/xdg-desktop-menu
+# BuildDep:	/usr/lib/libwx_gtk2u_core-2.8.so	/usr/lib/libwx_gtk2u_core-2.8.so
+# BuildDep:	/usr/lib/libidn.so	/usr/lib/libidn.so
+# BuildDep:	/usr/share/icons/hicolor/index.theme	/usr/share/icons/hicolor/index.theme
+# Dep(post):	/usr/share/icons/hicolor/index.theme	/usr/share/icons/hicolor/index.theme
+# Dep(post):	/usr/lib/libidn.so	/usr/lib/libidn.so
+# Dep(post):	/usr/lib/libwx_gtk2u_core-2.8.so	/usr/lib/libwx_gtk2u_core-2.8.so
+# Dep(post):	/usr/bin/xdg-desktop-menu	/usr/bin/xdg-desktop-menu
+# Dep(post):	/usr/lib/libdbus-1.so	/usr/lib/libdbus-1.so
+
+nbuild() {
+./configure \
+--prefix=/usr \
+--disable-manualupdatecheck \
+--with-tinyxml=builtin
+make
+}
+
+ninstall() {
+make install
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

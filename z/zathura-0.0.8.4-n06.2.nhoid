@@ -1,0 +1,39 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	zathura
+# Version:	0.0.8.4
+# Release:	n06.2
+# License:	custom
+# Group:	Office
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64 arm arm64
+# Url:	http://zathura.pwmt.org
+# Description:	A PDF viewer.
+# MD5:	61fac6dd9211030befe298f8f957c594  zathura-0.0.8.4.tar.xz
+
+
+# BuildDep:	/usr/lib/libpoppler-glib.so	/usr/lib/libpoppler-glib.so
+# BuildDep:	/usr/lib/libgtk-x11-2.0.so	/usr/lib/libgtk-x11-2.0.so
+# BuildDep:	/usr/lib/libcairo.so	/usr/lib/libcairo.so
+# Dep(post):	/usr/lib/libcairo.so	/usr/lib/libcairo.so
+# Dep(post):	/usr/lib/libgtk-x11-2.0.so	/usr/lib/libgtk-x11-2.0.so
+# Dep(post):	/usr/lib/libpoppler-glib.so	/usr/lib/libpoppler-glib.so
+
+nbuild() {
+make
+}
+
+ninstall() {
+install -D -m775 zathura "/usr/bin/zathura"
+install -D -m664 zathura.1 "/usr/share/man/man1/zathura.1"
+install -D -m664 LICENSE "/usr/share/licenses/zathura/LICENSE"
+install -D -m664 zathura.desktop "/usr/share/applications/zathura.desktop"
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

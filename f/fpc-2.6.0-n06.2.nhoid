@@ -1,0 +1,50 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	fpc
+# Version:	2.6.0
+# Release:	n06.2
+# License:	GPL LGPL custom
+# Group:	Programming
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64 arm arm64 armel
+# Url:	http://www.freepascal.org/
+# Description:	The Free Pascal Compiler is a Turbo Pascal 7.0 and Delphi compatible 32bit Pascal Compiler. It comes with fully TP 7.0 compatible run-time library.
+# MD5:	81c7d42d455008153b3d358883726673  fpc-2.6.0.tar.xz
+
+
+# BuildDep:	/usr/lib/libncurses.so	/usr/lib/libncurses.so
+# BuildDep:	/usr/bin/fpc	/usr/bin/fpc
+# Dep(post):	/usr/bin/fpc	/usr/bin/fpc
+# Dep(post):	/usr/lib/libncurses.so	/usr/lib/libncurses.so
+
+nbuild() {
+pushd fpcsrc/compiler
+fpcmake -Tall
+popd
+make NOGDB=1 build
+}
+
+ninstall() {
+pkgdir="/tmp/fpc"
+export HOME=$(pwd)
+make -j1 NOGDB=1 PREFIX=${pkgdir}/usr install
+export PATH=${pkgdir}/usr/bin:$PATH
+[ "$CARCH" = "i686" ] && ln -s /usr/lib/fpc/2.6.0/ppc386 ${pkgdir}/usr/bin/
+[ "$CARCH" = "x86_64" ] && ln -s /usr/lib/fpc/2.6.0/ppcx64 ${pkgdir}/usr/bin/
+mkdir -p ${pkgdir}/etc
+${pkgdir}/usr/lib/fpc/2.6.0/samplecfg ${pkgdir}/usr/lib/fpc/2.6.0 ${pkgdir}/etc
+# use -fPIC by default
+echo -e "#ifdef cpux86_64\n# for x86_64 use -fPIC by default\n-Cg\n#endif" >> "${pkgdir}/etc/fpc.cfg"
+mv ${pkgdir}/usr/man ${pkgdir}/usr/share/
+find ${pkgdir}/etc/ -type f -exec sed -i "s|${pkgdir}||g" {} \;
+cp -r ${pkgdir}/* /
+rm -r ${pkgdir}
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

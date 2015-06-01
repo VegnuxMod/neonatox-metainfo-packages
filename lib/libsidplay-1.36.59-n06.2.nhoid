@@ -1,0 +1,32 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sánchez <cargabsj175@gmail.com>
+
+# Name:	libsidplay
+# Version:	1.36.59
+# Release:	n06.2
+# License:	GPL
+# Group:	Multimedia
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64
+# Url:	http://critical.ch/distfiles/
+# Description:	A library for playing SID music files.
+# MD5:	4f1496721a3bb03c4244028ecca6088e  libsidplay-1.36.59.tar.xz
+
+
+
+nbuild() {
+patch -p1 < ../libsidplay-1.36.59-gcc43.patch
+./configure --prefix=/usr
+make
+}
+
+ninstall() {
+make install
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

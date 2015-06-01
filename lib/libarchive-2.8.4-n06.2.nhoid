@@ -1,0 +1,43 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	libarchive
+# Version:	2.8.4
+# Release:	n06.2
+# License:	BSD
+# Group:	System
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64 arm arm64
+# Url:	http://libarchive.googlecode.com/
+# Description:	Library that can create and read several streaming archive formats.
+# MD5:	675ed82f9824a59359faa4340fe80406  libarchive-2.8.4.tar.xz
+
+
+# BuildDep:	/usr/lib/libz.so	/usr/lib/libz.so
+# BuildDep:	/bin/bzip2	/bin/bzip2
+# BuildDep:	/usr/bin/xz	/usr/bin/xz
+# BuildDep:	/usr/lib/libacl.so	/usr/lib/libacl.so
+# BuildDep:	/usr/lib/libssl.so	/usr/lib/libssl.so
+# BuildDep:	/usr/lib/libexpat.so	/usr/lib/libexpat.so
+# Dep(post):	/usr/lib/libexpat.so	/usr/lib/libexpat.so
+# Dep(post):	/usr/lib/libssl.so	/usr/lib/libssl.so
+# Dep(post):	/usr/lib/libacl.so	/usr/lib/libacl.so
+# Dep(post):	/usr/bin/xz	/usr/bin/xz
+# Dep(post):	/bin/bzip2	/bin/bzip2
+# Dep(post):	/usr/lib/libz.so	/usr/lib/libz.so
+
+nbuild() {
+./configure --prefix=/usr --without-xml2
+make
+}
+
+ninstall() {
+make install
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

@@ -1,0 +1,37 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	bin86
+# Version:	0.16.18
+# Release:	n06.2
+# License:	GPL
+# Group:	Programming
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64 arm arm64 armel
+# Url:	http://www.debath.co.uk
+# Description:	A complete 8086 assembler and loader.
+# MD5:	8d156bf8c1334841f02d1a7947d89846  bin86-0.16.18.tar.xz
+
+
+
+nbuild() {
+if [[ $(uname -m) = x86_64 ]]; then
+patch -Np1 < "../bin86-0.16.17-x86_64-1.patch"
+fi
+make PREFIX=/usr
+}
+
+ninstall() {
+pkgdir=/tmp/bin86
+mkdir -p "$pkgdir/usr/bin" "$pkgdir/usr/share/man/man1"
+make "PREFIX=$pkgdir/usr" "MANDIR=$pkgdir/usr/share/man/man1" install
+cp -r $pkgdir/* /
+rm -r $pkgdir
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

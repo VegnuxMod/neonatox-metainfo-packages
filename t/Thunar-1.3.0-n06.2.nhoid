@@ -1,0 +1,65 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	Thunar
+# Version:	1.3.0
+# Release:	n06.2
+# License:	GPLv2
+# Group:	XFCE Desktop
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64 arm arm64
+# Url:	http://www.xfce.org/
+# Description:	Modern file manager for Xfce4.
+# MD5:	1f078045ef30bf0532bf8316e986cef2  Thunar-1.3.0.tar.xz
+
+
+# BuildDep:	/usr/lib/libexif.so	/usr/lib/libexif.so
+# BuildDep:	/usr/lib/libxfce4panel-1.0.so	/usr/lib/libxfce4panel-1.0.so
+# BuildDep:	/usr/share/icons/hicolor/index.theme	/usr/share/icons/hicolor/index.theme
+# BuildDep:	/usr/lib/libgamin-1.so	/usr/lib/libgamin-1.so
+# BuildDep:	/usr/lib/libpcre.so	/usr/lib/libpcre.so
+# BuildDep:	/usr/lib/libgudev-1.0.so	/usr/lib/libgudev-1.0.so
+# BuildDep:	/usr/lib/libnotify.so	/usr/lib/libnotify.so
+# BuildDep:	/usr/share/xfce4/dev-tools/m4macros/xdt-xfce.m4	/usr/share/xfce4/dev-tools/m4macros/xdt-xfce.m4
+# Dep(post):	/usr/share/xfce4/dev-tools/m4macros/xdt-xfce.m4	/usr/share/xfce4/dev-tools/m4macros/xdt-xfce.m4
+# Dep(post):	/usr/lib/libnotify.so	/usr/lib/libnotify.so
+# Dep(post):	/usr/lib/libgudev-1.0.so	/usr/lib/libgudev-1.0.so
+# Dep(post):	/usr/lib/libpcre.so	/usr/lib/libpcre.so
+# Dep(post):	/usr/lib/libgamin-1.so	/usr/lib/libgamin-1.so
+# Dep(post):	/usr/lib/libgamin-1.so	/usr/lib/libgamin-1.so
+# Dep(post):	/usr/lib/libxfce4panel-1.0.so	/usr/lib/libxfce4panel-1.0.so
+# Dep(post):	/usr/lib/libexif.so	/usr/lib/libexif.so
+
+nbuild() {
+ 
+make
+./configure --prefix=/usr \
+	--sysconfdir=/etc \
+	--libexecdir=/usr/lib/xfce4 \
+	--localstatedir=/var \
+	--disable-static \
+	--enable-gio-unix \
+	--enable-dbus \
+	--enable-startup-notification \
+	--enable-gudev \
+	--enable-notifications \
+	--enable-exif \
+	--enable-pcre \
+	--disable-debug
+make
+}
+
+ninstall() {
+make install
+  sed -i 's:x-directory/gnome-default-handler;::' /usr/share/applications/Thunar-folder-handler.desktop
+  install -dm700 /etc/polkit-1/localauthority
+  install -dm755 /etc/polkit-1/localauthority/50-local.d
+  install -m644 ../org.freedesktop.udisks.pkla /etc/polkit-1/localauthority/50-local.d/
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

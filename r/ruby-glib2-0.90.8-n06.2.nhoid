@@ -1,0 +1,39 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	ruby-glib2
+# Version:	0.90.8
+# Release:	n06.2
+# License:	LGPL
+# Group:	Programming
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64 arm arm64
+# Url:	http://ruby-gnome2.sourceforge.jp
+# Description:	Ruby bindings for glib2.
+# MD5:	0f80aaa35c620548290cd501a21024e7  ruby-glib2-0.90.8.tar.xz
+
+
+# BuildDep:	/usr/lib/ruby/gems/1.9.1/cache/pkg-config-1.0.7.gem	/usr/lib/ruby/gems/1.9.1/cache/pkg-config-1.0.7.gem
+# BuildDep:	/usr/bin/ruby	/usr/bin/ruby
+# Dep(post):	/usr/bin/ruby	/usr/bin/ruby
+# Dep(post):	/usr/lib/ruby/gems/1.9.1/cache/pkg-config-1.0.7.gem	/usr/lib/ruby/gems/1.9.1/cache/pkg-config-1.0.7.gem
+
+nbuild() {
+pkgdir=/tmp/rglib2
+ruby extconf.rb glib2 --topdir=$pkgdir
+make
+}
+
+ninstall() {
+pkgdir=/tmp/rglib2
+make DESTDIR="$pkgdir" install
+cp -r $pkgdir/* /
+rm -r $pkgdir
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

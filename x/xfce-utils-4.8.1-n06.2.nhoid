@@ -1,0 +1,50 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	xfce-utils
+# Version:	4.8.1
+# Release:	n06.2
+# License:	GPLv2
+# Group:	XFCE Desktop
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64 arm arm64
+# Url:	http://www.xfce.org/
+# Description:	Utilities for Xfce.
+# MD5:	044419f91faeeee4e5ce9cea6928d0e1  xfce-utils-4.8.1.tar.xz
+
+
+# BuildDep:	/usr/lib/libxfce4ui-1.so	/usr/lib/libxfce4ui-1.so
+# BuildDep:	/usr/share/icons/hicolor/index.theme	/usr/share/icons/hicolor/index.theme
+# BuildDep:	/usr/bin/perl	/usr/bin/perl
+# BuildDep:	/usr/lib/libxfce4util.so	/usr/lib/libxfce4util.so
+# BuildDep:	/usr/lib/libdbus-glib-1.so	/usr/lib/libdbus-glib-1.so
+# BuildDep:	/usr/share/xfce4/dev-tools/m4macros/xdt-xfce.m4	/usr/share/xfce4/dev-tools/m4macros/xdt-xfce.m4
+# Dep(post):	/usr/share/xfce4/dev-tools/m4macros/xdt-xfce.m4	/usr/share/xfce4/dev-tools/m4macros/xdt-xfce.m4
+# Dep(post):	/usr/lib/libdbus-glib-1.so	/usr/lib/libdbus-glib-1.so
+# Dep(post):	/usr/lib/libxfce4util.so	/usr/lib/libxfce4util.so
+# Dep(post):	/usr/bin/perl	/usr/bin/perl
+# Dep(post):	/usr/share/icons/hicolor/index.theme	/usr/share/icons/hicolor/index.theme
+# Dep(post):	/usr/lib/libxfce4ui-1.so	/usr/lib/libxfce4ui-1.so
+
+nbuild() {
+  ./configure --prefix=/usr \
+	--sysconfdir=/etc \
+	--libexecdir=/usr/lib/xfce4 \
+	--localstatedir=/var \
+	--disable-static \
+	--enable-dbus \
+	--disable-debug \
+	--with-vendor-info=NeonatoX
+  make
+}
+
+ninstall() {
+make install
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

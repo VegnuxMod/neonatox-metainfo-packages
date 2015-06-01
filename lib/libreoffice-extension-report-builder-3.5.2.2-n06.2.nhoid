@@ -1,0 +1,39 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	libreoffice-extension-report-builder
+# Version:	3.5.2.2
+# Release:	n06.2
+# License:	LGPLv3
+# Group:	libreoffice extension
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64 arm arm64 armel
+# Url:	http://www.libreoffice.org/
+# Description:	This extension creates smart-looking database reports.
+# MD5:	feef3183bb04741d9c05d8ce392ef6c3  libreoffice-extension-report-builder-3.5.2.2.tar.xz
+
+
+# BuildDep:	/usr/bin/libreoffice	/usr/bin/libreoffice
+# BuildDep:	/usr/bin/unzip	/usr/bin/unzip
+# BuildDep:	/usr/bin/java	/usr/bin/java
+# Dep(post):	/usr/bin/libreoffice	/usr/bin/libreoffice
+# Dep(post):	/usr/bin/java	/usr/bin/java
+
+nbuild() {
+./build.libreoffice
+}
+
+ninstall() {
+pkgdir=/tmp/libreoffice
+install -dm755 ${pkgdir}/usr/lib/libreoffice/share/extensions
+unzip -q solver/unxlng*/bin/report-builder.oxt -d ${pkgdir}/usr/lib/libreoffice/share/extensions/report-builder
+cp -r ${pkgdir}/* /
+rm -r ${pkgdir}
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

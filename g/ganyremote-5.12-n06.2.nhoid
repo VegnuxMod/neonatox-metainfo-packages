@@ -1,0 +1,39 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	ganyremote
+# Version:	5.12
+# Release:	n06.2
+# License:	GPL
+# Group:	System
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64 arm arm64
+# Url:	http://anyremote.sourceforge.net/
+# Description:	GTK frontend for anyremote.
+# MD5:	57d56d0785701991a4d827d8ad601224  ganyremote-5.12.tar.xz
+
+
+# BuildDep:	/usr/bin/python	/usr/bin/python
+# BuildDep:	/usr/lib/python2.7/site-packages/bluetooth/bluez.py	/usr/lib/python2.7/site-packages/bluetooth/bluez.py
+# BuildDep:	/usr/lib/python2.7/site-packages/gtk-2.0/gtk/_gtk.so	/usr/lib/python2.7/site-packages/gtk-2.0/gtk/_gtk.so
+# BuildDep:	/usr/bin/anyremote	/usr/bin/anyremote
+# Dep(post):	/usr/bin/anyremote	/usr/bin/anyremote
+# Dep(post):	/usr/lib/python2.7/site-packages/gtk-2.0/gtk/_gtk.so	/usr/lib/python2.7/site-packages/gtk-2.0/gtk/_gtk.so
+# Dep(post):	/usr/lib/python2.7/site-packages/bluetooth/bluez.py	/usr/lib/python2.7/site-packages/bluetooth/bluez.py
+# Dep(post):	/usr/bin/python	/usr/bin/python
+
+nbuild() {
+./configure --prefix=/usr
+make
+}
+
+ninstall() {
+make install
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

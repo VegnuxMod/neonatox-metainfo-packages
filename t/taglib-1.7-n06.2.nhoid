@@ -1,0 +1,39 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	taglib
+# Version:	1.7
+# Release:	n06.2
+# License:	LGPLv2.1
+# Group:	Multimedia
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64 arm arm64 armel
+# Url:	http://developer.kde.org/~wheeler/taglib.html
+# Description:	TagLib is a library for reading and editing the meta-data of several popular audio formats. Currently it supports both ID3v1 and ID3v2 for MP3 (LAME) files, Ogg Vorbis (libvorbis) comments and ID3 tags and Vorbis comments in FLAC files as well as MPC.
+# MD5:	854681ef9ec042eab761113ce68516cc  taglib-1.7.tar.xz
+
+
+
+nbuild() {
+  patch -p1 -i ../ape-idev2.patch
+  mkdir build
+  cd build
+  cmake .. \
+    -DCMAKE_INSTALL_PREFIX=/usr \
+    -DCMAKE_BUILD_TYPE=Release \
+    -DWITH_MP4=ON \
+    -DWITH_ASF=ON
+  make
+}
+
+ninstall() {
+	cd build
+make install
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

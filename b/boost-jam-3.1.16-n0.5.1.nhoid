@@ -1,0 +1,31 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sánchez <cargabsj175@gmail.com>
+
+# Name:	boost-jam
+# Version:	3.1.16
+# Release:	n0.5.1
+# License:	Boost 0.1
+# Group:	Programming
+# Arch:	i486 i586 i686
+# Url:	http://www.boost.org/
+# Description:	Boost Libraries for C++.
+# MD5:	f6b62b1966d080195ec7f2cbb0984964  boost-jam-3.1.16.tar.xz
+
+
+
+nbuild() {
+./build.sh
+}
+
+ninstall() {
+cd bin.linux* &&
+cp -v bjam /usr/bin
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

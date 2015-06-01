@@ -1,0 +1,47 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	libgnome
+# Version:	2.32.0
+# Release:	n06.2
+# License:	LGPL
+# Group:	Gnome Desktop
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64 arm arm64
+# Url:	http://www.gnome.org
+# Description:	Common libraries for GNOME.
+# MD5:	080c3f4af28002bdec4a441eec0704b4  libgnome-2.32.0.tar.xz
+
+
+# BuildDep:	/usr/lib/libgnomevfs-2.so	/usr/lib/libgnomevfs-2.so
+# BuildDep:	/usr/lib/libbonobo-2.so	/usr/lib/libbonobo-2.so
+# BuildDep:	/usr/lib/libgconf-2.so	/usr/lib/libgconf-2.so
+# BuildDep:	/usr/lib/libgvfscommon.so	/usr/lib/libgvfscommon.so
+# BuildDep:	/usr/lib/libcanberra.so	/usr/lib/libcanberra.so
+# Dep(post):	/usr/lib/libgnomevfs-2.so	/usr/lib/libgnomevfs-2.so
+# Dep(post):	/usr/lib/libbonobo-2.so	/usr/lib/libbonobo-2.so
+# Dep(post):	/usr/lib/libgconf-2.so	/usr/lib/libgconf-2.so
+# Dep(post):	/usr/lib/libgvfscommon.so	/usr/lib/libgvfscommon.so
+# Dep(post):	/usr/lib/libcanberra.so	/usr/lib/libcanberra.so
+
+nbuild() {
+./configure --prefix=/usr --sysconfdir=/etc \
+--localstatedir=/var --disable-static --disable-esd
+make
+}
+
+ninstall() {
+pkgdir=/tmp/libgnome
+make DESTDIR="${pkgdir}" install
+gconf-merge-schema "/usr/share/gconf/schemas/libgnome.schemas" --domain libgnome-2.0 /etc/gconf/schemas/*.schemas
+rm -f /etc/gconf/schemas/*.schemas
+cp -r ${pkgdir}/* /
+rm -r ${pkgdir}
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

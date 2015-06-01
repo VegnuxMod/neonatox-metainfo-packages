@@ -1,0 +1,43 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	live-media
+# Version:	20110124
+# Release:	n06.2
+# License:	LGPL
+# Group:	Multimedia
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64 arm arm64
+# Url:	http://live555.com/liveMedia
+# Description:	A set of C++ libraries for multimedia streaming.
+# MD5:	0439dd2d3b4b134d532fccd1a16d095d  live-media-20110124.tar.xz
+
+
+
+nbuild() {
+sed \
+-e 's/$(INCLUDES) -I. -O2 -DSOCKLEN_T/$(INCLUDES) -I. -O2 -I. -fPIC -DSOCKLEN_T/g' \
+-e 's/\(LIBRARY_LINK =\).*/\1 $(LD) -o/g' \
+-e 's/\(LIBRARY_LINK_OPTS =\).*/\1 $(LINK_OPTS) -r -Bstatic/g' \
+-i config.linux
+./genMakefiles linux
+make
+}
+
+ninstall() {
+for dir in BasicUsageEnvironment UsageEnvironment groupsock liveMedia; do
+mkdir -p /usr/lib/live/${dir}
+cp -r ${dir}/*.a ${dir}/include /usr/lib/live/${dir}
+done
+mkdir -p /usr/bin
+for testprog in `find testProgs -type f -perm 755`; do
+install ${testprog} /usr/bin
+done
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

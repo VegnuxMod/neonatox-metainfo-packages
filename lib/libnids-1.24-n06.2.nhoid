@@ -1,0 +1,38 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	libnids
+# Version:	1.24
+# Release:	n06.2
+# License:	GPL
+# Group:	Networking
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64 arm arm64
+# Url:	http://libnids.sourceforge.net
+# Description:	An implementation of an E-component of Network Intrusion Detection System.
+# MD5:	bfa3179a0adf391fb12bc6fb36dfc722  libnids-1.24.tar.xz
+
+
+# BuildDep:	/usr/lib/libnet.so	/usr/lib/libnet.so
+# BuildDep:	/usr/lib/libpcap.so	/usr/lib/libpcap.so
+# BuildDep:	/usr/lib/libglib-2.0.so	/usr/lib/libglib-2.0.so
+# Dep(post):	/usr/lib/libglib-2.0.so	/usr/lib/libglib-2.0.so
+# Dep(post):	/usr/lib/libpcap.so	/usr/lib/libpcap.so
+# Dep(post):	/usr/lib/libnet.so	/usr/lib/libnet.so
+
+nbuild() {
+./configure --prefix=/usr --man=/usr/share/man --enable-shared
+make
+}
+
+ninstall() {
+make install
+ln -s libnids.so.1.24 /usr/lib/libnids.so.1
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

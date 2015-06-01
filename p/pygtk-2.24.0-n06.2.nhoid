@@ -1,0 +1,39 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	pygtk
+# Version:	2.24.0
+# Release:	n06.2
+# License:	LGPL
+# Group:	Graphic Library
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64 arm arm64 armel
+# Url:	http://www.pygtk.org/
+# Description:	Python bindings for the GTK widget set.
+# MD5:	4db298c5bfca82cbf506745b6e3b5186  pygtk-2.24.0.tar.xz
+
+
+# BuildDep:	/usr/lib/python2.7/site-packages/cairo/_cairo.so	/usr/lib/python2.7/site-packages/cairo/_cairo.so
+# BuildDep:	/usr/lib/libglade-2.0.so	/usr/lib/libglade-2.0.so
+# BuildDep:	/usr/lib/python2.7/site-packages/gtk-2.0/gobject/_gobject.so	/usr/lib/python2.7/site-packages/gtk-2.0/gobject/_gobject.so
+# Dep(post):	/usr/lib/python2.7/site-packages/gtk-2.0/gobject/_gobject.so	/usr/lib/python2.7/site-packages/gtk-2.0/gobject/_gobject.so
+# Dep(post):	/usr/lib/libglade-2.0.so	/usr/lib/libglade-2.0.so
+# Dep(post):	/usr/lib/python2.7/site-packages/cairo/_cairo.so	/usr/lib/python2.7/site-packages/cairo/_cairo.so
+
+nbuild() {
+patch -Np1 -i "../python27.patch"
+./configure --prefix=/usr
+make
+}
+
+ninstall() {
+make install
+install -m644 gtk/gtk-extrafuncs.defs "/usr/share/pygtk/2.0/defs/"
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

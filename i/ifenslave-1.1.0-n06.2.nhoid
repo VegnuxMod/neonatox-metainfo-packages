@@ -1,0 +1,31 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	ifenslave
+# Version:	1.1.0
+# Release:	n06.2
+# License:	GPLv2
+# Group:	Networking
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64 arm arm64
+# Url:	http://www.linuxfoundation.org/en/Net:Bonding
+# Description:	Utility for bonding ethernet interfaces.
+# MD5:	595ed219fdc62b4bd24098bbb2a2a2b7  ifenslave-1.1.0.tar.xz
+
+
+
+nbuild() {
+gcc -Wall -Wstrict-prototypes ${CFLAGS} ${LDFLAGS} ifenslave.c -o ifenslave
+}
+
+ninstall() {
+install -Dm755 ifenslave /sbin/ifenslave
+install -Dm644 bonding.conf.d /etc/conf.d/bonding
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

@@ -1,0 +1,38 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sánchez <cargabsj175@gmail.com>
+
+# Name:	device-mapper
+# Version:	2.02.75
+# Release:	n06.2
+# License:	GPLv2 LGPLv2.1
+# Group:	Core System
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64
+# Url:	http://sourceware.org/lvm2/
+# Description:	Device mapper userspace library and tools.
+# MD5:	6b9d8b3bd8a58bc01a20477b6d5e0c5a  device-mapper-2.02.75.tar.xz
+
+
+# BuildDep:	/usr/lib/libudev.so	/usr/lib/libudev.so
+# Dep(post):	/usr/lib/libudev.so	/usr/lib/libudev.so
+
+nbuild() {
+sed -i 's|/usr/bin/tr|/bin/tr|' scripts/lvmdump.sh
+unset LDFLAGS
+./configure --prefix= --sysconfdir=/etc --localstatedir=/var --datarootdir=/usr/share \
+--includedir=/usr/include --with-usrlibdir=/usr/lib \
+--enable-pkgconfig --enable-readline --enable-dmeventd --enable-cmdlib --enable-applib \
+--with-udevdir=/lib/udev/rules.d/ --enable-udev_sync --enable-udev_rules
+make
+}
+
+ninstall() {
+make install_device-mapper
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

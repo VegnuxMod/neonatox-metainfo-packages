@@ -1,0 +1,40 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	mono-zeroconf
+# Version:	0.9.0
+# Release:	n06.2
+# License:	GPL
+# Group:	Networking
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64 arm arm64
+# Url:	http://www.mono-project.com/Mono.Zeroconf
+# Description:	A cross platform Zero Configuration Networking library for Mono and .NET.
+# MD5:	676d35bb901a85fe15c29cf8b32bac68  mono-zeroconf-0.9.0.tar.xz
+
+
+# BuildDep:	/usr/lib/libmono-2.0.so	/usr/lib/libmono-2.0.so
+# BuildDep:	/usr/lib/libavahi-ui.so	/usr/lib/libavahi-ui.so
+# Dep(post):	/usr/lib/libavahi-ui.so	/usr/lib/libavahi-ui.so
+# Dep(post):	/usr/lib/libmono-2.0.so	/usr/lib/libmono-2.0.so
+
+nbuild() {
+export MONO_SHARED_DIR=${pwd}/.wabi
+mkdir -p "${MONO_SHARED_DIR}"
+./configure --prefix=/usr --disable-docs --disable-mdnsresponder
+make hicolordir=/usr/share/icons/hicolor
+}
+
+ninstall() {
+make hicolordir=/usr/share/icons/hicolor \
+GCONF_DISABLE_MAKEFILE_SCHEMA_INSTALL=1 \
+DESTDIR=${pkgdir} install
+rm -rf "${MONO_SHARED_DIR}"
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

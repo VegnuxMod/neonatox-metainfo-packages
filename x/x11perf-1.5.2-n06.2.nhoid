@@ -1,0 +1,41 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	x11perf
+# Version:	1.5.2
+# Release:	n06.2
+# License:	X11 license
+# Group:	X Window System
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64 arm arm64
+# Url:	http://www.x.org/wiki
+# Description:	Simple X server performance benchmarker demo application.
+# MD5:	6d171113092586722fd193747954b1d4  x11perf-1.5.2.tar.xz
+
+
+# BuildDep:	/usr/lib/libX11.so	/usr/lib/libX11.so
+# BuildDep:	/usr/lib/libXmu.so	/usr/lib/libXmu.so
+# BuildDep:	/usr/lib/libXft.so	/usr/lib/libXft.so
+# BuildDep:	/usr/lib/libXrender.so	/usr/lib/libXrender.so
+# BuildDep:	/usr/lib/libXext.so	/usr/lib/libXext.so
+# Dep(post):	/usr/lib/libXext.so	/usr/lib/libXext.so
+# Dep(post):	/usr/lib/libXrender.so	/usr/lib/libXrender.so
+# Dep(post):	/usr/lib/libXft.so	/usr/lib/libXft.so
+# Dep(post):	/usr/lib/libXmu.so	/usr/lib/libXmu.so
+# Dep(post):	/usr/lib/libX11.so	/usr/lib/libX11.so
+
+nbuild() {
+./configure --prefix=/usr --sysconfdir=/etc --mandir=/usr/share/man --localstatedir=/var
+make
+}
+
+ninstall() {
+make install
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

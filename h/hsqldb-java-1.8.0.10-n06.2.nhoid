@@ -1,0 +1,50 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	hsqldb-java
+# Version:	1.8.0.10
+# Release:	n06.2
+# License:	custom
+# Group:	Programming
+# Arch:	any
+# Url:	http://hsqldb.org/
+# Description:	HSQLDB Java libraries.
+# MD5:	b8fd9abd94c28c164475b0724fc75ff9  hsqldb-java-1.8.0.10.tar.xz
+
+
+# BuildDep:	/usr/bin/unzip	/usr/bin/unzip
+# BuildDep:	/usr/share/java/apache-ant/bin/ant	/usr/share/java/apache-ant/bin/ant
+# BuildDep:	/usr/bin/java	/usr/bin/java
+# BuildDep:	/etc/profile.d/openjdk6.sh	/etc/profile.d/openjdk6.sh
+# Dep(post):	/etc/profile.d/openjdk6.sh	/etc/profile.d/openjdk6.sh
+# Dep(post):	/usr/bin/java	/usr/bin/java
+# Dep(post):	/usr/share/java/apache-ant/bin/ant	/usr/share/java/apache-ant/bin/ant
+# Dep(post):	/usr/bin/unzip	/usr/bin/unzip
+
+nbuild() {
+unset JAVA_HOME ANT_HOME
+if [ -z "${JAVA_HOME}" ]; then
+. /etc/profile.d/openjdk6.sh
+fi
+if [ -z "${ANT_HOME}" ]; then
+. /etc/profile.d/apache-ant.sh
+fi
+cd build
+ant jar
+}
+
+ninstall() {
+pkgdir=/tmp/hsqldb
+install -m755 -d ${pkgdir}/usr/share/java
+install -m644 lib/hsqldb.jar ${pkgdir}/usr/share/java/
+cp -r ${pkgdir}/* /
+rm -r ${pkgdir}
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

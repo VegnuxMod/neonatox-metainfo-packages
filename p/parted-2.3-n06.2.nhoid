@@ -1,0 +1,36 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sánchez <cargabsj175@gmail.com>
+
+# Name:	parted
+# Version:	2.3
+# Release:	n06.2
+# License:	GPLv3
+# Group:	Core System
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64
+# Url:	http://www.gnu.org/software/parted/parted.html
+# Description:	A program for creating, destroying, resizing, checking and copying partitions.
+# MD5:	2eb1bce84c2fe9c030b3f2e454df0862  parted-2.3.tar.xz
+
+
+# BuildDep:	/usr/lib/libdevmapper.so	/usr/lib/libdevmapper.so
+# BuildDep:	/usr/lib/libext2fs.so	/usr/lib/libext2fs.so
+# Dep(post):	/usr/lib/libdevmapper.so	/usr/lib/libdevmapper.so
+# Dep(post):	/usr/lib/libext2fs.so	/usr/lib/libext2fs.so
+
+nbuild() {
+./configure --prefix=/usr --disable-debug \
+--disable-rpath --disable-Werror
+make
+}
+
+ninstall() {
+make install
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

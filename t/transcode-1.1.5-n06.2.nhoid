@@ -1,0 +1,86 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	transcode
+# Version:	1.1.5
+# Release:	n06.2
+# License:	GPL
+# Group:	Multimedia
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64 arm arm64 armel
+# Url:	http://tcforge.berlios.de
+# Description:	A video/DVD ripper and encoder for the terminal/console.
+# MD5:	a9799b287cd49261301cf57a293b0046  transcode-1.1.5.tar.xz
+
+
+# BuildDep:	/usr/lib/libMagick++.so	/usr/lib/libMagick++.so
+# BuildDep:	/usr/lib/liblzo2.so	/usr/lib/liblzo2.so
+# BuildDep:	/usr/lib/libdvdread.so	/usr/lib/libdvdread.so
+# BuildDep:	/usr/bin/ffmpeg	/usr/bin/ffmpeg
+# BuildDep:	/usr/lib/libmjpegutils.so	/usr/lib/libmjpegutils.so
+# BuildDep:	/usr/lib/libmpeg2.so	/usr/lib/libmpeg2.so
+# BuildDep:	/usr/lib/libXaw.so	/usr/lib/libXaw.so
+# BuildDep:	/usr/lib/libxml2.so	/usr/lib/libxml2.so
+# BuildDep:	/usr/lib/libXv.so	/usr/lib/libXv.so
+# BuildDep:	/usr/lib/liba52.so	/usr/lib/liba52.so
+# Dep(post):	/usr/lib/liba52.so	/usr/lib/liba52.so
+# Dep(post):	/usr/lib/libXv.so	/usr/lib/libXv.so
+# Dep(post):	/usr/lib/libxml2.so	/usr/lib/libxml2.so
+# Dep(post):	/usr/lib/libXaw.so	/usr/lib/libXaw.so
+# Dep(post):	/usr/lib/libmpeg2.so	/usr/lib/libmpeg2.so
+# Dep(post):	/usr/lib/libmjpegutils.so	/usr/lib/libmjpegutils.so
+# Dep(post):	/usr/bin/ffmpeg	/usr/bin/ffmpeg
+# Dep(post):	/usr/lib/libdvdread.so	/usr/lib/libdvdread.so
+# Dep(post):	/usr/lib/liblzo2.so	/usr/lib/liblzo2.so
+# Dep(post):	/usr/lib/libMagick++.so	/usr/lib/libMagick++.so
+
+nbuild() {
+patch -p0 < ../transcode-1.1.5-jpeg-7.patch
+patch -p1 < ../transcode-1.1.5-mpa.patch
+./configure --prefix=/usr \
+--enable-sse=no --enable-sse2=no --enable-altivec=no --enable-mmx \
+--enable-lame --enable-ogg --enable-vorbis --enable-theora \
+--enable-libdv --enable-libxml2 --enable-v4l \
+--enable-imagemagick --enable-libjpeg --enable-lzo --enable-mjpegtools \
+--enable-sdl --enable-freetype2 --enable-a52 --enable-libpostproc \
+--enable-xvid --enable-x264 --enable-alsa \
+--enable-libmpeg2 --enable-libmpeg2convert \
+--with-libxml2-prefix=/usr \
+--with-mjpegtools-prefix=/usr \
+--with-imagemagick-prefix=/usr \
+--with-libdv-includes=/usr \
+--with-libpostproc-includes=/usr/include/libpostproc \
+--with-ogg-prefix=/usr \
+--with-lame-libs=/usr \
+--with-lzo-libs=/usr/lib \
+--with-libavcodec-prefix=/usr \
+--with-libavcodec-includes=/usr/include \
+--with-libavcodec-libs=/usr/lib
+make
+tar xvf ../subtitleripper-0.3-4.tgz
+mkdir contrib
+mv subtitleripper contrib/subrip
+cd contrib/subrip
+sed -e 's|^\(.*lppm.*\)$|#\1|' \
+-e 's|^\(.*D_HAVE_LIB_PPM.*\)$|#\1|' \
+-e 's/DEFINES :=/DEFINES = -DHAVE_GETLINE/' \
+-i Makefile
+make
+}
+
+ninstall() {
+make install
+cd contrib/subrip
+install -m 755 pgm2txt "/usr/bin/"
+install -m 755 srttool "/usr/bin/"
+install -m 755 subtitle2pgm "/usr/bin/"
+install -m 755 subtitle2vobsub "/usr/bin/"
+install -m 755 vobsub2pgm "/usr/bin/"
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

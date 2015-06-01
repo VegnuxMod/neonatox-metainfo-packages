@@ -1,0 +1,33 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	ttf-inconsolata
+# Version:	20090215
+# Release:	n06.2
+# License:	custom:OFL
+# Group:	font
+# Arch:	any
+# Url:	http://levien.com/type/myfonts/inconsolata.html
+# Description:	Monospace font for pretty code listings and for the terminal.
+# MD5:	8d8e423864da346e6f3966ea43348c35  ttf-inconsolata-20090215.tar.xz
+
+# BuildDep:	/usr/lib/libfontconfig.so	/usr/lib/libfontconfig.so
+# Dep(post):	/usr/lib/libfontconfig.so	/usr/lib/libfontconfig.so
+
+nbuild() {
+noemptyfuncs
+}
+
+ninstall() {
+install -Dm644 Inconsolata.otf /usr/share/fonts/TTF/ttf-inconsolata.otf
+}
+
+npostinstall() {
+fc-cache -f > /dev/null
+mkfontscale /usr/share/fonts/TTF
+mkfontdir /usr/share/fonts/TTF
+}
+
+npostremove() {
+noemptyfuncs
+}

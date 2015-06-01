@@ -1,0 +1,31 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sánchez <cargabsj175@gmail.com>
+
+# Name:	ed
+# Version:	1.3
+# Release:	n06.2
+# License:	GPLv3
+# Group:	Core System
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64
+# Url:	http://ftp.gnu.org/pub/gnu/ed/
+# Description:	Ed is a line-oriented text editor. It is used to create, display, modify and otherwise manipulate text files, both interactively and via shell scripts. Ed isn't something which many people use. It's described here because it can be used by the patch program if you encounter an ed-based patch file. This happens rarely because diff-based patches are preferred these days.
+# MD5:	7769fdef23803860440b41e0399309f6  ed-1.3.tar.xz
+
+
+
+nbuild() {
+./configure --prefix=/usr --bindir=/bin
+make
+}
+
+ninstall() {
+make install
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

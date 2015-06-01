@@ -1,0 +1,35 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	glibmm
+# Version:	2.28.2
+# Release:	n06.2
+# License:	LGPL
+# Group:	Programming
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64 arm arm64 armel
+# Url:	http://gtkmm.sourceforge.net/
+# Description:	Glib-- (glibmm) is a C++ interface for glib.
+# MD5:	f3502da582803b81daa6824291490c33  glibmm-2.28.2.tar.xz
+
+
+# BuildDep:	/usr/lib/libglib-2.0.so	/usr/lib/libglib-2.0.so
+# BuildDep:	/usr/lib/libsigc-2.0.so	/usr/lib/libsigc-2.0.so
+# Dep(post):	/usr/lib/libsigc-2.0.so	/usr/lib/libsigc-2.0.so
+# Dep(post):	/usr/lib/libglib-2.0.so	/usr/lib/libglib-2.0.so
+
+nbuild() {
+./configure --prefix=/usr --disable-documentation
+make
+}
+
+ninstall() {
+make install
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

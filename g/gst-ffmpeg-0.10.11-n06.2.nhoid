@@ -1,0 +1,42 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sánchez <cargabsj175@gmail.com>
+
+# Name:	gst-ffmpeg
+# Version:	0.10.11
+# Release:	n06.2
+# License:	GPL
+# Group:	Multimedia
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64
+# Url:	http://www.gstreamer.net
+# Description:	Gstreamer FFMpeg Plugin.
+# MD5:	414e6bcba6d75179b9540e63e359b1db  gst-ffmpeg-0.10.11.tar.xz
+
+
+# BuildDep:	/usr/lib/pkgconfig/gstreamer-plugins-base-0.10.pc	/usr/lib/pkgconfig/gstreamer-plugins-base-0.10.pc
+# BuildDep:	/bin/bzip2	/bin/bzip2
+# BuildDep:	/usr/bin/yasm	/usr/bin/yasm
+# BuildDep:	/usr/lib/libSDL.so	/usr/lib/libSDL.so
+# Dep(post):	/usr/lib/pkgconfig/gstreamer-plugins-base-0.10.pc	/usr/lib/pkgconfig/gstreamer-plugins-base-0.10.pc
+# Dep(post):	/bin/bzip2	/bin/bzip2
+# Dep(post):	/usr/bin/yasm	/usr/bin/yasm
+# Dep(post):	/usr/lib/libSDL.so	/usr/lib/libSDL.so
+
+nbuild() {
+unset CFLAGS
+unset CXXFLAGS
+./configure --prefix=/usr --sysconfdir=/etc --localstatedir=/var --disable-static --with-ffmpeg-extra-configure="--enable-runtime-cpudetect"
+make
+}
+
+ninstall() {
+make install
+rm -f /usr/lib/gstreamer-0.10/*.la
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

@@ -1,0 +1,33 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	startup-notification
+# Version:	0.9
+# Release:	n06.2
+# License:	LGPLv2
+# Group:	X Window System
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64
+# Url:	http://
+# Description:	The Startup-notification package contains Startup-notification libraries. These are useful for building a consistent manner to notify the user through the cursor that the application is loading.
+# MD5:	2b5f770fece963fda5a889b6c68a68c1  startup-notification-0.9.tar.xz
+
+
+# BuildDep:	/usr/lib/libX11.so	/usr/lib/libX11.so
+# Dep(post):	/usr/lib/libX11.so	/usr/lib/libX11.so
+
+nbuild() {
+./configure --prefix=/usr
+make
+}
+
+ninstall() {
+make install
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

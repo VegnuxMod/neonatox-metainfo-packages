@@ -1,0 +1,33 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sánchez <cargabsj175@gmail.com>
+
+# Name:	reiserfsprogs
+# Version:	3.6.21
+# Release:	n06.2
+# License:	GPL
+# Group:	Core System
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64
+# Url:	http://www.kernel.org/pub/linux/utils/fs/reiserfs/README
+# Description:	Reiserfs utilities.
+# MD5:	bdb0f098d3c279aaf545fa3a3a6a2a43  reiserfsprogs-3.6.21.tar.xz
+
+
+
+nbuild() {
+./configure --prefix=/usr --sbindir=/sbin
+make
+}
+
+ninstall() {
+make install
+ln -s reiserfsck "/sbin/fsck.reiserfs"
+ln -s mkreiserfs "/sbin/mkfs.reiserfs"
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

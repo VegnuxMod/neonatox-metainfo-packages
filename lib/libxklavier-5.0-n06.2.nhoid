@@ -1,0 +1,44 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sánchez <cargabsj175@gmail.com>
+
+# Name:	libxklavier
+# Version:	5.0
+# Release:	n06.2
+# License:	LGPL
+# Group:	Core System
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64
+# Url:	http://gswitchit.sourceforge.net
+# Description:	High-level API for X Keyboard Extension.
+# MD5:	de84a18045b1cccff760e48b0ab03568  libxklavier-5.0.tar.xz
+
+
+# BuildDep:	/usr/lib/libxkbfile.so	/usr/lib/libxkbfile.so
+# BuildDep:	/usr/lib/libxml2.so	/usr/lib/libxml2.so
+# BuildDep:	/usr/lib/libglib-2.0.so	/usr/lib/libglib-2.0.so
+# BuildDep:	/usr/share/X11/xkb/xkbcomp	/usr/share/X11/xkb/xkbcomp
+# BuildDep:	/usr/lib/libXi.so	/usr/lib/libXi.so
+# BuildDep:	/usr/lib/pkgconfig/iso-codes.pc	/usr/lib/pkgconfig/iso-codes.pc
+# Dep(post):	/usr/lib/pkgconfig/iso-codes.pc	/usr/lib/pkgconfig/iso-codes.pc
+# Dep(post):	/usr/lib/libXi.so	/usr/lib/libXi.so
+# Dep(post):	/usr/share/X11/xkb/xkbcomp	/usr/share/X11/xkb/xkbcomp
+# Dep(post):	/usr/lib/libglib-2.0.so	/usr/lib/libglib-2.0.so
+# Dep(post):	/usr/lib/libxml2.so	/usr/lib/libxml2.so
+# Dep(post):	/usr/lib/libxkbfile.so	/usr/lib/libxkbfile.so
+
+nbuild() {
+./configure --prefix=/usr \
+--with-xkb-base=/usr/share/X11/xkb --disable-static
+make
+}
+
+ninstall() {
+make install
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

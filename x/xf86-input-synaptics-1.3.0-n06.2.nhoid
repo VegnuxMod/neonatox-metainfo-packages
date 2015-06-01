@@ -1,0 +1,33 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	xf86-input-synaptics
+# Version:	1.3.0
+# Release:	n06.2
+# License:	X11 license
+# Group:	X Window System
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64 arm arm64
+# Url:	http://www.x.org/wiki/
+# Description:	xf86-input-synaptics Xorg driver.
+# MD5:	de4ad6522536dca1d13e8e81c107c554  xf86-input-synaptics-1.3.0.tar.xz
+
+
+# BuildDep:	/usr/bin/X	/usr/bin/X
+# Dep(post):	/usr/bin/X	/usr/bin/X
+
+nbuild() {
+./configure --prefix=/usr --sysconfdir=/etc --mandir=/usr/share/man --localstatedir=/var --with-xorg-module-dir=/usr/lib/X11/modules
+make
+}
+
+ninstall() {
+make install
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

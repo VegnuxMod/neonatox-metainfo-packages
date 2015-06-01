@@ -1,0 +1,40 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	harfbuzz
+# Version:	0.9.15
+# Release:	n06.2
+# License:	MIT
+# Group:	Graphics
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64 arm arm64 armel
+# Url:	http://www.freedesktop.org/wiki/Software/HarfBuzz
+# Description:	OpenType text shaping engine.
+# MD5:	c742187da991ad6dd2a98d1f58565ca2  harfbuzz-0.9.15.tar.xz
+
+# BuildDep:	/usr/bin/icu-config	/usr/bin/icu-config
+# BuildDep:	/usr/lib/libglib-2.0.so	/usr/lib/libglib-2.0.so
+# BuildDep:	/usr/lib/libfreetype.so	/usr/lib/libfreetype.so
+# BuildDep:	/usr/lib/libgraphite2.so	/usr/lib/libgraphite2.so
+# BuildDep:	/usr/lib/libcairo.so	/usr/lib/libcairo.so
+# Dep(post):	/usr/lib/libcairo.so	/usr/lib/libcairo.so
+# Dep(post):	/usr/lib/libgraphite2.so	/usr/lib/libgraphite2.so
+# Dep(post):	/usr/lib/libfreetype.so	/usr/lib/libfreetype.so
+# Dep(post):	/usr/lib/libglib-2.0.so	/usr/lib/libglib-2.0.so
+# Dep(post):	/usr/bin/icu-config	/usr/bin/icu-config
+
+nbuild() {
+./configure --prefix=/usr
+make
+}
+
+ninstall() {
+make install
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

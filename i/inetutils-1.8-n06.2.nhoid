@@ -1,0 +1,42 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	inetutils
+# Version:	1.8
+# Release:	n06.2
+# License:	GPLv3
+# Group:	Core System
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64 arm arm64
+# Url:	http://www.gnu.org/software/inetutils/
+# Description:	A collection of common network programs.
+# MD5:	ffdff70425694468a3e754dddfedcd93  inetutils-1.8.tar.xz
+
+
+# BuildDep:	/usr/lib/libncurses.so	/usr/lib/libncurses.so
+# BuildDep:	/usr/lib/libpam.so	/usr/lib/libpam.so
+# BuildDep:	/usr/lib/libreadline.so	/usr/lib/libreadline.so
+# Dep(post):	/usr/lib/libreadline.so	/usr/lib/libreadline.so
+# Dep(post):	/usr/lib/libpam.so	/usr/lib/libpam.so
+# Dep(post):	/usr/lib/libncurses.so	/usr/lib/libncurses.so
+
+nbuild() {
+./configure --prefix=/usr --libexecdir=/usr/sbin \
+--localstatedir=/var --disable-ifconfig \
+--disable-logger --disable-syslogd --disable-whois \
+--disable-servers
+make
+}
+
+ninstall() {
+make install
+mv -v /usr/bin/{hostname,ping,ping6} /bin
+mv -v /usr/bin/traceroute /sbin
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

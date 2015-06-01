@@ -1,0 +1,48 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	ruby-gtk2
+# Version:	1.0.0
+# Release:	n06.2
+# License:	LGPL
+# Group:	Graphic library
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64 arm arm64
+# Url:	http://ruby-gnome2.sourceforge.jp
+# Description:	Ruby bindings for gtk2.
+# MD5:	348afc8e9c1f2ddf2f7e137af1816623  ruby-gtk2-1.0.0.tar.xz
+
+
+# BuildDep:	/usr/lib/ruby/site_ruby/1.9.1/i686-linux/glib2.so	/usr/lib/ruby/site_ruby/1.9.1/i686-linux/glib2.so
+# BuildDep:	/usr/lib/ruby/site_ruby/1.9.1/i686-linux/pango.so	/usr/lib/ruby/site_ruby/1.9.1/i686-linux/pango.so
+# BuildDep:	/usr/lib/ruby/site_ruby/1.9.1/i686-linux/atk.so	/usr/lib/ruby/site_ruby/1.9.1/i686-linux/atk.so
+# BuildDep:	/usr/lib/ruby/site_ruby/1.9.1/i686-linux/gdk_pixbuf2.so	/usr/lib/ruby/site_ruby/1.9.1/i686-linux/gdk_pixbuf2.so
+# BuildDep:	/usr/lib/ruby/site_ruby/1.9.1/i686-linux/cairo.so	/usr/lib/ruby/site_ruby/1.9.1/i686-linux/cairo.so
+# BuildDep:	/usr/lib/ruby/gems/1.9.1/cache/pkg-config-1.0.7.gem	/usr/lib/ruby/gems/1.9.1/cache/pkg-config-1.0.7.gem
+# Dep(post):	/usr/lib/ruby/gems/1.9.1/cache/pkg-config-1.0.7.gem	/usr/lib/ruby/gems/1.9.1/cache/pkg-config-1.0.7.gem
+# Dep(post):	/usr/lib/ruby/site_ruby/1.9.1/i686-linux/cairo.so	/usr/lib/ruby/site_ruby/1.9.1/i686-linux/cairo.so
+# Dep(post):	/usr/lib/ruby/site_ruby/1.9.1/i686-linux/gdk_pixbuf2.so	/usr/lib/ruby/site_ruby/1.9.1/i686-linux/gdk_pixbuf2.so
+# Dep(post):	/usr/lib/ruby/site_ruby/1.9.1/i686-linux/atk.so	/usr/lib/ruby/site_ruby/1.9.1/i686-linux/atk.so
+# Dep(post):	/usr/lib/ruby/site_ruby/1.9.1/i686-linux/pango.so	/usr/lib/ruby/site_ruby/1.9.1/i686-linux/pango.so
+# Dep(post):	/usr/lib/ruby/site_ruby/1.9.1/i686-linux/glib2.so	/usr/lib/ruby/site_ruby/1.9.1/i686-linux/glib2.so
+
+nbuild() {
+pkgdir=/tmp/rgtk
+export LANG="en_US.UTF-8"
+ruby extconf.rb gtk2 --topdir=$pkgdir
+make
+}
+
+ninstall() {
+pkgdir=/tmp/rgtk
+make DESTDIR="$pkgdir" install
+cp -r $pkgdir/* /
+rm -r $pkgdir
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

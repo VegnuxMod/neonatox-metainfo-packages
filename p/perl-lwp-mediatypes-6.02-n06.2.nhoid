@@ -1,0 +1,37 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	perl-lwp-mediatypes
+# Version:	6.02
+# Release:	n06.2
+# License:	GPL
+# Group:	Programming
+# Arch:	noarch
+# Url:	https://metacpan.org/release/LWP-MediaTypes
+# Description:	guess media type for a file or a URL.
+# MD5:	80affcbb0b5fc6e1e234c6f62f87ebf3  perl-lwp-mediatypes-6.02.tar.xz
+
+# BuildDep:	/usr/bin/perl	/usr/bin/perl
+# Dep(post):	/usr/bin/perl	/usr/bin/perl
+
+nbuild() {
+export PERL_MM_USE_DEFAULT=1 PERL5LIB=""
+PERL_AUTOINSTALL=--skipdeps
+PERL_MM_OPT="INSTALLDIRS=vendor"
+PERL_MB_OPT="--installdirs vendor"
+MODULEBUILDRC=/dev/null
+perl Makefile.PL
+make
+}
+
+ninstall() {
+make install
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

@@ -1,0 +1,37 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	dconf
+# Version:	0.5.1
+# Release:	n06.2
+# License:	LGPLv2.1
+# Group:	System
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64 arm arm64
+# Url:	http://live.gnome.org/dconf
+# Description:	A low-level configuration system.
+# MD5:	68007512a4e06446b8405c55866993d6  dconf-0.5.1.tar.xz
+
+
+# BuildDep:	/usr/bin/vala	/usr/bin/vala
+# BuildDep:	/usr/lib/libgobject-2.0.so	/usr/lib/libgobject-2.0.so
+# BuildDep:	/usr/lib/libgtk-x11-2.0.so	/usr/lib/libgtk-x11-2.0.so
+# Dep(post):	/usr/bin/vala	/usr/bin/vala
+# Dep(post):	/usr/lib/libgobject-2.0.so	/usr/lib/libgobject-2.0.so
+# Dep(post):	/usr/lib/libgtk-x11-2.0.so	/usr/lib/libgtk-x11-2.0.so
+
+nbuild() {
+./configure --prefix=/usr --libexecdir=/usr/lib/dconf
+make
+}
+
+ninstall() {
+make install
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

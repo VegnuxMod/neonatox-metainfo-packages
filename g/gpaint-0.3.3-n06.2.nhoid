@@ -1,0 +1,49 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	gpaint
+# Version:	0.3.3
+# Release:	n06.2
+# License:	GPL
+# Group:	Graphics
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64 arm arm64 armel
+# Url:	http://www.gnu.org/software/gpaint/
+# Description:	GNU Paint (gpaint) is a simple, easy-to-use paint program for GNOME, the GNU Desktop.
+# MD5:	000d714f3aa6849673db5421bf9c0084  gpaint-0.3.3.tar.xz
+
+
+# BuildDep:	/usr/lib/libgtk-x11-2.0.so	/usr/lib/libgtk-x11-2.0.so
+# BuildDep:	/usr/lib/libglade-2.0.so	/usr/lib/libglade-2.0.so
+# Dep(post):	/usr/lib/libglade-2.0.so	/usr/lib/libglade-2.0.so
+# Dep(post):	/usr/lib/libgtk-x11-2.0.so	/usr/lib/libgtk-x11-2.0.so
+
+nbuild() {
+patch -Np1 -i ../01_drawing.diff
+patch -Np1 -i ../02_remove_menu_h_reference.diff
+patch -Np1 -i ../09_fix_menu_entry.diff
+patch -Np1 -i ../10_fix_crash_on_font_select.diff
+patch -Np1 -i ../11_fix_image_rotation.diff
+patch -Np1 -i ../20_fix_line_width_combo.diff
+patch -Np1 -i ../21_fix_crash_on_fill_button_click.diff
+patch -Np1 -i ../22_fix_not_printable_string.diff
+patch -Np1 -i ../23_add_accelerator_keys.diff
+patch -Np1 -i ../24_fix_crash_on_failed_write.diff
+patch -Np1 -i ../25_fix_color_selection.diff
+patch -Np1 -i ../26_fix_toolbar.diff
+./configure --prefix=/usr
+make
+}
+
+ninstall() {
+make install
+cp ../gpaint.desktop /usr/share/applications
+cp ../gpaint.png /usr/share/pixmaps
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

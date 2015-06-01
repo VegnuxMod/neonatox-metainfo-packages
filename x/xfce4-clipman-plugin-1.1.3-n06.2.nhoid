@@ -1,0 +1,46 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	xfce4-clipman-plugin
+# Version:	1.1.3
+# Release:	n06.2
+# License:	custom
+# Group:	XFCE Desktop
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64 arm arm64
+# Url:	http://goodies.xfce.org/projects/panel-plugins/xfce4-clipman-plugin
+# Description:	A clipboard plugin for the Xfce4 panel.
+# MD5:	14c7ba7b5afffab1154bfcf0df8dc6b0  xfce4-clipman-plugin-1.1.3.tar.xz
+
+
+# BuildDep:	/usr/lib/libxfcegui4.so	/usr/lib/libxfcegui4.so
+# BuildDep:	/usr/lib/libxfce4panel-1.0.so	/usr/lib/libxfce4panel-1.0.so
+# BuildDep:	/usr/lib/libunique-1.0.so	/usr/lib/libunique-1.0.so
+# BuildDep:	/usr/share/icons/hicolor/index.theme	/usr/share/icons/hicolor/index.theme
+# Dep(post):	/usr/share/icons/hicolor/index.theme	/usr/share/icons/hicolor/index.theme
+# Dep(post):	/usr/lib/libunique-1.0.so	/usr/lib/libunique-1.0.so
+# Dep(post):	/usr/lib/libxfce4panel-1.0.so	/usr/lib/libxfce4panel-1.0.so
+# Dep(post):	/usr/lib/libxfcegui4.so	/usr/lib/libxfcegui4.so
+
+nbuild() {
+sed -i -e "s/exo-0.3/exo-1/g" configure
+./configure --prefix=/usr \
+--sysconfdir=/etc \
+--libexecdir=/usr/lib \
+--localstatedir=/var \
+--disable-static \
+--enable-unique \
+--disable-debug
+make
+}
+
+ninstall() {
+make install
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

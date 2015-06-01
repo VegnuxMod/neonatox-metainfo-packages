@@ -1,0 +1,31 @@
+#%NHO-0.5
+# Package Maintainer:	Nehemias Velasquez <nehe009@gmail.com>
+
+# Name:	grub
+# Version:	1.98
+# Release:	n06.2
+# License:	GPLv3
+# Group:	Boot Loader
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64 arm arm64 armel
+# Url:	http://www.gnu.org/software/grub/grub.html
+# Description:	This is GRUB 2, the second version of the GRand Unified Bootloader. GRUB 2 is rewritten from scratch to make GNU GRUB cleaner, safer, more robust, more powerful, and more portable.
+# MD5:	5e070b7c318226fa3659ab55bccfb4a6  grub-1.98.tar.xz
+
+
+
+nbuild() {
+./configure --prefix=/usr --enable-grub-mkfont --enable-grub-fstest --enable-grub-emu-usb --enable-grub-emu-sdl --enable-grub-emu-pci
+make
+}
+
+ninstall() {
+make install
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

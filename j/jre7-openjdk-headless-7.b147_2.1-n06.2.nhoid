@@ -1,0 +1,175 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	jre7-openjdk-headless
+# Version:	7.b147_2.1
+# Release:	n06.2
+# License:	GPLv2
+# Group:	Programming
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64 arm arm64 armel
+# Url:	http:/icedtea.classpath.org
+# Description:	Free Java environment based on OpenJDK 7.0 with IcedTea7 replacing binary plugs - Minimal Java runtime - needed for executing non GUI Java programs.
+# MD5:	3b77ba520c70e197e905a8fdf832e8e6  jre7-openjdk-headless-7.b147_2.1.tar.xz
+
+
+# BuildDep:	/usr/lib/libjpeg.so	/usr/lib/libjpeg.so
+# BuildDep:	/usr/lib/liblcms2.so	/usr/lib/liblcms2.so
+# BuildDep:	/usr/lib/libnss3.so	/usr/lib/libnss3.so
+# BuildDep:	/usr/share/java/js.jar	/usr/share/java/js.jar
+# BuildDep:	/usr/lib/libcups.so	/usr/lib/libcups.so
+# Dep(post):	/usr/lib/libcups.so	/usr/lib/libcups.so
+# Dep(post):	/usr/share/java/js.jar	/usr/share/java/js.jar
+# Dep(post):	/usr/lib/libnss3.so	/usr/lib/libnss3.so
+# Dep(post):	/usr/lib/liblcms2.so	/usr/lib/liblcms2.so
+# Dep(post):	/usr/lib/libjpeg.so	/usr/lib/libjpeg.so
+
+nbuild() {
+_bootstrap=0 # 0/1 for quick build or full bootstrap
+if [ "$_bootstrap" = "1" ]; then
+makedepends=(${makedepends[@]} 'eclipse-ecj')
+fi
+_jvmdir=/usr/lib/jvm/java-7-openjdk
+ARCH=$(uname -m)
+if [ "$ARCH" = "x86_64" ]; then
+ _JARCH=amd64
+else
+ _JARCH=i386
+fi
+unset JAVA_HOME JDK_HOME CLASSPATH JAVAC JAVACFLAGS
+if [ -f /etc/profile.d/jdk.sh ]; then
+. /etc/profile.d/jdk.sh
+fi
+unset MAKEFLAGS # parallel build is currently broken
+export ALT_PARALLEL_COMPILE_JOBS="${MAKEFLAGS/-j}"
+export HOTSPOT_BUILD_JOBS="${ALT_PARALLEL_COMPILE_JOBS}"
+. /etc/profile.d/apache-ant.sh
+cp -v ../*.diff patches
+export DISTRIBUTION_PATCHES="patches/fontconfig-paths.diff patches/fix_corba_cmds_path.diff patches/openjdk7_fix_jdk_cmds_path.diff patches/openjdk7_nonreparenting-wm.diff"
+if [ "$_bootstrap" = "1" ]; then
+     BOOTSTRAPOPT="--enable-bootstrap --with-ecj-jar=/usr/share/java/ecj.jar"
+else
+     BOOTSTRAPOPT="--disable-bootstrap"
+fi
+./configure \
+		$BOOTSTRAPOPT \
+        --with-parallel-jobs="${MAKEFLAGS/-j}" \
+        --disable-tests \
+        --with-pkgversion="NeonatoX build 7.b147_2.1-${ARCH}" \
+        --with-jdk-home=${JAVA_HOME} \
+        --with-openjdk-src-zip=../openjdk.tar.gz \
+        --with-hotspot-src-zip=../hotspot.tar.gz \
+        --with-corba-src-zip=../corba.tar.gz \
+        --with-jaxp-src-zip=../jaxp.tar.gz \
+        --with-jaxws-src-zip=../jaxws.tar.gz \
+        --with-jdk-src-zip=../jdk.tar.gz \
+        --with-langtools-src-zip=../langtools.tar.gz \
+        --enable-nss \
+        --with-rhino \
+        --with-abs-install-dir=/usr/lib/jvm/java-7-openjdk
+# enlaces simbolicos necesarios solo para construir openjdk7
+ln -svf /bin/egrep /usr/bin/egrep
+ln -svf /bin/grep /usr/bin/grep
+ln -svf /bin/head /usr/bin/head
+ln -svf /bin/find /usr/bin/find
+ln -svf /usr/bin/tr /bin/tr
+ln -svf /usr/bin/touch /bin/touch
+ln -svf /usr/bin/cut /bin/cut
+make
+}
+
+ninstall() {
+ARCH=$(uname -m)
+if [ "$ARCH" = "x86_64" ]; then
+ _JARCH=amd64
+else
+ _JARCH=i386
+fi
+pkgdir=/tmp/jre7-openjdk
+cd "openjdk.build/j2sdk-image/jre"
+mv lib/fontconfig.Ubuntu.properties.src lib/fontconfig.properties
+mv lib/fontconfig.Ubuntu.bfc lib/fontconfig.bfc
+rm -f lib/fontconfig.*.bfc
+rm -f lib/fontconfig.*.properties.src
+rm -f lib/fontconfig.properties.src
+install -d -m755 ${pkgdir}/usr/lib/jvm/java-7-openjdk/jre/
+cp -a bin lib ${pkgdir}/usr/lib/jvm/java-7-openjdk/jre
+# Install man pages
+pushd ../../j2re-image/man
+install -m755 -d ${pkgdir}/usr/share/man/{,ja/}man1/
+install -m644 man1/*.1 ${pkgdir}/usr/share/man/man1
+install -m644 ja_JP.UTF-8/man1/*.1 ${pkgdir}/usr/share/man/ja/man1
+popd
+# more files that belong to the desktop package
+mkdir ../tmp-desktop-jre
+for file in "/usr/lib/jvm/java-7-openjdk/jre/bin/policytool" \
+	"/usr/lib/jvm/java-7-openjdk/jre/lib/${_JARCH}/libjsoundalsa.so" \
+	"/usr/lib/jvm/java-7-openjdk/jre/lib/${_JARCH}/libpulse-java.so" \
+	"/usr/lib/jvm/java-7-openjdk/jre/lib/${_JARCH}/libsplashscreen.so" \
+	"/usr/lib/jvm/java-7-openjdk/jre/lib/${_JARCH}/xawt/libmawt.so" \
+	"/usr/share/man/ja/man1/policytool.1" \
+	"/usr/share/man/man1/policytool.1"; do
+dirname=`dirname $file`
+install -dm755 ../tmp-desktop-jre/$dirname || /bin/true
+mv ${pkgdir}/$file ../tmp-desktop-jre$file
+done
+rmdir ${pkgdir}/usr/lib/jvm/java-7-openjdk/jre/lib/${_JARCH}/xawt
+# Link binaries into /usr/bin
+pushd ${pkgdir}/usr/lib/jvm/java-7-openjdk/jre/bin
+install -m755 -d ${pkgdir}/usr/bin/
+for file in *; do
+ln -sf /usr/lib/jvm/java-7-openjdk/jre/bin/${file} ${pkgdir}/usr/bin
+done
+popd
+# Link JKS keystore from ca-certificates-java
+rm -f ${pkgdir}/usr/lib/jvm/java-7-openjdk/jre/lib/security/cacerts
+ln -sf /etc/ssl/certs/java/cacerts "${pkgdir}/usr/lib/jvm/java-7-openjdk/jre/lib/security/cacerts"
+# Set some variables
+install -m755 -d ${pkgdir}/etc/profile.d/
+install -m755 ../jre7-openjdk.profile ${pkgdir}/etc/profile.d/jre.sh
+install -m755 ../jre7-openjdk.profile.csh ${pkgdir}/etc/profile.d/jre.csh
+# Install license
+install -m755 -d ${pkgdir}/usr/share/licenses/${pkgbase}/
+install -m644 ASSEMBLY_EXCEPTION LICENSE THIRD_PARTY_README ${pkgdir}/usr/share/licenses/java7-openjdk
+# Put some more files under backup control
+install -m755 -d ${pkgdir}/etc/java-7-openjdk/
+install -m644 ${pkgdir}/usr/lib/jvm/java-7-openjdk/jre/lib/*.properties* ${pkgdir}/etc/java-7-openjdk/
+# install dummy links to make them found by JAVA
+cd ${pkgdir}/usr/lib/jvm/java-7-openjdk/jre/lib/
+for file in `ls ${pkgdir}/etc/java-7-openjdk/*.properties*`; do
+ln -vsf /etc/java-7-openjdk/`basename $file` .
+done
+# some more
+install -m755 -d ${pkgdir}/etc/java-7-openjdk/{cursors,management,security}
+install -m644 ${pkgdir}/usr/lib/jvm/java-7-openjdk/jre/lib/images/cursors/cursors.properties ${pkgdir}/etc/java-7-openjdk/cursors/
+pushd ${pkgdir}/usr/lib/jvm/java-7-openjdk/jre/lib/images/cursors/
+ln -vsf /etc/java-7-openjdk/cursors/cursors.properties .
+popd
+mv ${pkgdir}/usr/lib/jvm/java-7-openjdk/jre/lib/management/jmxremote.password.template ${pkgdir}/usr/lib/jvm/java-7-openjdk/jre/lib/management/jmxremote.password
+mv ${pkgdir}/usr/lib/jvm/java-7-openjdk/jre/lib/management/snmp.acl.template ${pkgdir}/usr/lib/jvm/java-7-openjdk/jre/lib/management/snmp.acl
+install -m644 ${pkgdir}/usr/lib/jvm/java-7-openjdk/jre/lib/management/{management.properties,jmxremote.access,jmxremote.password,snmp.acl} ${pkgdir}/etc/java-7-openjdk/management/
+pushd ${pkgdir}/usr/lib/jvm/java-7-openjdk/jre/lib/management
+ln -vsf /etc/java-7-openjdk/management/{management.properties,jmxremote.access,jmxremote.password,snmp.acl} .
+popd
+install -m644 ${pkgdir}/usr/lib/jvm/java-7-openjdk/jre/lib/security/{java.policy,java.security,nss.cfg} ${pkgdir}/etc/java-7-openjdk/security/
+pushd ${pkgdir}/usr/lib/jvm/java-7-openjdk/jre/lib/security
+ln -vsf /etc/java-7-openjdk/security/{java.policy,java.security,nss.cfg} .
+popd
+install -m644 ${pkgdir}/usr/lib/jvm/java-7-openjdk/jre/lib/fontconfig.bfc ${pkgdir}/etc/java-7-openjdk/
+install -m644 ${pkgdir}/usr/lib/jvm/java-7-openjdk/jre/lib/${_JARCH}/jvm.cfg ${pkgdir}/etc/java-7-openjdk/
+pushd ${pkgdir}/usr/lib/jvm/java-7-openjdk/jre/lib/${_JARCH}/
+ln -vsf /etc/java-7-openjdk/jvm.cfg .
+popd
+cp -r ${pkgdir}/* /
+rm -r ${pkgdir}
+# dejamos todo como estaba
+rm -r /usr/bin/{egrep,grep,head,find}
+rm -r /bin/{tr,touch,cut}
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

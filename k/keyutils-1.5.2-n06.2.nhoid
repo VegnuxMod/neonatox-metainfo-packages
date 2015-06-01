@@ -1,0 +1,33 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	keyutils
+# Version:	1.5.2
+# Release:	n06.2
+# License:	GPLv2 LGPLv2.1
+# Group:	System
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64 arm arm64 armel
+# Url:	http://www.kernel.org/
+# Description:	Linux key management utilities.
+# MD5:	dffc4529b66f9279952c4df7525c6d79  keyutils-1.5.2.tar.xz
+
+
+# BuildDep:	/bin/bash	/bin/bash
+# Dep(post):	/bin/bash	/bin/bash
+
+nbuild() {
+sed -i "s|/lib64|/lib|g" Makefile
+make CFLAGS="${CFLAGS}" LDFLAGS="${LDFLAGS}"
+}
+
+ninstall() {
+make install
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

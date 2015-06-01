@@ -1,0 +1,56 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	audacity
+# Version:	1.3.12
+# Release:	n06.2
+# License:	GPL
+# Group:	Multimedia
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64 arm arm64
+# Url:	http://audacity.sourceforge.net/
+# Description:	A program that lets you manipulate digital audio waveforms.
+# MD5:	bd2e87baaf15eb975849a72402fb0494  audacity-1.3.12.tar.xz
+
+
+# BuildDep:	/usr/lib/libvorbis.so	/usr/lib/libvorbis.so
+# BuildDep:	/usr/lib/libid3.so	/usr/lib/libid3.so
+# BuildDep:	/usr/lib/libwx_gtk2u_core-2.8.so	/usr/lib/libwx_gtk2u_core-2.8.so
+# BuildDep:	/usr/lib/libsamplerate.so	/usr/lib/libsamplerate.so
+# BuildDep:	/usr/lib/libmp3lame.so	/usr/lib/libmp3lame.so
+# BuildDep:	/usr/lib/librdf.so	/usr/lib/librdf.so
+# BuildDep:	/usr/lib/libSoundTouch.so	/usr/lib/libSoundTouch.so
+# BuildDep:	/usr/bin/python	/usr/bin/python
+# BuildDep:	/usr/lib/libmad.so	/usr/lib/libmad.so
+# Dep(post):	/usr/bin/python	/usr/bin/python
+# Dep(post):	/usr/lib/libSoundTouch.so	/usr/lib/libSoundTouch.so
+# Dep(post):	/usr/lib/librdf.so	/usr/lib/librdf.so
+# Dep(post):	/usr/lib/libmp3lame.so	/usr/lib/libmp3lame.so
+# Dep(post):	/usr/lib/libsamplerate.so	/usr/lib/libsamplerate.so
+# Dep(post):	/usr/lib/libwx_gtk2u_core-2.8.so	/usr/lib/libwx_gtk2u_core-2.8.so
+# Dep(post):	/usr/lib/libid3.so	/usr/lib/libid3.so
+# Dep(post):	/usr/lib/libvorbis.so	/usr/lib/libvorbis.so
+# Dep(post):	/usr/lib/libmad.so	/usr/lib/libmad.so
+
+nbuild() {
+patch -Np1 -i ../audacity-fix-ffmpeg.patch
+WX_CONFIG=/usr/bin/wx-config \
+./configure --prefix=/usr \
+--with-portaudio=v19 --with-libsamplerate=system \
+--without-libresample --with-id3tag=system --with-flac=system \
+--with-vorbis=system --with-libexpat=system \
+--with-libsndfile=system --with-soundtouch \
+--enable-unicode --without-taglib --without-portmixer
+make
+}
+
+ninstall() {
+make install
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

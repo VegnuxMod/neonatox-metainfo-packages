@@ -1,0 +1,35 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sánchez <cargabsj175@gmail.com>
+
+# Name:	lame
+# Version:	3.98.4
+# Release:	n06.2
+# License:	LGPL
+# Group:	Multimedia
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64
+# Url:	http://lame.sourceforge.net/
+# Description:	An MP3 encoder and graphical frame analyzer.
+# MD5:	818dd80d350bb26fc6a633da2e6f6073  lame-3.98.4.tar.xz
+
+
+# BuildDep:	/usr/lib/libncurses.so	/usr/lib/libncurses.so
+# BuildDep:	/usr/bin/nasm	/usr/bin/nasm
+# Dep(post):	/usr/bin/nasm	/usr/bin/nasm
+# Dep(post):	/usr/lib/libncurses.so	/usr/lib/libncurses.so
+
+nbuild() {
+./configure --prefix=/usr --enable-nasm --enable-shared
+make
+}
+
+ninstall() {
+make install
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

@@ -1,0 +1,38 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	hardinfo
+# Version:	0.5.1
+# Release:	n06.2
+# License:	GPLv2
+# Group:	System
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64 arm arm64
+# Url:	http://hardinfo.berlios.de/wiki/index.php/Main_Page
+# Description:	A system information and benchmark tool.
+# MD5:	5522179f50634faec5b1cc1a7dab00b3  hardinfo-0.5.1.tar.xz
+
+
+# BuildDep:	/usr/lib/libgnutls.so	/usr/lib/libgnutls.so
+# BuildDep:	/usr/lib/libsoup-2.4.so	/usr/lib/libsoup-2.4.so
+# BuildDep:	/usr/lib/libgtk-x11-2.0.so	/usr/lib/libgtk-x11-2.0.so
+# Dep(post):	/usr/lib/libgnutls.so	/usr/lib/libgnutls.so
+# Dep(post):	/usr/lib/libsoup-2.4.so	/usr/lib/libsoup-2.4.so
+# Dep(post):	/usr/lib/libgtk-x11-2.0.so	/usr/lib/libgtk-x11-2.0.so
+
+nbuild() {
+patch -Np1 -i ../hardinfo-force_neonatox.patch
+./configure --prefix=/usr
+make
+}
+
+ninstall() {
+make install
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

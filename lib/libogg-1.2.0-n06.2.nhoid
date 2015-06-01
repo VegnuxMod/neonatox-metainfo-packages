@@ -1,0 +1,31 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sánchez <cargabsj175@gmail.com>
+
+# Name:	libogg
+# Version:	1.2.0
+# Release:	n06.2
+# License:	BSD
+# Group:	Multimedia
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64
+# Url:	http://www.xiph.org/ogg/
+# Description:	The Libogg package provides libraries for dealing with Ogg files. Ogg is a multimedia container format, and the native file and stream format for the Xiph.org multimedia codecs. As with all Xiph.org technology is it an open format free for anyone to use. As with most container formats it encapsulates raw compressed data and allows the interleaving of audio and video data inside a single convient format. Other examples of container formats are Quicktime .mov, the MPEG program stream, and AVI. In addition to encapsulation and interleave of multiple data streams, Ogg provides packet framing, error detection, and periodic timestamps for seeking, and in a small, bounded percentage bitrate overhead. Ogg is a stream oriented container, meaning it can be written and read in one pass, making it a natural fit for internet streaming and use in processing pipelines. This stream orientation is the major design difference over other file-based container formats.
+# MD5:	a21cf1786f87421fcaa8af5f888e1ce0  libogg-1.2.0.tar.xz
+
+
+
+nbuild() {
+./configure --prefix=/usr
+make
+}
+
+ninstall() {
+make install
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

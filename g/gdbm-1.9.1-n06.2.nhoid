@@ -1,0 +1,43 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	gdbm
+# Version:	1.9.1
+# Release:	n06.2
+# License:	GPl
+# Group:	System
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64 arm arm64
+# Url:	http://www.gnu.org/software/gdbm/gdbm.html
+# Description:	GNU database library.
+# MD5:	1ba82beba4ebe4c35067092c6fd78b1f  gdbm-1.9.1.tar.xz
+
+
+# BuildDep:	/bin/bash	/bin/bash
+# Dep(post):	/bin/bash	/bin/bash
+
+nbuild() {
+./configure --prefix=/usr --mandir=/usr/share/man --infodir=/usr/share/info
+echo "/* We use fcntl locking (POSIX) instead of flock (BSD) */" >> autoconf.h
+echo "#undef HAVE_FLOCK" >> autoconf.h
+make prefix=/usr
+}
+
+ninstall() {
+pkgdir=/tmp/gdbm
+make prefix=$pkgdir/usr \
+manprefix=$pkgdir/usr/share/man \
+man3dir=$pkgdir/usr/share/man/man3 \
+infodir=$pkgdir/usr/share/info \
+install install-compat
+ln -sf gdbm/gdbm.h $pkgdir/usr/include
+cp -r $pkgdir/* /
+rm -r $pkgdir
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

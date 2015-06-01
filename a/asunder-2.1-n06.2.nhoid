@@ -1,0 +1,43 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	asunder
+# Version:	2.1
+# Release:	n06.2
+# License:	GPLv2
+# Group:	Multimedia
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64 arm arm64
+# Url:	http://littlesvr.ca/asunder/
+# Description:	A graphical CD ripper and encoder.
+# MD5:	086f0eb95ba2f0b9d33d61c783c42fc9  asunder-2.1.tar.xz
+
+
+# BuildDep:	/usr/lib/libgtk-x11-2.0.so	/usr/lib/libgtk-x11-2.0.so
+# BuildDep:	/usr/lib/libcddb.so	/usr/lib/libcddb.so
+# BuildDep:	/usr/lib/libcdda_paranoia.so	/usr/lib/libcdda_paranoia.so
+# BuildDep:	/usr/lib/libmp3lame.so	/usr/lib/libmp3lame.so
+# BuildDep:	/usr/bin/ogg123	/usr/bin/ogg123
+# BuildDep:	/usr/lib/libFLAC.so	/usr/lib/libFLAC.so
+# Dep(post):	/usr/lib/libFLAC.so	/usr/lib/libFLAC.so
+# Dep(post):	/usr/bin/ogg123	/usr/bin/ogg123
+# Dep(post):	/usr/lib/libmp3lame.so	/usr/lib/libmp3lame.so
+# Dep(post):	/usr/lib/libcdda_paranoia.so	/usr/lib/libcdda_paranoia.so
+# Dep(post):	/usr/lib/libcddb.so	/usr/lib/libcddb.so
+# Dep(post):	/usr/lib/libgtk-x11-2.0.so	/usr/lib/libgtk-x11-2.0.so
+
+nbuild() {
+./configure --prefix=/usr
+make
+}
+
+ninstall() {
+make install
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

@@ -1,0 +1,55 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	moc
+# Version:	20110528
+# Release:	n06.2
+# License:	GPL
+# Group:	Multimedia
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64 arm arm64
+# Url:	http://moc.daper.net/
+# Description:	An ncurses console audio player with support for the mp3, ogg, and wave formats.
+# MD5:	533077d39dd50704c1df45aadf9cf597  moc-20110528.tar.xz
+
+
+# BuildDep:	/usr/lib/libmad.so	/usr/lib/libmad.so
+# BuildDep:	/usr/lib/libwavpack.so	/usr/lib/libwavpack.so
+# BuildDep:	/usr/lib/libid3tag.so	/usr/lib/libid3tag.so
+# BuildDep:	/usr/lib/libjack.so	/usr/lib/libjack.so
+# BuildDep:	/usr/lib/libcurl.so	/usr/lib/libcurl.so
+# BuildDep:	/usr/lib/libspeex.so	/usr/lib/libspeex.so
+# BuildDep:	/usr/bin/ffmpeg	/usr/bin/ffmpeg
+# BuildDep:	/usr/lib/libmpc.so	/usr/lib/libmpc.so
+# BuildDep:	/usr/lib/libmodplug.so	/usr/lib/libmodplug.so
+# Dep(post):	/usr/lib/libmodplug.so	/usr/lib/libmodplug.so
+# Dep(post):	/usr/lib/libmpc.so	/usr/lib/libmpc.so
+# Dep(post):	/usr/bin/ffmpeg	/usr/bin/ffmpeg
+# Dep(post):	/usr/lib/libspeex.so	/usr/lib/libspeex.so
+# Dep(post):	/usr/lib/libcurl.so	/usr/lib/libcurl.so
+# Dep(post):	/usr/lib/libjack.so	/usr/lib/libjack.so
+# Dep(post):	/usr/lib/libid3tag.so	/usr/lib/libid3tag.so
+# Dep(post):	/usr/lib/libwavpack.so	/usr/lib/libwavpack.so
+# Dep(post):	/usr/lib/libmad.so	/usr/lib/libmad.so
+
+nbuild() {
+patch -p0 -i ../gcc-undefined-symbols.diff
+./autogen.sh
+./configure --prefix=/usr --without-rcc --without-aac \
+--with-oss  --with-alsa  --with-jack --with-mp3 \
+--with-musepack --with-vorbis --with-flac --with-wavpack \
+--with-sndfile --with-modplug --with-ffmpeg --with-speex \
+--with-samplerate --with-curl --disable-debug
+make
+}
+
+ninstall() {
+make install
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

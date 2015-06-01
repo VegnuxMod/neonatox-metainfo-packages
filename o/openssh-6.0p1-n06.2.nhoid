@@ -1,0 +1,63 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	openssh
+# Version:	6.0p1
+# Release:	n06.2
+# License:	BSD
+# Group:	Networking
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64 arm arm64 armel
+# Url:	http://www.openssh.org/portable.html
+# Description:	Free version of the SSH connectivity tools.
+# MD5:	7592425c2100205642cbcb0d71fbadb0  openssh-6.0p1.tar.xz
+
+
+# BuildDep:	/usr/lib/libkrb5.so	/usr/lib/libkrb5.so
+# BuildDep:	/usr/lib/libssl.so	/usr/lib/libssl.so
+# BuildDep:	/usr/lib/libedit.so	/usr/lib/libedit.so
+# BuildDep:	/usr/lib/libldns.so	/usr/lib/libldns.so
+# Dep(post):	/usr/lib/libldns.so	/usr/lib/libldns.so
+# Dep(post):	/usr/lib/libedit.so	/usr/lib/libedit.so
+# Dep(post):	/usr/lib/libssl.so	/usr/lib/libssl.so
+# Dep(post):	/usr/lib/libkrb5.so	/usr/lib/libkrb5.so
+
+nbuild() {
+./configure \
+--prefix=/usr \
+--libexecdir=/usr/lib/ssh \
+--sysconfdir=/etc/ssh \
+--with-ldns \
+--with-libedit \
+--with-ssl-engine \
+--with-pam \
+--with-privsep-user=nobody \
+--with-kerberos5=/usr \
+--with-xauth=/usr/bin/xauth \
+--with-mantype=man \
+--with-md5-passwords \
+--with-pid-dir=/run 
+make
+}
+
+ninstall() {
+make install
+rm /usr/share/man/man1/slogin.1
+ln -sf ssh.1.gz /usr/share/man/man1/slogin.1.gz
+install -Dm644 ../sshd.pam /etc/pam.d/sshd
+install -Dm755 ../sshd /etc/rc.d/init.d/sshd
+ln -sf  ../init.d/sshd /etc/rc.d/rc0.d/K30sshd
+ln -sf  ../init.d/sshd /etc/rc.d/rc1.d/K30sshd
+ln -sf  ../init.d/sshd /etc/rc.d/rc2.d/K30sshd
+ln -sf  ../init.d/sshd /etc/rc.d/rc3.d/S30sshd
+ln -sf  ../init.d/sshd /etc/rc.d/rc4.d/S30sshd
+ln -sf  ../init.d/sshd /etc/rc.d/rc5.d/S30sshd
+ln -sf  ../init.d/sshd /etc/rc.d/rc6.d/K30sshd
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+rm -r  /etc/rc.d/rc{0,1,2,3,4,5,6}.d/*30ssh*
+}

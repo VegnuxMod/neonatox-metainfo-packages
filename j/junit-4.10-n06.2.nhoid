@@ -1,0 +1,41 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	junit
+# Version:	4.10
+# Release:	n06.2
+# License:	CPL
+# Group:	Programming
+# Arch:	any
+# Url:	http://www.junit.org/
+# Description:	Automated testing framework for Java.
+# MD5:	db57f874662f91c747bf49bb1f15b092  junit-4.10.tar.xz
+
+
+# BuildDep:	/usr/bin/java	/usr/bin/java
+# BuildDep:	/usr/share/java/apache-ant/bin/ant	/usr/share/java/apache-ant/bin/ant
+# Dep(post):	/usr/share/java/apache-ant/bin/ant	/usr/share/java/apache-ant/bin/ant
+# Dep(post):	/usr/bin/java	/usr/bin/java
+
+nbuild() {
+ant jars
+}
+
+ninstall() {
+pkgdir=/tmp/junit
+cd "junit4.10"
+install -dm755 ${pkgdir}/usr/share/java/junit
+install -m644 junit-4.10.jar junit-dep-4.10.jar ${pkgdir}/usr/share/java/junit
+ln -s junit/junit-4.10.jar ${pkgdir}/usr/share/java/junit.jar
+ln -s junit/junit-dep-4.10.jar ${pkgdir}/usr/share/java/junit-dep.jar
+cp -r ${pkgdir}/* /
+rm -r ${pkgdir}
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

@@ -1,0 +1,41 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	raptor2
+# Version:	2.0.7
+# Release:	n06.2
+# License:	LGPL
+# Group:	Programming
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64 arm arm64 armel
+# Url:	http://librdf.org/raptor
+# Description:	A C library that parses RDF/XML/N-Triples into RDF triples.
+# MD5:	1690bd10ce7d40034ff2908409eab6ae  raptor2-2.0.7.tar.xz
+
+
+# BuildDep:	/usr/bin/icu-config	/usr/bin/icu-config
+# BuildDep:	/usr/lib/libcurl.so	/usr/lib/libcurl.so
+# BuildDep:	/usr/lib/libxslt.so	/usr/lib/libxslt.so
+# Dep(post):	/usr/lib/libxslt.so	/usr/lib/libxslt.so
+# Dep(post):	/usr/lib/libcurl.so	/usr/lib/libcurl.so
+# Dep(post):	/usr/bin/icu-config	/usr/bin/icu-config
+
+
+nbuild() {
+./configure --prefix=/usr \
+--disable-static \
+--with-yajl=no \
+--with-icu-config=/usr/bin/icu-config
+make
+}
+
+ninstall() {
+make install
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

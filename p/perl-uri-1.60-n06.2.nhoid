@@ -1,0 +1,31 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	perl-uri
+# Version:	1.60
+# Release:	n06.2
+# License:	PerlArtistic
+# Group:	System
+# Arch:	any
+# Url:	http://search.cpan.org/dist/URI
+# Description:	Uniform Resource Identifiers (absolute and relative).
+# MD5:	9a9064fcb4c40eedf500eaf4f2a92bc3  perl-uri-1.60.tar.xz
+
+# BuildDep:	/usr/bin/perl	/usr/bin/perl
+
+nbuild() {
+perl Makefile.PL INSTALLDIRS=vendor
+make
+}
+
+ninstall() {
+make install
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

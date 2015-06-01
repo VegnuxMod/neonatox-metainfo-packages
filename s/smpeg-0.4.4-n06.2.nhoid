@@ -1,0 +1,39 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sánchez <cargabsj175@gmail.com>
+
+# Name:	smpeg
+# Version:	0.4.4
+# Release:	n06.2
+# License:	LGPL
+# Group:	Multimedia
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64
+# Url:	http://icculus.org/smpeg/
+# Description:	SDL MPEG Player Library.
+# MD5:	8ff2737ac73298ea6ea6ba39c42ad76b  smpeg-0.4.4.tar.xz
+
+
+# BuildDep:	/usr/lib/libSDL.so	/usr/lib/libSDL.so
+# BuildDep:	/usr/lib/libgtk-x11-2.0.so	/usr/lib/libgtk-x11-2.0.so
+# BuildDep:	/usr/lib/libGL.so	/usr/lib/libGL.so
+# Dep(post):	/usr/lib/libGL.so	/usr/lib/libGL.so
+# Dep(post):	/usr/lib/libgtk-x11-2.0.so	/usr/lib/libgtk-x11-2.0.so
+# Dep(post):	/usr/lib/libSDL.so	/usr/lib/libSDL.so
+
+nbuild() {
+patch -p1 < ../smpeg-0.4.4-gcc41.patch
+./configure --prefix=/usr --mandir=/usr/share/man
+make LDFLAGS+=-lstdc++
+}
+
+ninstall() {
+make install
+sed -i "s#(AM_PATH_SMPEG#([AM_PATH_SMPEG]#" /usr/share/aclocal/smpeg.m4
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

@@ -1,0 +1,45 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	wxpython
+# Version:	2.8.12.1
+# Release:	n06.2
+# License:	wxWindows
+# Group:	Graphics Library
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64 arm arm64 armel
+# Url:	http://www.wxpython.org
+# Description:	A wxWidgets GUI toolkit for Python.
+# MD5:	cbd7e51b59a9f96f9aeaf9be119e62e8  wxpython-2.8.12.1.tar.xz
+
+
+# BuildDep:	/usr/bin/python	/usr/bin/python
+# BuildDep:	/usr/lib/libwx_gtk2u_core-2.8.so	/usr/lib/libwx_gtk2u_core-2.8.so
+# Dep(post):	/usr/bin/python	/usr/bin/python
+# Dep(post):	/usr/lib/libwx_gtk2u_core-2.8.so	/usr/lib/libwx_gtk2u_core-2.8.so
+
+nbuild() {
+cd wxPython
+mv wxPython/wx/tools/Editra/editra wxPython/wx/tools/Editra/Editra
+./configure --prefix=/usr --libdir=/usr/lib --with-gtk=2 --with-opengl --enable-unicode \
+--enable-graphics_ctx --disable-optimize --enable-mediactrl \
+--with-regex=sys --with-libpng=sys --with-libxpm=sys --with-libjpeg=sys --with-libtiff=sys \
+--disable-precomp-headers
+patch -p2 -i "../../wxpython-cairo.patch"
+python setup.py WXPORT=gtk2 UNICODE=1 build
+}
+
+ninstall() {
+pkgdir=/tmp/wxpyhton
+cd wxPython
+python setup.py WXPORT=gtk2 UNICODE=1 install --root="${pkgdir}"
+cp -r ${pkgdir}/* /
+rm -r ${pkgdir}
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

@@ -1,0 +1,57 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	idjc
+# Version:	0.8.4
+# Release:	n06.2
+# License:	GPLv3
+# Group:	Multimedia
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64 arm arm64 armel
+# Url:	http://idjc.sourceforge.net/
+# Description:	Graphical DJ Console aimed mainly at internetradio streaming via  shout- or icecast. It also includes a jingle-player, advanced options for controling the microphone's sound and voip-integration.
+# MD5:	ec17bf2b3c062e5b9b86daafd2dd7353  idjc-0.8.4.tar.xz
+
+
+# BuildDep:	/usr/bin/python	/usr/bin/python
+# BuildDep:	/usr/lib/libjack.so	/usr/lib/libjack.so
+# BuildDep:	/usr/lib/python2.7/site-packages/gtk-2.0/gtk/_gtk.so	/usr/lib/python2.7/site-packages/gtk-2.0/gtk/_gtk.so
+# BuildDep:	/usr/lib/libmp3lame.so	/usr/lib/libmp3lame.so
+# BuildDep:	/usr/bin/moggsplit	/usr/bin/moggsplit
+# BuildDep:	/usr/lib/libFLAC++.so	/usr/lib/libFLAC++.so
+# BuildDep:	/usr/lib/libsamplerate.so	/usr/lib/libsamplerate.so
+# BuildDep:	/usr/lib/libshout.so	/usr/lib/libshout.so
+# BuildDep:	/usr/bin/ogginfo	/usr/bin/ogginfo
+# BuildDep:	/usr/lib/libsndfile.so	/usr/lib/libsndfile.so
+# BuildDep:	/usr/bin/ffmpeg	/usr/bin/ffmpeg
+# BuildDep:	/usr/lib/libmad.so	/usr/lib/libmad.so
+# BuildDep:	/usr/lib/libspeex.so	/usr/lib/libspeex.so
+# Dep(post):	/usr/lib/libspeex.so	/usr/lib/libspeex.so
+# Dep(post):	/usr/lib/libmad.so	/usr/lib/libmad.so
+# Dep(post):	/usr/bin/ffmpeg	/usr/bin/ffmpeg
+# Dep(post):	/usr/lib/libsndfile.so	/usr/lib/libsndfile.so
+# Dep(post):	/usr/bin/ogginfo	/usr/bin/ogginfo
+# Dep(post):	/usr/lib/libshout.so	/usr/lib/libshout.so
+# Dep(post):	/usr/lib/libsamplerate.so	/usr/lib/libsamplerate.so
+# Dep(post):	/usr/lib/libFLAC++.so	/usr/lib/libFLAC++.so
+# Dep(post):	/usr/bin/moggsplit	/usr/bin/moggsplit
+# Dep(post):	/usr/lib/libmp3lame.so	/usr/lib/libmp3lame.so
+# Dep(post):	/usr/lib/python2.7/site-packages/gtk-2.0/gtk/_gtk.so	/usr/lib/python2.7/site-packages/gtk-2.0/gtk/_gtk.so
+# Dep(post):	/usr/lib/libjack.so	/usr/lib/libjack.so
+# Dep(post):	/usr/bin/python	/usr/bin/python
+
+nbuild() {
+./configure --prefix=/usr CFLAGS="-O2"
+make -j4
+}
+
+ninstall() {
+make install
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

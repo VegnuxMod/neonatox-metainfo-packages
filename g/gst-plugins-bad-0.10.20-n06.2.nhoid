@@ -1,0 +1,87 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	gst-plugins-bad
+# Version:	0.10.20
+# Release:	n06.2
+# License:	GPL LGPL
+# Group:	Multimedia
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64 arm arm64
+# Url:	http://gstreamer.freedesktop.org/
+# Description:	GStreamer Multimedia Framework Bad Plugins (gst-plugins-bad).
+# MD5:	8837853b99df5de556978860d322a3d9  gst-plugins-bad-0.10.20.tar.xz
+
+
+# BuildDep:	/usr/lib/libgstaudio-0.10.so	/usr/lib/libgstaudio-0.10.so
+# BuildDep:	/usr/lib/libxvidcore.so	/usr/lib/libxvidcore.so
+# BuildDep:	/usr/lib/libdca.so	/usr/lib/libdca.so
+# BuildDep:	/bin/bzip2	/bin/bzip2
+# BuildDep:	/usr/lib/libdc1394.so	/usr/lib/libdc1394.so
+# BuildDep:	/usr/lib/libneon.so	/usr/lib/libneon.so
+# BuildDep:	/usr/lib/libfaad.so	/usr/lib/libfaad.so
+# BuildDep:	/usr/lib/libcdaudio.so	/usr/lib/libcdaudio.so
+# BuildDep:	/usr/lib/libmjpegutils.so	/usr/lib/libmjpegutils.so
+# BuildDep:	/usr/lib/libdvdnav.so	/usr/lib/libdvdnav.so
+# BuildDep:	/usr/lib/libmodplug.so	/usr/lib/libmodplug.so
+# BuildDep:	/usr/lib/libjasper.so	/usr/lib/libjasper.so
+# BuildDep:	/usr/lib/libSoundTouch.so	/usr/lib/libSoundTouch.so
+# BuildDep:	/usr/lib/libschroedinger-1.0.so	/usr/lib/libschroedinger-1.0.so
+# BuildDep:	/usr/lib/libvpx.so	/usr/lib/libvpx.so
+# BuildDep:	/usr/lib/libsndfile.so	/usr/lib/libsndfile.so
+# BuildDep:	/usr/lib/librsvg-2.so	/usr/lib/librsvg-2.so
+# BuildDep:	/usr/lib/libass.so	/usr/lib/libass.so
+# BuildDep:	/usr/lib/libmms.so	/usr/lib/libmms.so
+# BuildDep:	/usr/lib/libmusicbrainz.so	/usr/lib/libmusicbrainz.so
+# BuildDep:	/usr/lib/libvdpau.so	/usr/lib/libvdpau.so
+# BuildDep:	/usr/lib/librtmp.so	/usr/lib/librtmp.so
+# BuildDep:	/usr/lib/libgsm.so	/usr/lib/libgsm.so
+# BuildDep:	/usr/lib/libgme.so	/usr/lib/libgme.so
+# Dep(post):	/usr/lib/libgme.so	/usr/lib/libgme.so
+# Dep(post):	/usr/lib/libgsm.so	/usr/lib/libgsm.so
+# Dep(post):	/usr/lib/librtmp.so	/usr/lib/librtmp.so
+# Dep(post):	/usr/lib/libvdpau.so	/usr/lib/libvdpau.so
+# Dep(post):	/usr/lib/libmusicbrainz.so	/usr/lib/libmusicbrainz.so
+# Dep(post):	/usr/lib/libmms.so	/usr/lib/libmms.so
+# Dep(post):	/usr/lib/libass.so	/usr/lib/libass.so
+# Dep(post):	/usr/lib/librsvg-2.so	/usr/lib/librsvg-2.so
+# Dep(post):	/usr/lib/libsndfile.so	/usr/lib/libsndfile.so
+# Dep(post):	/usr/lib/libvpx.so	/usr/lib/libvpx.so
+# Dep(post):	/usr/lib/libschroedinger-1.0.so	/usr/lib/libschroedinger-1.0.so
+# Dep(post):	/usr/lib/libSoundTouch.so	/usr/lib/libSoundTouch.so
+# Dep(post):	/usr/lib/libjasper.so	/usr/lib/libjasper.so
+# Dep(post):	/usr/lib/libmodplug.so	/usr/lib/libmodplug.so
+# Dep(post):	/usr/lib/libdvdnav.so	/usr/lib/libdvdnav.so
+# Dep(post):	/usr/lib/libmjpegutils.so	/usr/lib/libmjpegutils.so
+# Dep(post):	/usr/lib/libcdaudio.so	/usr/lib/libcdaudio.so
+# Dep(post):	/usr/lib/libfaad.so	/usr/lib/libfaad.so
+# Dep(post):	/usr/lib/libneon.so	/usr/lib/libneon.so
+# Dep(post):	/usr/lib/libdc1394.so	/usr/lib/libdc1394.so
+# Dep(post):	/bin/bzip2	/bin/bzip2
+# Dep(post):	/usr/lib/libdca.so	/usr/lib/libdca.so
+# Dep(post):	/usr/lib/libxvidcore.so	/usr/lib/libxvidcore.so
+# Dep(post):	/usr/lib/libgstaudio-0.10.so	/usr/lib/libgstaudio-0.10.so
+
+nbuild() {
+./configure --prefix=/usr --sysconfdir=/etc --localstatedir=/var \
+--disable-static --enable-experimental \
+--with-package-name="GStreamer Bad Plugins (NeonatoX)" \
+--with-package-origin="http://vegnux.nhopkg.org"..
+make..
+sed -e 's/gst sys ext/gst/' -i Makefile
+}
+
+ninstall() {
+make install
+make -C gst-libs install
+make -C ext install
+make -C sys install
+make -C gst-libs uninstall
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

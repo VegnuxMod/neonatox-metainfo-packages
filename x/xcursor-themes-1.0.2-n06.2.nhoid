@@ -1,0 +1,36 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	xcursor-themes
+# Version:	1.0.2
+# Release:	n06.2
+# License:	X11 license
+# Group:	X Window System
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64 arm arm64 armel
+# Url:	http://www.x.org/wiki/
+# Description:	X.Org cursor themes: whiteglass, redglass and handhelds.
+# MD5:	34b6e9d3b6890a313a8550bf643d072d  xcursor-themes-1.0.2.tar.xz
+
+# BuildDep:	/usr/lib/libpng.so	/usr/lib/libpng.so
+# BuildDep:	/usr/lib/libXcursor.so	/usr/lib/libXcursor.so
+# BuildDep:	/usr/lib/libX11.so	/usr/lib/libX11.so
+# Dep(post):	/usr/lib/libpng.so	/usr/lib/libpng.so
+# Dep(post):	/usr/lib/libXcursor.so	/usr/lib/libXcursor.so
+# Dep(post):	/usr/lib/libX11.so	/usr/lib/libX11.so
+
+nbuild() {
+./configure --prefix=/usr
+make
+}
+
+ninstall() {
+make install
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

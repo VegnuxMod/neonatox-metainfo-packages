@@ -1,0 +1,33 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	icon-naming-utils
+# Version:	0.8.90
+# Release:	n06.2
+# License:	GPLv2
+# Group:	System
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64
+# Url:	http://www.freedesktop.org/wiki
+# Description:	Tango is a project to create a new cross-desktop and cross-platform icon theme, using a standard style guide, and the new Icon Naming Specification. This package contains the perl script for maintaining backwards compatibility.
+# MD5:	a4b01c12c90b5f0b3c4cef834e417075  icon-naming-utils-0.8.90.tar.xz
+
+
+# BuildDep:	/usr/lib/perl5/site_perl/5.10.1/XML/Simple.pm	/usr/lib/perl5/site_perl/5.10.1/XML/Simple.pm
+# Dep(post):	/usr/lib/perl5/site_perl/5.10.1/XML/Simple.pm	/usr/lib/perl5/site_perl/5.10.1/XML/Simple.pm
+
+nbuild() {
+./configure --prefix=/usr --libexecdir=/usr/bin
+make
+}
+
+ninstall() {
+make install
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

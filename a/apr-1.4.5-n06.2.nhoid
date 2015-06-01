@@ -1,0 +1,35 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	apr
+# Version:	1.4.5
+# Release:	n06.2
+# License:	APACHE
+# Group:	Networking
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64 arm arm64
+# Url:	http://apr.apache.org/
+# Description:	The Apache Portable Runtime
+# MD5:	0855618d0ff84411b67b6a4d5fd97441  apr-1.4.5.tar.xz
+
+
+
+nbuild() {
+export apr_cv_accept4=no
+./configure --prefix=/usr --includedir=/usr/include/apr-1 \
+--with-installbuilddir=/usr/share/apr-1/build \
+--enable-nonportable-atomics \
+--with-devrandom=/dev/urandom
+make
+}
+
+ninstall() {
+make install
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

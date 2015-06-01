@@ -1,0 +1,41 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	tdfsb
+# Version:	0.0.10
+# Release:	n06.2
+# License:	GPL
+# Group:	File Browser
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64 arm arm64
+# Url:	http://www.determinate.net/webdata/seg/tdfsb.html
+# Description:	SDL based graphical file browser.
+# MD5:	794c51f8d22b4be023d516db2e1ee2bd  tdfsb-0.0.10.tar.xz
+
+
+# BuildDep:	/usr/lib/libsmpeg.so	/usr/lib/libsmpeg.so
+# BuildDep:	/usr/lib/libglut.so	/usr/lib/libglut.so
+# BuildDep:	/usr/lib/libSDL_image.so	/usr/lib/libSDL_image.so
+# BuildDep:	/usr/lib/libXmu.so	/usr/lib/libXmu.so
+# Dep(post):	/usr/lib/libXmu.so	/usr/lib/libXmu.so
+# Dep(post):	/usr/lib/libSDL_image.so	/usr/lib/libSDL_image.so
+# Dep(post):	/usr/lib/libglut.so	/usr/lib/libglut.so
+# Dep(post):	/usr/lib/libsmpeg.so	/usr/lib/libsmpeg.so
+
+nbuild() {
+sed -i -e "s:-O2:${CFLAGS} ${LDFLAGS}:g" compile.sh
+./compile.sh
+}
+
+ninstall() {
+install -D -m755 tdfsb "/usr/bin/tdfsb"
+install -D -m755 ../tdfsb.desktop "/usr/share/applications/tdfsb.desktop"
+install -D -m644 ../tdfsb.png "/usr/share/pixmaps/tdfsb.png"
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

@@ -1,0 +1,38 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	recode
+# Version:	3.6
+# Release:	n06.2
+# License:	LGPL GPL
+# Group:	System
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64 arm arm64
+# Url:	http://www.gnu.org/software/recode/recode.html
+# Description:	Converts files between various character sets and usages.
+# MD5:	4b6d89d64b79da8dfb2580fc3db7e217  recode-3.6.tar.xz
+
+
+
+nbuild() {
+patch -Np0 -i ../recode-3.6-gcc43.patch
+sed -i '1i#include <stdlib.h>' src/argmatch.c
+if [ $(uname -m)-pc-linux-gnu == x86_64-pc-linux-gnu ]; then
+	export arch=x86_64-pc-linux-gnu
+	else
+	export arch=i686-pc-linux-gnu
+fi
+./configure --prefix=/usr --target=$arch --build=$arch --host=$arch
+make
+}
+
+ninstall() {
+make install
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

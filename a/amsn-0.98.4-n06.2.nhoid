@@ -1,0 +1,44 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	amsn
+# Version:	0.98.4
+# Release:	n06.2
+# License:	GPLv2
+# Group:	Networking
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64 arm arm64
+# Url:	http://amsn.sourceforge.net/
+# Description:	MSN client written in Tcl/Tk.
+# MD5:	c014a94dd48ee3b312f5fbdeebe589d8  amsn-0.98.4.tar.xz
+
+
+# BuildDep:	/usr/bin/wish	/usr/bin/wish
+# BuildDep:	/usr/lib/libtls1.6.so	/usr/lib/libtls1.6.so
+# BuildDep:	/usr/lib/libjpeg.so	/usr/lib/libjpeg.so
+# BuildDep:	/usr/lib/libpng.so	/usr/lib/libpng.so
+# BuildDep:	/usr/lib/farsight2-0.0/libmulticast-transmitter.so	/usr/lib/farsight2-0.0/libmulticast-transmitter.so
+# BuildDep:	/usr/lib/libv4l2.so	/usr/lib/libv4l2.so
+# Dep(post):	/usr/lib/libv4l2.so	/usr/lib/libv4l2.so
+# Dep(post):	/usr/lib/farsight2-0.0/libmulticast-transmitter.so	/usr/lib/farsight2-0.0/libmulticast-transmitter.so
+# Dep(post):	/usr/lib/libpng.so	/usr/lib/libpng.so
+# Dep(post):	/usr/lib/libjpeg.so	/usr/lib/libjpeg.so
+# Dep(post):	/usr/lib/libtls1.6.so	/usr/lib/libtls1.6.so
+# Dep(post):	/usr/bin/wish	/usr/bin/wish
+
+nbuild() {
+mv "skins/Dark Matter 4.0" "skins/Dark_Matter_4.0"
+./configure --prefix=/usr
+make
+}
+
+ninstall() {
+make install
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

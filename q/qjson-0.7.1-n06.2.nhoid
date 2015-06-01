@@ -1,0 +1,38 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	qjson
+# Version:	0.7.1
+# Release:	n06.2
+# License:	GPL
+# Group:	System
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64 arm arm64
+# Url:	http://qjson.sourceforge.net
+# Description:	A qt-based library that maps JSON data to QVariant objects.
+# MD5:	45c69acc404632c80834af2156f33d0d  qjson-0.7.1.tar.xz
+
+
+# BuildDep:	/usr//lib/libQtCore.so	/usr//lib/libQtCore.so
+# Dep(post):	/usr//lib/libQtCore.so	/usr//lib/libQtCore.so
+
+nbuild() {
+mkdir build
+cd build
+cmake .. \
+    -DCMAKE_INSTALL_PREFIX=/usr \
+    -DCMAKE_BUILD_TYPE=Release
+  make
+}
+
+ninstall() {
+cd build
+make install
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

@@ -1,0 +1,45 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	gnokii
+# Version:	0.6.30
+# Release:	n06.2
+# License:	GPL
+# Group:	System
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64 arm arm64
+# Url:	http://www.gnokii.org/
+# Description:	Tools and user space driver for use with mobile phones.
+# MD5:	e7e24163679703db53eff8fd6c1cf314  gnokii-0.6.30.tar.xz
+
+
+# BuildDep:	/usr/lib/libgtk-x11-2.0.so	/usr/lib/libgtk-x11-2.0.so
+# BuildDep:	/usr/lib/libusb-1.0.so	/usr/lib/libusb-1.0.so
+# BuildDep:	/usr/lib/libXpm.so	/usr/lib/libXpm.so
+# BuildDep:	/usr/lib/libbluetooth.so	/usr/lib/libbluetooth.so
+# BuildDep:	/usr/lib/libical.so	/usr/lib/libical.so
+# Dep(post):	/usr/lib/libical.so	/usr/lib/libical.so
+# Dep(post):	/usr/lib/libbluetooth.so	/usr/lib/libbluetooth.so
+# Dep(post):	/usr/lib/libXpm.so	/usr/lib/libXpm.so
+# Dep(post):	/usr/lib/libusb-1.0.so	/usr/lib/libusb-1.0.so
+# Dep(post):	/usr/lib/libgtk-x11-2.0.so	/usr/lib/libgtk-x11-2.0.so
+
+nbuild() {
+patch -Np1 -i "../gnokii.patch"
+./configure --prefix=/usr \
+--sysconfdir=/etc \
+--enable-security \
+--disable-unix98test
+make
+}
+
+ninstall() {
+make install
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

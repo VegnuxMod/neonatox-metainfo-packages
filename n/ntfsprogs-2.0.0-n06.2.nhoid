@@ -1,0 +1,33 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sánchez <cargabsj175@gmail.com>
+
+# Name:	ntfsprogs
+# Version:	2.0.0
+# Release:	n06.2
+# License:	GPL
+# Group:	Core System
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64
+# Url:	http://www.linux-ntfs.org/
+# Description:	NTFS filesystem utilities.
+# MD5:	0a5ac316424fc53b184bfd630aef3f12  ntfsprogs-2.0.0.tar.xz
+
+
+# BuildDep:	/usr/lib/libfuse.so	/usr/lib/libfuse.so
+# Dep(post):	/usr/lib/libfuse.so	/usr/lib/libfuse.so
+
+nbuild() {
+./configure --prefix=/usr --disable-gnome-vfs \
+--mandir=/usr/share/man
+}
+
+ninstall() {
+make install
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

@@ -1,0 +1,44 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	sox
+# Version:	14.3.1
+# Release:	n06.2
+# License:	GPL LGPL
+# Group:	Multimedia
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64 arm arm64
+# Url:	http://sox.sf.net
+# Description:	The Swiss Army knife of sound processing tools.
+# MD5:	dcecf86a5ff92c65fc3b823ec542a5e3  sox-14.3.1.tar.xz
+
+
+# BuildDep:	/usr/lib/libmagic.so	/usr/lib/libmagic.so
+# BuildDep:	/usr/lib/libsndfile.so	/usr/lib/libsndfile.so
+# BuildDep:	/usr/lib/libpng.so	/usr/lib/libpng.so
+# BuildDep:	/usr/lib/libopencore-amrnb.so	/usr/lib/libopencore-amrnb.so
+# BuildDep:	/usr/bin/ffmpeg	/usr/bin/ffmpeg
+# Dep(post):	/usr/lib/libmagic.so	/usr/lib/libmagic.so
+# Dep(post):	/usr/lib/libsndfile.so	/usr/lib/libsndfile.so
+# Dep(post):	/usr/lib/libpng.so	/usr/lib/libpng.so
+# Dep(post):	/usr/lib/libopencore-amrnb.so	/usr/lib/libopencore-amrnb.so
+# Dep(post):	/usr/bin/ffmpeg	/usr/bin/ffmpeg
+
+nbuild() {
+./configure --prefix=/usr --sysconfdir=/etc --without-lame \
+--with-dyn-default --without-mad --with-distro="NeonatoX"
+make
+}
+
+ninstall() {
+make install
+ln -sf play "/usr/bin/rec"
+ln -sf ../man1/sox.1.gz "/usr/share/man/man7/soxeffect.7"
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

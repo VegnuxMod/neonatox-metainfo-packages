@@ -1,0 +1,33 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	lcms2
+# Version:	2.3
+# Release:	n06.2
+# License:	MIT
+# Group:	System
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64 arm arm64
+# Url:	http://www.littlecms.com
+# Description:	Small-footprint color management engine, version 2.
+# MD5:	e6e59c4db67b17af80c61830a7fbe580  lcms2-2.3.tar.xz
+
+
+# BuildDep:	/usr/lib/libtiff.so	/usr/lib/libtiff.so
+# Dep(post):	/usr/lib/libtiff.so	/usr/lib/libtiff.so
+
+nbuild() {
+./configure --prefix=/usr
+make
+}
+
+ninstall() {
+make install
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

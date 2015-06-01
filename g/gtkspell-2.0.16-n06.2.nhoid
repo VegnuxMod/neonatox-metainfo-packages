@@ -1,0 +1,35 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	gtkspell
+# Version:	2.0.16
+# Release:	n06.2
+# License:	GPL
+# Group:	System
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64 arm arm64
+# Url:	http://gtkspell.sourceforge.net/
+# Description:	GtkSpell provides word-processor-style highlighting and replacement of misspelled words in a GtkTextView widget.
+# MD5:	b01b19b931c46616f41274ea3f4e00dd  gtkspell-2.0.16.tar.xz
+
+
+# BuildDep:	/usr/lib/libgtk-x11-2.0.so	/usr/lib/libgtk-x11-2.0.so
+# BuildDep:	/usr/lib/libenchant.so	/usr/lib/libenchant.so
+# Dep(post):	/usr/lib/libenchant.so	/usr/lib/libenchant.so
+# Dep(post):	/usr/lib/libgtk-x11-2.0.so	/usr/lib/libgtk-x11-2.0.so
+
+nbuild() {
+./configure --prefix=/usr
+make
+}
+
+ninstall() {
+make install
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

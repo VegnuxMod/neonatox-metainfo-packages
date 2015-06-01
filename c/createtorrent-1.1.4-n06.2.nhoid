@@ -1,0 +1,33 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	createtorrent
+# Version:	1.1.4
+# Release:	n06.2
+# License:	GPLv2
+# Group:	Networking
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64 arm arm64 armel
+# Url:	http://www.createtorrent.com/
+# Description:	Create BitTorrent files easily.
+# MD5:	016b75f22802a4fbda95362c32939104  createtorrent-1.1.4.tar.xz
+
+
+# BuildDep:	/usr/lib/libssl.so	/usr/lib/libssl.so
+# Dep(post):	/usr/lib/libssl.so	/usr/lib/libssl.so
+
+nbuild() {
+./configure --prefix=/usr
+make
+}
+
+ninstall() {
+make install
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

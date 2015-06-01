@@ -1,0 +1,37 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	wine-gecko
+# Version:	1.8
+# Release:	n06.2
+# License:	MPL
+# Group:	System
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64 arm arm64 armel
+# Url:	http://wiki.winehq.org/Gecko
+# Description:	Wine's built-in replacement for Microsoft's Internet Explorer.
+# MD5:	27b129582ab22ce16411c4635cd09d5d  wine-gecko-1.8.tar.xz
+
+
+# BuildDep:	/usr/bin/wine	/usr/bin/wine
+# Dep(post):	/usr/bin/wine	/usr/bin/wine
+
+nbuild() {
+noemptyfuncs
+}
+
+ninstall() {
+ARCH=$(uname -m)
+if [[ $ARCH == x86_64 ]]; then
+install -Dm644 wine_gecko-1.8-x86_64.msi "/usr/share/wine/gecko/"
+else
+install -Dm644 wine_gecko-1.8-x86.msi "/usr/share/wine/gecko/wine_gecko-1.4-x86.msi"
+fi
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

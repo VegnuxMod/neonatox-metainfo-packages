@@ -1,0 +1,35 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	xcb-util
+# Version:	0.3.0
+# Release:	n06.2
+# License:	X11 license
+# Group:	X Window System
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64
+# Url:	http://xcb.freedesktop.org
+# Description:	The xcb-util package provides additional extensions to the XCB  library, many that were previously found in Xlib, but are not part of core X protocol.
+# MD5:	8c80a9a7997b4cf0312aed6703e887bf  xcb-util-0.3.0.tar.xz
+
+
+# BuildDep:	/usr/lib/libxcb.so	/usr/lib/libxcb.so
+# BuildDep:	/usr/bin/gperf	/usr/bin/gperf
+# Dep(post):	/usr/lib/libxcb.so	/usr/lib/libxcb.so
+# Dep(post):	/usr/bin/gperf	/usr/bin/gperf
+
+nbuild() {
+./configure --prefix=/usr
+make
+}
+
+ninstall() {
+make install
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

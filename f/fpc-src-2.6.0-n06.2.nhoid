@@ -1,0 +1,34 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	fpc-src
+# Version:	2.6.0
+# Release:	n06.2
+# License:	GPL
+# Group:	Programming
+# Arch:	any
+# Url:	http://www.freepascal.org/
+# Description:	Sources for the FreePascal compiler (required by the Lazarus IDE).
+# MD5:	b8afe9f641b0eca91a78dc1c9023dd15  fpc-src-2.6.0.tar.xz
+
+
+nbuild() {
+noemptyfuncs
+}
+
+ninstall() {
+pkgdir="/tmp/fpc-src"
+cd fpcsrc
+mkdir -p ${pkgdir}/usr/lib/fpc/src
+cp -R . ${pkgdir}/usr/lib/fpc/src
+cp -r ${pkgdir}/* /
+rm -r ${pkgdir}
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

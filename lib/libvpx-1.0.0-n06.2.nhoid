@@ -1,0 +1,38 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	libvpx
+# Version:	1.0.0
+# Release:	n06.2
+# License:	BSD
+# Group:	Multimedia
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64 arm arm64 armel
+# Url:	http://www.webmproject.org/
+# Description:	The VP8 Codec SDK.
+# MD5:	b5b7bf6b1876b1ef82a2aaee32317c70  libvpx-1.0.0.tar.xz
+
+
+# BuildDep:	/usr/bin/yasm	/usr/bin/yasm
+
+nbuild() {
+./configure --prefix=/usr --enable-vp8 \
+--enable-runtime-cpu-detect \
+--enable-shared \
+--enable-postproc \
+--enable-pic \
+--disable-install-docs \
+--disable-install-srcs
+make
+}
+
+ninstall() {
+make DIST_DIR="/usr" install
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

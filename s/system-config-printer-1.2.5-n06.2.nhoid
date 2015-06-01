@@ -1,0 +1,49 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	system-config-printer
+# Version:	1.2.5
+# Release:	n06.2
+# License:	GPL
+# Group:	System
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64 arm arm64
+# Url:	http://cyberelk.net/tim/software/system-config-printer/
+# Description:	A CUPS printer configuration tool and status applet.
+# MD5:	34a3ca25d6d71970e17201fae8d8cf13  system-config-printer-1.2.5.tar.xz
+
+
+# BuildDep:	/usr/bin/python	/usr/bin/python
+# BuildDep:	/usr/bin/xmlto	/usr/bin/xmlto
+# BuildDep:	/usr/bin/desktop-file-install	/usr/bin/desktop-file-install
+# BuildDep:	/usr/lib/python2.7/site-packages/cups.so	/usr/lib/python2.7/site-packages/cups.so
+# BuildDep:	/usr/lib/pkgconfig/notify-python.pc	/usr/lib/pkgconfig/notify-python.pc
+# BuildDep:	/usr/lib/libxml2.so	/usr/lib/libxml2.so
+# Dep(post):	/usr/lib/libxml2.so	/usr/lib/libxml2.so
+# Dep(post):	/usr/lib/pkgconfig/notify-python.pc	/usr/lib/pkgconfig/notify-python.pc
+# Dep(post):	/usr/lib/python2.7/site-packages/cups.so	/usr/lib/python2.7/site-packages/cups.so
+# Dep(post):	/usr/bin/desktop-file-install	/usr/bin/desktop-file-install
+# Dep(post):	/usr/bin/xmlto	/usr/bin/xmlto
+# Dep(post):	/usr/bin/python	/usr/bin/python
+
+nbuild() {
+./configure --prefix=/usr \
+--sbindir=/usr/bin \
+--sysconfdir=/etc \
+--disable-nls
+make
+}
+
+ninstall() {
+pkgdir=/tmp/printer
+make DESTDIR="${pkgdir}" install
+cp -r ${pkgdir}/* /
+rm -r ${pkgdir}
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

@@ -1,0 +1,36 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	libreoffice-pt
+# Version:	3.5.2.2
+# Release:	n06.2
+# License:	LGPL
+# Group:	libreoffice
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64 arm arm64
+# Url:	http://www.documentfoundation.org
+# Description:	LibreOffice language/localisation files.
+# MD5:	06c9909b3e4656441e66618c215449a8  libreoffice-pt-3.5.2.2.tar.xz
+
+
+# BuildDep:	/usr/bin/xz	/usr/bin/xz
+
+nbuild() {
+noemptyfuncs
+}
+
+ninstall() {
+pkgdir=/tmp/libreoffice
+mkdir ${pkgdir}
+tar xvf libreoffice-??-3.5.2*xz -C ${pkgdir}
+rm -r ${pkgdir}/.P*
+cp -r ${pkgdir}/* /
+rm -r ${pkgdir}
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

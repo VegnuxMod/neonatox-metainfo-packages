@@ -1,0 +1,49 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sánchez <cargabsj175@gmail.com>
+
+# Name:	thunar
+# Version:	1.1.4
+# Release:	n06.2
+# License:	GPLv2
+# Group:	XFCE Desktop
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64
+# Url:	http://www.xfce.org/
+# Description:	New modern file manager for Xfce.
+# MD5:	2c3442e4118a3065971a94db4a0a750c  thunar-1.1.4.tar.xz
+
+
+# BuildDep:	/usr/lib/libexif.so	/usr/lib/libexif.so
+# BuildDep:	/usr/lib/libxfce4panel-1.0.so	/usr/lib/libxfce4panel-1.0.so
+# BuildDep:	/usr/share/icons/hicolor/index.theme	/usr/share/icons/hicolor/index.theme
+# BuildDep:	/usr/lib/libgamin-1.so	/usr/lib/libgamin-1.so
+# BuildDep:	/usr/lib/libpcre.so	/usr/lib/libpcre.so
+# BuildDep:	/usr/lib/libgudev-1.0.so	/usr/lib/libgudev-1.0.so
+# BuildDep:	/usr/lib/libnotify.so	/usr/lib/libnotify.so
+# BuildDep:	/usr/share/xfce4/dev-tools/m4macros/xdt-xfce.m4	/usr/share/xfce4/dev-tools/m4macros/xdt-xfce.m4
+# Dep(post):	/usr/share/xfce4/dev-tools/m4macros/xdt-xfce.m4	/usr/share/xfce4/dev-tools/m4macros/xdt-xfce.m4
+# Dep(post):	/usr/lib/libnotify.so	/usr/lib/libnotify.so
+# Dep(post):	/usr/lib/libgudev-1.0.so	/usr/lib/libgudev-1.0.so
+# Dep(post):	/usr/lib/libpcre.so	/usr/lib/libpcre.so
+# Dep(post):	/usr/lib/libgamin-1.so	/usr/lib/libgamin-1.so
+# Dep(post):	/usr/lib/libgamin-1.so	/usr/lib/libgamin-1.so
+# Dep(post):	/usr/lib/libxfce4panel-1.0.so	/usr/lib/libxfce4panel-1.0.so
+# Dep(post):	/usr/lib/libexif.so	/usr/lib/libexif.so
+
+nbuild() {
+./configure --prefix=/usr --sysconfdir=/etc --libexecdir=/usr/lib/xfce4 \
+--localstatedir=/var --disable-static \
+--enable-exif --enable-pcre
+make
+}
+
+ninstall() {
+make install
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

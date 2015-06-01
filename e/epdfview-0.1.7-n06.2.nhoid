@@ -1,0 +1,47 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	epdfview
+# Version:	0.1.7
+# Release:	n06.2
+# License:	0.1.7
+# Group:	Office
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64 arm arm64
+# Url:	http://www.emma-soft.com/projects/epdfview/
+# Description:	A free lightweight PDF document viewer.
+# MD5:	ab3d581c80bcf4ed55dc062ad5571c7e  epdfview-0.1.7.tar.xz
+
+
+# BuildDep:	/usr/lib/libpoppler-glib.so	/usr/lib/libpoppler-glib.so
+# BuildDep:	/usr/bin/desktop-file-install	/usr/bin/desktop-file-install
+# BuildDep:	/usr/share/icons/hicolor/index.theme	/usr/share/icons/hicolor/index.theme
+# Dep(post):	/usr/share/icons/hicolor/index.theme	/usr/share/icons/hicolor/index.theme
+# Dep(post):	/usr/bin/desktop-file-install	/usr/bin/desktop-file-install
+# Dep(post):	/usr/lib/libpoppler-glib.so	/usr/lib/libpoppler-glib.so
+
+nbuild() {
+patch -Np0 -i "../epdfview.desktop.patch"
+patch -Np2 -i "../0001-r329.patch"
+patch -Np2 -i "../0002-r354.patch"
+patch -Np2 -i "../0003-r357.patch"
+patch -Np0 -i "../m_Linearized.patch"
+touch ChangeLog
+autoreconf -fi
+./configure --prefix=/usr --sysconfdir=/etc --localstatedir=/var
+make
+}
+
+ninstall() {
+make install
+for size in 24 32 48; do
+install -Dm644 data/icon_epdfview-${size}.png "/usr/share/icons/hicolor/${size}x${size}/apps/epdfview.png"
+done
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

@@ -1,0 +1,45 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	hyphen
+# Version:	2.8.3
+# Release:	n06.2
+# License:	GPL LGPL MPL
+# Group:	Programming
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64 arm arm64 armel
+# Url:	http://hunspell.sf.net
+# Description:	Library for high quality hyphenation and justification.
+# MD5:	a8b2f429fcd89e520de916f3331071ea  hyphen-2.8.3.tar.xz
+
+
+# BuildDep:	/usr/bin/perl	/usr/bin/perl
+# Dep(post):	/usr/bin/perl	/usr/bin/perl
+
+nbuild() {
+./configure --prefix=/usr --disable-static
+make
+}
+
+ninstall() {
+make install
+pushd /usr/share/hyphen/
+en_US_aliases="en_AG en_AU en_BS en_BW en_BZ en_CA en_DK en_GB en_GH en_HK en_IE en_IN en_JM en_NA en_NZ en_PH en_SG en_TT en_ZA en_ZW"
+for lang in $en_US_aliases; do
+ln -s hyph_en_US.dic hyph_$lang.dic
+done
+popd
+install -dm755 /usr/share/myspell/dicts
+pushd /usr/share/myspell/dicts
+for file in /usr/share/hyphen/*; do
+ln -sv /usr/share/hyphen/$(basename $file) .
+done
+popd
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

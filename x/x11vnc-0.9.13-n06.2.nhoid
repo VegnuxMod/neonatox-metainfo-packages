@@ -1,0 +1,38 @@
+#%NHO-0.5
+# Package Maintainer:	Francisco Jesus Navarro Cortes <dominuskernel@gmail.com>
+
+# Name:	x11vnc
+# Version:	0.9.13
+# Release:	n06.2
+# License:	GPLv2
+# Group:	Settings
+# Arch:	x86_64 i686
+# Url:	http://www.karlrunge.com/x11vnc
+# Description:	Servidor vnc para acceso remoto
+# MD5:	f1dd2a5aaf68bdc417cf5f50f7338b2d  x11vnc-0.9.13.tar.xz
+
+
+# BuildDep:	/usr/lib/libavcodec.so	/usr/lib/libavcodec.so
+# BuildDep:	/usr/lib/libssl.so	/usr/lib/libssl.so
+# BuildDep:	/usr/lib/libjpeg.so	/usr/lib/libjpeg.so
+# BuildDep:	/usr/lib/libavahi-ui.so	/usr/lib/libavahi-ui.so
+# Dep(post):	/usr/lib/libavcodec.so	/usr/lib/libavcodec.so
+# Dep(post):	/usr/lib/libssl.so	/usr/lib/libssl.so
+# Dep(post):	/usr/lib/libjpeg.so	/usr/lib/libjpeg.so
+# Dep(post):	/usr/lib/libavahi-ui.so	/usr/lib/libavahi-ui.so
+
+nbuild() {
+./configure --prefix=/usr && make
+}
+
+ninstall() {
+make install
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

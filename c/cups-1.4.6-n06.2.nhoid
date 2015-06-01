@@ -1,0 +1,94 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	cups
+# Version:	1.4.6
+# Release:	n06.2
+# License:	GPL
+# Group:	System
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64 arm arm64
+# Url:	http://www.cups.org/
+# Description:	The CUPS Printing System - deamon package.
+# MD5:	468d03315868f078e30c8c1c040ac7d5  cups-1.4.6.tar.xz
+
+
+# BuildDep:	/usr/lib/libtiff.so	/usr/lib/libtiff.so
+# BuildDep:	/usr/lib/libpng.so	/usr/lib/libpng.so
+# BuildDep:	/usr/lib/libacl.so	/usr/lib/libacl.so
+# BuildDep:	/usr/lib/libpam.so	/usr/lib/libpam.so
+# BuildDep:	/usr/bin/xdg-open	/usr/bin/xdg-open
+# BuildDep:	/usr/lib/libgnutls.so	/usr/lib/libgnutls.so
+# BuildDep:	/usr/lib/libpoppler.so	/usr/lib/libpoppler.so
+# BuildDep:	/bin/gzip	/bin/gzip
+# BuildDep:	/usr/lib/libusb.so	/usr/lib/libusb.so
+# BuildDep:	/usr/lib/libdbus-1.so	/usr/lib/libdbus-1.so
+# BuildDep:	/usr/lib/libavahi-core.so	/usr/lib/libavahi-core.so
+# BuildDep:	/usr/share/icons/hicolor/index.theme	/usr/share/icons/hicolor/index.theme
+# Dep(post):	/usr/share/icons/hicolor/index.theme	/usr/share/icons/hicolor/index.theme
+# Dep(post):	/usr/lib/libavahi-core.so	/usr/lib/libavahi-core.so
+# Dep(post):	/usr/lib/libdbus-1.so	/usr/lib/libdbus-1.so
+# Dep(post):	/usr/lib/libusb.so	/usr/lib/libusb.so
+# Dep(post):	/bin/gzip	/bin/gzip
+# Dep(post):	/usr/lib/libpoppler.so	/usr/lib/libpoppler.so
+# Dep(post):	/usr/lib/libgnutls.so	/usr/lib/libgnutls.so
+# Dep(post):	/usr/bin/xdg-open	/usr/bin/xdg-open
+# Dep(post):	/usr/lib/libpam.so	/usr/lib/libpam.so
+# Dep(post):	/usr/lib/libacl.so	/usr/lib/libacl.so
+# Dep(post):	/usr/lib/libpng.so	/usr/lib/libpng.so
+# Dep(post):	/usr/lib/libtiff.so	/usr/lib/libtiff.so
+
+nbuild() {
+patch -Np1 -i ../cups-avahi.patch
+aclocal -I config-scripts
+autoconf -I config-scripts
+./configure --prefix=/usr --sysconfdir=/etc --localstatedir=/var --with-logdir=/var/log/cups -with-docdir=/usr/share/cups/doc \
+--with-cups-user=daemon --with-cups-group=lp --enable-pam=yes --disable-ldap --libdir=/usr/lib --enable-raw-printing \
+--enable-dbus --with-dbusdir=/etc/dbus-1 --enable-ssl=yes --enable-gnutls --disable-threads --enable-avahi \
+--with-pdftops=pdftops --with-optim="$CFLAGS"
+make
+}
+
+ninstall() {
+pkgdir=/tmp/cups
+make BUILDROOT=${pkgdir} install-headers install-libs
+mkdir -p ${pkgdir}/usr/bin
+install -m755 cups-config ${pkgdir}/usr/bin/cups-config
+make BUILDROOT=${pkgdir} install-data install-exec
+rm -f ${pkgdir}/usr/bin/cups-config
+rm -rf ${pkgdir}/etc/rc*.d
+rm -rf ${pkgdir}/etc/init.d
+install -D -m644 ../cups.logrotate ${pkgdir}/etc/logrotate.d/cups
+install -D -m644 ../cups.pam ${pkgdir}/etc/pam.d/cups
+chmod 755 ${pkgdir}/var/spool
+chmod 755 ${pkgdir}/etc
+chmod 700 ${pkgdir}/usr/lib/cups/backend/serial
+install -dm700 -g lp ${pkgdir}/etc/cups/ssl
+install -dm511 -g lp ${pkgdir}/var/run/cups/certs
+touch ${pkgdir}/etc/cups/printers.conf
+touch ${pkgdir}/etc/cups/classes.conf
+touch ${pkgdir}/etc/cups/client.conf
+echo "# see 'man client.conf'" >> ${pkgdir}/etc/cups/client.conf
+echo "ServerName /var/run/cups/cups.sock #  alternative: ServerName hostname-or-ip-address[:port] of a remote server" >> ${pkgdir}/etc/cups/client.conf
+touch ${pkgdir}/etc/cups/subscriptions.conf
+chgrp lp ${pkgdir}/etc/cups/{printers.conf,classes.conf,client.conf,subscriptions.conf}
+sed -i 's|^Exec=htmlview http://localhost:631/|Exec=xdg-open http://localhost:631/|g' ${pkgdir}/usr/share/applications/cups.desktop
+find ${pkgdir}/usr/share/cups/model -name "*.ppd" | xargs gzip -n9f
+cp -r ${pkgdir}/* /
+rm -r ${pkgdir}
+install -D -m755 ../cups /etc/rc.d/init.d/
+ln -sf  ../init.d/cups /etc/rc.d/rc0.d/K00cups
+ln -sf  ../init.d/cups /etc/rc.d/rc1.d/K00cups
+ln -sf  ../init.d/cups /etc/rc.d/rc2.d/S25cups
+ln -sf  ../init.d/cups /etc/rc.d/rc3.d/S25cups
+ln -sf  ../init.d/cups /etc/rc.d/rc4.d/S25cups
+ln -sf  ../init.d/cups /etc/rc.d/rc5.d/S25cups
+ln -sf  ../init.d/cups /etc/rc.d/rc6.d/K00cups
+}
+
+npostinstall() {
+groupadd -g 9 lp
+}
+
+npostremove() {
+groupdel lp
+}

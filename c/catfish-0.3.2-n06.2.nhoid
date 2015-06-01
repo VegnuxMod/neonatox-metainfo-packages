@@ -1,0 +1,48 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	catfish
+# Version:	0.3.2
+# Release:	n06.2
+# License:	GPL
+# Group:	System
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64 arm arm64 armel
+# Url:	http://software.twotoasts.de/index.php?/pages/catfish_summary.html
+# Description:	A versatile file searching tool.
+# MD5:	c7675c9a18faead6170cd6a737449f06  catfish-0.3.2.tar.xz
+
+
+# BuildDep:	/usr/lib/python2.7/site-packages/gtk-2.0/gtk/_gtk.so	/usr/lib/python2.7/site-packages/gtk-2.0/gtk/_gtk.so
+# BuildDep:	/usr/lib/python2.7/site-packages/xdg/Config.py	/usr/lib/python2.7/site-packages/xdg/Config.py
+# BuildDep:	/usr/bin/xdg-open	/usr/bin/xdg-open
+# BuildDep:	/usr/share/icons/hicolor/index.theme	/usr/share/icons/hicolor/index.theme
+# Dep(post):	/usr/share/icons/hicolor/index.theme	/usr/share/icons/hicolor/index.theme
+# Dep(post):	/usr/bin/xdg-open	/usr/bin/xdg-open
+# Dep(post):	/usr/lib/python2.7/site-packages/xdg/Config.py	/usr/lib/python2.7/site-packages/xdg/Config.py
+# Dep(post):	/usr/lib/python2.7/site-packages/gtk-2.0/gtk/_gtk.so	/usr/lib/python2.7/site-packages/gtk-2.0/gtk/_gtk.so
+
+nbuild() {
+patch -Np1 -i ../10Fix_makefile.dpatch
+patch -Np1 -i ../20Fix_desktopfile.dpatch
+patch -Np1 -i ../30Fix_tracker_backend.dpatch
+patch -Np1 -i ../40Fix_gtkiconload.dpatch
+./configure --prefix=/usr
+sed -i 's|ln -sf $(DESTDIR)/$(PREFIX)/share|ln -sf ..|' Makefile
+make
+}
+
+ninstall() {
+pkgdir=/tmp/catfish
+make DESTDIR=${pkgdir} install
+cp -r ${pkgdir}/* /
+rm -r ${pkgdir}
+ln -sf /usr/share/icons/hicolor/scalable/apps/catfish.svg /usr/share/pixmaps/catfish.svg
+}
+
+npostinstall() {
+which xdg-icon-resource 1>/dev/null 2>/dev/null && xdg-icon-resource forceupdate
+}
+
+npostremove() {
+which xdg-icon-resource 1>/dev/null 2>/dev/null && xdg-icon-resource forceupdate
+}

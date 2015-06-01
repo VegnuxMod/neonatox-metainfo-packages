@@ -1,0 +1,49 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sánchez <cargabsj175@gmail.com>
+
+# Name:	libproxy
+# Version:	0.4.6
+# Release:	n06.2
+# License:	LGPL
+# Group:	Networking
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64
+# Url:	http://libproxy.googlecode.com
+# Description:	A library that provides automatic proxy configuration management.
+# MD5:	df2c3cd2aae21112bb0860101d1a512b  libproxy-0.4.6.tar.xz
+
+
+# BuildDep:	/usr/lib/libgconf-2.so	/usr/lib/libgconf-2.so
+# BuildDep:	/usr/bin/cmake	/usr/bin/cmake
+# BuildDep:	/usr/bin/python	/usr/bin/python
+# BuildDep:	/usr/bin/perl	/usr/bin/perl
+# Dep(post):	/usr/bin/perl	/usr/bin/perl
+# Dep(post):	/usr/bin/python	/usr/bin/python
+# Dep(post):	/usr/bin/cmake	/usr/bin/cmake
+# Dep(post):	/usr/lib/libgconf-2.so	/usr/lib/libgconf-2.so
+
+nbuild() {
+mkdir -p build
+cd build
+cmake -DCMAKE_INSTALL_PREFIX=/usr \
+-DLIBEXEC_INSTALL_DIR=/usr/lib/libproxy \
+-DCMAKE_SKIP_RPATH=ON \
+-DPERL_VENDORINSTALL=yes \
+-DCMAKE_BUILD_TYPE=None \
+-DCMAKE_CXX_FLAGS="${CXXFLAGS}" \
+-DCMAKE_C_FLAGS="${CFLAGS}" \
+..
+make
+}
+
+ninstall() {
+cd build
+make install
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

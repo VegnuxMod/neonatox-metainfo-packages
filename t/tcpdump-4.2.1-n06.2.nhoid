@@ -1,0 +1,37 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	tcpdump
+# Version:	4.2.1
+# Release:	n06.2
+# License:	BSD
+# Group:	Networking
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64 arm arm64 armel
+# Url:	http://www.tcpdump.org
+# Description:	A tool for network monitoring and data acquisition.
+# MD5:	d9b398ac4a85f88f6df5ce5ff871ee8a  tcpdump-4.2.1.tar.xz
+
+
+# BuildDep:	/usr/lib/libpcap.so	/usr/lib/libpcap.so
+# BuildDep:	/usr/lib/libssl.so	/usr/lib/libssl.so
+# Dep(post):	/usr/lib/libssl.so	/usr/lib/libssl.so
+# Dep(post):	/usr/lib/libpcap.so	/usr/lib/libpcap.so
+
+nbuild() {
+patch -Np1 -i ../tcpdump_duplicate_executable.patch
+./configure --prefix=/usr \
+--enable-ipv6
+make
+}
+
+ninstall() {
+make install
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

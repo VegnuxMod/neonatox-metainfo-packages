@@ -1,0 +1,37 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	cairo-perl
+# Version:	1.061
+# Release:	n06.2
+# License:	LGPL
+# Group:	System
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64 arm arm64 armel
+# Url:	http://gtk2-perl.sourceforge.net/
+# Description:	Perl wrappers for cairo.
+# MD5:	af70f6c1b11176cc025ffe7dd91adc80  cairo-perl-1.061.tar.xz
+
+
+# BuildDep:	/usr/lib/perl5/vendor_perl/5.12.1/ExtUtils/Depends.pm	/usr/lib/perl5/vendor_perl/5.12.1/ExtUtils/Depends.pm
+# BuildDep:	/usr/lib/perl5/vendor_perl/5.12.1/ExtUtils/PkgConfig.pm	/usr/lib/perl5/vendor_perl/5.12.1/ExtUtils/PkgConfig.pm
+# BuildDep:	/usr/lib/libcairo.so	/usr/lib/libcairo.so
+# BuildDep:	/usr/bin/perl	/usr/bin/perl
+# Dep(post):	/usr/lib/libcairo.so	/usr/lib/libcairo.so
+# Dep(post):	/usr/bin/perl	/usr/bin/perl
+
+nbuild() {
+perl Makefile.PL INSTALLDIRS=vendor
+make
+}
+
+ninstall() {
+make install
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

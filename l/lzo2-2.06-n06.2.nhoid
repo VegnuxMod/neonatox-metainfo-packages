@@ -1,0 +1,37 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	lzo2
+# Version:	2.06
+# Release:	n06.2
+# License:	GPL
+# Group:	System
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64 arm arm64 armel
+# Url:	http://www.oberhumer.com/opensource/lzo
+# Description:	Portable lossless data compression library.
+# MD5:	77ecbabb6b5c6044e5ca8502cf83171f  lzo2-2.06.tar.xz
+
+
+
+nbuild() {
+./configure --prefix=/usr --enable-shared
+make
+gcc $CFLAGS -fpic -Iinclude/lzo -o minilzo/minilzo.o -c minilzo/minilzo.c
+gcc -g -shared -o libminilzo.so.0 -Wl,-soname,libminilzo.so.0 minilzo/minilzo.o
+}
+
+ninstall() {
+make install
+install -m 755 libminilzo.so.0 /usr/lib
+install -p -m 644 minilzo/minilzo.h /usr/include/lzo
+cd /usr/lib/
+ln -sf libminilzo.so.0 libminilzo.so
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

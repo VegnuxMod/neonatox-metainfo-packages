@@ -1,0 +1,45 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	foomatic-db-engine
+# Version:	4.0.6
+# Release:	n06.2
+# License:	GPL
+# Group:	System
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64 arm arm64
+# Url:	http://www.linuxprinting.org/foomatic.html
+# Description:	Foomatic - Foomatic's database engine generates PPD files from the data in Foomatic's XML database. It also contains scripts to directly generate print queues and handle jobs.
+# MD5:	251b191f555b75eb6187aeea10256431  foomatic-db-engine-4.0.6.tar.xz
+
+
+# BuildDep:	/usr/bin/perl	/usr/bin/perl
+# BuildDep:	/usr/lib/libxml2.so	/usr/lib/libxml2.so
+# BuildDep:	/bin/bash	/bin/bash
+# BuildDep:	/usr/bin/foomatic-rip	/usr/bin/foomatic-rip
+# Dep(post):	/usr/bin/foomatic-rip	/usr/bin/foomatic-rip
+# Dep(post):	/bin/bash	/bin/bash
+# Dep(post):	/usr/lib/libxml2.so	/usr/lib/libxml2.so
+# Dep(post):	/usr/bin/perl	/usr/bin/perl
+
+nbuild() {
+./configure --prefix=/usr
+make
+}
+
+ninstall() {
+pkgdir=/tmp/foomatic
+eval `perl -V:archname`
+make DESTDIR=${pkgdir} INSTALLARCHLIB=/usr/lib/perl5/vendor_perl/ INSTALLSITELIB=/usr/lib/perl5/vendor_perl/ INSTALLSITEARCH=/usr/lib/perl5/vendor_perl/ install
+/usr/bin/find ${pkgdir} -name '.packlist' -delete
+chmod 755 ${pkgdir}/usr/lib{,/perl5,/perl5/vendor_perl}
+cp -r ${pkgdir}/* /
+rm -r ${pkgdir}
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

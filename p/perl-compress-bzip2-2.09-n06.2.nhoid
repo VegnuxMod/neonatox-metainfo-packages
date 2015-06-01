@@ -1,0 +1,35 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	perl-compress-bzip2
+# Version:	2.09
+# Release:	n06.2
+# License:	GPLv2
+# Group:	System
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64 arm arm64 armel
+# Url:	http://search.cpan.org/dist/Compress-Bzip2
+# Description:	Interface to Bzip2 compression library.
+# MD5:	e82a748835f33e68a620dc7ec5699acd  perl-compress-bzip2-2.09.tar.xz
+
+
+# BuildDep:	/usr/bin/perl	/usr/bin/perl
+# BuildDep:	/bin/bzip2	/bin/bzip2
+# Dep(post):	/usr/bin/perl	/usr/bin/perl
+# Dep(post):	/bin/bzip2	/bin/bzip2
+
+nbuild() {
+PERL_MM_USE_DEFAULT=1 perl Makefile.PL INSTALLDIRS=vendor
+make
+}
+
+ninstall() {
+make install
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

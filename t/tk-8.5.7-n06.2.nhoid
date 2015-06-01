@@ -1,0 +1,41 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	tk
+# Version:	8.5.7
+# Release:	n06.2
+# License:	Unknow
+# Group:	Graphics Library
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64 arm arm64
+# Url:	http://www.tcl.tk/
+# Description:	Tk is a cross-platform graphical toolkit which provides the Motif look-and-feel and is implemented using the Tcl scripting language. This package contains everything you need to run Tk (wish) scripts and Tk-enabled apps.
+# MD5:	ea1111c22b19a47dcedb167f8be7929a  tk-8.5.7.tar.xz
+
+
+# BuildDep:	/usr/bin/xterm	/usr/bin/xterm
+# BuildDep:	/usr/bin/tclsh	/usr/bin/tclsh
+# BuildDep:	/usr/lib/libX11.so	/usr/lib/libX11.so
+# Dep(post):	/usr/bin/tclsh	/usr/bin/tclsh
+# Dep(post):	/usr/bin/xterm	/usr/bin/xterm
+# Dep(post):	/usr/lib/libX11.so	/usr/lib/libX11.so
+
+nbuild() {
+cd unix &&
+./configure --prefix=/usr --enable-threads &&
+make
+}
+
+ninstall() {
+cd unix
+make install &&
+make install-private-headers &&
+ln -v -sf wish8.5 /usr/bin/wish
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

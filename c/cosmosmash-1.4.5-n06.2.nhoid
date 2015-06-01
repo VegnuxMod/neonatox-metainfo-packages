@@ -1,0 +1,33 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	cosmosmash
+# Version:	1.4.5
+# Release:	n06.2
+# License:	GPL
+# Group:	Games
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64 arm arm64 armel
+# Url:	http://perso.b2b2c.ca/sarrazip/dev/cosmosmash.html
+# Description:	An Astrosmash clone.
+# MD5:	343fe979bdbd7c12ca4d1e9bc6ef5304  cosmosmash-1.4.5.tar.xz
+
+
+# BuildDep:	/usr/lib/libflatzebra-0.1.so	/usr/lib/libflatzebra-0.1.so
+# Dep(post):	/usr/lib/libflatzebra-0.1.so	/usr/lib/libflatzebra-0.1.so
+
+nbuild() {
+./configure --prefix=/usr
+make
+}
+
+ninstall() {
+make install
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

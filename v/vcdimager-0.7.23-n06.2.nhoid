@@ -1,0 +1,38 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	vcdimager
+# Version:	0.7.23
+# Release:	n06.2
+# License:	GPL
+# Group:	Multimedia
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64 arm arm64
+# Url:	http://www.vcdimager.org/
+# Description:	GNU VCDImager is a full-featured mastering suite for authoring disassembling and analyzing Video CD's and Super Video CD's.
+# MD5:	e7f3eae1234864cd024b85893b347d1e  vcdimager-0.7.23.tar.xz
+
+
+# BuildDep:	/usr/lib/libcdio.so	/usr/lib/libcdio.so
+# BuildDep:	/usr/lib/libxml2.so	/usr/lib/libxml2.so
+# BuildDep:	/usr/lib/libpopt.so	/usr/lib/libpopt.so
+# Dep(post):	/usr/lib/libpopt.so	/usr/lib/libpopt.so
+# Dep(post):	/usr/lib/libxml2.so	/usr/lib/libxml2.so
+# Dep(post):	/usr/lib/libcdio.so	/usr/lib/libcdio.so
+
+nbuild() {
+./configure --prefix=/usr \
+--mandir=/usr/share/man --infodir=/usr/share/info
+make
+}
+
+ninstall() {
+make install
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

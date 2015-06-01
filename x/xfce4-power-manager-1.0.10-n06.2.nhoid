@@ -1,0 +1,45 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	xfce4-power-manager
+# Version:	1.0.10
+# Release:	n06.2
+# License:	GPLv2
+# Group:	XFCE Desktop
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64 arm arm64
+# Url:	http://xfce-goodies.berlios.de/
+# Description:	Power manager for xfce4 desktop.
+# MD5:	10f106cc3ae1dfe9509788fff74c8ecc  xfce4-power-manager-1.0.10.tar.xz
+
+
+# BuildDep:	/usr/bin/upower	/usr/bin/upower
+# BuildDep:	/usr/bin/udisks	/usr/bin/udisks
+# BuildDep:	/usr/lib/libxfce4panel-1.0.so	/usr/lib/libxfce4panel-1.0.so
+# BuildDep:	/usr/lib/libnotify.so	/usr/lib/libnotify.so
+# BuildDep:	/usr/share/icons/hicolor/index.theme	/usr/share/icons/hicolor/index.theme
+# BuildDep:	/usr/lib/librsvg-2.so	/usr/lib/librsvg-2.so
+# Dep(post):	/usr/lib/librsvg-2.so	/usr/lib/librsvg-2.so
+# Dep(post):	/usr/share/icons/hicolor/index.theme	/usr/share/icons/hicolor/index.theme
+# Dep(post):	/usr/lib/libnotify.so	/usr/lib/libnotify.so
+# Dep(post):	/usr/lib/libxfce4panel-1.0.so	/usr/lib/libxfce4panel-1.0.so
+# Dep(post):	/usr/bin/udisks	/usr/bin/udisks
+# Dep(post):	/usr/bin/upower	/usr/bin/upower
+
+nbuild() {
+./configure --prefix=/usr --sysconfdir=/etc --libexecdir=/usr/lib \
+--localstatedir=/var --disable-network-manager --enable-polkit \
+--enable-dpms --disable-debug
+make
+}
+
+ninstall() {
+make install
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

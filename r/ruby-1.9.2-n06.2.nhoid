@@ -1,0 +1,49 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	ruby
+# Version:	1.9.2
+# Release:	n06.2
+# License:	custom
+# Group:	Programming
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64 arm arm64
+# Url:	http://www.ruby-lang.org/en/
+# Description:	An object-oriented language for quick and easy programming.
+# MD5:	625335f7148da3e4726f800e6446a5b3  ruby-1.9.2.tar.xz
+
+
+# BuildDep:	/usr/lib/libdb.so	/usr/lib/libdb.so
+# BuildDep:	/usr/lib/libgdbm.so	/usr/lib/libgdbm.so
+# BuildDep:	/usr/lib/libssl.so	/usr/lib/libssl.so
+# BuildDep:	/usr/lib/libz.so	/usr/lib/libz.so
+# BuildDep:	/usr/lib/libreadline.so	/usr/lib/libreadline.so
+# BuildDep:	/usr/bin/wish8.5	/usr/bin/wish8.5
+# BuildDep:	/usr/lib/libffi.so	/usr/lib/libffi.so
+# Dep(post):	/usr/lib/libffi.so	/usr/lib/libffi.so
+# Dep(post):	/usr/bin/wish8.5	/usr/bin/wish8.5
+# Dep(post):	/usr/lib/libreadline.so	/usr/lib/libreadline.so
+# Dep(post):	/usr/lib/libz.so	/usr/lib/libz.so
+# Dep(post):	/usr/lib/libssl.so	/usr/lib/libssl.so
+# Dep(post):	/usr/lib/libgdbm.so	/usr/lib/libgdbm.so
+# Dep(post):	/usr/lib/libdb.so	/usr/lib/libdb.so
+
+nbuild() {
+./configure --prefix=/usr \
+--sysconfdir=/etc \
+--enable-shared \
+--enable-pthread \
+--disable-rpath
+make
+}
+
+ninstall() {
+make install-nodoc
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

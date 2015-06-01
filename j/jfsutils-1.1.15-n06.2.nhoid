@@ -1,0 +1,32 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	jfsutils
+# Version:	1.1.15
+# Release:	n06.2
+# License:	GPL
+# Group:	System
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64 arm armel arm64
+# Url:	http://jfs.sourceforge.net
+# Description:	JFS filesystem utilities.
+# MD5:	7a7ff190c90d7f5b42235fd2ece41aa7  jfsutils-1.1.15.tar.xz
+
+
+
+nbuild() {
+patch -p1 -i ../inttypes.patch
+./configure --sbindir=/sbin
+make
+}
+
+ninstall() {
+make install
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

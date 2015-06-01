@@ -1,0 +1,40 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	xalan-c
+# Version:	1.11_pre1153059
+# Release:	n06.2
+# License:	APACHE
+# Group:	Programming
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64 arm arm64 armel
+# Url:	http://xml.apache.org/xalan-c
+# Description:	A XSLT processor for transforming XML documents.
+# MD5:	4b341fcc89f1f9da87dcde44631e2bcc  xalan-c-1.11_pre1153059.tar.xz
+
+
+# BuildDep:	/usr/lib/libxerces-c.so	/usr/lib/libxerces-c.so
+# Dep(post):	/usr/lib/libxerces-c.so	/usr/lib/libxerces-c.so
+
+nbuild() {
+cd c
+export XALANCROOT=$(pwd)
+patch -Np2 -i ../../1.11.0_pre797991-as-needed.patch
+patch -Np2 -i ../../1.11.0_pre797991-bugfixes.patch
+patch -Np2 -i ../../1.11.0_pre797991-parallel-build.patch
+./runConfigure -p linux -c gcc -x g++ -P/usr
+make
+}
+
+ninstall() {
+cd c
+export XALANCROOT=$(pwd)
+make install
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

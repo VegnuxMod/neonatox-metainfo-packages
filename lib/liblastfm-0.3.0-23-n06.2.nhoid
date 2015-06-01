@@ -1,0 +1,42 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	liblastfm
+# Version:	0.3.0-23
+# Release:	n06.2
+# License:	GPLv2
+# Group:	Multimedia
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64 arm arm64
+# Url:	http://github.com/mxcl/liblastfm/
+# Description:	Collection of libraries to integrate Last.fm services.
+# MD5:	6d4a2bf3ac579bbd358ec71856fcec63  liblastfm-0.3.0-23.tar.xz
+
+
+# BuildDep:	/usr/lib/libruby.so	/usr/lib/libruby.so
+# BuildDep:	/usr/lib/libsamplerate.so	/usr/lib/libsamplerate.so
+# BuildDep:	/usr/lib/libfftw3.so	/usr/lib/libfftw3.so
+# BuildDep:	/usr/lib/libQtCore.so	/usr/lib/libQtCore.so
+# Dep(post):	/usr/lib/libQtCore.so	/usr/lib/libQtCore.so
+# Dep(post):	/usr/lib/libfftw3.so	/usr/lib/libfftw3.so
+# Dep(post):	/usr/lib/libsamplerate.so	/usr/lib/libsamplerate.so
+
+nbuild() {
+patch -Np1 -i ../no-ftools.patch
+ruby configure --release --prefix /usr --skip-checks
+make
+}
+
+ninstall() {
+make install
+install -dm755 /usr/include/lastfm
+mv /usr/include/lastfm.h
+cp -r src/ws/ws.h /usr/include/lastfm
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

@@ -1,0 +1,35 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	flatzebra
+# Version:	0.1.5
+# Release:	n06.2
+# License:	GPL
+# Group:	Games
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64 arm arm64 armel
+# Url:	http://perso.b2b2c.ca/sarrazip/dev/burgerspace.html
+# Description:	A generic game engine for 2D double-buffering animation.
+# MD5:	b95d16abfbf2d1682d1e50333d2b3d08  flatzebra-0.1.5.tar.xz
+
+
+# BuildDep:	/usr/lib/libSDL_image.so	/usr/lib/libSDL_image.so
+# BuildDep:	/usr/lib/libSDL_mixer.so	/usr/lib/libSDL_mixer.so
+# Dep(post):	/usr/lib/libSDL_mixer.so	/usr/lib/libSDL_mixer.so
+# Dep(post):	/usr/lib/libSDL_image.so	/usr/lib/libSDL_image.so
+
+nbuild() {
+./configure --prefix=/usr
+make
+}
+
+ninstall() {
+make install
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

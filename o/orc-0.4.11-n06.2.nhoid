@@ -1,0 +1,32 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	orc
+# Version:	0.4.11
+# Release:	n06.2
+# License:	custom
+# Group:	Programming
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64 arm arm64
+# Url:	http://code.entropywave.com/projects/orc/
+# Description:	The Oild Runtime Compiler.
+# MD5:	78c4fe7d2890667e1315321e66b85d93  orc-0.4.11.tar.xz
+
+
+
+nbuild() {
+./configure --prefix=/usr \
+--disable-static
+make
+}
+
+ninstall() {
+make install
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

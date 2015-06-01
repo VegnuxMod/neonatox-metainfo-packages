@@ -1,0 +1,38 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	pango-perl
+# Version:	1.221
+# Release:	n06.2
+# License:	LGPL
+# Group:	System
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64 arm arm64 armel
+# Url:	http://gtk2-perl.sourceforge.net
+# Description:	Perl bindings for Pango.
+# MD5:	980db92323fb7ca944fcc4548b2acc37  pango-perl-1.221.tar.xz
+
+
+# BuildDep:	/usr/lib/perl5/vendor_perl/5.12.1/ExtUtils/Depends.pm	/usr/lib/perl5/vendor_perl/5.12.1/ExtUtils/Depends.pm
+# BuildDep:	/usr/lib/libpango-1.0.so	/usr/lib/libpango-1.0.so
+# BuildDep:	/usr/lib/perl5/vendor_perl/5.12.1/i686-linux/auto/Cairo/Cairo.so	/usr/lib/perl5/vendor_perl/5.12.1/i686-linux/auto/Cairo/Cairo.so
+# BuildDep:	/usr/lib/perl5/vendor_perl/5.12.1/i686-linux/auto/Glib/Glib.so	/usr/lib/perl5/vendor_perl/5.12.1/i686-linux/auto/Glib/Glib.so
+# Dep(post):	/usr/lib/perl5/vendor_perl/5.12.1/i686-linux/auto/Glib/Glib.so	/usr/lib/perl5/vendor_perl/5.12.1/i686-linux/auto/Glib/Glib.so
+# Dep(post):	/usr/lib/perl5/vendor_perl/5.12.1/i686-linux/auto/Cairo/Cairo.so	/usr/lib/perl5/vendor_perl/5.12.1/i686-linux/auto/Cairo/Cairo.so
+# Dep(post):	/usr/lib/libpango-1.0.so	/usr/lib/libpango-1.0.so
+
+nbuild() {
+PERL_MM_USE_DEFAULT=1 perl Makefile.PL INSTALLDIRS=vendor
+make
+}
+
+ninstall() {
+make install
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

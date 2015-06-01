@@ -1,0 +1,42 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	pyqt
+# Version:	4.8.5
+# Release:	n06.2
+# License:	GPL
+# Group:	Graphics library
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64 arm arm64
+# Url:	http://riverbankcomputing.co.uk/software/pyqt/intro
+# Description:	A set of Python bindings for the Qt toolkit.
+# MD5:	1d46bc86043effb50608b19ff2e08623  pyqt-4.8.5.tar.xz
+
+
+# BuildDep:	/usr/lib/libQtCore.so	/usr/lib/libQtCore.so
+# BuildDep:	/usr/lib/python2.7/site-packages/sip.so	/usr/lib/python2.7/site-packages/sip.so
+# BuildDep:	/usr/lib/python2.7/site-packages/dbus/_dbus.py	/usr/lib/python2.7/site-packages/dbus/_dbus.py
+# Dep(post):	/usr/lib/python2.7/site-packages/dbus/_dbus.py	/usr/lib/python2.7/site-packages/dbus/_dbus.py
+# Dep(post):	/usr/lib/python2.7/site-packages/sip.so	/usr/lib/python2.7/site-packages/sip.so
+# Dep(post):	/usr/lib/libQtCore.so	/usr/lib/libQtCore.so
+
+nbuild() {
+python configure.py --confirm-license -v /usr/share/sip --qsci-api
+find -name 'Makefile' | xargs sed -i 's|-Wl,-rpath,/usr/lib||g;s|-Wl,-rpath,.* ||g'
+make
+}
+
+ninstall() {
+pkgdir=/tmp/pyqt
+make DESTDIR="${pkgdir}" INSTALL_ROOT="${pkgdir}" install
+cp -r ${pkgdir}/usr/{lib,share} /usr
+cp -r ${pkgdir}/usr/local/* /usr
+rm -r ${pkgdir}
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

@@ -1,0 +1,33 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	gnome-mime-data
+# Version:	2.18.0
+# Release:	n06.2
+# License:	GPL
+# Group:	Gnome Desktop
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64 arm arm64
+# Url:	http://www.gnome.org
+# Description:	The base MIME and Application database for GNOME.
+# MD5:	617833b5397f3199c70ded8b4771013b  gnome-mime-data-2.18.0.tar.xz
+
+
+# BuildDep:	/usr/share/mime/packages/freedesktop.org.xml	/usr/share/mime/packages/freedesktop.org.xml
+# Dep(post):	/usr/share/mime/packages/freedesktop.org.xml	/usr/share/mime/packages/freedesktop.org.xml
+
+nbuild() {
+./configure --prefix=/usr --sysconfdir=/etc --localstatedir=/var
+make
+}
+
+ninstall() {
+make install
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

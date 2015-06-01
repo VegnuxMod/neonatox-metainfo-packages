@@ -1,0 +1,80 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	emesene
+# Version:	2.12.1
+# Release:	n06.2
+# License:	GPL LGPL
+# Group:	Networking
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64 arm armel arm64
+# Url:	http://www.emesene.org/
+# Description:	A pygtk MSN Messenger client.
+# MD5:	7de8fcbc6889cbe44b0d88f2fc648eec  emesene-2.12.1.tar.xz
+
+
+# BuildDep:	/usr/lib/libgtkspell.so	/usr/lib/libgtkspell.so
+# BuildDep:	/usr/lib/gstreamer-0.10/libgstspeex.so	/usr/lib/gstreamer-0.10/libgstspeex.so
+# BuildDep:	/usr/lib/python2.7/site-packages/gst-0.10/gst/_gst.so	/usr/lib/python2.7/site-packages/gst-0.10/gst/_gst.so
+# BuildDep:	/usr/lib/libaspell.so	/usr/lib/libaspell.so
+# BuildDep:	/usr/bin/xdg-desktop-menu	/usr/bin/xdg-desktop-menu
+# BuildDep:	/usr/share/icons/hicolor/index.theme	/usr/share/icons/hicolor/index.theme
+# BuildDep:	/usr/lib/python2.7/site-packages/gtk-2.0/gtk/_gtk.so	/usr/lib/python2.7/site-packages/gtk-2.0/gtk/_gtk.so
+# BuildDep:	/usr/bin/python	/usr/bin/python
+# BuildDep:	/usr/lib/python2.7/site-packages/Crypto/Cipher/AES.so	/usr/lib/python2.7/site-packages/Crypto/Cipher/AES.so
+# BuildDep:	/usr/lib/libssl.so	/usr/lib/libssl.so
+# BuildDep:	/usr/lib/libgstfarsight-0.10.so	/usr/lib/libgstfarsight-0.10.so
+# BuildDep:	/usr/lib/python2.7/site-packages/gtk-2.0/pynotify/_pynotify.so	/usr/lib/python2.7/site-packages/gtk-2.0/pynotify/_pynotify.so
+# BuildDep:	/usr/lib/python2.7/site-packages/_dbus_bindings.so	/usr/lib/python2.7/site-packages/_dbus_bindings.so
+# BuildDep:	/usr/lib/python2.7/site-packages/PIL/_imaging.so	/usr/lib/python2.7/site-packages/PIL/_imaging.so
+# BuildDep:	/usr/lib/python2.7/site-packages/OpenSSL/SSL.so	/usr/lib/python2.7/site-packages/OpenSSL/SSL.so
+# BuildDep:	/usr/lib/libpyglib-2.0-python.so	/usr/lib/libpyglib-2.0-python.so
+# BuildDep:	/usr/lib/gstreamer-0.10/libgstossaudio.so	/usr/lib/gstreamer-0.10/libgstossaudio.so
+# BuildDep:	/usr/lib/python2.7/site-packages/xmpp/client.py	/usr/lib/python2.7/site-packages/xmpp/client.py
+# BuildDep:	/usr/lib/python2.7/site-packages/dns/ipv4.py	/usr/lib/python2.7/site-packages/dns/ipv4.py
+# BuildDep:	/usr/lib/python2.7/site-packages/webkit/webkit.so	/usr/lib/python2.7/site-packages/webkit/webkit.so
+# Dep(post):	/usr/lib/libgtkspell.so	/usr/lib/libgtkspell.so
+# Dep(post):	/usr/lib/gstreamer-0.10/libgstspeex.so	/usr/lib/gstreamer-0.10/libgstspeex.so
+# Dep(post):	/usr/lib/python2.7/site-packages/gst-0.10/gst/_gst.so	/usr/lib/python2.7/site-packages/gst-0.10/gst/_gst.so
+# Dep(post):	/usr/lib/libaspell.so	/usr/lib/libaspell.so
+# Dep(post):	/usr/bin/xdg-desktop-menu	/usr/bin/xdg-desktop-menu
+# Dep(post):	/usr/share/icons/hicolor/index.theme	/usr/share/icons/hicolor/index.theme
+# Dep(post):	/usr/lib/python2.7/site-packages/gtk-2.0/gtk/_gtk.so	/usr/lib/python2.7/site-packages/gtk-2.0/gtk/_gtk.so
+# Dep(post):	/usr/bin/python	/usr/bin/python
+# Dep(post):	/usr/lib/python2.7/site-packages/Crypto/Cipher/AES.so	/usr/lib/python2.7/site-packages/Crypto/Cipher/AES.so
+# Dep(post):	/usr/lib/libssl.so	/usr/lib/libssl.so
+# Dep(post):	/usr/lib/libgstfarsight-0.10.so	/usr/lib/libgstfarsight-0.10.so
+# Dep(post):	/usr/lib/python2.7/site-packages/gtk-2.0/pynotify/_pynotify.so	/usr/lib/python2.7/site-packages/gtk-2.0/pynotify/_pynotify.so
+# Dep(post):	/usr/lib/python2.7/site-packages/_dbus_bindings.so	/usr/lib/python2.7/site-packages/_dbus_bindings.so
+# Dep(post):	/usr/lib/python2.7/site-packages/PIL/_imaging.so	/usr/lib/python2.7/site-packages/PIL/_imaging.so
+# Dep(post):	/usr/lib/python2.7/site-packages/OpenSSL/SSL.so	/usr/lib/python2.7/site-packages/OpenSSL/SSL.so
+# Dep(post):	/usr/lib/libpyglib-2.0-python.so	/usr/lib/libpyglib-2.0-python.so
+# Dep(post):	/usr/lib/gstreamer-0.10/libgstossaudio.so	/usr/lib/gstreamer-0.10/libgstossaudio.so
+# Dep(post):	/usr/lib/python2.7/site-packages/xmpp/client.py	/usr/lib/python2.7/site-packages/xmpp/client.py
+# Dep(post):	/usr/lib/python2.7/site-packages/dns/ipv4.py	/usr/lib/python2.7/site-packages/dns/ipv4.py
+# Dep(post):	/usr/lib/python2.7/site-packages/webkit/webkit.so	/usr/lib/python2.7/site-packages/webkit/webkit.so
+
+nbuild() {
+noemptyfuncs
+}
+
+ninstall() {
+pkgdir=/tmp/msn
+export PYTHONPATH="${pkgdir}/usr/lib/python2.7/site-packages/"
+install -d ${pkgdir}/usr/lib/python2.7/site-packages/
+install -d  ${pkgdir}/usr/bin
+python setup.py install --prefix=${pkgdir}/usr
+mv -f ${pkgdir}/usr/lib/python2.7/site-packages/emesene-2.12.1-py2.7.egg/share ${pkgdir}/usr
+mv -f ${pkgdir}/usr/lib/python2.7/site-packages/emesene-2.12.1-py2.7.egg/emesene ${pkgdir}/usr/share
+rm -rf ${pkgdir}/usr/lib
+install -Dm755 ../emesene.run ${pkgdir}/usr/bin/emesene
+cp -r ${pkgdir}/* /
+rm -r ${pkgdir}
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

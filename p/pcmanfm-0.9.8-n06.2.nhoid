@@ -1,0 +1,41 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	pcmanfm
+# Version:	0.9.8
+# Release:	n06.2
+# License:	GPL
+# Group:	LXDE Desktop
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64
+# Url:	http://pcmanfm.sourceforge.net/
+# Description:	File manager of the LXDE Desktop
+# MD5:	0c559535e81c5623a095f4baf247bf39  pcmanfm-0.9.8.tar.xz
+
+
+# BuildDep:	/usr/lib/libgtk-x11-2.0.so	/usr/lib/libgtk-x11-2.0.so
+# BuildDep:	/usr/bin/udisks	/usr/bin/udisks
+# BuildDep:	/usr/bin/update-desktop-database	/usr/bin/update-desktop-database
+# BuildDep:	/usr/lib/libstartup-notification-1.so	/usr/lib/libstartup-notification-1.so
+# BuildDep:	/usr/lib/libfm.so	/usr/lib/libfm.so
+# Dep(post):	/usr/lib/libfm.so	/usr/lib/libfm.so
+# Dep(post):	/usr/bin/update-desktop-database	/usr/bin/update-desktop-database
+# Dep(post):	/usr/bin/udisks	/usr/bin/udisks
+# Dep(post):	/usr/lib/libstartup-notification-1.so	/usr/lib/libstartup-notification-1.so
+# Dep(post):	/usr/lib/libgtk-x11-2.0.so	/usr/lib/libgtk-x11-2.0.so
+
+nbuild() {
+./configure --sysconfdir=/etc --prefix=/usr
+make
+}
+
+ninstall() {
+make install
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

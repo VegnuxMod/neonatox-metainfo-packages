@@ -1,0 +1,46 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	xchat
+# Version:	2.8.8
+# Release:	n06.2
+# License:	GPL
+# Group:	Networking
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64 arm arm64
+# Url:	http://www.xchat.org/
+# Description:	A GTK+ based IRC client.
+# MD5:	9f79400a17c135fd36d2c5b9dadced83  xchat-2.8.8.tar.xz
+
+
+# BuildDep:	/usr/lib/libssl.so	/usr/lib/libssl.so
+# BuildDep:	/usr/lib/libgtk-x11-2.0.so	/usr/lib/libgtk-x11-2.0.so
+# BuildDep:	/usr/lib/libdbus-glib-1.so	/usr/lib/libdbus-glib-1.so
+# BuildDep:	/usr/bin/tclsh	/usr/bin/tclsh
+# BuildDep:	/usr/bin/perl	/usr/bin/perl
+# BuildDep:	/usr/bin/python	/usr/bin/python
+# BuildDep:	/usr/lib/libenchant.so	/usr/lib/libenchant.so
+# Dep(post):	/usr/lib/libenchant.so	/usr/lib/libenchant.so
+# Dep(post):	/usr/bin/python	/usr/bin/python
+# Dep(post):	/usr/bin/perl	/usr/bin/perl
+# Dep(post):	/usr/bin/tclsh	/usr/bin/tclsh
+# Dep(post):	/usr/lib/libdbus-glib-1.so	/usr/lib/libdbus-glib-1.so
+# Dep(post):	/usr/lib/libgtk-x11-2.0.so	/usr/lib/libgtk-x11-2.0.so
+# Dep(post):	/usr/lib/libssl.so	/usr/lib/libssl.so
+
+nbuild() {
+./configure --prefix=/usr --sysconfdir=/etc --enable-openssl --enable-dbus \
+--disable-textfe --enable-ipv6 --enable-shm --enable-spell=static
+make
+}
+
+ninstall() {
+make install
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

@@ -1,0 +1,35 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	dvd+rw-tools
+# Version:	7.1
+# Release:	n06.2
+# License:	GPL
+# Group:	Multimedia
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64 arm arm64
+# Url:	http://fy.chalmers.se/~appro/linux/DVD+RW
+# Description:	Dvd burning tools.
+# MD5:	a5b9e998acdaf414cb4c269d1a4b5cb9  dvd+rw-tools-7.1.tar.xz
+
+
+# BuildDep:	/usr/bin/mkisofs	/usr/bin/mkisofs
+# Dep(post):	/usr/bin/mkisofs	/usr/bin/mkisofs
+
+nbuild() {
+patch -Np1 -i "../buildpatch-7.0-3-20080108-karolina.patch"
+make
+}
+
+ninstall() {
+install -m755 growisofs dvd+rw-{booktype,format,mediainfo} dvd-ram-control "/usr/bin/"
+gzip growisofs.1
+install -m644 growisofs.1.gz /usr/share/man/man1/growisofs.1.gz
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

@@ -1,0 +1,34 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sánchez <cargabsj175@gmail.com>
+
+# Name:	libdvdread
+# Version:	4.1.3
+# Release:	n06.2
+# License:	GPL
+# Group:	Multimedia
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64
+# Url:	http://www.mplayerhq.hu/MPlayer/releases/dvdnav/
+# Description:	Provides a simple foundation for reading DVD video disks.
+# MD5:	917f31b6a0235cdb8d526382f3805d15  libdvdread-4.1.3.tar.xz
+
+
+# BuildDep:	/usr/lib/libdvdcss.so	/usr/lib/libdvdcss.so
+# Dep(post):	/usr/lib/libdvdcss.so	/usr/lib/libdvdcss.so
+
+nbuild() {
+patch -Np1 -i ../DVDFileStat.patch
+./autogen.sh --prefix=/usr
+make
+}
+
+ninstall() {
+make install
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

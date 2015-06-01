@@ -1,0 +1,35 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sánchez <cargabsj175@gmail.com>
+
+# Name:	flac
+# Version:	1.2.1
+# Release:	n06.2
+# License:	GPL LGPL FDL custom
+# Group:	Multimedia
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64
+# Url:	http://flac.sourceforge.net/
+# Description:	Free Lossless Audio Codec.
+# MD5:	ad309a5a5fc51e626b502d22f71d217f  flac-1.2.1.tar.xz
+
+
+# BuildDep:	/usr/lib/libogg.so	/usr/lib/libogg.so
+# Dep(post):	/usr/lib/libogg.so	/usr/lib/libogg.so
+
+nbuild() {
+patch -Np1 -i "../flac-1.2.1-gcc-4.3-includes.patch"
+./configure --prefix=/usr --mandir=/usr/share/man --enable-shared --disable-sse \
+--disable-rpath --with-pic
+make
+}
+
+ninstall() {
+make install
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

@@ -1,0 +1,34 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	perl-html-parser
+# Version:	3.69
+# Release:	n06.2
+# License:	PerlArtistic
+# Group:	Programming
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64 arm arm64 armel
+# Url:	http://search.cpan.org/dist/HTML-Parser
+# Description:	Perl HTML parser class.
+# MD5:	462c06c65945ee45140af8ed42fc8504  perl-html-parser-3.69.tar.xz
+
+# BuildDep:	/usr/lib/perl5/vendor_perl/5.12.1/HTML/Tagset.pm	/usr/lib/perl5/vendor_perl/5.12.1/HTML/Tagset.pm
+# BuildDep:	/usr/bin/perl	/usr/bin/perl
+# Dep(post):	/usr/bin/perl	/usr/bin/perl
+# Dep(post):	/usr/lib/perl5/vendor_perl/5.12.1/HTML/Tagset.pm	/usr/lib/perl5/vendor_perl/5.12.1/HTML/Tagset.pm
+
+nbuild() {
+perl Makefile.PL INSTALLDIRS=vendor
+make
+}
+
+ninstall() {
+make install
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

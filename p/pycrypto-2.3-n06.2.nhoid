@@ -1,0 +1,36 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	pycrypto
+# Version:	2.3
+# Release:	n06.2
+# License:	custom
+# Group:	System
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64 arm armel arm64
+# Url:	http://www.dlitz.net/software/pycrypto/
+# Description:	Collection of cryptographic algorithms and protocols, implemented for use from Python.
+# MD5:	8a3dcb6a2609a6a3de7855a9e6f9c28b  pycrypto-2.3.tar.xz
+
+
+# BuildDep:	/usr/bin/python	/usr/bin/python
+# Dep(post):	/usr/bin/python	/usr/bin/python
+
+nbuild() {
+noemptyfuncs
+}
+
+ninstall() {
+pkgdir=/tmp/pycrypto
+python setup.py build
+python setup.py install --root="${pkgdir}" --optimize=1
+cp -r ${pkgdir}/* /
+rm -r ${pkgdir}
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

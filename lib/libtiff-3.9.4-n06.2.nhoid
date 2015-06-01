@@ -1,0 +1,40 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sánchez <cargabsj175@gmail.com>
+
+# Name:	libtiff
+# Version:	3.9.4
+# Release:	n06.2
+# License:	custom
+# Group:	Graphic Library
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64
+# Url:	http://www.remotesensing.org/libtiff/
+# Description:	Library for manipulation of TIFF images.
+# MD5:	5c30ba19b0901d2d84ed81b1e80d7eeb  libtiff-3.9.4.tar.xz
+
+
+# BuildDep:	/usr/lib/libjpeg.so	/usr/lib/libjpeg.so
+# BuildDep:	/usr/lib/libGL.so	/usr/lib/libGL.so
+# BuildDep:	/usr/lib/libXmu.so	/usr/lib/libXmu.so
+# BuildDep:	/usr/lib/libXi.so	/usr/lib/libXi.so
+# Dep(post):	/usr/lib/libXi.so	/usr/lib/libXi.so
+# Dep(post):	/usr/lib/libXmu.so	/usr/lib/libXmu.so
+# Dep(post):	/usr/lib/libGL.so	/usr/lib/libGL.so
+# Dep(post):	/usr/lib/libjpeg.so	/usr/lib/libjpeg.so
+
+nbuild() {
+patch -p1 < ../libtiff-CVE-2009-2285.patch
+./configure --prefix=/usr --sysconfdir=/etc --mandir=/usr/share/man
+make
+}
+
+ninstall() {
+make install
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

@@ -1,0 +1,37 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	pcre
+# Version:	8.13
+# Release:	n06.2
+# License:	BSD
+# Group:	System
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64 arm arm64
+# Url:	http://www.pcre.org/
+# Description:	A library that implements Perl 5-style regular expressions.
+# MD5:	6a7620428def004ac9e468acf66a3cd9  pcre-8.13.tar.xz
+
+
+
+nbuild() {
+./configure --prefix=/usr --enable-utf8 --enable-unicode-properties
+make
+}
+
+ninstall() {
+pkgdir=/tmp/pcre
+make DESTDIR="${pkgdir}" install
+install -dm755 "${pkgdir}"/lib
+mv "${pkgdir}"/usr/lib/libpcre.so.* "${pkgdir}"/lib/
+ln -sf /lib/libpcre.so.0 "${pkgdir}"/usr/lib/libpcre.so
+cp -r ${pkgdir}/* /
+rm -r ${pkgdir}
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

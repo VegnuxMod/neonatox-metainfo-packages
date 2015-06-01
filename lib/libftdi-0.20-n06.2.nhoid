@@ -1,0 +1,34 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	libftdi
+# Version:	0.20
+# Release:	n06.2
+# License:	GPLv2 LGPLv2.1
+# Group:	System
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64 arm arm64 armel
+# Url:	http://www.intra2net.com/en/developer/libftdi/download.php
+# Description:	A library to talk to FTDI chips.
+# MD5:	70a1593f4d54c6b30fe60a11af467a8f  libftdi-0.20.tar.xz
+
+
+# BuildDep:	/usr/lib/libusb.so	/usr/lib/libusb.so
+# Dep(post):	/usr/lib/libusb.so	/usr/lib/libusb.so
+
+nbuild() {
+sed -i '/no-install/d' examples/Makefile.in
+./configure --prefix=/usr
+make
+}
+
+ninstall() {
+make install
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

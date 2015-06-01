@@ -1,0 +1,40 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sánchez <cargabsj175@gmail.com>
+
+# Name:	lxpanel
+# Version:	0.5.6
+# Release:	n06.2
+# License:	GPLv2
+# Group:	LXDE Desktop
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64
+# Url:	http://lxde.org/
+# Description:	Panel of the LXDE Desktop.
+# MD5:	036dc1e4d0a6c8b4af9c1567f0a70b30  lxpanel-0.5.6.tar.xz
+
+
+# BuildDep:	/usr/lib/libgtk-x11-2.0.so	/usr/lib/libgtk-x11-2.0.so
+# BuildDep:	/usr/lib/libasound.so	/usr/lib/libasound.so
+# BuildDep:	/usr/lib/libmenu-cache.so	/usr/lib/libmenu-cache.so
+# BuildDep:	/etc/xdg/menus/lxde-applications.menu	/etc/xdg/menus/lxde-applications.menu
+# Dep(post):	/etc/xdg/menus/lxde-applications.menu	/etc/xdg/menus/lxde-applications.menu
+# Dep(post):	/usr/lib/libmenu-cache.so	/usr/lib/libmenu-cache.so
+# Dep(post):	/usr/lib/libasound.so	/usr/lib/libasound.so
+# Dep(post):	/usr/lib/libgtk-x11-2.0.so	/usr/lib/libgtk-x11-2.0.so
+
+nbuild() {
+patch -p1 -i ../Fix-build-issue-with-symbol-alarm-showing-up-on-F14-.patch
+./configure --sysconfdir=/etc --prefix=/usr
+make
+}
+
+ninstall() {
+make install
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

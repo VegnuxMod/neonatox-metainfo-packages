@@ -1,0 +1,36 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	wvdial
+# Version:	1.61
+# Release:	n06.2
+# License:	custom
+# Group:	Networking
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64 arm arm64
+# Url:	http://alumnit.ca/wiki/index.php?page=WvDial
+# Description:	A dialer program to connect to the Internet.
+# MD5:	af01e306ffba6a875f8cbebfc9242a15  wvdial-1.61.tar.xz
+
+
+# BuildDep:	/usr/lib/libwvstreams.so	/usr/lib/libwvstreams.so
+# BuildDep:	/usr/sbin/pppd	/usr/sbin/pppd
+# Dep(post):	/usr/sbin/pppd	/usr/sbin/pppd
+# Dep(post):	/usr/lib/libwvstreams.so	/usr/lib/libwvstreams.so
+
+nbuild() {
+unset LDFLAGS
+./configure
+make
+}
+
+ninstall() {
+make PPPDIR=/etc/ppp/peers install
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

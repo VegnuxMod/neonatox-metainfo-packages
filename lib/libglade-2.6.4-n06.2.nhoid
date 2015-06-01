@@ -1,0 +1,39 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sánchez <cargabsj175@gmail.com>
+
+# Name:	libglade
+# Version:	2.6.4
+# Release:	n06.2
+# License:	LGPL
+# Group:	Graphic Library
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64
+# Url:	http://www.gnome.org
+# Description:	Allows you to load glade interface files in a program at runtime.
+# MD5:	6e69af3ccbb3ebd4eb7de356b5b514ca  libglade-2.6.4.tar.xz
+
+
+# BuildDep:	/usr/lib/libgtk-x11-2.0.so	/usr/lib/libgtk-x11-2.0.so
+# BuildDep:	/usr/lib/libxml2.so	/usr/lib/libxml2.so
+# BuildDep:	/usr/bin/python	/usr/bin/python
+# Dep(post):	/usr/bin/python	/usr/bin/python
+# Dep(post):	/usr/lib/libxml2.so	/usr/lib/libxml2.so
+# Dep(post):	/usr/lib/libgtk-x11-2.0.so	/usr/lib/libgtk-x11-2.0.so
+
+nbuild() {
+patch -Np1 -i "../libglade-2.0.1-nowarning.patch"
+./configure --sysconfdir=/etc --prefix=/usr --localstatedir=/var
+make
+}
+
+ninstall() {
+make install
+install -m755 libglade-convert "/usr/bin/"
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

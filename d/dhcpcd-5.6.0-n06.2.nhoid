@@ -1,0 +1,40 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	dhcpcd
+# Version:	5.6.0
+# Release:	n06.2
+# License:	BSD
+# Group:	Networking
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64 arm arm64 armel
+# Url:	http://roy.marples.name/dhcpcd/
+# Description:	RFC2131 compliant DHCP client daemon.
+# MD5:	53ee9e4634120afe11f6a5fe50add207  dhcpcd-5.6.0.tar.xz
+
+
+# BuildDep:	/bin/sh	/bin/sh
+# Dep(post):	/bin/sh	/bin/sh
+
+nbuild() {
+./configure --libexecdir=/usr/lib/dhcpcd --dbdir=/var/lib/dhcpcd
+make
+}
+
+ninstall() {
+pkgdir=/tmp/dhcpcd
+make DESTDIR=${pkgdir} install
+install -d ${pkgdir}/usr/sbin
+ln -sf /sbin/dhcpcd ${pkgdir}/usr/sbin/dhcpcd
+install -D -m644 ../dhcpcd.conf.d ${pkgdir}/etc/conf.d/dhcpcd
+echo noipv4ll >> ${pkgdir}/etc/dhcpcd.conf
+cp -r ${pkgdir}/* /
+rm -r ${pkgdir}
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

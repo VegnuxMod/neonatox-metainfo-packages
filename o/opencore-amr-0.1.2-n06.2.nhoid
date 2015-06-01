@@ -1,0 +1,31 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	opencore-amr
+# Version:	0.1.2
+# Release:	n06.2
+# License:	Apache-2.0
+# Group:	Multimedia
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64
+# Url:	http://opencore-amr.sourceforge.net/
+# Description:	Implementation of Adaptive Multi Rate Narrowband and Wideband speech codec.
+# MD5:	5a3933cb39a50e7241ac952002855b7e  opencore-amr-0.1.2.tar.xz
+
+
+
+nbuild() {
+./configure --prefix=/usr
+make
+}
+
+ninstall() {
+make install
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

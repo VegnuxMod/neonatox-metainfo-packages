@@ -1,0 +1,35 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	xkbutils
+# Version:	1.0.3
+# Release:	n06.2.1
+# License:	X11 license
+# Group:	X Window System
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64 arm arm64
+# Url:	http://www.x.org/wiki/
+# Description:	XKB utility demo application.
+# MD5:	54cde0d46d9c9915c364cf13a7f5c9ef  xkbutils-1.0.3.tar.xz
+
+
+# BuildDep:	/usr/lib/libxkbfile.so	/usr/lib/libxkbfile.so
+# BuildDep:	/usr/lib/libXaw.so	/usr/lib/libXaw.so
+# Dep(post):	/usr/lib/libXaw.so	/usr/lib/libXaw.so
+# Dep(post):	/usr/lib/libxkbfile.so	/usr/lib/libxkbfile.so
+
+nbuild() {
+./configure --prefix=/usr --sysconfdir=/etc --mandir=/usr/share/man --localstatedir=/var
+make
+}
+
+ninstall() {
+make install
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

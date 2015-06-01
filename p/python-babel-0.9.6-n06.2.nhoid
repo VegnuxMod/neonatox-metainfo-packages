@@ -1,0 +1,37 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <caragbsj175@gmail.com>
+
+# Name:	python-babel
+# Version:	0.9.6
+# Release:	n06.2
+# License:	BSD
+# Group:	System
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64 arm arm64 armel
+# Url:	http://babel.edgewall.org/
+# Description:	A collection of tools for internationalizing Python applications.}
+# MD5:	2b979c99d40561be8e3cccfcc96cb501  python-babel-0.9.6.tar.xz
+
+
+# BuildDep:	/usr/lib/python2.7/site-packages/setuptools/archive_util.py	/usr/lib/python2.7/site-packages/setuptools/archive_util.py
+# BuildDep:	/usr/bin/python	/usr/bin/python
+# Dep(post):	/usr/bin/python	/usr/bin/python
+# Dep(post):	/usr/lib/python2.7/site-packages/setuptools/archive_util.py	/usr/lib/python2.7/site-packages/setuptools/archive_util.py
+
+nbuild() {
+noemptyfuncs
+}
+
+ninstall() {
+pkgdir=/tmp/babel
+python setup.py install --root=$pkgdir
+cp -r $pkgdir/* /
+rm -r $pkgdir
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

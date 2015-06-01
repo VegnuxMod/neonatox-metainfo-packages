@@ -1,0 +1,37 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sánchez <cargabsj175@gmail.com>
+
+# Name:	libmpeg2
+# Version:	0.5.1
+# Release:	n06.2
+# License:	GPLv2
+# Group:	Multimedia
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64
+# Url:	http://libmpeg2.sourceforge.net/
+# Description:	libmpeg2 is a library for decoding MPEG-1 and MPEG-2 video streams.
+# MD5:	ebb63b95f582238a82df29afaeadbd14  libmpeg2-0.5.1.tar.xz
+
+
+# BuildDep:	/usr/lib/libSDL.so	/usr/lib/libSDL.so
+# BuildDep:	/usr/lib/libSM.so	/usr/lib/libSM.so
+# BuildDep:	/usr/lib/libXv.so	/usr/lib/libXv.so
+# Dep(post):	/usr/lib/libXv.so	/usr/lib/libXv.so
+# Dep(post):	/usr/lib/libSM.so	/usr/lib/libSM.so
+# Dep(post):	/usr/lib/libSDL.so	/usr/lib/libSDL.so
+
+nbuild() {
+./configure --prefix=/usr --enable-shared --disable-static
+make OPT_CFLAGS="${CFLAGS}" MPEG2DEC_CFLAGS="${CFLAGS}" LIBMPEG2_CFLAGS=""
+}
+
+ninstall() {
+make install
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

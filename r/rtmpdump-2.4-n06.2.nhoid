@@ -1,0 +1,33 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	rtmpdump
+# Version:	2.4
+# Release:	n06.2
+# License:	GPLv2 LGPLv2.1
+# Group:	Multimedia
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64 arm arm64
+# Url:	http://rtmpdump.mplayerhq.hu/
+# Description:	A tool to download rtmp streams.
+# MD5:	d26352611386c70e20667c83fd2d6993  rtmpdump-2.4.tar.xz
+
+
+# BuildDep:	/usr/lib/libssl.so	/usr/lib/libssl.so
+# Dep(post):	/usr/lib/libssl.so	/usr/lib/libssl.so
+
+nbuild() {
+noemptyfuncs
+}
+
+ninstall() {
+make
+make prefix=/usr mandir=/usr/share/man install
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

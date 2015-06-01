@@ -1,0 +1,42 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	gcc-objc
+# Version:	4.5.1
+# Release:	n06.2
+# License:	GPLv3
+# Group:	Programming
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64 arm arm64 armel
+# Url:	http://gcc.gnu.org
+# Description:	Objective-C front-end for GCC.
+# MD5:	c4f2bd34f261dfbcf78ae87675c9f5e5  gcc-objc-4.5.1.tar.xz
+
+
+
+nbuild() {
+./build.objc
+}
+
+ninstall() {
+_basedir=/usr/src/nhopkg/gcc-4.5.1
+pkgver="4.5.1"
+CHOST=$(uname -m)-pc-linux-gnu
+pkgdir="/tmp/gcc-objc"
+make -j1 DESTDIR=${pkgdir} install-target-libobjc
+install -dm755 ${pkgdir}/usr/lib/gcc/${CHOST}/${pkgver}/
+install -m755 gcc/cc1obj{,plus} ${pkgdir}/usr/lib/gcc/${CHOST}/${pkgver}/
+# remove libraries included in gcc-libs
+rm ${pkgdir}/usr/lib/libobjc.so*
+# Install Runtime Library Exception
+install -Dm644 ${_basedir}/COPYING.RUNTIME ${pkgdir}/usr/share/licenses/gcc-objc/RUNTIME.LIBRARY.EXCEPTION
+cp -r ${pkgdir}/* /
+rm -r ${pkgdir}
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

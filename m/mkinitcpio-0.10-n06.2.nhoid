@@ -1,0 +1,55 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	mkinitcpio
+# Version:	0.10
+# Release:	n06.2
+# License:	GPL
+# Group:	Core System
+# Arch:	any
+# Url:	http://www.archlinux.org/
+# Description:	Modular initramfs image creation utility.
+# MD5:	47ac7796e306319c5cb78d7d37a02d0e  mkinitcpio-0.10.tar.xz
+
+
+# BuildDep:	/lib/initcpio/busybox	/lib/initcpio/busybox
+# BuildDep:	/usr/bin/kmod	/usr/bin/kmod
+# BuildDep:	/usr/lib/libarchive.so	/usr/lib/libarchive.so
+# BuildDep:	/bin/sh	/bin/sh
+# BuildDep:	/bin/find	/bin/find
+# BuildDep:	/bin/sed	/bin/sed
+# BuildDep:	/bin/grep	/bin/grep
+# BuildDep:	/usr/lib/libudev.so	/usr/lib/libudev.so
+# BuildDep:	/usr/bin/file	/usr/bin/file
+# BuildDep:	/bin/gzip	/bin/gzip
+# BuildDep:	/usr/bin/xz	/usr/bin/xz
+# Dep(post):	/usr/bin/xz	/usr/bin/xz
+# Dep(post):	/bin/gzip	/bin/gzip
+# Dep(post):	/usr/bin/file	/usr/bin/file
+# Dep(post):	/usr/lib/libudev.so	/usr/lib/libudev.so
+# Dep(post):	/bin/grep	/bin/grep
+# Dep(post):	/bin/sed	/bin/sed
+# Dep(post):	/bin/find	/bin/find
+# Dep(post):	/bin/sh	/bin/sh
+# Dep(post):	/usr/lib/libarchive.so	/usr/lib/libarchive.so
+# Dep(post):	/usr/bin/kmod	/usr/bin/kmod
+# Dep(post):	/lib/initcpio/busybox	/lib/initcpio/busybox
+
+nbuild() {
+noemptyfuncs
+}
+
+ninstall() {
+pkgdir=/tmp/mkinitrd
+make -C . DESTDIR="$pkgdir" install
+cp -r $pkgdir/* /
+rm -r $pkgdir
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

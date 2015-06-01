@@ -1,0 +1,43 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	fceux
+# Version:	2.1.5
+# Release:	n06.2
+# License:	GPL
+# Group:	Games
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64 arm arm64 armel
+# Url:	http://fceux.com/web/home.html
+# Description:	A fast and ultra-compatible NES/Famicom emulator with SDL, OpenGL and SVGALIB support.
+# MD5:	e2a2036d92bde82bb406ae9d8d52e5ae  fceux-2.1.5.tar.xz
+
+
+# BuildDep:	/usr/lib/libSDL.so	/usr/lib/libSDL.so
+# BuildDep:	/usr/lib/liblua.so	/usr/lib/liblua.so
+# BuildDep:	/usr/lib/libgtk-x11-2.0.so	/usr/lib/libgtk-x11-2.0.so
+# OptionalBuildDep:	/usr/bin/scons	/usr/bin/scons
+# OptionalBuildDep:	/usr/lib/libGL.so	/usr/lib/libGL.so
+# OptionalDep(post):	/usr/lib/libGL.so	/usr/lib/libGL.so
+# OptionalDep(post):	/usr/lib/libgtk-x11-2.0.so	/usr/lib/libgtk-x11-2.0.so
+# OptionalDep(post):	/usr/lib/liblua.so	/usr/lib/liblua.so
+# OptionalDep(post):	/usr/lib/libSDL.so	/usr/lib/libSDL.so
+
+nbuild() {
+scons
+}
+
+ninstall() {
+sed -i "s|/usr/local|${pkgdir}/usr|" SConstruct
+scons install
+install -D -m644 bin/$pkgname.chm "/usr/share/doc/fceux/fceux.chm"
+install -D -m644 ../fceux.desktop /usr/share/applications/fceux.desktop
+install -D -m644 ../fceux.png /usr/share/pixmaps/fceux.png
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

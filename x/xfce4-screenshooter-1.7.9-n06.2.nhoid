@@ -1,0 +1,48 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	xfce4-screenshooter
+# Version:	1.7.9
+# Release:	n06.2
+# License:	GPLv2
+# Group:	XFCE Desktop
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64 arm arm64
+# Url:	http://goodies.xfce.org/projects/applications/xfce4-screenshooter
+# Description:	Plugin that makes screenshots for the Xfce4 panel.
+# MD5:	7a3ed1476b8884a8a4c4802b82118b78  xfce4-screenshooter-1.7.9.tar.xz
+
+
+# BuildDep:	/usr/lib/libxfce4panel-1.0.so	/usr/lib/libxfce4panel-1.0.so
+# BuildDep:	/usr/lib/libxfcegui4.so	/usr/lib/libxfcegui4.so
+# BuildDep:	/usr/lib/libxfce4ui-1.so	/usr/lib/libxfce4ui-1.so
+# BuildDep:	/usr/lib/libsoup-2.4.so	/usr/lib/libsoup-2.4.so
+# BuildDep:	/usr/share/icons/hicolor/index.theme	/usr/share/icons/hicolor/index.theme
+# Dep(post):	/usr/share/icons/hicolor/index.theme	/usr/share/icons/hicolor/index.theme
+# Dep(post):	/usr/lib/libsoup-2.4.so	/usr/lib/libsoup-2.4.so
+# Dep(post):	/usr/lib/libxfce4ui-1.so	/usr/lib/libxfce4ui-1.so
+# Dep(post):	/usr/lib/libxfcegui4.so	/usr/lib/libxfcegui4.so
+# Dep(post):	/usr/lib/libxfce4panel-1.0.so	/usr/lib/libxfce4panel-1.0.so
+
+nbuild() {
+patch -Np1 -i ../xfce4-screenshooter-1.7.9-dsofix.patch
+patch -Np1 -i ../fix_segfault.diff
+./configure --prefix=/usr \
+--sysconfdir=/etc \
+--libexecdir=/usr/lib \
+--localstatedir=/var \
+--disable-static \
+--disable-debug
+make
+}
+
+ninstall() {
+make install
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

@@ -1,0 +1,52 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	perl-sdl
+# Version:	2.531
+# Release:	n06.2
+# License:	LGPL
+# Group:	Multimedia
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64 arm arm64 armel
+# Url:	http://sdl.perl.org
+# Description:	Simple DirectMedia Layer for Perl.
+# MD5:	077aa741f45a3134db82c7e09318ec85  perl-sdl-2.531.tar.xz
+
+
+# BuildDep:	/usr/lib/perl5/vendor_perl/5.12.1/Alien/SDL.pm	/usr/lib/perl5/vendor_perl/5.12.1/Alien/SDL.pm
+# BuildDep:	/usr/lib/perl5/vendor_perl/5.12.1/Tie/Simple.pm	/usr/lib/perl5/vendor_perl/5.12.1/Tie/Simple.pm
+# BuildDep:	/usr/lib/libSDL_net.so	/usr/lib/libSDL_net.so
+# BuildDep:	/usr/lib/libSDL_ttf.so	/usr/lib/libSDL_ttf.so
+# BuildDep:	/usr/lib/libSDL_image.so	/usr/lib/libSDL_image.so
+# BuildDep:	/usr/lib/libSDL_mixer.so	/usr/lib/libSDL_mixer.so
+# BuildDep:	/usr/lib/libSDL_gfx.so	/usr/lib/libSDL_gfx.so
+# BuildDep:	/usr/lib/libSDL_Pango.so	/usr/lib/libSDL_Pango.so
+# BuildDep:	/usr/lib/libGL.so	/usr/lib/libGL.so
+# BuildDep:	/usr/lib/libsmpeg.so	/usr/lib/libsmpeg.so
+# Dep(post):	/usr/lib/libsmpeg.so	/usr/lib/libsmpeg.so
+# Dep(post):	/usr/lib/libGL.so	/usr/lib/libGL.so
+# Dep(post):	/usr/lib/libSDL_Pango.so	/usr/lib/libSDL_Pango.so
+# Dep(post):	/usr/lib/libSDL_gfx.so	/usr/lib/libSDL_gfx.so
+# Dep(post):	/usr/lib/libSDL_mixer.so	/usr/lib/libSDL_mixer.so
+# Dep(post):	/usr/lib/libSDL_image.so	/usr/lib/libSDL_image.so
+# Dep(post):	/usr/lib/libSDL_ttf.so	/usr/lib/libSDL_ttf.so
+# Dep(post):	/usr/lib/libSDL_net.so	/usr/lib/libSDL_net.so
+# Dep(post):	/usr/lib/perl5/vendor_perl/5.12.1/Tie/Simple.pm	/usr/lib/perl5/vendor_perl/5.12.1/Tie/Simple.pm
+# Dep(post):	/usr/lib/perl5/vendor_perl/5.12.1/Alien/SDL.pm	/usr/lib/perl5/vendor_perl/5.12.1/Alien/SDL.pm
+
+nbuild() {
+noemptyfuncs
+}
+
+ninstall() {
+perl Build.PL installdirs=vendor
+perl Build
+perl Build install
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

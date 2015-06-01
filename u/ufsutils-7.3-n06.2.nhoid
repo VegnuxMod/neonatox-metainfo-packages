@@ -1,0 +1,44 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	ufsutils
+# Version:	7.3
+# Release:	n06.2
+# License:	BSD
+# Group:	System
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64 arm armel arm64
+# Url:	http://packages.qa.debian.org/u/ufsutils.html
+# Description:	Utilities to manage the UFS filesystem, mostly used in BSD or derived operating systems. This include FFS, UFS and UFS2.
+# MD5:	9340ad7a16eea1405b0fce0669efb1a2  ufsutils-7.3.tar.xz
+
+
+# BuildDep:	/usr/lib/libbsd.so	/usr/lib/libbsd.so
+# BuildDep:	/usr/lib/libedit.so	/usr/lib/libedit.so
+# BuildDep:	/usr/lib/libtermcap.so	/usr/lib/libtermcap.so
+# BuildDep:	/usr/lib/libncurses.so	/usr/lib/libncurses.so
+# Dep(post):	/usr/lib/libncurses.so	/usr/lib/libncurses.so
+# Dep(post):	/usr/lib/libtermcap.so	/usr/lib/libtermcap.so
+# Dep(post):	/usr/lib/libedit.so	/usr/lib/libedit.so
+# Dep(post):	/usr/lib/libbsd.so	/usr/lib/libbsd.so
+
+nbuild() {
+patch -Np1 -i ../00_ufsutils-debian-patches.patch
+patch -Np1 -i ../01_ufsutils-fix_makefile.patch
+ln -svf ../freebsd/sys include/sys
+make
+}
+
+ninstall() {
+pkgdir=/tmp/ufs
+make DESTDIR=$pkgdir install
+cp -r $pkgdir/* /
+rm -r $pkgdir
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

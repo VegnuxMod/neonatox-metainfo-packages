@@ -1,0 +1,58 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sánchez <cargabsj175@gmail.com>
+
+# Name:	timidity++
+# Version:	2.13.1
+# Release:	n06.2
+# License:	GPL
+# Group:	Multimedia
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64
+# Url:	http://timidity.sourceforge.net
+# Description:	A MIDI to WAVE converter and player.
+# MD5:	d9fc184d5f19785d7d79cee50f5d2778  timidity++-2.13.1.tar.xz
+
+
+# BuildDep:	/usr/lib/libao.so	/usr/lib/libao.so
+# BuildDep:	/usr/lib/libvorbis.so	/usr/lib/libvorbis.so
+# BuildDep:	/usr/lib/libjack.so	/usr/lib/libjack.so
+# BuildDep:	/usr/lib/libncurses.so	/usr/lib/libncurses.so
+# BuildDep:	/usr/lib/libgtk-x11-2.0.so	/usr/lib/libgtk-x11-2.0.so
+# BuildDep:	/usr/share/timidity/freepats/freepats.cfg	/usr/share/timidity/freepats/freepats.cfg
+# Dep(post):	/usr/lib/libao.so	/usr/lib/libao.so
+# Dep(post):	/usr/lib/libvorbis.so	/usr/lib/libvorbis.so
+# Dep(post):	/usr/lib/libjack.so	/usr/lib/libjack.so
+# Dep(post):	/usr/lib/libncurses.so	/usr/lib/libncurses.so
+# Dep(post):	/usr/lib/libgtk-x11-2.0.so	/usr/lib/libgtk-x11-2.0.so
+# Dep(post):	/usr/share/timidity/freepats/freepats.cfg	/usr/share/timidity/freepats/freepats.cfg
+
+nbuild() {
+patch -p1 < ../2.13.2-gcc4.patch
+patch -p1 < ../TiMidity++-2.13.2+flac-1.1.3.patch
+patch -p1 < ../timidity++-2.13.2-exiterror.patch
+patch -p0 < ../timidity++-2.13.2-gtk26.patch
+patch -p0 < ../timidity++-2.13.2-polling.patch
+sed -i 's/tcl8.4/tcl8.5/' configure
+sed -i 's/tk8.4/tk8.5/' configure
+./configure --prefix=/usr --mandir=/usr/share/man --with-default-path=/etc/timidity++ \
+--enable-server --enable-alsaseq --enable-spectrogram \
+--enable-audio=alsa,oss,ao,vorbis,flac,esd,jack \
+--enable-dynamic=ncurses,gtk \
+--disable-gtktest
+make
+}
+
+ninstall() {
+make install
+install -D -m644 ../timidity.cfg "/etc/timidity++/timidity.cfg"
+install -D -m755 ../timidity-gtk "/usr/bin/timidity-gtk"
+install -D -m755 ../timidity.xpm "/usr/share/pixmaps/"
+install -D -m755 ../timidity++.desktop "/usr/share/applications/"
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

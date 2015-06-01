@@ -1,0 +1,164 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	openjdk6
+# Version:	20101602
+# Release:	n06.2
+# License:	GPL
+# Group:	Develop
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64 arm arm64 armel
+# Url:	http://icedtea.classpath.org
+# Description:	Free Java environment based on OpenJDK 6.0 with IcedTea6 replacing binary plugs.
+# MD5:	bab7645a56e22cfacda015ee63927f1d  openjdk6-20101602.tar.xz
+
+
+# BuildDep:	/usr/bin/xdg-desktop-menu	/usr/bin/xdg-desktop-menu
+# BuildDep:	/usr/share/icons/hicolor/index.theme	/usr/share/icons/hicolor/index.theme
+# BuildDep:	/usr/lib/libasound.so	/usr/lib/libasound.so
+# BuildDep:	/usr/lib/libgif.so	/usr/lib/libgif.so
+# BuildDep:	/usr/lib/libgailutil.so	/usr/lib/libgailutil.so
+# BuildDep:	/usr/lib/libgtk-x11-2.0.so	/usr/lib/libgtk-x11-2.0.so
+# BuildDep:	/usr/lib/pkgconfig/mozilla-nspr.pc	/usr/lib/pkgconfig/mozilla-nspr.pc
+# BuildDep:	/usr/lib/libz.so	/usr/lib/libz.so
+# BuildDep:	/usr/lib/libfreetype.so	/usr/lib/libfreetype.so
+# BuildDep:	/usr/lib/libjpeg.so	/usr/lib/libjpeg.so
+# BuildDep:	/usr/lib/libX11.so	/usr/lib/libX11.so
+# BuildDep:	/usr/lib/libXtst.so	/usr/lib/libXtst.so
+# BuildDep:	/usr/bin/unzip	/usr/bin/unzip
+# BuildDep:	/bin/cpio	/bin/cpio
+# BuildDep:	/usr/share/java/apache-ant/bin/ant	/usr/share/java/apache-ant/bin/ant
+# BuildDep:	/usr/share/java/xalan.jar	/usr/share/java/xalan.jar
+# BuildDep:	/usr/lib/libXp.so	/usr/lib/libXp.so
+# BuildDep:	/usr/lib/libcups.so	/usr/lib/libcups.so
+# BuildDep:	/usr/share/java/junit.jar	/usr/share/java/junit.jar
+# Dep(post):	/usr/lib/libXp.so	/usr/lib/libXp.so
+# Dep(post):	/usr/share/java/xalan.jar	/usr/share/java/xalan.jar
+# Dep(post):	/usr/share/java/apache-ant/bin/ant	/usr/share/java/apache-ant/bin/ant
+# Dep(post):	/usr/bin/unzip	/usr/bin/unzip
+# Dep(post):	/usr/lib/libXtst.so	/usr/lib/libXtst.so
+# Dep(post):	/usr/lib/libX11.so	/usr/lib/libX11.so
+# Dep(post):	/usr/lib/libjpeg.so	/usr/lib/libjpeg.so
+# Dep(post):	/usr/lib/libfreetype.so	/usr/lib/libfreetype.so
+# Dep(post):	/usr/lib/libz.so	/usr/lib/libz.so
+# Dep(post):	/usr/lib/pkgconfig/mozilla-nspr.pc	/usr/lib/pkgconfig/mozilla-nspr.pc
+# Dep(post):	/usr/lib/libgtk-x11-2.0.so	/usr/lib/libgtk-x11-2.0.so
+# Dep(post):	/usr/lib/libgailutil.so	/usr/lib/libgailutil.so
+# Dep(post):	/usr/lib/libgif.so	/usr/lib/libgif.so
+# Dep(post):	/usr/lib/libasound.so	/usr/lib/libasound.so
+# Dep(post):	/usr/share/icons/hicolor/index.theme	/usr/share/icons/hicolor/index.theme
+# Dep(post):	/usr/bin/xdg-desktop-menu	/usr/bin/xdg-desktop-menu
+# Dep(post):	/usr/lib/libcups.so	/usr/lib/libcups.so
+# Dep(post):	/usr/share/java/junit.jar	/usr/share/java/junit.jar
+
+nbuild() {
+tar xf ../icedtea6-1.8.tar.gz -C ../
+cp -r ../icedtea6-1.8/* .
+rm -r ../icedtea6-1.8
+mv ../jdk6-jaxp-2009_10_13.zip .
+mv ../jdk6-jaxws-2009_10_27.zip .
+mv ../jdk6-jaf-2009_10_27.zip .
+unset JAVA_HOME
+unset CLASSPATH
+export basedir=$(pwd)
+cd ${basedir}
+ln -sf ../openjdk-6-src-b18-16_feb_2010.tar.gz .
+ln -sf ../62926c7f67a3.tar.gz .
+ln -sf /usr/share/java/xalan.jar ./xalan-j2.jar
+ln -sf /usr/share/java/serializer.jar ./xalan-j2-serializer.jar
+ln -sf /usr/share/java/xercesImpl.jar ./xerces-j2.jar
+cp -r ../*.diff patches/
+cp -r ../linux.Makefile ${basedir}/openjdk/hotspot/make/linux/Makefile
+autoreconf -i
+. /etc/profile.d/apache-ant.sh
+export DISTRIBUTION_PATCHES="patches/fix_jdk_cmds_path.diff patches/aatext_by_default.diff patches/fontconfig-paths.diff patches/fix_corba_cmds_path.diff patches/nonreparenting-wm.diff"
+export ALT_PARALLEL_COMPILE_JOBS="${MAKEFLAGS/-j}"
+export HOTSPOT_BUILD_JOBS="${ALT_PARALLEL_COMPILE_JOBS}"
+export ARCH="$(uname -m)"
+unset MAKEFLAGS
+export 
+  if [ -x /usr/lib/jvm/java-6-openjdk/bin/javac ]; then
+    JCONF="--with-openjdk"
+  elif [ -x /opt/java/bin/javac ]; then
+    JCONF="--with-openjdk"
+      else
+    echo "No supported java installation found, install either openjdk6 or jdk"
+    return 1
+  fi
+./configure --with-parallel-jobs=${HOTSPOT_BUILD_JOBS} \
+--with-xalan2-jar=/usr/share/java/xalan.jar \
+--with-ant-home=/usr/share/java/apache-ant \
+--with-pkgversion="NeonatoX build 6.b18_1.8-${ARCH}" $JCONF \
+--with-hotspot-src-zip=../62926c7f67a3.tar.gz \
+--with-jaxp-drop-zip=../jdk6-jaxp-2009_10_13.zip \
+--with-jaxws-drop-zip=../jdk6-jaxws-2009_10_27.zip \
+--with-jaf-drop-zip=../jdk6-jaf-2009_10_27.zip
+# enlaces simbolicos necesarios solo para construir openjdk6
+ln -svf /bin/egrep /usr/bin/egrep
+ln -svf /bin/grep /usr/bin/grep
+ln -svf /bin/head /usr/bin/head
+ln -svf /bin/find /usr/bin/find
+ln -svf /usr/bin/tr /bin/tr
+ln -svf /usr/bin/touch /bin/touch
+ln -svf /usr/bin/cut /bin/cut
+ln -svf /usr/bin/gawk /bin/gawk
+LD_PRELOAD="" make
+}
+
+ninstall() {
+basedir=$(pwd)
+install -m755 -d /usr/lib/jvm/java-6-openjdk/jre
+cd ${basedir}/openjdk/build/linux-i586/j2sdk-image
+cp -a bin include lib /usr/lib/jvm/java-6-openjdk/
+cp -a jre/bin jre/lib /usr/lib/jvm/java-6-openjdk/jre/
+mv /usr/lib/jvm/java-6-openjdk/jre/lib/fontconfig.Ubuntu.properties.src /usr/lib/jvm/java-6-openjdk/jre/lib/fontconfig.properties.src
+mv /usr/lib/jvm/java-6-openjdk/jre/lib/fontconfig.Ubuntu.bfc /usr/lib/jvm/java-6-openjdk/jre/lib/fontconfig.bfc
+rm -f /usr/lib/jvm/java-6-openjdk/jre/lib/fontconfig.*.bfc
+rm -f /usr/lib/jvm/java-6-openjdk/jre/lib/fontconfig.*.properties.src
+# Install man pages.
+install -m755 -d /usr/share/man/man1
+install -m644 man/man1/*.1 /usr/share/man/man1/
+## Install demos and samples.
+# cp -a demo /usr/lib/jvm/java-6-openjdk/
+# install -m755 -d sample/rmi
+# mv bin/java-rmi.cgi sample/rmi
+# cp -a sample /usr/lib/jvm/java-6-openjdk/
+# cd ${basedir}
+# Install icons and menu entries.
+# for s in 16 24 32 48 ; do
+# install -m755 -d /usr/share/icons/hicolor/${s}x${s}/apps
+# install -m644 openjdk/jdk/src/solaris/classes/sun/awt/X11/java-icon${s}.png /usr/share/icons/hicolor/${s}x${s}/apps/java.png
+# done
+# Install desktop files.
+# install -m755 -d /usr/share/{applications,pixmaps}
+# install -m644 javaws.png /usr/share/pixmaps
+# install -m644 {javaws,jconsole,policytool}.desktop /usr/share/applications
+# link the mozilla-plugin - test it here http:/www.java.com/en/download/help/testvm.xml
+# install -m755 -d /usr/lib/mozilla/plugins/
+# ln -sf /usr/lib/jvm/java-6-openjdk/jre/lib/i386/IcedTeaPlugin.so /usr/lib/mozilla/plugins/
+# link binaries into /usr/bin
+# install -m755 -d /usr/bin
+# cd /usr/lib/jvm/java-6-openjdk/bin
+# for file in *; do
+# ln -sf /usr/lib/jvm/java-6-openjdk/bin/${file} /usr/bin
+# done
+cd ${basedir}
+rm -f /usr/lib/jvm/java-6-openjdk/jre/lib/security/cacerts
+ln -sf /etc/ssl/certs/java/cacerts /usr/lib/jvm/java-6-openjdk/jre/lib/security/cacerts
+install -m755 -d /etc/profile.d
+install -m755 ../openjdk6.profile /etc/profile.d/openjdk6.sh
+#cd ${basedir}
+#install -m755 -d /usr/lib/jvm/java-6-openjdk/jre
+#cd ${basedir}/openjdk/build/linux-i586/j2sdk-image
+#cp -a src.zip /usr/lib/jvm/java-6-openjdk/
+# dejamos todo como estaba
+rm -r /usr/bin/{egrep,grep,head,find}
+rm -r /bin/{tr,touch,cut,gawk}
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

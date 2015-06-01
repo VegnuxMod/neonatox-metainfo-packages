@@ -1,0 +1,50 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	pinentry
+# Version:	0.8.1
+# Release:	n06.2
+# License:	GPL
+# Group:	System
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64 arm arm64
+# Url:	http://www.gnupg.org/aegypten2
+# Description:	A collection of simple PIN or passphrase entry dialogs which utilize the Assuan protocol.
+# MD5:	a4653b21b8b8e01a2b1df25e0d51d40e  pinentry-0.8.1.tar.xz
+
+
+# BuildDep:	/usr/lib/libncurses.so	/usr/lib/libncurses.so
+# BuildDep:	/lib/libcap.so	/lib/libcap.so
+# BuildDep:	/usr/lib/libgtk-x11-2.0.so	/usr/lib/libgtk-x11-2.0.so
+# BuildDep:	/usr/lib/libQtCore.so	/usr/lib/libQtCore.so
+# Dep(post):	/usr/lib/libQtCore.so	/usr/lib/libQtCore.so
+# Dep(post):	/usr/lib/libgtk-x11-2.0.so	/usr/lib/libgtk-x11-2.0.so
+# Dep(post):	/lib/libcap.so	/lib/libcap.so
+# Dep(post):	/usr/lib/libncurses.so	/usr/lib/libncurses.so
+
+nbuild() {
+for file in qt4/*.moc; do
+/usr/bin/moc ${file/.moc/.h} > ${file}
+done
+./configure --prefix=/usr --enable-pinentry-curses \
+--enable-pinentry-gtk2 --enable-pinentry-qt4 \
+--enable-fallback-curses
+make
+}
+
+ninstall() {
+pkgdir=/tmp/pinentry
+make DESTDIR=${pkgdir} install
+rm ${pkgdir}/usr/share/info/dir
+rm ${pkgdir}/usr/bin/pinentry
+ln -sf pinentry-gtk-2 ${pkgdir}/usr/bin/pinentry
+cp -r ${pkgdir}/* /
+rm -r ${pkgdir}
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

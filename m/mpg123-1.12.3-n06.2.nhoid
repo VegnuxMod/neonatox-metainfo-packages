@@ -1,0 +1,37 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	mpg123
+# Version:	1.12.3
+# Release:	n06.2
+# License:	GPLv2 LGPLv2.1
+# Group:	Multimedia
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64 arm arm64
+# Url:	http://sourceforge.net/projects/mpg123
+# Description:	A console based real time MPEG Audio Player for Layer 1, 2 and 3.
+# MD5:	4ffed66b2d122a279f9e306636218b68  mpg123-1.12.3.tar.xz
+
+
+# BuildDep:	/usr/lib/libSDL.so	/usr/lib/libSDL.so
+# BuildDep:	/usr/lib/libasound.so	/usr/lib/libasound.so
+# BuildDep:	/usr/lib/libesd.so	/usr/lib/libesd.so
+# Dep(post):	/usr/lib/libesd.so	/usr/lib/libesd.so
+# Dep(post):	/usr/lib/libasound.so	/usr/lib/libasound.so
+# Dep(post):	/usr/lib/libSDL.so	/usr/lib/libSDL.so
+
+nbuild() {
+./configure --prefix=/usr --with-audio="alsa esd sdl"
+make
+}
+
+ninstall() {
+make install
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

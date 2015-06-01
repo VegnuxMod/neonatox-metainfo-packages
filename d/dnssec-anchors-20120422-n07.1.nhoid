@@ -1,0 +1,30 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	dnssec-anchors
+# Version:	20120422
+# Release:	n07.1
+# License:	custom
+# Group:	System
+# Arch:	any
+# Url:	http://data.iana.org/root-anchors/
+# Description:	DNSSEC trust anchors for the root zone.
+# MD5:	3222a72b65fc2073082968da97abb426  dnssec-anchors-20120422.tar.xz
+
+
+
+nbuild() {
+noemptyfuncs
+}
+
+ninstall() {
+install -Dm644 trusted-key.key /etc/trusted-key.key
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

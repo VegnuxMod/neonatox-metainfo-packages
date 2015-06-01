@@ -1,0 +1,34 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sánchez <cargabsj175@gmail.com>
+
+# Name:	libao
+# Version:	1.0.0
+# Release:	n06.2
+# License:	GPL
+# Group:	Multimedia
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64
+# Url:	http://www.xiph.org/ao
+# Description:	A cross-platform audio output library and plugins.
+# MD5:	7ae5d08c795200a55eed76fe75096d2e  libao-1.0.0.tar.xz
+
+
+# BuildDep:	/usr/lib/libasound.so	/usr/lib/libasound.so
+# Dep(post):	/usr/lib/libasound.so	/usr/lib/libasound.so
+
+nbuild() {
+./configure --prefix=/usr
+make
+}
+
+ninstall() {
+make install
+install -Dm0644 ../libao.conf /etc/libao.conf
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

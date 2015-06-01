@@ -1,0 +1,40 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	gksu
+# Version:	2.0.2
+# Release:	n06.2
+# License:	GPL
+# Group:	System
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64 arm arm64
+# Url:	http://www.nongnu.org/gksu/index.html
+# Description:	A graphical frontend for su.
+# MD5:	ae6c43cc3923300c972ce1149279db51  gksu-2.0.2.tar.xz
+
+
+# BuildDep:	/usr/lib/libgksu2.so	/usr/lib/libgksu2.so
+# Dep(post):	/usr/lib/libgksu2.so	/usr/lib/libgksu2.so
+
+nbuild() {
+sed -i -e 's|/usr/bin/x-terminal-emulator|-l terminal|g' gksu.desktop
+echo "TryExec=terminal" >> gksu.desktop
+libtoolize --force
+aclocal
+autoconf
+automake
+./configure --prefix=/usr --sysconfdir=/etc \
+--localstatedir=/var --disable-static --disable-nautilus-extension
+make
+}
+
+ninstall() {
+make install
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

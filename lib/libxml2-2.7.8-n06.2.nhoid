@@ -1,0 +1,50 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	libxml2
+# Version:	2.7.8
+# Release:	n06.2
+# License:	custom
+# Group:	Core System
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64 arm arm64 armel
+# Url:	http://xmlsoft.org/
+# Description:	The libxml2 package contains XML libraries. These are useful for parsing XML files.
+# MD5:	1380176c1dffe21a50b708f1fafc5675  libxml2-2.7.8.tar.xz
+
+
+# BuildDep:	/usr/bin/python	/usr/bin/python
+# BuildDep:	/usr/lib/libz.so	/usr/lib/libz.so
+# BuildDep:	/usr/lib/libncurses.so.5	/usr/lib/libncurses.so.5
+# BuildDep:	/usr/lib/libreadline.so	/usr/lib/libreadline.so
+# Dep(post):	/usr/bin/python	/usr/bin/python
+# Dep(post):	/usr/lib/libz.so	/usr/lib/libz.so
+# Dep(post):	/usr/lib/libncurses.so.5	/usr/lib/libncurses.so.5
+# Dep(post):	/usr/lib/libreadline.so	/usr/lib/libreadline.so
+
+nbuild() {
+patch -Np1 -i "../largefile64.patch"
+patch -Np1 -i "../shared_library_versionning.patch"
+patch -Np1 -i "../libxml2-2.7.8-xpath-freeing.patch"
+patch -Np1 -i "../libxml2-2.7.8-xpath-freeing2.patch"
+patch -Np1 -i "../CVE-2011-1944.patch"
+patch -Np1 -i "../libxml2-2.7.8-xpath-hardening.patch"
+patch -Np1 -i "../CVE-2011-0216.patch"
+patch -Np1 -i "../CVE-2011-2834.patch"
+patch -Np1 -i "../CVE-2011-3905.patch"
+patch -Np1 -i "../CVE-2011-3919.patch"
+autoreconf -fi
+./configure --prefix=/usr --with-threads --with-history 
+make
+}
+
+ninstall() {
+make install
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

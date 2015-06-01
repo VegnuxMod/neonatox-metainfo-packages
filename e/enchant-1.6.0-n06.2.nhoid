@@ -1,0 +1,40 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	enchant
+# Version:	1.6.0
+# Release:	n06.2
+# License:	LGPL
+# Group:	System
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64 arm arm64
+# Url:	http://www.abisource.com/enchant/
+# Description:	A wrapper library for generic spell checking.
+# MD5:	82140190e1d8482ac12fbe0cea74f500  enchant-1.6.0.tar.xz
+
+
+# BuildDep:	/usr/lib/libaspell.so	/usr/lib/libaspell.so
+# BuildDep:	/usr/lib/libdbus-glib-1.so	/usr/lib/libdbus-glib-1.so
+# BuildDep:	/usr/lib/libhunspell-1.2.so	/usr/lib/libhunspell-1.2.so
+# Dep(post):	/usr/lib/libhunspell-1.2.so	/usr/lib/libhunspell-1.2.so
+# Dep(post):	/usr/lib/libdbus-glib-1.so	/usr/lib/libdbus-glib-1.so
+# Dep(post):	/usr/lib/libaspell.so	/usr/lib/libaspell.so
+
+nbuild() {
+./configure --prefix=/usr \
+--disable-static \
+--disable-ispell \
+--with-myspell-dir=/usr/share/myspell
+make
+}
+
+ninstall() {
+make install
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

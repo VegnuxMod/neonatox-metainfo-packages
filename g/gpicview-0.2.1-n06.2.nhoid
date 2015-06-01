@@ -1,0 +1,35 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	gpicview
+# Version:	0.2.1
+# Release:	n06.2
+# License:	GPLv2
+# Group:	Graphics
+# Arch:	i486 i586 i686 x86_64 mips mip64 mipsel mip64el ppc ppc64
+# Url:	http://www.lxde.org/
+# Description:	GPicView is a GTK+ based picture viewer for LXDE and other environments.
+# MD5:	d8ccff604e8cb47400670a6a923a2575  gpicview-0.2.1.tar.xz
+
+
+# BuildDep:	/usr/lib/libgtk-x11-2.0.so	/usr/lib/libgtk-x11-2.0.so
+# BuildDep:	/usr/bin/pkg-config	/usr/bin/pkg-config
+# Dep(post):	/usr/lib/libgtk-x11-2.0.so	/usr/lib/libgtk-x11-2.0.so
+# Dep(post):	/usr/bin/pkg-config	/usr/bin/pkg-config
+
+nbuild() {
+./configure --prefix=/usr
+make
+}
+
+ninstall() {
+make install
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

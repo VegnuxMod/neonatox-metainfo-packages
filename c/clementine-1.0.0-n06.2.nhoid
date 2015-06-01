@@ -1,0 +1,58 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	clementine
+# Version:	1.0.0
+# Release:	n06.2
+# License:	GPLv3
+# Group:	Multimedia
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64 arm arm64 armel
+# Url:	http://code.google.com/p/clementine-player/
+# Description:	A modern music player and library organizer based on Amarok 1.4 and Qt4.
+# MD5:	687a8fb03be983c4352a35ecdea8dc8d  clementine-1.0.0.tar.xz
+
+
+# BuildDep:	/usr/lib/libboost_date_time-gcc44-mt.so	/usr/lib/libboost_date_time-gcc44-mt.so
+# BuildDep:	/usr/qt4/lib/libQtCore.so	/usr/qt4/lib/libQtCore.so
+# BuildDep:	/usr/lib/libgstsdp-0.10.so	/usr/lib/libgstsdp-0.10.so
+# BuildDep:	/usr/lib/libtag.so	/usr/lib/libtag.so
+# BuildDep:	/usr/lib/libnotify.so	/usr/lib/libnotify.so
+# BuildDep:	/usr/lib/liblastfm.so	/usr/lib/liblastfm.so
+# BuildDep:	/usr/lib/libGLEW.so	/usr/lib/libGLEW.so
+# BuildDep:	/usr/lib/libqjson.so	/usr/lib/libqjson.so
+# Dep(post):	/usr/lib/libboost_date_time-gcc44-mt.so	/usr/lib/libboost_date_time-gcc44-mt.so
+# Dep(post):	/usr/qt4/lib/libQtCore.so	/usr/qt4/lib/libQtCore.so
+# Dep(post):	/usr/lib/libgstsdp-0.10.so	/usr/lib/libgstsdp-0.10.so
+# Dep(post):	/usr/lib/libtag.so	/usr/lib/libtag.so
+# Dep(post):	/usr/lib/libnotify.so	/usr/lib/libnotify.so
+# Dep(post):	/usr/lib/liblastfm.so	/usr/lib/liblastfm.so
+# Dep(post):	/usr/lib/libGLEW.so	/usr/lib/libGLEW.so
+# Dep(post):	/usr/lib/libqjson.so	/usr/lib/libqjson.so
+
+nbuild() {
+#cmake . -DCMAKE_INSTALL_PREFIX=/usr \
+#-DCMAKE_BUILD_TYPE=Release \
+#-DSTATIC_SQLITE=0 \
+#-DGLEW_INCLUDE_DIRS=/usr/include/GL
+cmake . -DCMAKE_INSTALL_PREFIX=/usr -DCMAKE_BUILD_TYPE=Release -DENABLE_REMOTE=ON
+make
+}
+
+ninstall() {
+make DESTDIR=/tmp/clementine install
+cd ${DESTDIR}/usr/share/clementine/projectm-presets
+for i in *; do
+   nuevo=`echo $i | sed -s 's/\ //g'`;
+   mv "${i}" ${nuevo};
+done
+cp -r /tmp/clementine/* /
+rm -r /tmp/clementine
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

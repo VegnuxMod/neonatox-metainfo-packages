@@ -1,0 +1,39 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	neonatox-theme
+# Version:	0.1
+# Release:	n06.2
+# License:	GPLv3
+# Group:	Neonatox Desktop
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64 arm arm64
+# Url:	http://www.gmail.com
+# Description:	Neonatox Artistic theme :).
+# MD5:	f4998f12d0bcccbf7761a4a4bdb67794  neonatox-theme-0.1.tar.xz
+
+
+
+nbuild() {
+noemptyfuncs
+}
+
+ninstall() {
+make install
+list=$(ls src/wallpapers/*)
+list=$(echo $list | sed "s:src/wallpapers/::g")
+for linking in ${list}
+do
+	ln -sf ../../wallpapers/neonatox/${linking} /usr/share/pixmaps/backgrounds/${linking}
+	ln -sf ../../wallpapers/neonatox/${linking} /usr/share/xfce4/backdrops/${linking}
+	ln -sf ../wallpapers/neonatox/${linking} /usr/share/backgrounds/${linking}
+done
+cp -r {THANKS,COPYING} ${DESTDIR}/usr/share/doc/neonatox-theme
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

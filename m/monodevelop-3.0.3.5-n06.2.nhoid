@@ -1,0 +1,44 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	monodevelop
+# Version:	3.0.3.5
+# Release:	n06.2
+# License:	GPL
+# Group:	Programming
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64 arm arm64 armel
+# Url:	http://www.monodevelop.com
+# Description:	An IDE primarily designed for C# and other .NET languages.
+# MD5:	62e200dd42265ffad85e6f9843fbdf6d  monodevelop-3.0.3.5.tar.xz
+
+
+# BuildDep:	/usr/lib/libmono-2.0.so	/usr/lib/libmono-2.0.so
+# BuildDep:	/usr/lib/libgnomesharpglue-2.so	/usr/lib/libgnomesharpglue-2.so
+# BuildDep:	/usr/bin/update-desktop-database	/usr/bin/update-desktop-database
+# BuildDep:	/usr/share/icons/hicolor/index.theme	/usr/share/icons/hicolor/index.theme
+# BuildDep:	/usr/lib/mono/mono-addins/Mono.Addins.dll	/usr/lib/mono/mono-addins/Mono.Addins.dll
+# Dep(post):	/usr/lib/mono/mono-addins/Mono.Addins.dll	/usr/lib/mono/mono-addins/Mono.Addins.dll
+# Dep(post):	/usr/share/icons/hicolor/index.theme	/usr/share/icons/hicolor/index.theme
+# Dep(post):	/usr/bin/update-desktop-database	/usr/bin/update-desktop-database
+# Dep(post):	/usr/lib/libgnomesharpglue-2.so	/usr/lib/libgnomesharpglue-2.so
+# Dep(post):	/usr/lib/libmono-2.0.so	/usr/lib/libmono-2.0.so
+
+nbuild() {
+export MONO_SHARED_DIR=$(pwd)/.wabi
+mkdir -p $MONO_SHARED_DIR
+patch -Np0 -i ../monodevelop-core-addins.pc.in.patch
+./configure --prefix=/usr --disable-update-mimedb --disable-update-desktopdb
+LD_PRELOAD="" make
+}
+
+ninstall() {
+LD_PRELOAD="" make  install
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

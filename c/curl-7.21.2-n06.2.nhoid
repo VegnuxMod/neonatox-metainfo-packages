@@ -1,0 +1,56 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sánchez <cargabsj175@gmail.com>
+
+# Name:	curl
+# Version:	7.21.2
+# Release:	n06.2
+# License:	MIT
+# Group:	Networking
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64
+# Url:	http://curl.haxx.se
+# Description:	An URL retrival utility and library.
+# MD5:	630cc3156647739785ee9dd2bd833f8c  curl-7.21.2.tar.xz
+
+
+# BuildDep:	/usr/lib/libz.so	/usr/lib/libz.so
+# BuildDep:	/usr/lib/libssl.so	/usr/lib/libssl.so
+# BuildDep:	/bin/bash	/bin/bash
+# Dep(post):	/bin/bash	/bin/bash
+# Dep(post):	/usr/lib/libssl.so	/usr/lib/libssl.so
+# Dep(post):	/usr/lib/libz.so	/usr/lib/libz.so
+
+nbuild() {
+./configure \
+--with-random=/dev/urandom \
+--prefix=/usr \
+--mandir=/usr/share/man \
+--disable-dependency-tracking \
+--enable-ipv6 \
+--disable-ldaps \
+--disable-ldap \
+--enable-manual \
+--enable-versioned-symbols \
+--with-ca-path=/etc/ssl/certs \
+--without-libidn
+make
+}
+
+ninstall() {
+make install
+install -Dm644 docs/libcurl/libcurl.m4 /usr/share/aclocal/libcurl.m4
+if [ $(uname -m) = i686 ]; then
+mv "/usr/include/curl/curlbuild.h" "/usr/include/curl/curlbuild-32.h"
+install -m 644 ../curlbuild.h "/usr/include/curl/curlbuild.h"
+else
+mv "/usr/include/curl/curlbuild.h" "/usr/include/curl/curlbuild-64.h"
+install -m 644 ../curlbuild.h "/usr/include/curl/curlbuild.h"
+fi
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

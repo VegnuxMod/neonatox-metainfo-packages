@@ -1,0 +1,88 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	gcc4
+# Version:	4.5.1
+# Release:	n06.2
+# License:	GPLv3
+# Group:	Programming
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64 arm arm64 armel
+# Url:	http://gcc.gnu.org
+# Description:	The GNU Compiler Collection - C and C++ frontends.
+# MD5:	d650b0ab9842d4aefd7c6aa5c5f6bf66  gcc4-4.5.1.tar.xz
+
+
+
+nbuild() {
+./build.gcc
+}
+
+ninstall() {
+_basedir=/usr/src/nhopkg/gcc-4.5.1
+pkgver="4.5.1"
+CHOST=$(uname -m)-pc-linux-gnu
+pkgdir="/tmp/gcc"
+make -j1 DESTDIR=${pkgdir} install
+install -d ${pkgdir}/usr/share/gdb/auto-load
+mv ${pkgdir}/usr/{lib/libstdc++.so.6.0.17-gdb.py,share/gdb/auto-load}
+# unfortunately it is much, much easier to install the lot and clean-up the mess...
+rm ${pkgdir}/usr/bin/{{${CHOST}-,}gfortran,{${CHOST}-,}gccgo,gnat*}
+rm ${pkgdir}/usr/lib/*.so*
+rm ${pkgdir}/usr/lib/lib{ffi,gfortran,go{,begin},objc,quadmath}.a
+rm ${pkgdir}/usr/lib/libgfortran.spec
+rm -r ${pkgdir}/usr/lib/gcc/${CHOST}/${pkgver}/{ada{include,lib},finclude,include/objc}
+rm ${pkgdir}/usr/lib/gcc/${CHOST}/${pkgver}/include/{ffi{,target}.h,quadmath{,_weak}.h}
+rm ${pkgdir}/usr/lib/gcc/${CHOST}/${pkgver}/{cc1obj{,plus},f951,gnat1,go1}
+rm ${pkgdir}/usr/lib/gcc/${CHOST}/${pkgver}/{libcaf_single,libgfortranbegin}.a
+rm -r ${pkgdir}/usr/lib/go
+rm ${pkgdir}/usr/share/info/{gccgo,gfortran,gnat*,libgomp,libquadmath,libitm}.info
+rm ${pkgdir}/usr/share/locale/{de,fr}/LC_MESSAGES/libstdc++.mo
+rm ${pkgdir}/usr/share/man/man1/{gccgo,gfortran}.1
+rm ${pkgdir}/usr/share/man/man3/ffi*
+# many packages require these symlinks
+install -dm755 ${pkgdir}/lib
+ln -s /usr/bin/cpp ${pkgdir}/lib/cpp
+ln -s gcc ${pkgdir}/usr/bin/cc
+# POSIX conformance launcher scripts for c89 and c99
+cat > ${pkgdir}/usr/bin/c89 <<"EOF"
+#!/bin/sh
+fl="-std=c89"
+for opt; do
+  case "$opt" in
+    -ansi|-std=c89|-std=iso9899:1990) fl="";;
+    -std=*) echo "`basename $0` called with non ANSI/ISO C option $opt" >&2
+	    exit 1;;
+  esac
+done
+exec gcc $fl ${1+"$@"}
+EOF
+
+cat > ${pkgdir}/usr/bin/c99 <<"EOF"
+#!/bin/sh
+fl="-std=c99"
+for opt; do
+  case "$opt" in
+    -std=c99|-std=iso9899:1999) fl="";;
+    -std=*) echo "`basename $0` called with non ISO C99 option $opt" >&2
+	    exit 1;;
+  esac
+done
+exec gcc $fl ${1+"$@"}
+EOF
+chmod 755 ${pkgdir}/usr/bin/c{8,9}9
+# install the libstdc++ man pages
+install -dm755 ${pkgdir}/usr/share/man/man3
+install -m644 man/man3/* ${pkgdir}/usr/share/man/man3/
+# Install Runtime Library Exception
+install -Dm644 ${_basedir}/COPYING.RUNTIME ${pkgdir}/usr/share/licenses/gcc/RUNTIME.LIBRARY.EXCEPTION
+cp -r ${pkgdir}/* /
+rm -r ${pkgdir}
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

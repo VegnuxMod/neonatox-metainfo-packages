@@ -1,0 +1,41 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sánchez <cargabsj175@gmail.com>
+
+# Name:	mupen64plus
+# Version:	1.99.4
+# Release:	n06
+# License:	GPLv2
+# Group:	Games
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64
+# Url:	http://code.google.com/p/mupen64plus/
+# Description:	Nintendo64 Emulator.
+# MD5:	9abe0e49b57ebc0e0efed0522eba5473  mupen64plus-1.99.4.tar.xz
+
+
+# BuildDep:	/usr/lib/libGL.so	/usr/lib/libGL.so
+# BuildDep:	/usr/lib/libsamplerate.so	/usr/lib/libsamplerate.so
+# BuildDep:	/usr/lib/libpng.so	/usr/lib/libpng.so
+# BuildDep:	/usr/lib/libSDL.so	/usr/lib/libSDL.so
+# BuildDep:	/usr/lib/libfreetype.so	/usr/lib/libfreetype.so
+# Dep(post):	/usr/lib/libfreetype.so	/usr/lib/libfreetype.so
+# Dep(post):	/usr/lib/libSDL.so	/usr/lib/libSDL.so
+# Dep(post):	/usr/lib/libpng.so	/usr/lib/libpng.so
+# Dep(post):	/usr/lib/libsamplerate.so	/usr/lib/libsamplerate.so
+# Dep(post):	/usr/lib/libGL.so	/usr/lib/libGL.so
+
+nbuild() {
+patch -Np1 -i ../mupen64plus-extraplugins-1.99.4.patch
+./m64p_build.sh
+}
+
+ninstall() {
+./m64p_install.sh PREFIX='/usr' MANDIR='/usr/share/man' LDCONFIG='true'
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

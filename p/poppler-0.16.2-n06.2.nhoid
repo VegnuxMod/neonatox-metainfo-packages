@@ -1,0 +1,53 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	poppler
+# Version:	0.16.2
+# Release:	n06.2
+# License:	GPL
+# Group:	System
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64 arm arm64
+# Url:	http://poppler.freedesktop.org/
+# Description:	PDF rendering library based on xpdf 3.0.
+# MD5:	b8de984be1ca9a47eade084d0d72b952  poppler-0.16.2.tar.xz
+
+
+# BuildDep:	/usr/lib/libjpeg.so	/usr/lib/libjpeg.so
+# BuildDep:	/usr/lib/libcairo.so	/usr/lib/libcairo.so
+# BuildDep:	/usr/lib/libxml2.so	/usr/lib/libxml2.so
+# BuildDep:	/usr/lib/libfontconfig.so	/usr/lib/libfontconfig.so
+# BuildDep:	/usr/lib/libgtk-x11-2.0.so	/usr/lib/libgtk-x11-2.0.so
+# BuildDep:	/usr/lib/libQtCore.so	/usr/lib/libQtCore.so
+# BuildDep:	/usr/lib/liblcms.so	/usr/lib/liblcms.so
+# BuildDep:	/usr/share/poppler/unicodeMap/Latin2	/usr/share/poppler/unicodeMap/Latin2
+# Dep(post):	/usr/share/poppler/unicodeMap/Latin2	/usr/share/poppler/unicodeMap/Latin2
+# Dep(post):	/usr/lib/liblcms.so	/usr/lib/liblcms.so
+# Dep(post):	/usr/lib/libQtCore.so	/usr/lib/libQtCore.so
+# Dep(post):	/usr/lib/libgtk-x11-2.0.so	/usr/lib/libgtk-x11-2.0.so
+# Dep(post):	/usr/lib/libfontconfig.so	/usr/lib/libfontconfig.so
+# Dep(post):	/usr/lib/libxml2.so	/usr/lib/libxml2.so
+# Dep(post):	/usr/lib/libcairo.so	/usr/lib/libcairo.so
+# Dep(post):	/usr/lib/libjpeg.so	/usr/lib/libjpeg.so
+
+nbuild() {
+./configure --prefix=/usr --sysconfdir=/etc \
+--localstatedir=/var --disable-static \
+--enable-cairo-output \
+--enable-xpdf-headers \
+--enable-libjpeg --enable-zlib \
+--enable-poppler-qt4 \
+--enable-poppler-glib
+make
+}
+
+ninstall() {
+make install
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

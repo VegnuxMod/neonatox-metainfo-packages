@@ -1,0 +1,31 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <carlos@gmail.com>
+
+# Name:	nasm
+# Version:	2.05.01
+# Release:	n06.2
+# License:	LGPL
+# Group:	System
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64
+# Url:	http://www.nasm.us/
+# Description:	80x86 assembler designed for portability and modularity.
+# MD5:	70e2c88fc6badd120ac5ef3bd8abc2c1  nasm-2.05.01.tar.xz
+
+
+
+nbuild() {
+./configure --prefix=/usr
+make
+}
+
+ninstall() {
+make install
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

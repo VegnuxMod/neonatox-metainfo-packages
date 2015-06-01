@@ -1,0 +1,70 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	irrlicht
+# Version:	1.7.2
+# Release:	n06.2
+# License:	ZLIB
+# Group:	System
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64 arm arm64
+# Url:	http://irrlicht.sourceforge.net/
+# Description:	An open source high performance realtime 3D graphics engine.
+# MD5:	156cc072f90545589cb482e79157727f  irrlicht-1.7.2.tar.xz
+
+
+# BuildDep:	/usr/lib/libGL.so	/usr/lib/libGL.so
+# BuildDep:	/usr/lib/libjpeg.so	/usr/lib/libjpeg.so
+# Dep(post):	/usr/lib/libjpeg.so	/usr/lib/libjpeg.so
+# Dep(post):	/usr/lib/libGL.so	/usr/lib/libGL.so
+
+nbuild() {
+noemptyfuncs
+}
+
+ninstall() {
+pkgdir=/tmp/irrlicht
+sed -i -e '/^#.*NON_SYSTEM_ZLIB/d' \
+-e '/^#.*NON_SYSTEM_JPEG/d' \
+-e '/^#.*NON_SYSTEM_BZLIB/d' \
+include/IrrCompileConfig.h
+cd source/Irrlicht
+sed -i -e '/^CXXFLAGS/s:-g.*::' \
+-e '/^CXXFLAGS/s:-Wall::' \
+-e '/^CFLAGS/s/:= -O3 -fexpensive-optimizations/+=/' \
+-e '/^CXXINCS/s:-Izlib -Ijpeglib::' \
+-e '/^ZLIBOBJ/d' \
+-e '/^JPEGLIBOBJ/d' \
+-e '/^BZIP2OBJ/d' \
+-e '/.o=.d/d' \
+-e '/^sharedlib: LDFLAGS/s:+=:+= -lGL -lXxf86vm -ljpeg -lbz2 -lz:' \
+-e "/^INSTALL_DIR/s:=.*:=$pkgdir/usr/lib:" \
+-e 's/0-SVN/1/' \
+-e 's/.$(VERSION_MINOR) -o/ -o/' \
+Makefile
+make sharedlib
+make
+install -d $pkgdir/usr/lib $pkgdir/usr/share/licenses/irrlicht $pkgdir/usr/share/irrlicht/examples/bin $pkgdir/usr/share/doc/irrlicht
+make install
+cd ../../
+install -m644 lib/Linux/libIrrlicht.a $pkgdir/usr/lib
+chmod 644 $pkgdir/usr/include/irrlicht/*
+cp -r media $pkgdir/usr/share/irrlicht
+cd examples
+sed -i '/define USE_IRRKLANG/s:.*://&:' ./Demo/CDemo.h
+sed -i '/^CXXFLAGS/d' $(grep -Rl "^CXXFLAGS =" *)
+make
+install -m755  ../bin/Linux/* $pkgdir/usr/share/irrlicht/examples/bin/
+cd $pkgdir/usr/lib
+ln -s libIrrlicht.so.1.7.2 libIrrlicht.so.1
+ln -s libIrrlicht.so.1.7.2 libIrrlicht.so
+cp -r $pkgdir/* /
+rm -r $pkgdir
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

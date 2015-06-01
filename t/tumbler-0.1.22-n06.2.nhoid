@@ -1,0 +1,48 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	tumbler
+# Version:	0.1.22
+# Release:	n06.2
+# License:	GPLv2 LGPL
+# Group:	XFCE Desktop
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64 arm arm64
+# Url:	http://git.xfce.org/xfce/tumbler/
+# Description:	D-Bus service for applications to request thumbnails.
+# MD5:	eafa5ad57989f0164419be2980e1258c  tumbler-0.1.22.tar.xz
+
+
+# BuildDep:	/usr/lib/libpoppler.so	/usr/lib/libpoppler.so
+# BuildDep:	/usr/lib/libdbus-glib-1.so	/usr/lib/libdbus-glib-1.so
+# BuildDep:	/bin/bzip2	/bin/bzip2
+# BuildDep:	/usr/lib/libgdk_pixbuf-2.0.so	/usr/lib/libgdk_pixbuf-2.0.so
+# BuildDep:	/usr/bin/ffmpegthumbnailer	/usr/bin/ffmpegthumbnailer
+# BuildDep:	/usr/lib/libgstreamer-0.10.so	/usr/lib/libgstreamer-0.10.so
+# Dep(post):	/usr/lib/libgstreamer-0.10.so	/usr/lib/libgstreamer-0.10.so
+# Dep(post):	/usr/bin/ffmpegthumbnailer	/usr/bin/ffmpegthumbnailer
+# Dep(post):	/usr/lib/libgdk_pixbuf-2.0.so	/usr/lib/libgdk_pixbuf-2.0.so
+# Dep(post):	/bin/bzip2	/bin/bzip2
+# Dep(post):	/usr/lib/libdbus-glib-1.so	/usr/lib/libdbus-glib-1.so
+# Dep(post):	/usr/lib/libpoppler.so	/usr/lib/libpoppler.so
+
+nbuild() {
+patch -Np1 -i ../fix-video-image.patch
+./configure --prefix=/usr \
+--sysconfdir=/etc \
+--libexecdir=/usr/lib/xfce4 \
+--disable-static \
+--disable-debug
+make
+}
+
+ninstall() {
+make install
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

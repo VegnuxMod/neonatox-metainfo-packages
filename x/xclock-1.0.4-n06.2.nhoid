@@ -1,0 +1,41 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sánchez <cargabsj175@gmail.com>
+
+# Name:	xclock
+# Version:	1.0.4
+# Release:	n06.2
+# License:	X11 license
+# Group:	X Window System
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64
+# Url:	http://www.x.org/wiki
+# Description:	X clock.
+# MD5:	c39718f3571125e590e2f5dcf2fe35cd  xclock-1.0.4.tar.xz
+
+
+# BuildDep:	/usr/lib/libX11.so	/usr/lib/libX11.so
+# BuildDep:	/usr/lib/libXrender.so	/usr/lib/libXrender.so
+# BuildDep:	/usr/lib/libXft.so	/usr/lib/libXft.so
+# BuildDep:	/usr/lib/libxkbfile.so	/usr/lib/libxkbfile.so
+# BuildDep:	/usr/lib/libXaw.so	/usr/lib/libXaw.so
+# Dep(post):	/usr/lib/libXaw.so	/usr/lib/libXaw.so
+# Dep(post):	/usr/lib/libxkbfile.so	/usr/lib/libxkbfile.so
+# Dep(post):	/usr/lib/libXft.so	/usr/lib/libXft.so
+# Dep(post):	/usr/lib/libXrender.so	/usr/lib/libXrender.so
+# Dep(post):	/usr/lib/libX11.so	/usr/lib/libX11.so
+
+nbuild() {
+./configure --prefix=/usr --sysconfdir=/etc --mandir=/usr/share/man --localstatedir=/var
+make
+}
+
+ninstall() {
+make install
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

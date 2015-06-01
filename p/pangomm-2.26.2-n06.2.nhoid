@@ -1,0 +1,37 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	pangomm
+# Version:	2.26.2
+# Release:	n06.2
+# License:	LGPL
+# Group:	Graphic Library
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64 arm arm64
+# Url:	http://gtkmm.sourceforge.net/
+# Description:	C++ bindings for pango.
+# MD5:	5cc1942c1e8205fd5d997d3c686b5c08  pangomm-2.26.2.tar.xz
+
+
+# BuildDep:	/usr/lib/libpango-1.0.so	/usr/lib/libpango-1.0.so
+# BuildDep:	/usr/lib/libglibmm-2.4.so	/usr/lib/libglibmm-2.4.so
+# BuildDep:	/usr/lib/libcairomm-1.0.so	/usr/lib/libcairomm-1.0.so
+# Dep(post):	/usr/lib/libcairomm-1.0.so	/usr/lib/libcairomm-1.0.so
+# Dep(post):	/usr/lib/libglibmm-2.4.so	/usr/lib/libglibmm-2.4.so
+# Dep(post):	/usr/lib/libpango-1.0.so	/usr/lib/libpango-1.0.so
+
+nbuild() {
+./configure --prefix=/usr --disable-documentation
+make
+}
+
+ninstall() {
+make install
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

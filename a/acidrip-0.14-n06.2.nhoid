@@ -1,0 +1,49 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	acidrip
+# Version:	0.14
+# Release:	n06.2
+# License:	GPL
+# Group:	Multimedia
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64 arm arm64 armel
+# Url:	http://untrepid.com/acidrip/
+# Description:	A Gtk2::Perl application for ripping and encoding DVD's.
+# MD5:	5bc73aae88f942e8997e634829cba21b  acidrip-0.14.tar.xz
+
+
+# BuildDep:	/usr/bin/mplayer	/usr/bin/mplayer
+# BuildDep:	/usr/bin/lsdvd	/usr/bin/lsdvd
+# BuildDep:	/usr/lib/libmp3lame.so	/usr/lib/libmp3lame.so
+# BuildDep:	/usr/lib/libdvdcss.so	/usr/lib/libdvdcss.so
+# BuildDep:	/usr/lib/perl5/vendor_perl/5.12.1/i686-linux/Gtk2.pm	/usr/lib/perl5/vendor_perl/5.12.1/i686-linux/Gtk2.pm
+# BuildDep:	/usr/bin/perl	/usr/bin/perl
+# BuildDep:	/usr/bin/mencoder	/usr/bin/mencoder
+# Dep(post):	/usr/bin/mencoder	/usr/bin/mencoder
+# Dep(post):	/usr/bin/perl	/usr/bin/perl
+# Dep(post):	/usr/lib/perl5/vendor_perl/5.12.1/i686-linux/Gtk2.pm	/usr/lib/perl5/vendor_perl/5.12.1/i686-linux/Gtk2.pm
+# Dep(post):	/usr/lib/libdvdcss.so	/usr/lib/libdvdcss.so
+# Dep(post):	/usr/lib/libmp3lame.so	/usr/lib/libmp3lame.so
+# Dep(post):	/usr/bin/lsdvd	/usr/bin/lsdvd
+# Dep(post):	/usr/bin/mplayer	/usr/bin/mplayer
+
+nbuild() {
+patch -Np1 -i ../crop-fixes.patch
+patch -Np1 -i ../xvidencopts.patch
+perl Makefile.PL INSTALLDIRS=vendor INSTALLVENDORSCRIPT=/usr/bin
+make
+}
+
+ninstall() {
+make install
+install -Dm644 ../acidrip.png /usr/share/pixmaps/acidrip.png
+install -Dm644 ../acidrip.desktop /usr/share/applications/acidrip.desktop
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

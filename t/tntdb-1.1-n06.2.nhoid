@@ -1,0 +1,37 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	tntdb
+# Version:	1.1
+# Release:	n06.2
+# License:	LGPL
+# Group:	System
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64 arm arm64
+# Url:	http://www.tntnet.org/index.html
+# Description:	Tntdb is a c++-class-library for easy access to databases.
+# MD5:	17371b9d0fec40e129046fcca0df8aca  tntdb-1.1.tar.xz
+
+
+# BuildDep:	/usr/lib/libcxxtools.so	/usr/lib/libcxxtools.so
+# BuildDep:	/usr/lib/libtntnet.so	/usr/lib/libtntnet.so
+# BuildDep:	/usr/bin/psql	/usr/bin/psql
+# Dep(post):	/usr/lib/libgnutls.so	/usr/lib/libgnutls.so
+# Dep(post):	/usr/lib/libtntnet.so	/usr/lib/libtntnet.so
+# Dep(post):	/usr/bin/psql	/usr/bin/psql
+
+nbuild() {
+./configure --prefix=/usr --sysconfdir=/etc --without-mysql --without-doxygen
+make
+}
+
+ninstall() {
+make install
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

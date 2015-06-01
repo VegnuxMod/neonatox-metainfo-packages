@@ -1,0 +1,45 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	gucharmap
+# Version:	2.32.1
+# Release:	n06.2
+# License:	GPL
+# Group:	Gnome Desktop
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64 arm arm64
+# Url:	http://www.gnome.org
+# Description:	Gnome Unicode Charmap.
+# MD5:	8166c926c287922a009c42a9f8569223  gucharmap-2.32.1.tar.xz
+
+
+# BuildDep:	/usr/lib/libgconf-2.so	/usr/lib/libgconf-2.so
+# BuildDep:	/usr/share/icons/hicolor/index.theme	/usr/share/icons/hicolor/index.theme
+# BuildDep:	/usr/bin/gnome-doc-tool	/usr/bin/gnome-doc-tool
+# Dep(post):	/usr/bin/gnome-doc-tool	/usr/bin/gnome-doc-tool
+# Dep(post):	/usr/share/icons/hicolor/index.theme	/usr/share/icons/hicolor/index.theme
+# Dep(post):	/usr/lib/libgconf-2.so	/usr/lib/libgconf-2.so
+
+nbuild() {
+./configure --prefix=/usr --sysconfdir=/etc \
+--localstatedir=/var --disable-static \
+--disable-scrollkeeper
+make
+}
+
+ninstall() {
+pkgdir=/tmp/gucharmap
+make -j1 GCONF_DISABLE_MAKEFILE_SCHEMA_INSTALL=1 DESTDIR="${pkgdir}" install
+install -m755 -d "${pkgdir}/usr/share/gconf/schemas"
+gconf-merge-schema "${pkgdir}/usr/share/gconf/schemas/${pkgname}.schemas" --domain gucharmap ${pkgdir}/etc/gconf/schemas/*.schemas
+rm -f ${pkgdir}/etc/gconf/schemas/*.schemas
+cp -r ${pkgdir}/* /
+rm -r ${pkgdir}
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

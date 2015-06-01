@@ -1,0 +1,31 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	beanshell
+# Version:	2.0b4
+# Release:	n06.2
+# License:	LGPL
+# Group:	Programming
+# Arch:	any
+# Url:	http://www.beanshell.org/home.html
+# Description:	Small, free, embeddable, source level Java interpreter with object based scripting language features written in Java.
+# MD5:	c3107f07477197a0142c51661b01ef86  beanshell-2.0b4.tar.xz
+
+
+
+nbuild() {
+noemptyfuncs
+}
+
+ninstall() {
+install -m755 -d /usr/share/java/
+install -D -m644 bsh-2.0b4.jar /usr/share/java/bsh.jar
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

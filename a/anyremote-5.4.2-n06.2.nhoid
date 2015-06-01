@@ -1,0 +1,37 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	anyremote
+# Version:	5.4.2
+# Release:	n06.2
+# License:	GPL
+# Group:	System
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64 arm arm64
+# Url:	http://anyremote.sourceforge.net
+# Description:	Remote control (console-oriented) through bluetooth or IR connection.
+# MD5:	cf6677556377846907fa9ad361ca5fb6  anyremote-5.4.2.tar.xz
+
+
+# BuildDep:	/usr/lib/libbluetooth.so	/usr/lib/libbluetooth.so
+# BuildDep:	/usr/lib/libdbus-glib-1.so	/usr/lib/libdbus-glib-1.so
+# BuildDep:	/usr/lib/libxslt.so	/usr/lib/libxslt.so
+# Dep(post):	/usr/lib/libxslt.so	/usr/lib/libxslt.so
+# Dep(post):	/usr/lib/libdbus-glib-1.so	/usr/lib/libdbus-glib-1.so
+# Dep(post):	/usr/lib/libbluetooth.so	/usr/lib/libbluetooth.so
+
+nbuild() {
+./configure --prefix=/usr
+make
+}
+
+ninstall() {
+make install
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

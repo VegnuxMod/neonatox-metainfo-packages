@@ -1,0 +1,32 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	rpcbind
+# Version:	0.2.0
+# Release:	n06.2
+# License:	custom
+# Group:	Networking
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64 arm armel arm64
+# Url:	http://rpcbind.sourceforge.net
+# Description:	Portmap replacement which supports RPC over various protocols.
+# MD5:	56a32dce3680143c115d5c89e3db29ce  rpcbind-0.2.0.tar.xz
+
+
+
+nbuild() {
+patch -Np1 -i ../rpcbind-sunrpc.patch
+./configure --prefix=/usr --enable-warmstarts --with-statedir=/run
+make
+}
+
+ninstall() {
+make install
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

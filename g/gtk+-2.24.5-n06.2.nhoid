@@ -1,0 +1,46 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	gtk+
+# Version:	2.24.5
+# Release:	n06.2
+# License:	GPLv2
+# Group:	Graphics
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64 arm arm64 armel
+# Url:	http://www.gtk.org/
+# Description:	The Gtk2 package contains version 2 of the GTK+ libraries. GTK+ is a multi-platform toolkit for creating graphical user interfaces. It is the GUI toolkit that Gnome uses. The current version of Gnome - Gnome 2 - is based on Gtk2.
+# MD5:	139fe4052856b8825b294eea3791e6a1  gtk+-2.24.5.tar.xz
+
+
+# BuildDep:	/usr/lib/libcairo.so	/usr/lib/libcairo.so
+# BuildDep:	/usr/lib/libpango-1.0.so	/usr/lib/libpango-1.0.so
+# BuildDep:	/usr/lib/libatk-1.0.so	/usr/lib/libatk-1.0.so
+# BuildDep:	/usr/lib/libgdk_pixbuf-2.0.so	/usr/lib/libgdk_pixbuf-2.0.so
+# Dep(post):	/usr/lib/libcairo.so	/usr/lib/libcairo.so
+# Dep(post):	/usr/lib/libpango-1.0.so	/usr/lib/libpango-1.0.so
+# Dep(post):	/usr/lib/libatk-1.0.so	/usr/lib/libatk-1.0.so
+# Dep(post):	/usr/lib/libgdk_pixbuf-2.0.so	/usr/lib/libgdk_pixbuf-2.0.so
+
+
+nbuild() {
+patch -Np1 -i "../xid-collision-debug.patch"
+patch -NRp1 -i "../gdk_Make_background_changes_queue_a_repaint.patch"
+CXX=/bin/false ./configure --prefix=/usr \
+        --sysconfdir=/etc \
+        --localstatedir=/var \
+        --with-xinput=yes
+sed -i -e 's/ -shared / -Wl,-O1,--as-needed\0/g' libtool
+make
+}
+
+ninstall() {
+make install
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

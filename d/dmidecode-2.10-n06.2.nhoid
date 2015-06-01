@@ -1,0 +1,31 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sánchez <cargabsj175@gmail.com>
+
+# Name:	dmidecode
+# Version:	2.10
+# Release:	n06.2
+# License:	GPL
+# Group:	Core System
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64
+# Url:	http://www.nongnu.org/dmidecode
+# Description:	Desktop Management Interface table related utilities.
+# MD5:	1ff1fcec3f37e58cc543eb2dc4898bd0  dmidecode-2.10.tar.xz
+
+
+
+nbuild() {
+noemptyfuncs
+}
+
+ninstall() {
+make prefix=/usr
+make prefix=/usr install
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

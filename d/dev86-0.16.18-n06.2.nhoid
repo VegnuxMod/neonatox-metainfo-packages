@@ -1,0 +1,51 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	dev86
+# Version:	0.16.18
+# Release:	n06.2
+# License:	GPL
+# Group:	Programming
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64 arm arm64 armel
+# Url:	http://www.debath.co.uk/dev86/
+# Description:	Simple C compiler to generate 8086 code.
+# MD5:	5acff600cadacbae86221cd2108eb243  dev86-0.16.18.tar.xz
+
+
+# BuildDep:	/usr/bin/as86	/usr/bin/as86
+# Dep(post):	/usr/bin/as86	/usr/bin/as86
+
+nbuild() {
+patch -Np0 -i ../dev86-pic.patch
+patch -Np1 -i ../dev86-0.16.17-fortify.patch
+if [ "$(uname -m)" = "x86_64" ]; then
+sed -i.orig -e 's,alt-libs elksemu,alt-libs,' -e 's,install-lib install-emu,install-lib,' makefile.in
+sed -i -e "s/-O2 -g/-O2 -g -m32/" makefile.in
+sed -i 's|^LDFLAGS.*=$|LDFLAGS=-m32|' makefile.in
+fi
+unset CFLAGS
+unset LDFLAGS
+unset CPPFLAGS
+unset CXXFLAGS
+pkgdir=/tmp/dev86
+make PREFIX=/usr DIST="$pkgdir"
+}
+
+ninstall() {
+pkgdir=/tmp/dev86
+make install-all DIST="$pkgdir"
+mkdir -p $pkgdir/usr/share
+mv $pkgdir/usr/man $pkgdir/usr/share
+rm $pkgdir/usr/bin/{as,ld,nm,objdump,size}86
+rm $pkgdir/usr/share/man/man1/{as,ld}86.1
+cp -r $pkgdir/* /
+rm -r $pkgdir
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

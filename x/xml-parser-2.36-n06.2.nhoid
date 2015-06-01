@@ -1,0 +1,33 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sánchez <cargabsj175@gmail.com>
+
+# Name:	xml-parser
+# Version:	2.36
+# Release:	n06.2
+# License:	Perl license
+# Group:	System
+# Arch:	i486 i586 i686 x86_64 mips64 mipsel mips64el ppc ppc64
+# Url:	Unknow
+# Description:	XML parser module.
+# MD5:	16844d8b44f062f9f7635f9958bdbe76  xml-parser-2.36.tar.xz
+
+
+# BuildDep:	/usr/lib/libexpat.so	/usr/lib/libexpat.so
+# Dep(post):	/usr/lib/libexpat.so	/usr/lib/libexpat.so
+
+nbuild() {
+perl Makefile.PL
+make
+}
+
+ninstall() {
+make install
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

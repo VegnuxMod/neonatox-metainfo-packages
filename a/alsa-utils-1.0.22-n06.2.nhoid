@@ -1,0 +1,44 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	alsa-utils
+# Version:	1.0.22
+# Release:	n06.2
+# License:	GPLv2
+# Group:	Multimedia
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64
+# Url:	http://www.alsa-project.org/
+# Description:	The ALSA Utilities package contains the command line utilities for the ALSA project. This package can be compiled only with the installed ALSA driver and the ALSA C library.
+# MD5:	b72b3d984829249cd01c8158bbbf59d3  alsa-utils-1.0.22.tar.xz
+
+
+# BuildDep:	/usr/lib/libasound.so	/usr/lib/libasound.so
+# OptionalBuildDep:	/usr/lib/libdialog.so	/usr/lib/libdialog.so
+# OptionalBuildDep:	/usr/bin/xmlto	/usr/bin/xmlto
+# Dep(post):	/usr/lib/libasound.so	/usr/lib/libasound.so
+# OptionalDep(post):	/usr/lib/libdialog.so	/usr/lib/libdialog.so
+# OptionalDep(post):	/usr/bin/xmlto	/usr/bin/xmlto
+
+nbuild() {
+sed -i -e 's/^\(man_MANS[ \t]*=[ \t]*\).*$/\1/' alsactl/Makefile.*
+./configure --prefix=/usr
+make
+}
+
+ninstall() {
+make install
+install -m 754 ../alsa /etc/rc.d/init.d/
+ln -sf  /etc/rc.d/init.d/alsa /etc/rc.d/rc0.d/K35alsa
+ln -sf  /etc/rc.d/init.d/alsa /etc/rc.d/rc1.d/K35alsa
+ln -sf  /etc/rc.d/init.d/alsa /etc/rc.d/rc6.d/K35alsa
+}
+
+npostinstall() {
+touch /etc/asound.state
+alsactl store
+}
+
+npostremove() {
+rm -r /etc/asound.state
+exec /etc/rc.d/init.d/alsa stop
+}

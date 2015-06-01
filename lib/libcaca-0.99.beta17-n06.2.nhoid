@@ -1,0 +1,39 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	libcaca
+# Version:	0.99.beta17
+# Release:	n06.2
+# License:	LGPLv2.1
+# Group:	Graphic Library
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64 arm arm64
+# Url:	http://libcaca.zoy.org/
+# Description:	Libcaca is a graphics library that outputs text instead of pixels, so that it can work on older video cards or text terminals.
+# MD5:	13f82f85bdd63dc66ba51129a15380a7  libcaca-0.99.beta17.tar.xz
+
+
+# BuildDep:	/usr/lib/libImlib2.so	/usr/lib/libImlib2.so
+# BuildDep:	/usr/bin/X	/usr/bin/X
+# BuildDep:	/usr/lib/libncurses.so.5	/usr/lib/libncurses.so.5
+# Dep(post):	/usr/lib/libImlib2.so	/usr/lib/libImlib2.so
+# Dep(post):	/usr/bin/X	/usr/bin/X
+# Dep(post):	/usr/lib/libncurses.so.5	/usr/lib/libncurses.so.5
+
+nbuild() {
+./configure --prefix=/usr --mandir=/usr/share/man \
+--enable-shared --disable-doc \
+--disable-cxx --disable-gl --disable-csharp
+make
+}
+
+ninstall() {
+make install
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

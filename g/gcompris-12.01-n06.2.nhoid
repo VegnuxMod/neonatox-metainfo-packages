@@ -1,0 +1,49 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	gcompris
+# Version:	12.01
+# Release:	n06.2
+# License:	GPLv3
+# Group:	Education
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64 arm arm64
+# Url:	http://gcompris.net/
+# Description:	Educational software suite comprising of numerous activities for children aged 2 to 10.
+# MD5:	abb7b88db29b74e73db7ef148c52232d  gcompris-12.01.tar.xz
+
+
+# BuildDep:	/usr/lib/libgnet-2.0.so	/usr/lib/libgnet-2.0.so
+# BuildDep:	/usr/lib/libgstapp-0.10.so	/usr/lib/libgstapp-0.10.so
+# BuildDep:	/usr/lib/librsvg-2.so	/usr/lib/librsvg-2.so
+# BuildDep:	/usr/lib/python2.7/site-packages/gtk-2.0/gtk/_gtk.so	/usr/lib/python2.7/site-packages/gtk-2.0/gtk/_gtk.so
+# BuildDep:	/usr/lib/python2.7/site-packages/pysqlite2/_sqlite.so	/usr/lib/python2.7/site-packages/pysqlite2/_sqlite.so
+# BuildDep:	/usr/lib/python2.7/site-packages/_xmlplus/parsers/pyexpat.so	/usr/lib/python2.7/site-packages/_xmlplus/parsers/pyexpat.so
+# BuildDep:	/usr/bin/gnucap	/usr/bin/gnucap
+# BuildDep:	/usr/bin/gnuchess	/usr/bin/gnuchess
+# BuildDep:	/usr/bin/tuxpaint	/usr/bin/tuxpaint
+# Dep(post):	/usr/bin/tuxpaint	/usr/bin/tuxpaint
+# Dep(post):	/usr/bin/gnuchess	/usr/bin/gnuchess
+# Dep(post):	/usr/bin/gnucap	/usr/bin/gnucap
+# Dep(post):	/usr/lib/python2.7/site-packages/_xmlplus/parsers/pyexpat.so	/usr/lib/python2.7/site-packages/_xmlplus/parsers/pyexpat.so
+# Dep(post):	/usr/lib/python2.7/site-packages/pysqlite2/_sqlite.so	/usr/lib/python2.7/site-packages/pysqlite2/_sqlite.so
+# Dep(post):	/usr/lib/python2.7/site-packages/gtk-2.0/gtk/_gtk.so	/usr/lib/python2.7/site-packages/gtk-2.0/gtk/_gtk.so
+# Dep(post):	/usr/lib/librsvg-2.so	/usr/lib/librsvg-2.so
+# Dep(post):	/usr/lib/libgstapp-0.10.so	/usr/lib/libgstapp-0.10.so
+# Dep(post):	/usr/lib/libgnet-2.0.so	/usr/lib/libgnet-2.0.so
+
+nbuild() {
+./configure --prefix=/usr
+make
+}
+
+ninstall() {
+make install
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

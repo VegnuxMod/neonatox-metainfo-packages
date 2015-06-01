@@ -1,0 +1,31 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	mozilla-common
+# Version:	1.4
+# Release:	n06.2
+# License:	GPL
+# Group:	Networking
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64 arm arm64
+# Url:	http://www.mozilla.org/
+# Description:	Common Initialization Profile for Mozilla.org products.
+# MD5:	62bba3d8c933a96b964d14c4148cc58a  mozilla-common-1.4.tar.xz
+
+
+
+nbuild() {
+noemptyfuncs
+}
+
+ninstall() {
+install -m755 -d "/etc/profile.d"
+install -m755 mozilla-common.{,c}sh "/etc/profile.d/"
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

@@ -1,0 +1,40 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sánchez <cargabsj175@gmail.com>
+
+# Name:	libwnck
+# Version:	2.30.6
+# Release:	n06.2
+# License:	LGPL
+# Group:	XFCE Desktop
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64
+# Url:	http://www.gnome.org/
+# Description:	Window Navigator Construction Kit.
+# MD5:	1c4183017b0323bfbaf47b53eb8e745e  libwnck-2.30.6.tar.xz
+
+
+# BuildDep:	/usr/lib/libgtk-x11-2.0.so	/usr/lib/libgtk-x11-2.0.so
+# BuildDep:	/usr/lib/libstartup-notification-1.so	/usr/lib/libstartup-notification-1.so
+# BuildDep:	/usr/lib/libXt.so	/usr/lib/libXt.so
+# BuildDep:	/usr/lib/libgobject-2.0.so	/usr/lib/libgobject-2.0.so
+# Dep(post):	/usr/lib/libgobject-2.0.so	/usr/lib/libgobject-2.0.so
+# Dep(post):	/usr/lib/libXt.so	/usr/lib/libXt.so
+# Dep(post):	/usr/lib/libstartup-notification-1.so	/usr/lib/libstartup-notification-1.so
+# Dep(post):	/usr/lib/libgtk-x11-2.0.so	/usr/lib/libgtk-x11-2.0.so
+
+nbuild() {
+./configure --prefix=/usr --sysconfdir=/etc \
+--localstatedir=/var --disable-static
+make
+}
+
+ninstall() {
+make install
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

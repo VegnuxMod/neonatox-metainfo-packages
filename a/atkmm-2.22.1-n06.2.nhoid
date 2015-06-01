@@ -1,0 +1,37 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	atkmm
+# Version:	2.22.1
+# Release:	n06.2
+# License:	LGPL
+# Group:	Programming
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64 arm arm64
+# Url:	http://gtkmm.sourceforge.net/
+# Description:	C++ bindings for atk.
+# MD5:	588f65c12f2c2eb60ad56fc59ae446be  atkmm-2.22.1.tar.xz
+
+
+# BuildDep:	/usr/lib/libatk-1.0.so	/usr/lib/libatk-1.0.so
+# BuildDep:	/usr/lib/libglibmm-2.4.so	/usr/lib/libglibmm-2.4.so
+# BuildDep:	/usr/lib/libsigc-2.0.so	/usr/lib/libsigc-2.0.so
+# Dep(post):	/usr/lib/libsigc-2.0.so	/usr/lib/libsigc-2.0.so
+# Dep(post):	/usr/lib/libglibmm-2.4.so	/usr/lib/libglibmm-2.4.so
+# Dep(post):	/usr/lib/libatk-1.0.so	/usr/lib/libatk-1.0.so
+
+nbuild() {
+./configure --prefix=/usr --disable-documentation
+make
+}
+
+ninstall() {
+make install
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

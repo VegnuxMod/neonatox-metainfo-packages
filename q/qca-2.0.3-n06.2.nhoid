@@ -1,0 +1,40 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com.>
+
+# Name:	qca
+# Version:	2.0.3
+# Release:	n06.2
+# License:	LGPL
+# Group:	Programming
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64
+# Url:	http://delta.affinix.com/qca/
+# Description:	Qt Cryptographic Architecture.
+# MD5:	1a8c25a5f0575bfb86b740a2960dd132  qca-2.0.3.tar.xz
+
+
+# BuildDep:	/usr/lib/libQtCore.so	/usr/lib/libQtCore.so
+# BuildDep:	/etc/ssl/certs/ca-certificates.crt	/etc/ssl/certs/ca-certificates.crt
+# Dep(post):	/etc/ssl/certs/ca-certificates.crt	/etc/ssl/certs/ca-certificates.crt
+# Dep(post):	/usr/lib/libQtCore.so	/usr/lib/libQtCore.so
+
+nbuild() {
+./configure \
+--prefix=/usr \
+--disable-tests \
+--certstore-path=/etc/ssl/certs/ca-certificates.crt \
+--release \
+--no-separate-debug-info
+make
+}
+
+ninstall() {
+make install
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

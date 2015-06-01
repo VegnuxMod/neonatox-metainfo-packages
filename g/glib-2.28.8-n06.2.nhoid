@@ -1,0 +1,40 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	glib
+# Version:	2.28.8
+# Release:	n06.2
+# License:	GPLv2
+# Group:	System
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64 arm arm64 armel
+# Url:	http://www.gtk.org/
+# Description:	GLib is the low-level core library that forms the basis of GTK+ (Gtk2) and Gnome. It provides data structure handling for C, portability wrappers, and interfaces for such runtime functionality as an event loop, threads, dynamic loading, and an object system.
+# MD5:	b50201e58295e1c6469ca6414aed7090  glib-2.28.8.tar.xz
+
+
+# BuildDep:	/usr/bin/pkg-config	/usr/bin/pkg-config
+# BuildDep:	/usr/bin/python	/usr/bin/python
+# BuildDep:	/usr/lib/libpcre.so	/usr/lib/libpcre.so
+# Dep(post):	/usr/bin/pkg-config	/usr/bin/pkg-config
+# Dep(post):	/usr/bin/python	/usr/bin/python
+# Dep(post):	/usr/lib/libpcre.so	/usr/lib/libpcre.so
+
+nbuild() {
+./configure --prefix=/usr --sysconfdir=/etc --with-pcre=system --disable-fam
+make
+}
+
+ninstall() {
+make install
+install -d "/etc/profile.d"
+install -m755 "../glib2.sh" "/etc/profile.d/"
+install -m755 "../glib2.csh" "/etc/profile.d/"
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

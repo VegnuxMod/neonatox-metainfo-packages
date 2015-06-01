@@ -1,0 +1,45 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	thunar-vfs
+# Version:	1.2.0
+# Release:	n06.2
+# License:	GPLv2
+# Group:	XFCE Desktop
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64 arm arm64
+# Url:	http://www.xfce.org/
+# Description:	Virtual filesystem shipped with the thunar 1.0 and earlier releases.
+# MD5:	0d11de29b9859bc130ba0461a12645d6  thunar-vfs-1.2.0.tar.xz
+
+
+# BuildDep:	/usr/lib/libexo-1.so	/usr/lib/libexo-1.so
+# BuildDep:	/usr/lib/libstartup-notification-1.so	/usr/lib/libstartup-notification-1.so
+# BuildDep:	/usr/sbin/hald	/usr/sbin/hald
+# Dep(post):	/usr/sbin/hald	/usr/sbin/hald
+# Dep(post):	/usr/lib/libstartup-notification-1.so	/usr/lib/libstartup-notification-1.so
+# Dep(post):	/usr/lib/libexo-1.so	/usr/lib/libexo-1.so
+
+nbuild() {
+./configure --prefix=/usr \
+--sysconfdir=/etc \
+--libexecdir=/usr/lib \
+--localstatedir=/var \
+--disable-static \
+--enable-startup-notification \
+--enable-dbus \
+--with-volume-manager=hal \
+--disable-debug
+make
+}
+
+ninstall() {
+make install
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

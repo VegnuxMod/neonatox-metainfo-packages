@@ -1,0 +1,39 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	libreoffice-extension-presenter-screen
+# Version:	3.5.2.2
+# Release:	n06.2
+# License:	LGPLv3
+# Group:	libreoffice extension
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64 arm arm64 armel
+# Url:	http://www.libreoffice.org/
+# Description:	This extension provides more control over your slide show presentation, such as the ability to see the upcoming slide, the slide notes, and a presentation timer whereas the audience see only the current slide.
+# MD5:	da91ceb27d526d788bdbcb96f5b5dfaa  libreoffice-extension-presenter-screen-3.5.2.2.tar.xz
+
+
+# BuildDep:	/usr/bin/libreoffice	/usr/bin/libreoffice
+# BuildDep:	/usr/bin/java	/usr/bin/java
+# BuildDep:	/usr/bin/unzip	/usr/bin/unzip
+# Dep(post):	/usr/bin/libreoffice	/usr/bin/libreoffice
+# Dep(post):	/usr/bin/java	/usr/bin/java
+
+nbuild() {
+./build.libreoffice
+}
+
+ninstall() {
+pkgdir=/tmp/libreoffice
+install -dm755 ${pkgdir}/usr/lib/libreoffice/share/extensions
+unzip -q solver/unxlng*/bin/presenter-screen.oxt -d ${pkgdir}/usr/lib/libreoffice/share/extensions/presenter-screen
+cp -r ${pkgdir}/* /
+rm -r ${pkgdir}
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

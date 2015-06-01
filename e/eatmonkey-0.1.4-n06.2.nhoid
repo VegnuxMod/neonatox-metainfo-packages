@@ -1,0 +1,48 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	eatmonkey
+# Version:	0.1.4
+# Release:	n06.2
+# License:	custom
+# Group:	Networking
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64 arm arm64
+# Url:	http://goodies.xfce.org/projects/applications/eatmonkey
+# Description:	Download manager works with aria2 xml-rpc.
+# MD5:	8b0a67f1669fd1ca6dc878d7e99e2c80  eatmonkey-0.1.4.tar.xz
+
+
+# BuildDep:	/usr/lib/libgtk-x11-2.0.so	/usr/lib/libgtk-x11-2.0.so
+# BuildDep:	/usr/lib/libnotify.so	/usr/lib/libnotify.so
+# BuildDep:	/usr/bin/ruby	/usr/bin/ruby
+# BuildDep:	/usr/bin/aria2c	/usr/bin/aria2c
+# BuildDep:	/usr/lib/ruby/site_ruby/1.9.1/i686-linux/gtk2.so	/usr/lib/ruby/site_ruby/1.9.1/i686-linux/gtk2.so
+# Dep(post):	/usr/lib/ruby/site_ruby/1.9.1/i686-linux/gtk2.so	/usr/lib/ruby/site_ruby/1.9.1/i686-linux/gtk2.so
+# Dep(post):	/usr/bin/aria2c	/usr/bin/aria2c
+# Dep(post):	/usr/bin/ruby	/usr/bin/ruby
+# Dep(post):	/usr/lib/libnotify.so	/usr/lib/libnotify.so
+# Dep(post):	/usr/lib/libgtk-x11-2.0.so	/usr/lib/libgtk-x11-2.0.so
+
+nbuild() {
+./configure --prefix=/usr
+make
+}
+
+ninstall() {
+pkgdir=/tmp/eatmonkey
+make DESTDIR=$pkgdir install
+(
+echo '#!/bin/sh'
+echo 'cd /usr/share/eatmonkey && exec ruby -I"/usr/share/eatmonkey" eat.rb "$@"'
+) > $pkgdir/usr/bin/eatmonkey
+cp -r $pkgdir/* /
+rm -r $pkgdir
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

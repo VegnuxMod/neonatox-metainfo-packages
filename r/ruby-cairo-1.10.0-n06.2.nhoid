@@ -1,0 +1,37 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	ruby-cairo
+# Version:	1.10.0
+# Release:	n06.2
+# License:	GPL
+# Group:	Graphics library
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64 arm arm64
+# Url:	http://cairographics.org/rcairo/
+# Description:	Ruby bindings for cairo
+# MD5:	7738c1bc0883c5b64b1d4db31ea55261  ruby-cairo-1.10.0.tar.xz
+
+
+# BuildDep:	/usr/lib/libcairo.so	/usr/lib/libcairo.so
+# BuildDep:	/usr/bin/ruby	/usr/bin/ruby
+# BuildDep:	/usr/lib/ruby/gems/1.9.1/cache/pkg-config-1.0.7.gem	/usr/lib/ruby/gems/1.9.1/cache/pkg-config-1.0.7.gem
+# Dep(post):	/usr/lib/ruby/gems/1.9.1/cache/pkg-config-1.0.7.gem	/usr/lib/ruby/gems/1.9.1/cache/pkg-config-1.0.7.gem
+# Dep(post):	/usr/bin/ruby	/usr/bin/ruby
+# Dep(post):	/usr/lib/libcairo.so	/usr/lib/libcairo.so
+
+nbuild() {
+ruby extconf.rb
+make
+}
+
+ninstall() {
+make install
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

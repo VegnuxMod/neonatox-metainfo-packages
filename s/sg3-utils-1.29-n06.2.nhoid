@@ -1,0 +1,30 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sánchez <cargabsj175@gmail.com>
+
+# Name:	sg3-utils
+# Version:	1.29
+# Release:	n06.2
+# License:	GPL custom BSD
+# Group:	System
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64
+# Url:	http://sg.danny.cz/sg/sg3_utils.html
+# Description:	Generic SCSI utilities.
+# MD5:	6c7e398a02d446d5b60b2a40f4dc2919  sg3-utils-1.29.tar.xz
+
+
+nbuild() {
+./configure --prefix=/usr
+make
+}
+
+ninstall() {
+make install
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

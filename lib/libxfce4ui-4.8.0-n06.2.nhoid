@@ -1,0 +1,44 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	libxfce4ui
+# Version:	4.8.0
+# Release:	n06.2
+# License:	GPLv2
+# Group:	XFCE Desktop
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64 arm arm64
+# Url:	http://www.xfce.org/
+# Description:	A freedesktop.org compliant ui implementation for Xfce.
+# MD5:	a9b0af5505f1b1142104e27926c0084c  libxfce4ui-4.8.0.tar.xz
+
+
+# BuildDep:	/usr/lib/libglade-2.0.so	/usr/lib/libglade-2.0.so
+# BuildDep:	/usr/lib/libxfconf-0.so	/usr/lib/libxfconf-0.so
+# BuildDep:	/usr/lib/libgtk-x11-2.0.so	/usr/lib/libgtk-x11-2.0.so
+# BuildDep:	/usr/lib/libxfce4util.so	/usr/lib/libxfce4util.so
+# BuildDep:	/usr/lib/libstartup-notification-1.so	/usr/lib/libstartup-notification-1.so
+# BuildDep:	/usr/share/xfce4/dev-tools/m4macros/xdt-xfce.m4	/usr/share/xfce4/dev-tools/m4macros/xdt-xfce.m4
+# Dep(post):	/usr/share/xfce4/dev-tools/m4macros/xdt-xfce.m4	/usr/share/xfce4/dev-tools/m4macros/xdt-xfce.m4
+# Dep(post):	/usr/lib/libstartup-notification-1.so	/usr/lib/libstartup-notification-1.so
+# Dep(post):	/usr/lib/libxfce4util.so	/usr/lib/libxfce4util.so
+# Dep(post):	/usr/lib/libgtk-x11-2.0.so	/usr/lib/libgtk-x11-2.0.so
+# Dep(post):	/usr/lib/libxfconf-0.so	/usr/lib/libxfconf-0.so
+# Dep(post):	/usr/lib/libglade-2.0.so	/usr/lib/libglade-2.0.so
+
+nbuild() {
+./configure --prefix=/usr --sysconfdir=/etc --libexecdir=/usr/lib \
+--localstatedir=/var --disable-static --disable-debug
+make
+}
+
+ninstall() {
+make install
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

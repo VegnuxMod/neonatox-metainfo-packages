@@ -1,0 +1,42 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	thunar-volman
+# Version:	0.6.0
+# Release:	n06.2
+# License:	GPLv2
+# Group:	XFCE Desktop
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64 arm arm64
+# Url:	http://foo-projects.org/~benny/projects/thunar-volman
+# Description:	Automatic management for removeable devices in thunar.
+# MD5:	98df152a91bd90fa960e32a891e252de  thunar-volman-0.6.0.tar.xz
+
+
+# BuildDep:	/usr/bin/thunar	/usr/bin/thunar
+# BuildDep:	/usr/lib/libxfce4ui-1.so	/usr/lib/libxfce4ui-1.so
+# BuildDep:	/usr/share/icons/hicolor/index.theme	/usr/share/icons/hicolor/index.theme
+# Dep(post):	/usr/share/icons/hicolor/index.theme	/usr/share/icons/hicolor/index.theme
+# Dep(post):	/usr/lib/libxfce4ui-1.so	/usr/lib/libxfce4ui-1.so
+# Dep(post):	/usr/bin/thunar	/usr/bin/thunar
+
+nbuild() {
+./configure --prefix=/usr \
+--sysconfdir=/etc \
+--libexecdir=/usr/lib/xfce4 \
+--localstatedir=/var \
+--disable-static \
+--disable-debug
+make
+}
+
+ninstall() {
+make install
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

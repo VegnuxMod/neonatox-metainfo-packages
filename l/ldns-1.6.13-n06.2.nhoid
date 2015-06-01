@@ -1,0 +1,40 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabshj175@gmail.com>
+
+# Name:	ldns
+# Version:	1.6.13
+# Release:	n06.2
+# License:	BSD
+# Group:	Networking
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64 arm arm64 armel
+# Url:	http://www.nlnetlabs.nl/projects/ldns/
+# Description:	Fast DNS library supporting recent RFCs.
+# MD5:	7afbba93d1e0ac473abca29e3adb165d  ldns-1.6.13.tar.xz
+
+
+# BuildDep:	/usr/lib/libssl.so	/usr/lib/libssl.so
+# BuildDep:	/usr/lib/libpcap.so	/usr/lib/libpcap.so
+# BuildDep:	/etc/trusted-key.key	/etc/trusted-key.key
+# Dep(post):	/etc/trusted-key.key	/etc/trusted-key.key
+# Dep(post):	/usr/lib/libpcap.so	/usr/lib/libpcap.so
+# Dep(post):	/usr/lib/libssl.so	/usr/lib/libssl.so
+
+nbuild() {
+./configure --prefix=/usr \
+--sysconfdir=/etc --localstatedir=/var \
+--enable-static=no --disable-rpath \
+--with-drill --with-examples
+make
+}
+
+ninstall() {
+make install
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

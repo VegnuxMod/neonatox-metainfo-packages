@@ -1,0 +1,38 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	acpid
+# Version:	1.0.8
+# Release:	n06.2
+# License:	GPLv2
+# Group:	Core System
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64
+# Url:	https://sourceforge.net/projects/acpid/
+# Description:	The Advanced Configuration & Power Interface Daemon (ACPID) is a flexible and totally extensible daemon for responding to ACPI events. It listens to /proc/acpi/event and executes programs to handle the events when they occur. The programs it executes are configured through a set of configuration files.
+# MD5:	abf23521211f01330b828086e7ef56b2  acpid-1.0.8.tar.xz
+
+
+# OptionalBuildDep:	/sbin/hdparm	/sbin/hdparm
+# OptionalDep(post):	/sbin/hdparm	/sbin/hdparm
+
+nbuild() {
+sed -i "s/-Werror//g" Makefile
+make
+}
+
+ninstall() {
+make install
+mkdir -pv /etc/acpi/events &&
+cp -v samples/battery/battery.conf /etc/acpi/events &&
+cp -v samples/battery/battery.sh /etc/acpi &&
+chmod 755 /etc/acpi/battery.sh
+exec /usr/src/nhopkg/acpid
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

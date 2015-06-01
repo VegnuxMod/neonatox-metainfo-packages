@@ -1,0 +1,32 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	fuse-exfat
+# Version:	0.9.5
+# Release:	n06.2
+# License:	GPLv3
+# Group:	File System
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64 arm arm64
+# Url:	http://code.google.com/p/exfat
+# Description:	exFAT filesystem support.
+# MD5:	9a8c9dac481c4ac43d924c563953a920  fuse-exfat-0.9.5.tar.xz
+
+
+# BuildDep:	/usr/lib/libfuse.so	/usr/lib/libfuse.so
+# Dep(post):	/usr/lib/libfuse.so	/usr/lib/libfuse.so
+
+nbuild() {
+scons
+}
+
+ninstall() {
+scons install
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

@@ -1,0 +1,34 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sánchez <cargabsj175@gmail.com>
+
+# Name:	libtasn1
+# Version:	2.6
+# Release:	n06.2
+# License:	GPLv3 LGPL
+# Group:	System
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64
+# Url:	http://www.gnu.org/software/libtasn1/
+# Description:	The ASN.1 library used in GNUTLS.
+# MD5:	3f66d861dcc167710d0ce767aa1cfbc6  libtasn1-2.6.tar.xz
+
+
+
+nbuild() {
+./configure --prefix=/usr \
+--with-packager=cargabsj175 \
+--with-packager-bug-reports="cargabsj175@gmail.com" \
+--with-packager-version=2.6-n06.2
+make
+}
+
+ninstall() {
+make install
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

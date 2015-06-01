@@ -1,0 +1,45 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	xfconf
+# Version:	4.8.0
+# Release:	n06.2
+# License:	GPLv2
+# Group:	XFCE Desktop
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64 arm arm64
+# Url:	http://www.xfce.org/
+# Description:	Simple client-server configuration storage and query system.
+# MD5:	05762b0f9420b488107a60215349c17f  xfconf-4.8.0.tar.xz
+
+
+# BuildDep:	/usr/share/xfce4/dev-tools/m4macros/xdt-xfce.m4	/usr/share/xfce4/dev-tools/m4macros/xdt-xfce.m4
+# BuildDep:	/usr/lib/libxfce4util.so	/usr/lib/libxfce4util.so
+# BuildDep:	/usr/lib/perl5/vendor_perl/5.12.1/ExtUtils/Depends.pm	/usr/lib/perl5/vendor_perl/5.12.1/ExtUtils/Depends.pm
+# BuildDep:	/usr/lib/perl5/vendor_perl/5.12.1/ExtUtils/PkgConfig.pm	/usr/lib/perl5/vendor_perl/5.12.1/ExtUtils/PkgConfig.pm
+# BuildDep:	/usr/lib/perl5/vendor_perl/5.12.1/i686-linux/Glib.pm	/usr/lib/perl5/vendor_perl/5.12.1/i686-linux/Glib.pm
+# BuildDep:	/usr/lib/libdbus-glib-1.so	/usr/lib/libdbus-glib-1.so
+# Dep(post):	/usr/lib/libdbus-glib-1.so	/usr/lib/libdbus-glib-1.so
+# Dep(post):	/usr/lib/perl5/vendor_perl/5.12.1/i686-linux/Glib.pm	/usr/lib/perl5/vendor_perl/5.12.1/i686-linux/Glib.pm
+# Dep(post):	/usr/lib/perl5/vendor_perl/5.12.1/ExtUtils/PkgConfig.pm	/usr/lib/perl5/vendor_perl/5.12.1/ExtUtils/PkgConfig.pm
+# Dep(post):	/usr/lib/perl5/vendor_perl/5.12.1/ExtUtils/Depends.pm	/usr/lib/perl5/vendor_perl/5.12.1/ExtUtils/Depends.pm
+# Dep(post):	/usr/lib/libxfce4util.so	/usr/lib/libxfce4util.so
+# Dep(post):	/usr/share/xfce4/dev-tools/m4macros/xdt-xfce.m4	/usr/share/xfce4/dev-tools/m4macros/xdt-xfce.m4
+
+nbuild() {
+./configure --prefix=/usr --sysconfdir=/etc --libexecdir=/usr/lib/xfce4 \
+--localstatedir=/var --disable-static --disable-debug
+make
+}
+
+ninstall() {
+make install
+rm -r /usr/lib/perl5/site_perl/5.12.1/i686-linux/auto/Xfce4/Xfconf/Xfconf.bs
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

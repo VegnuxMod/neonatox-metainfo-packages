@@ -1,0 +1,48 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	libreoffice-draw
+# Version:	3.5.2.2
+# Release:	n06.2
+# License:	LGPLv3
+# Group:	libreoffice
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64 arm arm64 armel
+# Url:	http://www.libreoffice.org/
+# Description:	Drawing Application for LibreOffice.
+# MD5:	8403545d1e1b289a9fb30bd408bf5495  libreoffice-draw-3.5.2.2.tar.xz
+
+
+# BuildDep:	/usr/bin/libreoffice	/usr/bin/libreoffice
+# Dep(post):	/usr/bin/libreoffice	/usr/bin/libreoffice
+
+nbuild() {
+./build.libreoffice
+}
+
+ninstall() {
+curdir=$(pwd)
+srcdir=/usr/src/nhopkg
+pkgdir=/tmp/libreoffice
+# create directories from *list.txt file
+for directory in `grep ^%dir ${srcdir}/libreoffice-core-3.5.2.2/file-lists/draw_list.txt`; do
+install -dm755 ${pkgdir}/${directory/\%dir/}
+done
+# install files into the pkg from fakeinstall dir
+for file in `grep -v ^%dir $srcdir/libreoffice-core-3.5.2.2/file-lists/draw_list.txt`; do
+dirname=`dirname $file`
+# check if directory has been already been created - some are missing like manpages
+[ -d ${pkgdir}/$dirname ] || install -dm755 ${pkgdir}/$dirname
+# mv file from fakeinstall to pkgdir
+cp -rv fakeinstall${file} ${pkgdir}$file
+done
+cp -r ${pkgdir}/* /
+rm -r ${pkgdir}
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

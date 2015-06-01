@@ -1,0 +1,39 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	ristretto
+# Version:	0.0.91
+# Release:	n06.2
+# License:	GPLv2
+# Group:	XFCE DEsktop
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64 arm arm64
+# Url:	http://goodies.xfce.org/projects/applications/ristretto
+# Description:	Ristretto is a image viewer for Xfce.
+# MD5:	50c2a38ffd9ab7271d3a1aca23a9cef3  ristretto-0.0.91.tar.xz
+
+
+# BuildDep:	/usr/lib/libxfcegui4.so	/usr/lib/libxfcegui4.so
+# BuildDep:	/usr/bin/update-desktop-database	/usr/bin/update-desktop-database
+# BuildDep:	/usr/share/icons/hicolor/index.theme	/usr/share/icons/hicolor/index.theme
+# BuildDep:	/usr/lib/libexif.so	/usr/lib/libexif.so
+# Dep(post):	/usr/lib/libexif.so	/usr/lib/libexif.so
+# Dep(post):	/usr/share/icons/hicolor/index.theme	/usr/share/icons/hicolor/index.theme
+# Dep(post):	/usr/bin/update-desktop-database	/usr/bin/update-desktop-database
+# Dep(post):	/usr/lib/libxfcegui4.so	/usr/lib/libxfcegui4.so
+
+nbuild() {
+./configure --prefix=/usr --sysconfdir=/etc --localstatedir=/var
+make
+}
+
+ninstall() {
+make install
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

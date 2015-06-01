@@ -1,0 +1,38 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	libsexy
+# Version:	0.1.11
+# Release:	n06.2
+# License:	GPL
+# Group:	System
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64 arm arm64
+# Url:	http://chipx86.com/wiki/Libsexy
+# Description:	Doing naughty things to good widgets.
+# MD5:	996b1d5d1297aa867a7886f6a741ea93  libsexy-0.1.11.tar.xz
+
+
+# BuildDep:	/usr/lib/libgtk-x11-2.0.so	/usr/lib/libgtk-x11-2.0.so
+# BuildDep:	/usr/lib/libxml2.so	/usr/lib/libxml2.so
+# BuildDep:	/usr/lib/pkgconfig/iso-codes.pc	/usr/lib/pkgconfig/iso-codes.pc
+# Dep(post):	/usr/lib/pkgconfig/iso-codes.pc	/usr/lib/pkgconfig/iso-codes.pc
+# Dep(post):	/usr/lib/libxml2.so	/usr/lib/libxml2.so
+# Dep(post):	/usr/lib/libgtk-x11-2.0.so	/usr/lib/libgtk-x11-2.0.so
+
+nbuild() {
+./configure --prefix=/usr --disable-static
+make
+}
+
+ninstall() {
+make install
+rm -f /usr/lib/libsexy.a
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

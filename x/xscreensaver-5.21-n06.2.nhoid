@@ -1,0 +1,53 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	xscreensaver
+# Version:	5.21
+# Release:	n06.2
+# License:	BSD
+# Group:	Graphics
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64 arm arm64 armel
+# Url:	http://www.jwz.org/xscreensaver/
+# Description:	Screen saver and locker for the X Window System.
+# MD5:	f37fc43c535314226935d29f75154fea  xscreensaver-5.21.tar.xz
+
+# BuildDep:	/usr/lib/libGLU.so	/usr/lib/libGLU.so
+# BuildDep:	/usr/lib/libglade-2.0.so	/usr/lib/libglade-2.0.so
+# BuildDep:	/usr/lib/libXmu.so	/usr/lib/libXmu.so
+# BuildDep:	/usr/lib/libXxf86vm.so	/usr/lib/libXxf86vm.so
+# BuildDep:	/usr/lib/perl5/vendor_perl/5.12.1/HTTP/Headers/Util.pm	/usr/lib/perl5/vendor_perl/5.12.1/HTTP/Headers/Util.pm
+# BuildDep:	/usr/lib/perl5/vendor_perl/5.12.1/LWP/Protocol/http.pm	/usr/lib/perl5/vendor_perl/5.12.1/LWP/Protocol/http.pm
+# BuildDep:	/usr/bin/appres	/usr/bin/appres
+# Dep(post):	/usr/bin/appres	/usr/bin/appres
+# Dep(post):	/usr/lib/perl5/vendor_perl/5.12.1/LWP/Protocol/http.pm	/usr/lib/perl5/vendor_perl/5.12.1/LWP/Protocol/http.pm
+# Dep(post):	/usr/lib/perl5/vendor_perl/5.12.1/HTTP/Headers/Util.pm	/usr/lib/perl5/vendor_perl/5.12.1/HTTP/Headers/Util.pm
+# Dep(post):	/usr/lib/libXxf86vm.so	/usr/lib/libXxf86vm.so
+# Dep(post):	/usr/lib/libXmu.so	/usr/lib/libXmu.so
+# Dep(post):	/usr/lib/libglade-2.0.so	/usr/lib/libglade-2.0.so
+# Dep(post):	/usr/lib/libGLU.so	/usr/lib/libGLU.so
+
+nbuild() {
+patch -p0 -i ../add-electricsheep.diff
+./configure --prefix=/usr --sysconfdir=/etc --localstatedir=/var \
+--libexecdir=/usr/lib --with-x-app-defaults=/usr/share/X11/app-defaults \
+--with-pam --with-login-manager --with-gtk --with-gl \
+--without-gle --with-pixbuf --with-jpeg
+make
+}
+
+ninstall() {
+pkgdir=/tmp/xss
+make install_prefix="${pkgdir}" install
+install -D -m644 ../xscreensaver.pam "${pkgdir}/etc/pam.d/xscreensaver"
+echo "NotShowIn=KDE;GNOME;" >> "${pkgdir}/usr/share/applications/xscreensaver-properties.desktop"
+cp -r ${pkgdir}/* /
+rm -r ${pkgdir}
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

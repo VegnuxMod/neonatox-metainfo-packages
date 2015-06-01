@@ -1,0 +1,39 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sánchez <cargabsj175@gmail.com>
+
+# Name:	libid3tag
+# Version:	0.15.1b
+# Release:	n06.2
+# License:	GPL
+# Group:	Multimedia
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64
+# Url:	http://www.underbit.com/products/mad/
+# Description:	library for id3 tagging.
+# MD5:	b3eadb51e896576dc5f556381c10e26c  libid3tag-0.15.1b.tar.xz
+
+
+# BuildDep:	/usr/lib/libz.so	/usr/lib/libz.so
+# BuildDep:	/usr/bin/gperf	/usr/bin/gperf
+# Dep(post):	/usr/bin/gperf	/usr/bin/gperf
+# Dep(post):	/usr/lib/libz.so	/usr/lib/libz.so
+
+nbuild() {
+patch -p1 < ../10_utf16.diff
+patch -p1 < ../11_unknown_encoding.diff
+patch -Np0 -i ../CVE-2008-2109.patch
+./configure --prefix=/usr
+make
+}
+
+ninstall() {
+make install
+install -D -m644 "../id3tag.pc" "/usr/lib/pkgconfig/id3tag.pc"
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

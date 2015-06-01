@@ -1,0 +1,31 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sánchez <cargabsj175@gmail.com>
+
+# Name:	libffi
+# Version:	3.0.9
+# Release:	n06.2
+# License:	MIT
+# Group:	Programming
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64
+# Url:	http://sourceware.org/libffi
+# Description:	A portable, high level programming interface to various calling conventions.
+# MD5:	54f5e47792d02a7cf9e2c66cd4fb3683  libffi-3.0.9.tar.xz
+
+
+
+nbuild() {
+./configure --prefix=/usr
+make
+}
+
+ninstall() {
+make install
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

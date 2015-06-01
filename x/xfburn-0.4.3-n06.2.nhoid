@@ -1,0 +1,51 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	xfburn
+# Version:	0.4.3
+# Release:	n06.2
+# License:	GPLv2
+# Group:	Xfce Desktop
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64 arm arm64
+# Url:	http://goodies.xfce.org/projects/applications/xfburn
+# Description:	A simple CD/DVD burning tool based on libburnia libraries.
+# MD5:	996fbd873d62421b83c208dd7bdc6afe  xfburn-0.4.3.tar.xz
+
+
+# BuildDep:	/usr/lib/libburn.so	/usr/lib/libburn.so
+# BuildDep:	/usr/lib/libisofs.so	/usr/lib/libisofs.so
+# BuildDep:	/usr/lib/libxfcegui4.so	/usr/lib/libxfcegui4.so
+# BuildDep:	/usr/lib/libthunar-vfs-1.so	/usr/lib/libthunar-vfs-1.so
+# BuildDep:	/usr/share/icons/hicolor/index.theme	/usr/share/icons/hicolor/index.theme
+# BuildDep:	/usr/lib/librsvg-2.so	/usr/lib/librsvg-2.so
+# BuildDep:	/usr/lib/libgstcdda-0.10.so	/usr/lib/libgstcdda-0.10.so
+# BuildDep:	/usr/bin/desktop-file-validate	/usr/bin/desktop-file-validate
+# Dep(post):	/usr/bin/desktop-file-validate	/usr/bin/desktop-file-validate
+# Dep(post):	/usr/lib/libgstcdda-0.10.so	/usr/lib/libgstcdda-0.10.so
+# Dep(post):	/usr/lib/librsvg-2.so	/usr/lib/librsvg-2.so
+# Dep(post):	/usr/share/icons/hicolor/index.theme	/usr/share/icons/hicolor/index.theme
+# Dep(post):	/usr/lib/libthunar-vfs-1.so	/usr/lib/libthunar-vfs-1.so
+# Dep(post):	/usr/lib/libxfcegui4.so	/usr/lib/libxfcegui4.so
+# Dep(post):	/usr/lib/libisofs.so	/usr/lib/libisofs.so
+# Dep(post):	/usr/lib/libburn.so	/usr/lib/libburn.so
+
+nbuild() {
+./configure --prefix=/usr \
+--enable-gstreamer \
+--enable-thunar-vfs \
+--enable-dbus \
+--enable-hal
+make
+}
+
+ninstall() {
+make install
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

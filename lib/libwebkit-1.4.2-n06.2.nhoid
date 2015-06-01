@@ -1,0 +1,55 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	libwebkit
+# Version:	1.4.2
+# Release:	n06.2
+# License:	custom
+# Group:	Networking
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64 arm arm64 armel
+# Url:	http://webkitgtk.org/
+# Description:	An opensource web content engine, derived from KHTML and KJS from KDE.
+# MD5:	1fc6746b04698cff6e385a4b3ea0f61b  libwebkit-1.4.2.tar.xz
+
+
+# BuildDep:	/usr/lib/libXt.so	/usr/lib/libXt.so
+# BuildDep:	/usr/lib/libxslt.so	/usr/lib/libxslt.so
+# BuildDep:	/usr/lib/libsqlite3.so	/usr/lib/libsqlite3.so
+# BuildDep:	/usr/lib/libgtk-x11-2.0.so	/usr/lib/libgtk-x11-2.0.so
+# BuildDep:	/usr/lib/libicuuc.so	/usr/lib/libicuuc.so
+# BuildDep:	/usr/lib/libsoup-2.4.so	/usr/lib/libsoup-2.4.so
+# BuildDep:	/usr/lib/libenchant.so	/usr/lib/libenchant.so
+# BuildDep:	/usr/bin/gperf	/usr/bin/gperf
+# BuildDep:	/usr/lib/libgobject-2.0.so	/usr/lib/libgobject-2.0.so
+# BuildDep:	/usr/bin/python	/usr/bin/python
+# Dep(post):	/usr/bin/python	/usr/bin/python
+# Dep(post):	/usr/lib/libgobject-2.0.so	/usr/lib/libgobject-2.0.so
+# Dep(post):	/usr/bin/gperf	/usr/bin/gperf
+# Dep(post):	/usr/lib/libenchant.so	/usr/lib/libenchant.so
+# Dep(post):	/usr/lib/libsoup-2.4.so	/usr/lib/libsoup-2.4.so
+# Dep(post):	/usr/lib/libicuuc.so	/usr/lib/libicuuc.so
+# Dep(post):	/usr/lib/libgtk-x11-2.0.so	/usr/lib/libgtk-x11-2.0.so
+# Dep(post):	/usr/lib/libsqlite3.so	/usr/lib/libsqlite3.so
+# Dep(post):	/usr/lib/libxslt.so	/usr/lib/libxslt.so
+# Dep(post):	/usr/lib/libXt.so	/usr/lib/libXt.so
+
+nbuild() {
+./configure --prefix=/usr --with-gtk=2.0 \
+--enable-video --enable-introspection \
+--with-font-backend=freetype --enable-gtk-doc \
+--enable-jit --with-unicode-backend=icu \
+--enable-spellcheck "$@"
+make
+}
+
+ninstall() {
+make install
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

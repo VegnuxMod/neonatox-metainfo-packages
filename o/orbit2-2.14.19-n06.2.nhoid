@@ -1,0 +1,33 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sánchez <cargabsj175@gmail.com>
+
+# Name:	orbit2
+# Version:	2.14.19
+# Release:	n06.2
+# License:	LGPL GPL
+# Group:	Gnome Desktop
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64
+# Url:	http://www.gnome.org
+# Description:	Thin/fast CORBA ORB.
+# MD5:	58ebfcbdd68f93ec09def41a280257af  orbit2-2.14.19.tar.xz
+
+
+# BuildDep:	/usr/lib/libIDL-2.so	/usr/lib/libIDL-2.so
+# Dep(post):	/usr/lib/libIDL-2.so	/usr/lib/libIDL-2.so
+
+nbuild() {
+./configure --prefix=/usr --disable-static
+make
+}
+
+ninstall() {
+make install
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

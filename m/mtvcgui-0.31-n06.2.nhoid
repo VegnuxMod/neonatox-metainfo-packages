@@ -1,0 +1,54 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sánchez <carlos@lugma.org.ve>
+
+# Name:	mtvcgui
+# Version:	0.31
+# Release:	n06.2
+# License:	GPLv3
+# Group:	Multimedia
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64 arm arm64 armel
+# Url:	http://code.google.com/p/mtvcgui/
+# Description:	mtvcgui is a very simple graphical user interface for TV capture using the mplayer encoder (mencoder) written in python with qt4 libraries, using qtdesigner and PyQt4.
+# MD5:	6e3ec8b09d96e37e8a790bd586bae7b0  mtvcgui-0.31.tar.xz
+
+
+# BuildDep:	/usr/bin/aumix	/usr/bin/aumix
+# BuildDep:	/usr/lib/python2.7/site-packages/PyQt4/Qt.so	/usr/lib/python2.7/site-packages/PyQt4/Qt.so
+# Dep(post):	/usr/bin/aumix	/usr/bin/aumix
+# Dep(post):	/usr/lib/python2.7/site-packages/PyQt4/Qt.so	/usr/lib/python2.7/site-packages/PyQt4/Qt.so
+
+nbuild() {
+noemptyfuncs
+}
+
+ninstall() {
+mkdir /usr/lib/mtvcgui
+chmod 755 /usr/lib/mtvcgui
+cp -r * /usr/lib/mtvcgui
+ln -svf /usr/lib/mtvcgui/run.py /usr/bin/mtvcgui
+chmod 755 /usr/bin/mtvcgui
+ln -svf /usr/lib/mtvcgui/ui/icons/mplayer_32x32.png /usr/share/pixmaps/mtvcgui.png
+chmod 755 /usr/share/pixmaps/mtvcgui.png
+cat > /usr/share/applications/mtvcgui.desktop << "EOF"
+[Desktop Entry]
+Type=Application
+Name=Mencoder TV capture GUI
+Name[es]=Capturador de TV con Mencoder
+Name[en]=Mencoder TV capture GUI
+GenericName=Mencoder
+Comment=Captura de video/tv con mencoder
+Icon=mtvcgui
+TryExec=mtvcgui
+Exec=mtvcgui
+Terminal=false
+Categories=GTK;AudioVideo;Audio;Video;Player;TV;
+EOF
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

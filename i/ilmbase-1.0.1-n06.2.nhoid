@@ -1,0 +1,31 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	ilmbase
+# Version:	1.0.1
+# Release:	n06.2
+# License:	custom
+# Group:	Graphics Library
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64 arm arm64
+# Url:	http://www.openexr.org/
+# Description:	IlmThread is a thread abstraction library for use with OpenEXR.
+# MD5:	bba229c53afe172c7978c69cd1aff896  ilmbase-1.0.1.tar.xz
+
+
+
+nbuild() {
+./configure --prefix=/usr
+make
+}
+
+ninstall() {
+make install
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

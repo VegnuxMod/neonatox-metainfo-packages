@@ -1,0 +1,43 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	transmission
+# Version:	2.21
+# Release:	n06.2
+# License:	MIT
+# Group:	Networking
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64 arm arm64
+# Url:	http://www.transmissionbt.com/
+# Description:	Fast, easy, and free BitTorrent client (GTK+ GUI).
+# MD5:	e4551922da7523a4645cf4c15440e2d4  transmission-2.21.tar.xz
+
+
+# BuildDep:	/usr/lib/libcurl.so	/usr/lib/libcurl.so
+# BuildDep:	/usr/lib/libnotify.so	/usr/lib/libnotify.so
+# BuildDep:	/usr/bin/desktop-file-install	/usr/bin/desktop-file-install
+# BuildDep:	/usr/lib/libevent.so	/usr/lib/libevent.so
+# Dep(post):	/usr/lib/libevent.so	/usr/lib/libevent.so
+# Dep(post):	/usr/bin/desktop-file-install	/usr/bin/desktop-file-install
+# Dep(post):	/usr/lib/libnotify.so	/usr/lib/libnotify.so
+# Dep(post):	/usr/lib/libcurl.so	/usr/lib/libcurl.so
+
+nbuild() {
+./configure --prefix=/usr
+make
+}
+
+ninstall() {
+pkgdir=/tmp/transmission
+make -C gtk DESTDIR="${pkgdir}" install
+make -C po DESTDIR="${pkgdir}" install
+cp -r ${pkgdir}/* /
+rm -r ${pkgdir}
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

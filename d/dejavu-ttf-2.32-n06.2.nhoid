@@ -1,0 +1,32 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	dejavu-ttf
+# Version:	2.32
+# Release:	n06.2
+# License:	custom
+# Group:	X window System
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64 arm arm64
+# Url:	http://dejavu.sourceforge.net
+# Description:	Font family based on the Bitstream Vera Fonts with a wider range of characters.
+# MD5:	ba2a9278b357b05086f3e043484ae890  dejavu-ttf-2.32.tar.xz
+
+
+# BuildDep:	/usr/lib/libfontconfig.so	/usr/lib/libfontconfig.so
+# Dep(post):	/usr/lib/libfontconfig.so	/usr/lib/libfontconfig.so
+
+nbuild() {
+noemptyfuncs
+}
+
+ninstall() {
+tar xvf data.tar.bz2 -C /
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

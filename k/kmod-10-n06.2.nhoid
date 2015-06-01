@@ -1,0 +1,38 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	kmod
+# Version:	10
+# Release:	n06.2
+# License:	GPL
+# Group:	Core System
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64 arm armel
+# Url:	http://git.kernel.org/?p=utils/kernel/kmod/kmod.git;a=summary
+# Description:	The Kmod package contains libraries and utilities for loading kernel modules.
+# MD5:	71cd1eb375163eeb10e1a8da2dbdf4c5  kmod-10.tar.xz
+
+
+# BuildDep:	/usr/lib/libz.so	/usr/lib/libz.so
+# Dep(post):	/usr/lib/libz.so	/usr/lib/libz.so
+
+nbuild() {
+./configure --prefix=/usr --bindir=/bin --libdir=/lib --sysconfdir=/etc   \
+--with-xz --with-zlib
+make
+}
+
+ninstall() {
+make pkgconfigdir=/usr/lib/pkgconfig install
+for target in depmod insmod modinfo modprobe rmmod; do
+ln -sv ../bin/kmod /sbin/$target
+done
+ln -sv kmod /bin/lsmod
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

@@ -1,0 +1,71 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	gimp
+# Version:	2.8.0
+# Release:	n06.2
+# License:	GPL
+# Group:	Graphics
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64 arm arm64 armel
+# Url:	http://www.gimp.org/
+# Description:	GIMP is the GNU Image Manipulation Program.
+# MD5:	36114d8994a305ad5aa3bb203b6441e7  gimp-2.8.0.tar.xz
+
+
+# BuildDep:	/usr/lib/libgtk-x11-2.0.so	/usr/lib/libgtk-x11-2.0.so
+# BuildDep:	/usr/lib/liblcms.so	/usr/lib/liblcms.so
+# BuildDep:	/usr/lib/libXpm.so	/usr/lib/libXpm.so
+# BuildDep:	/usr/lib/libwmf.so	/usr/lib/libwmf.so
+# BuildDep:	/usr/lib/libXmu.so	/usr/lib/libXmu.so
+# BuildDep:	/usr/lib/librsvg-2.so	/usr/lib/librsvg-2.so
+# BuildDep:	/usr/lib/libmng.so	/usr/lib/libmng.so
+# BuildDep:	/usr/lib/libdbus-glib-1.so	/usr/lib/libdbus-glib-1.so
+# BuildDep:	/usr/lib/libexif.so	/usr/lib/libexif.so
+# BuildDep:	/usr/lib/python2.7/site-packages/gtk-2.0/gtk/_gtk.so	/usr/lib/python2.7/site-packages/gtk-2.0/gtk/_gtk.so
+# BuildDep:	/usr/bin/desktop-file-install	/usr/bin/desktop-file-install
+# BuildDep:	/usr/lib/libgegl-0.2.so	/usr/lib/libgegl-0.2.so
+# BuildDep:	/usr/lib/libasound.so	/usr/lib/libasound.so
+# BuildDep:	/usr/lib/libwebkitgtk-1.0.so	/usr/lib/libwebkitgtk-1.0.so
+# Dep(post):	/usr/lib/libwebkitgtk-1.0.so	/usr/lib/libwebkitgtk-1.0.so
+# Dep(post):	/usr/lib/libasound.so	/usr/lib/libasound.so
+# Dep(post):	/usr/lib/libgegl-0.2.so	/usr/lib/libgegl-0.2.so
+# Dep(post):	/usr/bin/desktop-file-install	/usr/bin/desktop-file-install
+# Dep(post):	/usr/lib/python2.7/site-packages/gtk-2.0/gtk/_gtk.so	/usr/lib/python2.7/site-packages/gtk-2.0/gtk/_gtk.so
+# Dep(post):	/usr/lib/libexif.so	/usr/lib/libexif.so
+# Dep(post):	/usr/lib/libdbus-glib-1.so	/usr/lib/libdbus-glib-1.so
+# Dep(post):	/usr/lib/libmng.so	/usr/lib/libmng.so
+# Dep(post):	/usr/lib/librsvg-2.so	/usr/lib/librsvg-2.so
+# Dep(post):	/usr/lib/libXmu.so	/usr/lib/libXmu.so
+# Dep(post):	/usr/lib/libwmf.so	/usr/lib/libwmf.so
+# Dep(post):	/usr/lib/libXpm.so	/usr/lib/libXpm.so
+# Dep(post):	/usr/lib/liblcms.so	/usr/lib/liblcms.so
+# Dep(post):	/usr/lib/libgtk-x11-2.0.so	/usr/lib/libgtk-x11-2.0.so
+
+nbuild() {
+./configure --prefix=/usr --sysconfdir=/etc \
+--enable-mp --enable-gimp-console --with-libcurl \
+--enable-python --with-gif-compression=lzw --without-aa
+make
+}
+
+ninstall() {
+pkgver=2.8.4
+make install
+ln -sf gimp-console-${pkgver%.*}.1.gz "/usr/share/man/man1/gimp-console.1.gz"
+ln -sf fgimp-remote-${pkgver%.*}.1.gz "/usr/share/man/man1/gimp-remote.1.gz"
+ln -sf gimprc-${pkgver%.*}.5.gz "/usr/share/man/man5/gimprc.5.gz"
+ln -sf gimptool-2.0.1.gz "/usr/share/man/man1/gimptool.1.gz"
+ln -sf gimp-${pkgver%.*}.1.gz "/usr/share/man/man1/gimp.1.gz"
+ln -sf gimp-${pkgver%.*} "/usr/bin/gimp"
+ln -sf gimp-console-${pkgver%.*} "/usr/bin/gimp-console"
+ln -sf gimp-remote-${pkgver%.*} "/usr/bin/gimp-remote"
+ln -sf gimptool-2.0 "/usr/bin/gimptool"
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

@@ -1,0 +1,46 @@
+#%NHO-0.5
+# Package Maintainer:	Francisco Jesus Navarro Cortes <dominuskernel@gmail.com>
+
+# Name:	dia
+# Version:	0.97.1
+# Release:	n07.1
+# License:	GPLv2
+# Group:	Graphics
+# Arch:	x86_64 i686
+# Url:	http://projects.gnome.org/dia
+# Description:	Aplicacion para elaborar diagramas de flujo
+# MD5:	1469ad44f960e33790f4fd5a5ec622cc  dia-0.97.1.tar.xz
+
+
+# BuildDep:	/usr/lib/libgtk-x11-2.0.so	/usr/lib/libgtk-x11-2.0.so
+# BuildDep:	/usr/lib/pkgconfig/gtk+-2.0.pc	/usr/lib/pkgconfig/gtk+-2.0.pc
+# BuildDep:	/usr/share/intltool/Makefile.in.in	/usr/share/intltool/Makefile.in.in
+# BuildDep:	/usr/lib/libfontconfig.so	/usr/lib/libfontconfig.so
+# BuildDep:	/usr/lib/libglib-2.0.so	/usr/lib/libglib-2.0.so
+# BuildDep:	/usr/lib/libatk-1.0.so	/usr/lib/libatk-1.0.so
+# BuildDep:	/usr/lib/libfreetype.so	/usr/lib/libfreetype.so
+# BuildDep:	/usr/lib/libpango-1.0.so	/usr/lib/libpango-1.0.so
+# BuildDep:	/usr/lib/libxml2.so	/usr/lib/libxml2.so
+# Dep(post):	/usr/lib/libgtk-x11-2.0.so	/usr/lib/libgtk-x11-2.0.so
+# Dep(post):	/usr/lib/libfontconfig.so	/usr/lib/libfontconfig.so
+# Dep(post):	/usr/lib/libfreetype.so	/usr/lib/libfreetype.so
+# Dep(post):	/usr/lib/libpango-1.0.so	/usr/lib/libpango-1.0.so
+# Dep(post):	/usr/lib/libxml2.so	/usr/lib/libxml2.so
+# Dep(post):	/usr/lib/libfreetype.so	/usr/lib/libfreetype.so
+
+nbuild() {
+patch -Np1 -i ../dia-0.97.1_fix_glib_header.patch
+./configure --prefix=/usr && make
+}
+
+ninstall() {
+make install
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

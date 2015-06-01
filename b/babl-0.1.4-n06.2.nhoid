@@ -1,0 +1,31 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	babl
+# Version:	0.1.4
+# Release:	n06.2
+# License:	LGPLv3
+# Group:	Graphics Library
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64 arm arm64
+# Url:	http://gegl.org/babl/
+# Description:	Dynamic, any to any, pixel format conversion library.
+# MD5:	bb5a137c4e35343912bda620f5ee98a0  babl-0.1.4.tar.xz
+
+
+
+nbuild() {
+./configure --prefix=/usr
+make
+}
+
+ninstall() {
+make install
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

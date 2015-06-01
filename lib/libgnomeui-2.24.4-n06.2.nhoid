@@ -1,0 +1,39 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	libgnomeui
+# Version:	2.24.4
+# Release:	n06.2
+# License:	LGPL
+# Group:	Gnome Desktop
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64 arm arm64
+# Url:	http://www.gnome.org
+# Description:	User Interface library for GNOME.
+# MD5:	872321ccbc971e1af5b8cc013bc2b8d1  libgnomeui-2.24.4.tar.xz
+
+
+# BuildDep:	/usr/lib/libbonoboui-2.so	/usr/lib/libbonoboui-2.so
+# BuildDep:	/usr/lib/libgnome-keyring.so	/usr/lib/libgnome-keyring.so
+# BuildDep:	/usr/lib/libSM.so	/usr/lib/libSM.so
+# Dep(post):	/usr/lib/libSM.so	/usr/lib/libSM.so
+# Dep(post):	/usr/lib/libgnome-keyring.so	/usr/lib/libgnome-keyring.so
+# Dep(post):	/usr/lib/libbonoboui-2.so	/usr/lib/libbonoboui-2.so
+
+nbuild() {
+./configure --prefix=/usr --sysconfdir=/etc \
+--localstatedir=/var --disable-static \
+--libexecdir=/usr/lib/libgnomeui
+make
+}
+
+ninstall() {
+make install
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

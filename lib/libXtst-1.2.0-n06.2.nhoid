@@ -1,0 +1,35 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	libXtst
+# Version:	1.2.0
+# Release:	n06.2.1
+# License:	X11 license
+# Group:	X Window System
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64 arm arm64
+# Url:	http://www.x.org/wiki
+# Description:	libXtst provides an X Window System client interface to the Record extension to the X protocol.
+# MD5:	4e6528a154b48ec066bff07a820dba7e  libXtst-1.2.0.tar.xz
+
+
+# BuildDep:	/usr/lib/libX11.so	/usr/lib/libX11.so
+# BuildDep:	/usr/lib/libXext.so	/usr/lib/libXext.so
+# OptionalBuildDep:	/usr/lib/libXext.so	/usr/lib/libXext.so
+# OptionalBuildDep:	/usr/lib/libX11.so	/usr/lib/libX11.so
+
+nbuild() {
+./configure --prefix=/usr --sysconfdir=/etc --mandir=/usr/share/man --localstatedir=/var
+make
+}
+
+ninstall() {
+make install
+}
+
+npostinstall() {
+ldconfig
+}
+
+npostremove() {
+noemptyfuncs
+}

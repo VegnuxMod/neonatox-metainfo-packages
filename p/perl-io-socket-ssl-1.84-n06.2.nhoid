@@ -1,0 +1,36 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	perl-io-socket-ssl
+# Version:	1.84
+# Release:	n06.2
+# License:	GPL
+# Group:	Programming
+# Arch:	noarch
+# Url:	http://search.cpan.org/dist/IO-Socket-SSL
+# Description:	Nearly transparent SSL encapsulation for IO::Socket::INET.
+# MD5:	918590bb1dbc353e22540ae3320be845  perl-io-socket-ssl-1.84.tar.xz
+
+# BuildDep:	/usr/bin/perl	/usr/bin/perl
+# BuildDep:	/usr/lib/perl5/vendor_perl/5.12.1/URI/http.pm	/usr/lib/perl5/vendor_perl/5.12.1/URI/http.pm
+# BuildDep:	/usr/share/man/man3/Net::SSLeay.3	/usr/share/man/man3/Net::SSLeay.3
+# Dep(post):	/usr/share/man/man3/Net::SSLeay.3	/usr/share/man/man3/Net::SSLeay.3
+# Dep(post):	/usr/lib/perl5/vendor_perl/5.12.1/URI/http.pm	/usr/lib/perl5/vendor_perl/5.12.1/URI/http.pm
+# Dep(post):	/usr/bin/perl	/usr/bin/perl
+
+nbuild() {
+perl Makefile.PL INSTALLDIRS=vendor
+make
+}
+
+ninstall() {
+make install
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

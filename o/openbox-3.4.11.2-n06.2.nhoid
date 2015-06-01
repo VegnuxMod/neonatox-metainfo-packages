@@ -1,0 +1,43 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sánchez <cargabsj175@gmail.com>
+
+# Name:	openbox
+# Version:	3.4.11.2
+# Release:	n06.2
+# License:	GPL
+# Group:	LXDE Desktop
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64
+# Url:	http://openbox.org
+# Description:	A window manager for the X11 windowing system.
+# MD5:	e6826273d4484b52e068f6403ba6f2cf  openbox-3.4.11.2.tar.xz
+
+
+# BuildDep:	/usr/lib/libstartup-notification-1.so	/usr/lib/libstartup-notification-1.so
+# BuildDep:	/usr/lib/libXinerama.so	/usr/lib/libXinerama.so
+# BuildDep:	/usr/lib/libXrandr.so	/usr/lib/libXrandr.so
+# BuildDep:	/usr/lib/libXcursor.so	/usr/lib/libXcursor.so
+# BuildDep:	/usr/lib/libpango-1.0.so	/usr/lib/libpango-1.0.so
+# Dep(post):	/usr/lib/libpango-1.0.so	/usr/lib/libpango-1.0.so
+# Dep(post):	/usr/lib/libXcursor.so	/usr/lib/libXcursor.so
+# Dep(post):	/usr/lib/libXrandr.so	/usr/lib/libXrandr.so
+# Dep(post):	/usr/lib/libXinerama.so	/usr/lib/libXinerama.so
+# Dep(post):	/usr/lib/libxml2.so	/usr/lib/libxml2.so
+# Dep(post):	/usr/lib/libstartup-notification-1.so	/usr/lib/libstartup-notification-1.so
+
+nbuild() {
+patch -Np1 -i ../which-2.20.patch
+./configure --prefix=/usr --with-x --enable-startup-notification --sysconfdir=/etc
+make
+}
+
+ninstall() {
+make install
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

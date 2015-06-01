@@ -1,0 +1,39 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	zenity
+# Version:	2.32.1
+# Release:	n06.2
+# License:	LGPL
+# Group:	Gnome Desktop
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64 arm arm64
+# Url:	http://www.gnome.org
+# Description:	Display graphical dialog boxes from shell scripts.
+# MD5:	745398ae962a6f0ebba1b4d2e2a64cdc  zenity-2.32.1.tar.xz
+
+
+# BuildDep:	/usr/bin/gnome-doc-tool	/usr/bin/gnome-doc-tool
+# BuildDep:	/usr/lib/libnotify.so	/usr/lib/libnotify.so
+# BuildDep:	/usr/lib/libgtk-x11-2.0.so	/usr/lib/libgtk-x11-2.0.so
+# Dep(post):	/usr/lib/libgtk-x11-2.0.so	/usr/lib/libgtk-x11-2.0.so
+# Dep(post):	/usr/lib/libnotify.so	/usr/lib/libnotify.so
+# Dep(post):	/usr/bin/gnome-doc-tool	/usr/bin/gnome-doc-tool
+
+nbuild() {
+patch -Np0 -i "../zenity-2.32.1-libnotify-0.7.patch"
+./configure --prefix=/usr --sysconfdir=/etc \
+--localstatedir=/var --disable-scrollkeeper
+make
+}
+
+ninstall() {
+make install
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

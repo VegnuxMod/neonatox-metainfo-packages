@@ -1,0 +1,51 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sánchez <cargabsj175@gmail.com>
+
+# Name:	gconf
+# Version:	2.32.0
+# Release:	n06.2
+# License:	LGPL
+# Group:	Gnome Desktop
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64
+# Url:	http://www.gnome.org
+# Description:	A configuration database system.
+# MD5:	f8fec64c880492be6c1b7d166d4634d9  gconf-2.32.0.tar.xz
+
+
+# BuildDep:	/usr/lib/libORBit-2.so	/usr/lib/libORBit-2.so
+# BuildDep:	/usr/lib/libgtk-x11-2.0.so	/usr/lib/libgtk-x11-2.0.so
+# BuildDep:	/usr/lib/libxml2.so	/usr/lib/libxml2.so
+# BuildDep:	/usr/lib/libpolkit-agent-1.so	/usr/lib/libpolkit-agent-1.so
+# BuildDep:	/usr/lib/libldap.so	/usr/lib/libldap.so
+# BuildDep:	/usr/lib/libdbus-glib-1.so	/usr/lib/libdbus-glib-1.so
+# BuildDep:	/usr/lib/libgobject-2.0.so	/usr/lib/libgobject-2.0.so
+# Dep(post):	/usr/lib/libgobject-2.0.so	/usr/lib/libgobject-2.0.so
+# Dep(post):	/usr/lib/libdbus-glib-1.so	/usr/lib/libdbus-glib-1.so
+# Dep(post):	/usr/lib/libldap.so	/usr/lib/libldap.so
+# Dep(post):	/usr/lib/libpolkit-agent-1.so	/usr/lib/libpolkit-agent-1.so
+# Dep(post):	/usr/lib/libxml2.so	/usr/lib/libxml2.so
+# Dep(post):	/usr/lib/libgtk-x11-2.0.so	/usr/lib/libgtk-x11-2.0.so
+# Dep(post):	/usr/lib/libORBit-2.so	/usr/lib/libORBit-2.so
+
+nbuild() {
+patch -Np1 -i "../gconf-reload.patch"
+patch -Np1 -i "../01_xml-gettext-domain.patch"
+./configure --prefix=/usr --sysconfdir=/etc --localstatedir=/var \
+--libexecdir=/usr/lib/GConf --disable-static --enable-defaults-service
+make pkglibdir=/usr/lib/GConf
+}
+
+ninstall() {
+make install
+install -m755 -d "/etc/gconf/gconf.xml.system"
+install -m755 "../gconf-merge-schema" "/usr/bin/"
+install -m755 "../gconfpkg" "/usr/sbin/"
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

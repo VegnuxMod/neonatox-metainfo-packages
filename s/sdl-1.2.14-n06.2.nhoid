@@ -1,0 +1,42 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	sdl
+# Version:	1.2.14
+# Release:	n06.2
+# License:	LGPL
+# Group:	Multimedia
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64 arm arm64
+# Url:	http://www.libsdl.org
+# Description:	A library for portable low-level access to a video framebuffer, audio output, mouse, and keyboard.
+# MD5:	161d40713cb65884d8ea368e6c7d8439  sdl-1.2.14.tar.xz
+
+
+# BuildDep:	/usr/lib/libXext.so	/usr/lib/libXext.so
+# BuildDep:	/usr/lib/libXrender.so	/usr/lib/libXrender.so
+# BuildDep:	/usr/lib/libX11.so	/usr/lib/libX11.so
+# BuildDep:	/usr/lib/libesd.so	/usr/lib/libesd.so
+# Dep(post):	/usr/lib/libesd.so	/usr/lib/libesd.so
+# Dep(post):	/usr/lib/libX11.so	/usr/lib/libX11.so
+# Dep(post):	/usr/lib/libXrender.so	/usr/lib/libXrender.so
+# Dep(post):	/usr/lib/libXext.so	/usr/lib/libXext.so
+
+nbuild() {
+patch -Np1 -i ../sdl-1.2.14-fix-disappearing-cursor.patch
+patch -Np1 -i ../sdl-1.2.14-fix-mouse-clicking.patch
+patch -Np1 -i ../sdl-1.2.14-joystick-crash.diff
+./configure --prefix=/usr --disable-nasm --enable-alsa --enable-esd --with-x --disable-rpath
+make
+}
+
+ninstall() {
+make install
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

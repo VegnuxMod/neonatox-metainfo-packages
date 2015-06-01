@@ -1,0 +1,39 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	tdb
+# Version:	1.2.9
+# Release:	n06.2
+# License:	GPLv3
+# Group:	System
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64 arm arm64 armel
+# Url:	http://tdb.samba.org/
+# Description:	A Trivia Database similar to GDBM but allows simultaneous commits.
+# MD5:	40ca671c0ba9ab4c35ac0e98cc1e092b  tdb-1.2.9.tar.xz
+
+
+# OptionalBuildDep:	/usr/share/xml/docbook/xsl-stylesheets-1.76.1/manpages/docbook.xsl	/usr/share/xml/docbook/xsl-stylesheets-1.76.1/manpages/docbook.xsl
+# OptionalBuildDep:	/usr/bin/python	/usr/bin/python
+# OptionalBuildDep:	/usr/lib/libxslt.so	/usr/lib/libxslt.so
+# OptionalDep(post):	/usr/share/xml/docbook/xsl-stylesheets-1.76.1/manpages/docbook.xsl	/usr/share/xml/docbook/xsl-stylesheets-1.76.1/manpages/docbook.xsl
+# OptionalDep(post):	/usr/bin/python	/usr/bin/python
+# OptionalDep(post):	/usr/lib/libxslt.so	/usr/lib/libxslt.so
+
+nbuild() {
+./configure --prefix=/usr \
+--localstatedir=/var \
+--sysconfdir=/etc/samba
+make
+}
+
+ninstall() {
+make install
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

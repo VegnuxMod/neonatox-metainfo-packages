@@ -1,0 +1,37 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	perl-http-date
+# Version:	6.02
+# Release:	n06.2
+# License:	GPL
+# Group:	Programming
+# Arch:	noarch
+# Url:	http://search.cpan.org/dist/HTTP-Date
+# Description:	Date conversion routines.
+# MD5:	f24fa659a84f03d4af71ab80acbd98f2  perl-http-date-6.02.tar.xz
+
+# BuildDep:	/usr/bin/perl	/usr/bin/perl
+# OptionalBuildDep:	/usr/bin/perl	/usr/bin/perl
+
+nbuild() {
+export PERL_MM_USE_DEFAULT=1 PERL5LIB=""
+export PERL_AUTOINSTALL=--skipdeps
+export PERL_MM_OPT="INSTALLDIRS=vendor"
+export PERL_MB_OPT="--installdirs vendor"
+export MODULEBUILDRC=/dev/null
+perl Makefile.PL
+make
+}
+
+ninstall() {
+make install
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

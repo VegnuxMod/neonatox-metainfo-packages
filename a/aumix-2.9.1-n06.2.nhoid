@@ -1,0 +1,34 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	aumix
+# Version:	2.9.1
+# Release:	n06.2
+# License:	GPL
+# Group:	Multimedia
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64 arm arm64 armel
+# Url:	http://www.jpj.net/~trevor/aumix.html
+# Description:	A color text mode sound mixer with GPM support.
+# MD5:	8558b0276e5c55a43c40b974f696ec76  aumix-2.9.1.tar.xz
+
+
+# BuildDep:	/usr/lib/libgtk-x11-2.0.so	/usr/lib/libgtk-x11-2.0.so
+# Dep(post):	/usr/lib/libgtk-x11-2.0.so	/usr/lib/libgtk-x11-2.0.so
+
+nbuild() {
+./configure --prefix=/usr --mandir=/usr/share/man --without-gtk1 --without-alsa
+make
+}
+
+ninstall() {
+make install
+install -D -m0644 ../aumix.desktop /usr/share/applications/aumix.desktop
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

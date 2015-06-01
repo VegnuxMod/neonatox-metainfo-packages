@@ -1,0 +1,35 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	gtkhotkey
+# Version:	0.2.1
+# Release:	n06.2
+# License:	LGPLv3
+# Group:	System
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64 arm arm64 armel
+# Url:	https://launchpad.net/gtkhotkey
+# Description:	Platform independent hotkey handling for Gtk+ applications.
+# MD5:	34c28f06f2e6a6573729d6aeae76d393  gtkhotkey-0.2.1.tar.xz
+
+
+# BuildDep:	/usr/lib/libgtk-x11-2.0.so	/usr/lib/libgtk-x11-2.0.so
+# Dep(post):	/usr/lib/libgtk-x11-2.0.so	/usr/lib/libgtk-x11-2.0.so
+
+nbuild() {
+sed -i "/gtkhotkeydocdir/s/\${prefix}/\/usr\/share/g" Makefile.*
+./configure --prefix=/usr \
+--disable-static
+make
+}
+
+ninstall() {
+make install
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

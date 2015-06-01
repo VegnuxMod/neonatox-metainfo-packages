@@ -1,0 +1,36 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	wpscrack
+# Version:	2011
+# Release:	n06.2
+# License:	custom
+# Group:	Networking
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64 arm arm64 armel
+# Url:	http://sviehb.wordpress.com/
+# Description:	PoC implementation of a brute force attack against WPS - PIN External Registrar.
+# MD5:	235780122de2a6d34622e8b12fd16b73  wpscrack-2011.tar.xz
+
+
+# BuildDep:	/usr/sbin/tcpdump	/usr/sbin/tcpdump
+# BuildDep:	/usr/lib/python2.7/site-packages/Crypto/__init__.py	/usr/lib/python2.7/site-packages/Crypto/__init__.py
+# BuildDep:	/usr/bin/scapy	/usr/bin/scapy
+# Dep(post):	/usr/bin/scapy	/usr/bin/scapy
+# Dep(post):	/usr/lib/python2.7/site-packages/Crypto/__init__.py	/usr/lib/python2.7/site-packages/Crypto/__init__.py
+# Dep(post):	/usr/sbin/tcpdump	/usr/sbin/tcpdump
+
+nbuild() {
+noemptyfuncs
+}
+
+ninstall() {
+install -D -m755 wpscrack.py /usr/bin/wpscrack
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

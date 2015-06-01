@@ -1,0 +1,45 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	cdrdao
+# Version:	1.2.3
+# Release:	n06.2
+# License:	GPL
+# Group:	Multimedia
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64 arm arm64
+# Url:	http://cdrdao.sourceforge.net/
+# Description:	Records audio/data CD-Rs in disk-at-once (DAO) mode.
+# MD5:	76734078ec096d878738cf3d2b4dcd3c  cdrdao-1.2.3.tar.xz
+
+
+# BuildDep:	/usr/lib/libmp3lame.so	/usr/lib/libmp3lame.so
+# BuildDep:	/usr/lib/libmad.so	/usr/lib/libmad.so
+# BuildDep:	/usr/lib/libvorbis.so	/usr/lib/libvorbis.so
+# BuildDep:	/usr/lib/libao.so	/usr/lib/libao.so
+# Dep(post):	/usr/lib/libao.so	/usr/lib/libao.so
+# Dep(post):	/usr/lib/libvorbis.so	/usr/lib/libvorbis.so
+# Dep(post):	/usr/lib/libmad.so	/usr/lib/libmad.so
+# Dep(post):	/usr/lib/libmp3lame.so	/usr/lib/libmp3lame.so
+
+nbuild() {
+patch -Np1 -i "../cdrdao-1.2.3-autoconf-update.patch"
+patch -Np1 -i "../cdrdao-1.2.3-k3b.patch"
+patch -Np1 -i "../cdrdao-1.2.3-stat.patch"
+autoreconf
+./configure --prefix=/usr --mandir=/usr/share/man \
+--sysconfdir=/etc --with-lame \
+--with-ogg-support --with-mp3-support
+make
+}
+
+ninstall() {
+make install
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

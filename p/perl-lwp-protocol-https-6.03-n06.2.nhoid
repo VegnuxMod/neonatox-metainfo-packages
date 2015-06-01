@@ -1,0 +1,43 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	perl-lwp-protocol-https
+# Version:	6.03
+# Release:	n06.2
+# License:	GPL
+# Group:	Programming
+# Arch:	noarch
+# Url:	https://metacpan.org/release/LWP-Protocol-https
+# Description:	Provide https support for LWP::UserAgent.
+# MD5:	1277b59b4930370ad1616f6b3f07106d  perl-lwp-protocol-https-6.03.tar.xz
+
+# BuildDep:	/usr/bin/perl	/usr/bin/perl
+# BuildDep:	/usr/lib/perl5/vendor_perl/5.12.1/IO/Socket/SSL.pm	/usr/lib/perl5/vendor_perl/5.12.1/IO/Socket/SSL.pm
+# BuildDep:	/usr/lib/perl5/vendor_perl/5.12.1/Mozilla/CA/cacert.pem	/usr/lib/perl5/vendor_perl/5.12.1/Mozilla/CA/cacert.pem
+# BuildDep:	/usr/lib/perl5/vendor_perl/5.12.1/Net/HTTP.pm	/usr/lib/perl5/vendor_perl/5.12.1/Net/HTTP.pm
+# Dep(post):	/usr/bin/perl	/usr/bin/perl
+# Dep(post):	/usr/lib/perl5/vendor_perl/5.12.1/IO/Socket/SSL.pm	/usr/lib/perl5/vendor_perl/5.12.1/IO/Socket/SSL.pm
+# Dep(post):	/usr/lib/perl5/vendor_perl/5.12.1/Mozilla/CA/cacert.pem	/usr/lib/perl5/vendor_perl/5.12.1/Mozilla/CA/cacert.pem
+# Dep(post):	/usr/lib/perl5/vendor_perl/5.12.1/Net/HTTP.pm	/usr/lib/perl5/vendor_perl/5.12.1/Net/HTTP.pm
+
+nbuild() {
+export PERL_MM_USE_DEFAULT=1 PERL5LIB=""
+export PERL_AUTOINSTALL=--skipdeps
+export PERL_MM_OPT="INSTALLDIRS=vendor"
+export PERL_MB_OPT="--installdirs vendor"
+export MODULEBUILDRC=/dev/null
+perl Makefile.PL
+make
+}
+
+ninstall() {
+make install
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

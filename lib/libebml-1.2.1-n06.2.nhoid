@@ -1,0 +1,32 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	libebml
+# Version:	1.2.1
+# Release:	n06.2
+# License:	LGPL
+# Group:	Programming
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64 arm arm64
+# Url:	http://dl.matroska.org/downloads/libebml/
+# Description:	Extensible Binary Meta Language library.
+# MD5:	0b87eec703700e9b34f05302d21daece  libebml-1.2.1.tar.xz
+
+
+
+nbuild() {
+cd make/linux
+make
+}
+
+ninstall() {
+cd make/linux
+make prefix=/usr install
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

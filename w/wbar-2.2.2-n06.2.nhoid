@@ -1,0 +1,35 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	wbar
+# Version:	2.2.2
+# Release:	n06.2
+# License:	GPL
+# Group:	Desktop bar
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64 arm arm64
+# Url:	http://code.google.com/p/wbar
+# Description:	A quick launch bar developed with speed in mind.
+# MD5:	a460a80627ddef213331a98902f62889  wbar-2.2.2.tar.xz
+
+
+# BuildDep:	/usr/lib/libglade-2.0.so	/usr/lib/libglade-2.0.so
+# BuildDep:	/usr/lib/libImlib2.so	/usr/lib/libImlib2.so
+# Dep(post):	/usr/lib/libImlib2.so	/usr/lib/libImlib2.so
+# Dep(post):	/usr/lib/libglade-2.0.so	/usr/lib/libglade-2.0.so
+
+nbuild() {
+./configure --prefix=/usr --exec_prefix=/usr --sysconfdir=/etc
+make
+}
+
+ninstall() {
+make install
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

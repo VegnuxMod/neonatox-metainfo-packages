@@ -1,0 +1,36 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sánchez <cargabsj175@gmail.com>
+
+# Name:	lsof
+# Version:	4.84
+# Release:	n06.2
+# License:	custom
+# Group:	Core System
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64
+# Url:	http://people.freebsd.org/~abe/
+# Description:	Lists open files for running Unix processes.
+# MD5:	be714fe9a7ce172cb1ecab3842103570  lsof-4.84.tar.xz
+
+
+
+nbuild() {
+tar xf lsof_4.84_src.tar
+cd lsof_4.84_src
+sed -i 's|/\* #define\tHASSECURITY\t1 \*/|#define\tHASSECURITY\t1|' dialects/linux/machine.h
+./Configure -n linux
+make
+}
+
+ninstall() {
+cd lsof_4.84_src
+install -Dm0755 -o root -g root lsof /usr/sbin/lsof
+install -Dm0644 -o root -g root lsof.8 /usr/share/man/man8/lsof.8
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

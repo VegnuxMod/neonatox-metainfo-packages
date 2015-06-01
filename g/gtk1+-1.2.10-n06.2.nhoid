@@ -1,0 +1,44 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	gtk1+
+# Version:	1.2.10
+# Release:	n06.2
+# License:	GPLv2
+# Group:	Graphics
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64 arm arm64 armel
+# Url:	http://www.gtk.org
+# Description:	The Gtk1 package contains version 1 of the GTK+ libraries. GTK+ is a multi-platform toolkit for creating graphical user interfaces. It is the GUI toolkit that Gnome uses. While the current version of Gnome - Gnome 2 - is based on Gtk2, there are still a number of packages that use the Gtk1 version of GTK+.
+# MD5:	59722f4612b4128ce2c4e31aca81c307  gtk1+-1.2.10.tar.xz
+
+
+# BuildDep:	/usr/bin/X	/usr/bin/X
+# BuildDep:	/etc/profile.d/18-glib1.sh	/etc/profile.d/18-glib1.sh
+# Dep(post):	/etc/profile.d/18-glib1.sh	/etc/profile.d/18-glib1.sh
+# Dep(post):	/usr/bin/X	/usr/bin/X
+
+nbuild() {
+patch -Np1 -i ../gtk+-1.2.10-config_update-1.patch
+patch -Np1 -i ../gtk+-1.2.10-fixes-1.patch
+./configure --prefix=/opt/gtk1 --sysconfdir=/opt/etc
+make
+}
+
+ninstall() {
+make install
+cat > /etc/profile.d/18-gtk1.sh << "EOF"
+export PATH="${PATH}:/opt/gtk1/bin"
+export PKG_CONFIG_PATH="${PKG_CONFIG_PATH}${PKG_CONFIG_PATH+:}/opt/gtk1/lib/pkgconfig"
+EOF
+chmod 755 /etc/profile.d/18-gtk1.sh
+}
+
+npostinstall() {
+echo "/opt/gtk1/lib" >> /etc/ld.so.conf
+ldconfig
+}
+
+npostremove() {
+sed -i 's@/opt/gtk1/lib@@g' /etc/ld.so.conf
+ldconfig
+}

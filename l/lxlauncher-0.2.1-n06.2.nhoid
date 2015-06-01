@@ -1,0 +1,46 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sánchez <cargabsj175@gmail.com>
+
+# Name:	lxlauncher
+# Version:	0.2.1
+# Release:	n06.2
+# License:	GPLv2
+# Group:	LXDE Desktop
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64
+# Url:	http://lxde.org/
+# Description:	Launcher for Asus EeePC (part of LXDE).
+# MD5:	85c415c630143dfa1a005317f801c5a7  lxlauncher-0.2.1.tar.xz
+
+
+# BuildDep:	/usr/lib/libgnome-menu.so	/usr/lib/libgnome-menu.so
+# BuildDep:	/usr/lib/libmenu-cache.so	/usr/lib/libmenu-cache.so
+# BuildDep:	/usr/lib/libgtk-x11-2.0.so	/usr/lib/libgtk-x11-2.0.so
+# BuildDep:	/usr/lib/libstartup-notification-1.so	/usr/lib/libstartup-notification-1.so
+# BuildDep:	/usr/bin/intltoolize	/usr/bin/intltoolize
+# Dep(post):	/usr/bin/intltoolize	/usr/bin/intltoolize
+# Dep(post):	/usr/lib/libstartup-notification-1.so	/usr/lib/libstartup-notification-1.so
+# Dep(post):	/usr/lib/libgtk-x11-2.0.so	/usr/lib/libgtk-x11-2.0.so
+# Dep(post):	/usr/lib/libmenu-cache.so	/usr/lib/libmenu-cache.so
+# Dep(post):	/usr/lib/libgnome-menu.so	/usr/lib/libgnome-menu.so
+
+nbuild() {
+patch -Np1 -i ../lxlauncher-0.2.1-fix-SUSE-lint-warnings.patch
+patch -Np1 -i ../lxlauncher-0.2.1-fix-for-the-new-behavior-of-libmenu-cache-0.3-series.patch
+patch -Np1 -i ../lxlauncher-0.2.1-dsofix.patch
+patch -Np1 -i ../intltool.patch
+autoreconf
+./configure --sysconfdir=/etc --prefix=/usr
+make
+}
+
+ninstall() {
+make install
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

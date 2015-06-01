@@ -1,0 +1,30 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	net-tools
+# Version:	1.60
+# Release:	n06.2
+# License:	GPLv2
+# Group:	Networking
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64
+# Url:	http://www.linux-foundation.org/en/Net:Net-tools
+# Description:	A collection of programs that form the base set of the NET-3 networking distribution for the Linux operating system.
+# MD5:	18a551be9c34a31da9ca7d42a6259598  net-tools-1.60.tar.xz
+
+
+
+nbuild() {
+make
+}
+
+ninstall() {
+make update
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

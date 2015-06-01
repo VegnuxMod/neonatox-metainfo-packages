@@ -1,0 +1,41 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	lpsolve
+# Version:	5.5.2.0
+# Release:	n06.2
+# License:	GPL
+# Group:	Programming
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64 arm arm64 armel
+# Url:	http://lpsolve.sourceforge.net/
+# Description:	A Mixed Integer Linear Programming (MILP) solver.
+# MD5:	62e5ba1d0ea5a12f07f6b91abb0cf353  lpsolve-5.5.2.0.tar.xz
+
+
+
+nbuild() {
+patch -Np1 -i ../cflags.patch
+cd lpsolve55
+sh -x ccc
+rm bin/ux*/liblpsolve55.a
+cd ../lp_solve
+sh -x ccc
+}
+
+ninstall() {
+pkgdir=/tmp/lpsolve
+install -dm755 ${pkgdir}/usr/{bin,lib,include/lpsolve}
+install -m755 lp_solve/bin/ux*/lp_solve ${pkgdir}/usr/bin/
+install -m755 lpsolve55/bin/ux*/liblpsolve55.so ${pkgdir}/usr/lib/
+install -m644 lp*.h ${pkgdir}/usr/include/lpsolve/
+cp -r ${pkgdir}/* /
+rm -r ${pkgdir}
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

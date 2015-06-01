@@ -1,0 +1,31 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	xfce4-dev-tools
+# Version:	4.8.0
+# Release:	n06.2
+# License:	GPLv2
+# Group:	XFCE Desktop
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64 arm arm64
+# Url:	http://www.xfce.org/
+# Description:	The Xfce development tools are a collection of tools and macros for Xfce developers and people that want to build Xfce from Git In addition it contains the Xfce developer's handbook.
+# MD5:	7ed9910a25df6833da2b350a0d761bbf  xfce4-dev-tools-4.8.0.tar.xz
+
+
+
+nbuild() {
+./configure --prefix=/usr --libexecdir=/usr/lib --localstatedir=/var
+make
+}
+
+ninstall() {
+make install
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

@@ -1,0 +1,31 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <carlos@gmail.com>
+
+# Name:	yasm
+# Version:	1.0.0
+# Release:	n06.2
+# License:	custom
+# Group:	Programming
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64
+# Url:	http://www.tortall.net/projects/yasm/
+# Description:	A rewrite of NASM to allow for multiple syntax supported (NASM, TASM, GAS, etc.).
+# MD5:	ec5d62c394a7c9534ef0d6ff3df5f5c2  yasm-1.0.0.tar.xz
+
+
+
+nbuild() {
+./configure --prefix=/usr
+make
+}
+
+ninstall() {
+make install
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

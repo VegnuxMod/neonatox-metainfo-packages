@@ -1,0 +1,33 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	ssidsniff
+# Version:	0.53
+# Release:	n06.2
+# License:	GPL
+# Group:	Networking
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64 arm arm64
+# Url:	http://www.bastard.net/~kos/wifi/
+# Description:	A curses based tool that allows identification, classification and data capturing of wireless networks.
+# MD5:	b83ee4a1c2df8c33911b4dc8acf1b0ac  ssidsniff-0.53.tar.xz
+
+
+# BuildDep:	/usr/lib/libpcap.so	/usr/lib/libpcap.so
+# Dep(post):	/usr/lib/libpcap.so	/usr/lib/libpcap.so
+
+nbuild() {
+./configure
+make
+}
+
+ninstall() {
+make install
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

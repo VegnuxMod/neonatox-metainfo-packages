@@ -1,0 +1,35 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	libxkbfile
+# Version:	1.0.7
+# Release:	n06.2.1
+# License:	custom
+# Group:	X Window System
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64 arm arm64
+# Url:	http://www.x.org/wiki
+# Description:	X11 keyboard file manipulation library
+# MD5:	4c62c39af12d611ab1efce4890f2e249  libxkbfile-1.0.7.tar.xz
+
+
+# BuildDep:	/usr/lib/libX11.so	/usr/lib/libX11.so
+# BuildDep:	/usr/share/pkgconfig/xorg-macros.pc	/usr/share/pkgconfig/xorg-macros.pc
+# Dep(post):	/usr/share/pkgconfig/xorg-macros.pc	/usr/share/pkgconfig/xorg-macros.pc
+# Dep(post):	/usr/lib/libX11.so	/usr/lib/libX11.so
+
+nbuild() {
+./configure --prefix=/usr --sysconfdir=/etc --disable-static
+make
+}
+
+ninstall() {
+make install
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

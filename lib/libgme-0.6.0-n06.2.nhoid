@@ -1,0 +1,35 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	libgme
+# Version:	0.6.0
+# Release:	n06.2
+# License:	LGPL
+# Group:	Multimedia
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64 arm arm64
+# Url:	http://game-music-emu.googlecode.com/
+# Description:	Video game music file emulation/playback library.
+# MD5:	ca2f0effffe840c90e5e198e059e16d4  libgme-0.6.0.tar.xz
+
+
+# BuildDep:	/usr/bin/cmake	/usr/bin/cmake
+
+nbuild() {
+mkdir -p build
+cd build
+cmake .. -DCMAKE_INSTALL_PREFIX=/usr
+make
+}
+
+ninstall() {
+cd build
+make install
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

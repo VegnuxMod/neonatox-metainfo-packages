@@ -1,0 +1,46 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	gcc-fortran
+# Version:	4.5.1
+# Release:	n06.2
+# License:	GPLv3
+# Group:	Programming
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64 arm arm64 armel
+# Url:	http://gcc.gnu.org
+# Description:	Fortran front-end for GCC.
+# MD5:	d39a3d65ec77deb79fd96733abbb95a1  gcc-fortran-4.5.1.tar.xz
+
+
+
+nbuild() {
+./build.gcc-fortran
+}
+
+ninstall() {
+_basedir=/usr/src/nhopkg/gcc-4.5.1
+pkgver="4.5.1"
+CHOST=$(uname -m)-pc-linux-gnu
+pkgdir="/tmp/gcc-fortran"
+make -j1 DESTDIR=${pkgdir} install-target-libquadmath
+make -j1 DESTDIR=${pkgdir} install-target-libgfortran
+make -j1 -C ${CHOST}/libgomp DESTDIR=${pkgdir} install-nodist_fincludeHEADERS
+make -j1 -C gcc DESTDIR=${pkgdir} fortran.install-{common,man,info}
+install -Dm755 gcc/f951 ${pkgdir}/usr/lib/gcc/${CHOST}/$pkgver/f951
+# remove libraries included in gcc-libs
+rm ${pkgdir}/usr/lib/lib{gfortran,quadmath}.so*
+rm ${pkgdir}/usr/share/info/libquadmath.info
+ln -s gfortran ${pkgdir}/usr/bin/f95
+# Install Runtime Library Exception
+install -Dm644 ${_basedir}/COPYING.RUNTIME ${pkgdir}/usr/share/licenses/gcc-fortran/RUNTIME.LIBRARY.EXCEPTION
+cp -r ${pkgdir}/* /
+rm -r ${pkgdir}
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

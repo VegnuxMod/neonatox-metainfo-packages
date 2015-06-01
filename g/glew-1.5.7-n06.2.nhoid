@@ -1,0 +1,37 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sánchez <cargabsj175@gmail.com>
+
+# Name:	glew
+# Version:	1.5.7
+# Release:	n06.2
+# License:	BSD MIT GPL
+# Group:	Graphic Library
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64
+# Url:	http://glew.sourceforge.net
+# Description:	The OpenGL Extension Wrangler Library.
+# MD5:	f566392e17a1bd3bf91e3d39f6bc5f9d  glew-1.5.7.tar.xz
+
+
+# BuildDep:	/usr/lib/libXmu.so	/usr/lib/libXmu.so
+# BuildDep:	/usr/lib/libXi.so	/usr/lib/libXi.so
+# BuildDep:	/usr/lib/libGL.so	/usr/lib/libGL.so
+# Dep(post):	/usr/lib/libGL.so	/usr/lib/libGL.so
+# Dep(post):	/usr/lib/libXi.so	/usr/lib/libXi.so
+# Dep(post):	/usr/lib/libXmu.so	/usr/lib/libXmu.so
+
+nbuild() {
+sed -i 's|lib64|lib|' config/Makefile.linux
+make
+}
+
+ninstall() {
+make install
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

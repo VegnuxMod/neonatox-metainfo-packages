@@ -1,0 +1,35 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	x264
+# Version:	20120204
+# Release:	n06.2
+# License:	GPL
+# Group:	Multimedia
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64 arm arm64 armel
+# Url:	http://www.videolan.org/developers/x264.html
+# Description:	Free library for encoding H264/AVC video streams.
+# MD5:	e3592bea570c9bb619a2ae7d7f501004  x264-20120204.tar.xz
+
+
+
+nbuild() {
+./configure --enable-shared
+make
+}
+
+ninstall() {
+make DESTDIR="$pkgdir" \
+bindir=/usr/bin \
+libdir=/usr/lib \
+includedir=/usr/include \
+install
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

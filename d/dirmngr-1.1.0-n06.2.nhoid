@@ -1,0 +1,43 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	dirmngr
+# Version:	1.1.0
+# Release:	n06.2
+# License:	GPL
+# Group:	System
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64 arm arm64
+# Url:	ftp://ftp.gnupg.org/gcrypt/dirmngr
+# Description:	A daemon to handle CRL and certificate requests.
+# MD5:	433033abfcb2f69f99164f804d9936f5  dirmngr-1.1.0.tar.xz
+
+
+# BuildDep:	/usr/lib/libgcrypt.so	/usr/lib/libgcrypt.so
+# BuildDep:	/usr/lib/libldap.so	/usr/lib/libldap.so
+# BuildDep:	/usr/lib/libksba.so	/usr/lib/libksba.so
+# BuildDep:	/usr/lib/libgpg-error.so	/usr/lib/libgpg-error.so
+# BuildDep:	/usr/lib/libassuan.so	/usr/lib/libassuan.so
+# BuildDep:	/usr/lib/libpth.so	/usr/lib/libpth.so
+# Dep(post):	/usr/lib/libpth.so	/usr/lib/libpth.so
+# Dep(post):	/usr/lib/libassuan.so	/usr/lib/libassuan.so
+# Dep(post):	/usr/lib/libgpg-error.so	/usr/lib/libgpg-error.so
+# Dep(post):	/usr/lib/libksba.so	/usr/lib/libksba.so
+# Dep(post):	/usr/lib/libldap.so	/usr/lib/libldap.so
+# Dep(post):	/usr/lib/libgcrypt.so	/usr/lib/libgcrypt.so
+
+nbuild() {
+./configure --prefix=/usr  --libexecdir=/usr/lib
+make
+}
+
+ninstall() {
+make install
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

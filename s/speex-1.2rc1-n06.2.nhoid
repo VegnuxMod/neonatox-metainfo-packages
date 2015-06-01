@@ -1,0 +1,34 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sánchez <cargabsj175@gmail.com>
+
+# Name:	speex
+# Version:	1.2rc1
+# Release:	n06.2
+# License:	BSD
+# Group:	Multimedia
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64
+# Url:	http://www.speex.org/
+# Description:	A free codec for free speech.
+# MD5:	a7d70cc1e80cd027065249c0373a4fbe  speex-1.2rc1.tar.xz
+
+
+# BuildDep:	/usr/lib/libogg.so	/usr/lib/libogg.so
+# Dep(post):	/usr/lib/libogg.so	/usr/lib/libogg.so
+
+nbuild() {
+./configure --prefix=/usr --sysconfdir=/etc --localstatedir=/var
+make
+}
+
+ninstall() {
+make install
+cp /usr/include/speex/* /usr/include/
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

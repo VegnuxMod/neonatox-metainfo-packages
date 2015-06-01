@@ -1,0 +1,35 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sánchez <cargabsj175@gmail.com>
+
+# Name:	gnome-menus
+# Version:	2.30.4
+# Release:	n06.2
+# License:	GPL LGPL
+# Group:	GNOME Desktop
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64
+# Url:	http://www.gnome.org
+# Description:	GNOME menu specifications.
+# MD5:	7438f4eeaf97c45eb54e4f980860c9ad  gnome-menus-2.30.4.tar.xz
+
+
+# BuildDep:	/usr/lib/python2.7/site-packages/gtk-2.0/gtk/_gtk.so	/usr/lib/python2.7/site-packages/gtk-2.0/gtk/_gtk.so
+# Dep(post):	/usr/lib/python2.7/site-packages/gtk-2.0/gtk/_gtk.so	/usr/lib/python2.7/site-packages/gtk-2.0/gtk/_gtk.so
+
+nbuild() {
+patch -Np0 -i "../menus.patch"
+./configure --prefix=/usr --sysconfdir=/etc \
+--localstatedir=/var --disable-static
+make
+}
+
+ninstall() {
+make install
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

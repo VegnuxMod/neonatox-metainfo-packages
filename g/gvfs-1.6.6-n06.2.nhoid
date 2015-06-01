@@ -1,0 +1,51 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	gvfs
+# Version:	1.6.6
+# Release:	n06.2
+# License:	LGPL
+# Group:	Gnome Desktop
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64 arm arm64 armel
+# Url:	http://www.gnome.org
+# Description:	Userspace virtual filesystem implemented as a pluggable module for gio.
+# MD5:	a45df1468d4833d1e4e14f3dd7dcce67  gvfs-1.6.6.tar.xz
+
+
+# BuildDep:	/usr/lib/libsoup-gnome-2.4.so	/usr/lib/libsoup-gnome-2.4.so
+# BuildDep:	/usr/lib/libcdio.so	/usr/lib/libcdio.so
+# BuildDep:	/usr/lib/libfuse.so	/usr/lib/libfuse.so
+# BuildDep:	/usr/lib/libgphoto2.so	/usr/lib/libgphoto2.so
+# BuildDep:	/usr/lib/libarchive.so	/usr/lib/libarchive.so
+# BuildDep:	/usr/lib/libgdu.so	/usr/lib/libgdu.so
+# BuildDep:	/usr/bin/obex-data-server	/usr/bin/obex-data-server
+# Dep(post):	/usr/bin/obex-data-server	/usr/bin/obex-data-server
+# Dep(post):	/usr/lib/libgdu.so	/usr/lib/libgdu.so
+# Dep(post):	/usr/lib/libarchive.so	/usr/lib/libarchive.so
+# Dep(post):	/usr/lib/libgphoto2.so	/usr/lib/libgphoto2.so
+# Dep(post):	/usr/lib/libfuse.so	/usr/lib/libfuse.so
+# Dep(post):	/usr/lib/libcdio.so	/usr/lib/libcdio.so
+# Dep(post):	/usr/lib/libsoup-gnome-2.4.so	/usr/lib/libsoup-gnome-2.4.so
+
+nbuild() {
+./configure --prefix=/usr --sysconfdir=/etc \
+--localstatedir=/var --disable-static \
+--libexecdir=/usr/lib/gvfs --disable-gconf \
+--with-bash-completion-dir=/etc/bash_completion.d
+make
+}
+
+ninstall() {
+sed -e 's/^am__append_3/#am__append_3/' \
+-e 's/^am__append_4/#am__append_4/' \
+-i monitor/Makefile
+make install
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

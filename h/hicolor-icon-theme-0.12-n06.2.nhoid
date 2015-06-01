@@ -1,0 +1,31 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sánchez <cargabsj175@gmail.com>
+
+# Name:	hicolor-icon-theme
+# Version:	0.12
+# Release:	n06.2
+# License:	GPLv2
+# Group:	Core System
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64
+# Url:	http://icon-theme.freedesktop.org/wiki/HicolorTheme
+# Description:	Freedesktop.org Hicolor icon theme
+# MD5:	bdbf79ec9f951989f2ede54ed0fc6e95  hicolor-icon-theme-0.12.tar.xz
+
+
+
+nbuild() {
+./configure --prefix=/usr
+make
+}
+
+ninstall() {
+make install
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

@@ -1,0 +1,53 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	turpial
+# Version:	1.6.7
+# Release:	n06.2
+# License:	GPLv3
+# Group:	Networking
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64 arm arm64 armel
+# Url:	http://turpial.org.ve/
+# Description:	A multi-interface Twitter client written in Python.
+# MD5:	cde718ec9592ce1cfb3bf00f83b0c73e  turpial-1.6.7.tar.xz
+
+
+# BuildDep:	/usr/lib/python2.7/site-packages/setuptools/archive_util.py	/usr/lib/python2.7/site-packages/setuptools/archive_util.py
+# BuildDep:	/usr/lib/python2.7/site-packages/simplejson/encoder.py	/usr/lib/python2.7/site-packages/simplejson/encoder.py
+# BuildDep:	/usr/lib/python2.7/site-packages/gtk-2.0/gtk/_gtk.so	/usr/lib/python2.7/site-packages/gtk-2.0/gtk/_gtk.so
+# BuildDep:	/usr/lib/python2.7/site-packages/gtk-2.0/pynotify/_pynotify.so	/usr/lib/python2.7/site-packages/gtk-2.0/pynotify/_pynotify.so
+# BuildDep:	/usr/lib/python2.7/site-packages/pygst.py	/usr/lib/python2.7/site-packages/pygst.py
+# BuildDep:	/usr/bin/pybabel	/usr/bin/pybabel
+# BuildDep:	/usr/lib/python2.7/site-packages/webkit/webkit.so	/usr/lib/python2.7/site-packages/webkit/webkit.so
+# BuildDep:	/usr/lib/python2.7/site-packages/pygame/mixer.so	/usr/lib/python2.7/site-packages/pygame/mixer.so
+# BuildDep:	/usr/lib/libaspell.so	/usr/lib/libaspell.so
+# BuildDep:	/usr/bin/python	/usr/bin/python
+# Dep(post):	/usr/bin/python	/usr/bin/python
+# Dep(post):	/usr/lib/libaspell.so	/usr/lib/libaspell.so
+# Dep(post):	/usr/lib/python2.7/site-packages/pygame/mixer.so	/usr/lib/python2.7/site-packages/pygame/mixer.so
+# Dep(post):	/usr/lib/python2.7/site-packages/webkit/webkit.so	/usr/lib/python2.7/site-packages/webkit/webkit.so
+# Dep(post):	/usr/bin/pybabel	/usr/bin/pybabel
+# Dep(post):	/usr/lib/python2.7/site-packages/pygst.py	/usr/lib/python2.7/site-packages/pygst.py
+# Dep(post):	/usr/lib/python2.7/site-packages/gtk-2.0/pynotify/_pynotify.so	/usr/lib/python2.7/site-packages/gtk-2.0/pynotify/_pynotify.so
+# Dep(post):	/usr/lib/python2.7/site-packages/gtk-2.0/gtk/_gtk.so	/usr/lib/python2.7/site-packages/gtk-2.0/gtk/_gtk.so
+# Dep(post):	/usr/lib/python2.7/site-packages/simplejson/encoder.py	/usr/lib/python2.7/site-packages/simplejson/encoder.py
+# Dep(post):	/usr/lib/python2.7/site-packages/setuptools/archive_util.py	/usr/lib/python2.7/site-packages/setuptools/archive_util.py
+
+nbuild() {
+noemptyfuncs
+}
+
+ninstall() {
+pkgdir=/tmp/turpial
+python setup.py install --root=$pkgdir/ --optimize=1
+cp -r $pkgdir/* /
+rm -r $pkgdir
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

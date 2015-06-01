@@ -1,0 +1,35 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	diffuse
+# Version:	0.4.6
+# Release:	n06.2
+# License:	GPL
+# Group:	Text Editor
+# Arch:	any
+# Url:	http://diffuse.sourceforge.net/
+# Description:	A graphical tool for merging and comparing text files.
+# MD5:	ccb5f5fb052881d77e8179c9a1671fa2  diffuse-0.4.6.tar.xz
+
+
+# BuildDep:	/usr/lib/python2.7/site-packages/gtk-2.0/gtk/_gtk.so	/usr/lib/python2.7/site-packages/gtk-2.0/gtk/_gtk.so
+# Dep(post):	/usr/lib/python2.7/site-packages/gtk-2.0/gtk/_gtk.so	/usr/lib/python2.7/site-packages/gtk-2.0/gtk/_gtk.so
+
+nbuild() {
+noemptyfuncs
+}
+
+ninstall() {
+pkgdir=/tmp/diffuse
+python install.py --prefix=/usr --destdir="$pkgdir"
+cp -r $pkgdir/* /
+rm -r $pkgdir
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

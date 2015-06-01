@@ -1,0 +1,33 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	liboil
+# Version:	0.3.16
+# Release:	n06.2
+# License:	Copyright Motorola, Inc. 2003
+# Group:	Multimedia
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64
+# Url:	http://liboil.freedesktop.org/wiki/
+# Description:	Liboil is a library of simple functions that are optimized for various CPUs. These functions are generally loops implementing simple algorithms, such as converting an array of N integers to floating-point numbers or multiplying and summing an array of N numbers. Such functions are candidates for significant optimization using various techniques, especially by using extended instructions provided by modern CPUs (Altivec, MMX, SSE, etc.).
+# MD5:	dafe3a3e38fc87e4282cd076c9162961  liboil-0.3.16.tar.xz
+
+
+# BuildDep:	/usr/lib/libglib-2.0.so	/usr/lib/libglib-2.0.so
+# Dep(post):	/usr/lib/libglib-2.0.so	/usr/lib/libglib-2.0.so
+
+nbuild() {
+./configure --prefix=/usr
+make
+}
+
+ninstall() {
+make install
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

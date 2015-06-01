@@ -1,0 +1,45 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	parole
+# Version:	0.3.0
+# Release:	n06.2
+# License:	GPL
+# Group:	Multimedia
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64 arm arm64 armel
+# Url:	http://goodies.xfce.org/projects/applications/parole/
+# Description:	A modern media player based on the GStreamer framework.
+# MD5:	fa1339bf107ad1f48b13471dbc5a2730  parole-0.3.0.tar.xz
+
+
+# BuildDep:	/usr/lib/libgstaudio-0.10.so	/usr/lib/libgstaudio-0.10.so
+# BuildDep:	/usr/share/icons/hicolor/index.theme	/usr/share/icons/hicolor/index.theme
+# BuildDep:	/usr/lib/libnotify.so	/usr/lib/libnotify.so
+# BuildDep:	/usr/lib/libxfcegui4.so	/usr/lib/libxfcegui4.so
+# BuildDep:	/usr/lib/libtag.so	/usr/lib/libtag.so
+# BuildDep:	/usr/lib/libssl.so	/usr/lib/libssl.so
+# Dep(post):	/usr/lib/libssl.so	/usr/lib/libssl.so
+# Dep(post):	/usr/lib/libtag.so	/usr/lib/libtag.so
+# Dep(post):	/usr/lib/libxfcegui4.so	/usr/lib/libxfcegui4.so
+# Dep(post):	/usr/lib/libnotify.so	/usr/lib/libnotify.so
+# Dep(post):	/usr/share/icons/hicolor/index.theme	/usr/share/icons/hicolor/index.theme
+# Dep(post):	/usr/lib/libgstaudio-0.10.so	/usr/lib/libgstaudio-0.10.so
+
+nbuild() {
+ LDFLAGS+=' -lX11'
+ patch -Np1 -i ../fix-gstreamer.patch
+./configure --prefix=/usr --libexecdir=/usr/lib --enable-taglib --enable-libnotify
+make
+}
+
+ninstall() {
+make install
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

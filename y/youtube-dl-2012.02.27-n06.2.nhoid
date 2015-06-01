@@ -1,0 +1,32 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	youtube-dl
+# Version:	2012.02.27
+# Release:	n06.2
+# License:	any
+# Group:	Networking
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64 arm arm64
+# Url:	http://rg3.github.com/youtube-dl/
+# Description:	A small command-line program to download videos from YouTube.com and a few more sites.
+# MD5:	bd3ce1cef640bd8a00508ca5a1c40f8d  youtube-dl-2012.02.27.tar.xz
+
+
+# BuildDep:	/usr/bin/python	/usr/bin/python
+# Dep(post):	/usr/bin/python	/usr/bin/python
+
+nbuild() {
+noemptyfuncs
+}
+
+ninstall() {
+install -D -m755 youtube-dl /usr/bin/youtube-dl
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

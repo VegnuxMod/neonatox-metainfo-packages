@@ -1,0 +1,44 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	qt4pas
+# Version:	2.5
+# Release:	n06.2
+# License:	LGPL
+# Group:	Programming
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64 arm arm64 armel
+# Url:	http://users.telenet.be/Jan.Van.hijfte/qtforfpc/fpcqt4.html
+# Description:	Free Pascal Qt4 Binding Library.
+# MD5:	d8fdb79e51efe5d7a6553e928923387f  qt4pas-2.5.tar.xz
+
+
+# BuildDep:	/usr/lib/libQtWebKit.so	/usr/lib/libQtWebKit.so
+# Dep(post):	/usr/lib/libQtWebKit.so	/usr/lib/libQtWebKit.so
+
+nbuild() {
+sed -ie "s:target\.path = :target\.path = $pkgdir:g" Qt4Pas.pro
+qmake -query
+qmake
+make
+}
+
+ninstall() {
+pkgdir=/tmp/qt4pas
+mkdir -p $pkgdir/usr/lib
+make install
+pushd "$pkgdir/usr/lib"
+for intflink in 'libqt4intf.so' 'libqt4intf.so.5' 'libqt4intf.so.5.2' 'libqt4intf.so.5.2.1' 'libqt4intf.so.5.2.5'; do
+ln -svf libQt4Pas.so.5.2.5 $intflink
+done
+popd
+cp -r $pkgdir/* /
+rm -r $pkgdir
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

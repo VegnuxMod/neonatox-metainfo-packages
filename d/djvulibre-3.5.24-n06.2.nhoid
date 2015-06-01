@@ -1,0 +1,45 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	djvulibre
+# Version:	3.5.24
+# Release:	n06.2
+# License:	GPL
+# Group:	Graphic Library
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64 arm arm64
+# Url:	http://djvu.sourceforge.net/
+# Description:	Suite to create, manipulate and view DjVu ('déjà vu') documents.
+# MD5:	90aaf49e4fe3c25d970e3c0e2069b473  djvulibre-3.5.24.tar.xz
+
+
+# BuildDep:	/usr/lib/libtiff.so	/usr/lib/libtiff.so
+# BuildDep:	/bin/bash	/bin/bash
+# BuildDep:	/usr/share/icons/hicolor/index.theme	/usr/share/icons/hicolor/index.theme
+# Dep(post):	/usr/share/icons/hicolor/index.theme	/usr/share/icons/hicolor/index.theme
+# Dep(post):	/bin/bash	/bin/bash
+# Dep(post):	/usr/lib/libtiff.so	/usr/lib/libtiff.so
+
+nbuild() {
+patch -Np1 -i "../git-fixes.patch"
+./configure --prefix=/usr --disable-desktopfiles
+make
+}
+
+ninstall() {
+pkgdir=/tmp/djvulibre
+make DESTDIR="${pkgdir}" install
+install -m755 -d ${pkgdir}/usr/share/icons/hicolor/{22x22,32x32,48x48,64x64}/mimetypes
+for sz in 22 32 48 64; do
+install -m644 desktopfiles/prebuilt-hi${sz}-djvu.png "${pkgdir}/usr/share/icons/hicolor/${sz}x${sz}/mimetypes/image-vnd.djvu.mime.png"
+done
+cp -r ${pkgdir}/* /
+rm -r ${pkgdir}
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

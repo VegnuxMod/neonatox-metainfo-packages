@@ -1,0 +1,35 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	libXres
+# Version:	1.0.5
+# Release:	n06.2
+# License:	X11 license
+# Group:	X Window System
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64 arm arm64
+# Url:	http://www.x.org/wiki
+# Description:	libXRes provides an X Window System client interface to the Resource extension to the X protocol.
+# MD5:	544c1a300406c115f9794b0d5298ad35  libXres-1.0.5.tar.xz
+
+
+# BuildDep:	/usr/lib/libX11.so	/usr/lib/libX11.so
+# BuildDep:	/usr/lib/libXext.so	/usr/lib/libXext.so
+# Dep(post):	/usr/lib/libXext.so	/usr/lib/libXext.so
+# Dep(post):	/usr/lib/libX11.so	/usr/lib/libX11.so
+
+nbuild() {
+./configure --prefix=/usr --sysconfdir=/etc --mandir=/usr/share/man --localstatedir=/var
+make
+}
+
+ninstall() {
+make install
+}
+
+npostinstall() {
+ldconfig
+}
+
+npostremove() {
+noemptyfuncs
+}

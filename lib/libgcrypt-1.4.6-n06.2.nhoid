@@ -1,0 +1,35 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sánchez <cargabsj175@gmail.com>
+
+# Name:	libgcrypt
+# Version:	1.4.6
+# Release:	n06.2
+# License:	LGPL
+# Group:	Core System
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64
+# Url:	http://www.gnupg.org
+# Description:	A general purpose crypto library based on the code used.
+# MD5:	b2329ad7a75a16260c3260eb12b887df  libgcrypt-1.4.6.tar.xz
+
+
+# BuildDep:	/usr/lib/libgpg-error.so	/usr/lib/libgpg-error.so
+# Dep(post):	/usr/lib/libgpg-error.so	/usr/lib/libgpg-error.so
+
+nbuild() {
+./configure --prefix=/usr --disable-padlock-support
+make
+}
+
+ninstall() {
+make install
+mv /usr/lib/libgcrypt.so* /lib/
+ln -sf /lib/libgcrypt.so /usr/lib/libgcrypt.so
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

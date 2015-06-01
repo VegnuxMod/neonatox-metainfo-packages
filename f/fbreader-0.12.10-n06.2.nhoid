@@ -1,0 +1,49 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	fbreader
+# Version:	0.12.10
+# Release:	n06.2
+# License:	GPL
+# Group:	Ebook Reader
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64 arm arm64
+# Url:	http://www.fbreader.org
+# Description:	An e-book reader for Linux
+# MD5:	9f234df09609520e4c4a89cd784f963c  fbreader-0.12.10.tar.xz
+
+
+# BuildDep:	/usr/lib/libfribidi.so	/usr/lib/libfribidi.so
+# BuildDep:	/bin/bzip2	/bin/bzip2
+# BuildDep:	/usr/lib/libcurl.so	/usr/lib/libcurl.so
+# BuildDep:	/usr/lib/libgtk-x11-2.0.so	/usr/lib/libgtk-x11-2.0.so
+# BuildDep:	/usr/lib/libsqlite3.so	/usr/lib/libsqlite3.so
+# BuildDep:	/usr/lib/liblinebreak.so	/usr/lib/liblinebreak.so
+# Dep(post):	/usr/lib/liblinebreak.so	/usr/lib/liblinebreak.so
+# Dep(post):	/usr/lib/libsqlite3.so	/usr/lib/libsqlite3.so
+# Dep(post):	/usr/lib/libgtk-x11-2.0.so	/usr/lib/libgtk-x11-2.0.so
+# Dep(post):	/usr/lib/libcurl.so	/usr/lib/libcurl.so
+# Dep(post):	/bin/bzip2	/bin/bzip2
+# Dep(post):	/usr/lib/libfribidi.so	/usr/lib/libfribidi.so
+
+nbuild() {
+export CPPFLAGS="-I/usr/include/cairo"
+export TARGET_ARCH=desktop
+export UI_TYPE=gtk
+export TARGET_STATUS=release
+export srcdir
+patch -p0 makefiles/config.mk <../build-fix.patch
+sed -i 's#Library::Library &Library::Instance()#Library \&Library::Instance()#' fbreader/src/library/Library.cpp
+make INSTALLDIR=/usr
+}
+
+ninstall() {
+make INSTALLDIR=/usr install
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

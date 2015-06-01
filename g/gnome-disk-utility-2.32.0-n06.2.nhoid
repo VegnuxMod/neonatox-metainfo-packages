@@ -1,0 +1,48 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	gnome-disk-utility
+# Version:	2.32.0
+# Release:	n06.2
+# License:	GPL
+# Group:	Gnome Desktop
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64 arm arm64
+# Url:	http://www.gnome.org
+# Description:	GNOME libraries and applications for dealing with storage devices.
+# MD5:	90ae2a3a0da140e3a8d4760a828aae25  gnome-disk-utility-2.32.0.tar.xz
+
+
+# BuildDep:	/usr/lib/libdbus-glib-1.so	/usr/lib/libdbus-glib-1.so
+# BuildDep:	/usr/lib/libgnome-keyring.so	/usr/lib/libgnome-keyring.so
+# BuildDep:	/usr/lib/libunique-1.0.so	/usr/lib/libunique-1.0.so
+# BuildDep:	/usr/bin/udisks	/usr/bin/udisks
+# BuildDep:	/usr/lib/libnotify.so	/usr/lib/libnotify.so
+# BuildDep:	/usr/share/icons/hicolor/index.theme	/usr/share/icons/hicolor/index.theme
+# BuildDep:	/usr/lib/libavahi-core.so	/usr/lib/libavahi-core.so
+# Dep(post):	/usr/lib/libavahi-core.so	/usr/lib/libavahi-core.so
+# Dep(post):	/usr/share/icons/hicolor/index.theme	/usr/share/icons/hicolor/index.theme
+# Dep(post):	/usr/lib/libnotify.so	/usr/lib/libnotify.so
+# Dep(post):	/usr/bin/udisks	/usr/bin/udisks
+# Dep(post):	/usr/lib/libunique-1.0.so	/usr/lib/libunique-1.0.so
+# Dep(post):	/usr/lib/libgnome-keyring.so	/usr/lib/libgnome-keyring.so
+# Dep(post):	/usr/lib/libdbus-glib-1.so	/usr/lib/libdbus-glib-1.so
+
+nbuild() {
+patch -Np1 -i "../fix-freeze.patch"
+./configure --prefix=/usr --sysconfdir=/etc --localstatedir=/var \
+--libexecdir=/usr/lib/gnome-disk-utility --disable-scrollkeeper \
+--disable-nautilus --disable-gtk-doc
+make
+}
+
+ninstall() {
+make install
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

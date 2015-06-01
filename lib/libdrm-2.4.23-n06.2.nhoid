@@ -1,0 +1,41 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	libdrm
+# Version:	2.4.23
+# Release:	n06.2
+# License:	custom
+# Group:	X Window System
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64 arm arm64
+# Url:	http://dri.freedesktop.org/
+# Description:	Userspace interface to kernel DRM services.
+# MD5:	ffced2ab18550eb0e884f2b48638a598  libdrm-2.4.23.tar.xz
+
+
+
+nbuild() {
+patch -Np1 -i "../no-pthread-stubs.patch"
+libtoolize --force
+aclocal
+autoconf
+automake
+./configure --prefix=/usr \
+--enable-udev \
+--enable-intel \
+--enable-radeon \
+--enable-vmwgfx-experimental-api \
+--enable-nouveau-experimental-api
+make
+}
+
+ninstall() {
+make install
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

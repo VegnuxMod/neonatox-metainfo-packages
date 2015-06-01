@@ -1,0 +1,45 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	acl
+# Version:	2.2.47
+# Release:	n06.2
+# License:	LGPLv2.1
+# Group:	Utility
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64
+# Url:	http://oss.sgi.com/projects/xfs/
+# Description:	Access control list utilities, libraries and headers.
+# MD5:	567d078f9a67b2ebd22b3ecf7fad694b  acl-2.2.47.tar.xz
+
+
+# BuildDep:	/usr/lib/libattr.so	/usr/lib/libattr.so
+# Dep(post):	/usr/lib/libattr.so	/usr/lib/libattr.so
+
+nbuild() {
+sed -i Makefile \
+-e '/autoconf/d' \
+-e 's@default: $(CONFIGURE)@default:@' &&
+sed -i "/AC_OUTPUT/i\AC_PROG_LIBTOOL" configure.in &&
+cp install-sh{,.orig} &&
+libtoolize -f -i &&
+cp -vf install-sh{.orig,} &&
+aclocal -I m4 &&
+autoconf &&
+./configure --prefix=/ --exec-prefix=/ --sbindir=/sbin \
+--bindir=/usr/sbin --libdir=/lib --libexecdir=/usr/lib --includedir=/usr/include \
+--mandir=/usr/share/man --datadir=/usr/share &&
+make DEBUG=-DNDEBUG LIBTOOL="$PWD/libtool"
+}
+
+ninstall() {
+make LIBTOOL=$PWD/libtool install install-dev install-lib &&
+chmod 755 /lib/libacl.so.1.1.0
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

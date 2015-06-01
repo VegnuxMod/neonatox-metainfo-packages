@@ -1,0 +1,92 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	vidrop
+# Version:	0.6.8
+# Release:	n06.2
+# License:	GPL
+# Group:	Multimedia
+# Arch:	any
+# Url:	http://vidrop.learnfree.eu/
+# Description:	A free video transcoding software written in python, for easy conversion of videos into formats playable on Smarthones, Tablets, MIDs, Portable Media Players, etc.
+# MD5:	e2bdada80a9d004535c32a80c9391bc7  vidrop-0.6.8.tar.xz
+
+
+# BuildDep:	/usr/bin/mencoder	/usr/bin/mencoder
+# BuildDep:	/usr/bin/mplayer	/usr/bin/mplayer
+# BuildDep:	/usr/lib/python2.7/site-packages/gtk-2.0/gtk/_gtk.so	/usr/lib/python2.7/site-packages/gtk-2.0/gtk/_gtk.so
+# Dep(post):	/usr/lib/python2.7/site-packages/gtk-2.0/gtk/_gtk.so	/usr/lib/python2.7/site-packages/gtk-2.0/gtk/_gtk.so
+# Dep(post):	/usr/bin/mplayer	/usr/bin/mplayer
+# Dep(post):	/usr/bin/mencoder	/usr/bin/mencoder
+
+nbuild() {
+noemptyfuncs
+}
+
+ninstall() {
+curdir=$(pwd)
+pkgdir=/tmp/vidrop
+install -m 0755 -d $pkgdir/usr/bin
+install -m 0755 -d $pkgdir/usr/share/vidrop/presets
+install -m 0755 -d $pkgdir/usr/share/applications
+install -m 0755 -d $pkgdir/usr/share/locale/bg/LC_MESSAGES
+install -m 0755 *.py $pkgdir/usr/share/vidrop
+install -m 0644 facebook.png vidrop.glade vidrop-logo.png $pkgdir/usr/share/vidrop
+install -m 0644 presets/* $pkgdir/usr/share/vidrop/presets
+cd $pkgdir/usr/share/vidrop/presets
+for i in *; do
+   nuevo=`echo $i | sed -s 's/\ /_/g'`;
+   mv -v "${i}" ${nuevo};
+done
+cd $curdir
+install -m 0644 locale/bg/LC_MESSAGES/vidrop.mo $pkgdir/usr/share/locale/bg/LC_MESSAGES
+cat >$pkgdir/usr/bin/vidrop <<EOF
+#!/bin/bash
+cd /usr/share/vidrop/
+echo $@
+./vidrop.py '$@'
+EOF
+chmod 0755 $pkgdir/usr/bin/vidrop
+cat >$pkgdir/usr/bin/vidrop-simple <<EOF
+#!/bin/bash
+cd /usr/share/vidrop/
+./vidrop-simple.py '$@'
+EOF
+chmod 0755 $pkgdir/usr/bin/vidrop-simple
+cat > $pkgdir/usr/share/applications/vidrop.desktop << "EOF"
+[Desktop Entry]
+Encoding=UTF-8
+Name=Vidrop
+Comment=Vidrop video transcoding
+Commen[es]=Transcodificador de Vídeo Vidrop
+Exec=vidrop
+Icon=/usr/share/vidrop/vidrop-logo.png
+Terminal=false
+Type=Application
+Categories=GNOME;GTK;Video;AudioVideo;
+EOF
+chmod 0755 $pkgdir/usr/share/applications/vidrop.desktop
+cat > $pkgdir/usr/share/applications/vidrop-simple.desktop << "EOF"
+[Desktop Entry]
+Encoding=UTF-8
+Name=Vidrop (Simple)
+Comment=Vidrop video transcoding (Simple)
+Commen[es]=Transcodificador de Vídeo Vidrop (Simple)
+Exec=vidrop-simple
+Icon=/usr/share/vidrop/vidrop-logo.png
+Terminal=false
+Type=Application
+Categories=GNOME;GTK;Video;AudioVideo;
+EOF
+chmod 0755 $pkgdir/usr/share/applications/vidrop.desktop
+cp -r $pkgdir/* /
+rm -r $pkgdir
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

@@ -1,0 +1,35 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sánchez <cargabsj175@gmail.com>
+
+# Name:	intltool
+# Version:	0.40.6
+# Release:	n06.2
+# License:	GPLv2
+# Group:	Core System
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64
+# Url:	http://www.freedesktop.org/wiki/Software/intltool
+# Description:	intltool is a set of tools to centralize translation of many different file formats using GNU gettext-compatible PO files.
+# MD5:	a25c71ac009515a1cf68b3ef37b80098  intltool-0.40.6.tar.xz
+
+
+# BuildDep:	/usr/lib/perl5/site_perl/5.10.1/i686-linux/XML/Parser.pm	/usr/lib/perl5/site_perl/5.10.1/i686-linux/XML/Parser.pm
+# Dep(post):	/usr/lib/perl5/site_perl/5.10.1/i686-linux/XML/Parser.pm	/usr/lib/perl5/site_perl/5.10.1/i686-linux/XML/Parser.pm
+
+nbuild() {
+./configure --prefix=/usr
+make
+}
+
+ninstall() {
+make install &&
+install -v -m644 -D doc/I18N-HOWTO \
+/usr/share/doc/intltool-0.40.6/I18N-HOWTO
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

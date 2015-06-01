@@ -1,0 +1,66 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	xfdesktop
+# Version:	4.8.1
+# Release:	n06.2
+# License:	GPLv2
+# Group:	XFCE Desktop
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64 arm arm64
+# Url:	http://www.xfce.org/
+# Description:	A desktop manager for Xfce.
+# MD5:	fa5c251319e97d30aad2ee99416cb42c  xfdesktop-4.8.1.tar.xz
+
+
+# BuildDep:	/usr/lib/libgarcon-1.so	/usr/lib/libgarcon-1.so
+# BuildDep:	/usr/bin/thunar	/usr/bin/thunar
+# BuildDep:	/usr/share/icons/hicolor/index.theme	/usr/share/icons/hicolor/index.theme
+# BuildDep:	/usr/lib/libgtk-x11-2.0.so	/usr/lib/libgtk-x11-2.0.so
+# BuildDep:	/usr/lib/libglib-2.0.so	/usr/lib/libglib-2.0.so
+# BuildDep:	/usr/lib/libxfce4ui-1.so	/usr/lib/libxfce4ui-1.so
+# BuildDep:	/usr/lib/libxfce4util.so	/usr/lib/libxfce4util.so
+# BuildDep:	/usr/lib/libwnck-1.so	/usr/lib/libwnck-1.so
+# BuildDep:	/usr/lib/libxfconf-0.so	/usr/lib/libxfconf-0.so
+# BuildDep:	/usr/lib/libdbus-glib-1.so	/usr/lib/libdbus-glib-1.so
+# BuildDep:	/usr/lib/libexo-1.so	/usr/lib/libexo-1.so
+# BuildDep:	/usr/lib/libnotify.so	/usr/lib/libnotify.so
+# BuildDep:	/usr/share/xfce4/dev-tools/m4macros/xdt-xfce.m4	/usr/share/xfce4/dev-tools/m4macros/xdt-xfce.m4
+# Dep(post):	/usr/share/xfce4/dev-tools/m4macros/xdt-xfce.m4	/usr/share/xfce4/dev-tools/m4macros/xdt-xfce.m4
+# Dep(post):	/usr/lib/libnotify.so	/usr/lib/libnotify.so
+# Dep(post):	/usr/lib/libexo-1.so	/usr/lib/libexo-1.so
+# Dep(post):	/usr/lib/libdbus-glib-1.so	/usr/lib/libdbus-glib-1.so
+# Dep(post):	/usr/lib/libxfconf-0.so	/usr/lib/libxfconf-0.so
+# Dep(post):	/usr/lib/libwnck-1.so	/usr/lib/libwnck-1.so
+# Dep(post):	/usr/lib/libxfce4util.so	/usr/lib/libxfce4util.so
+# Dep(post):	/usr/lib/libxfce4ui-1.so	/usr/lib/libxfce4ui-1.so
+# Dep(post):	/usr/lib/libglib-2.0.so	/usr/lib/libglib-2.0.so
+# Dep(post):	/usr/lib/libgtk-x11-2.0.so	/usr/lib/libgtk-x11-2.0.so
+# Dep(post):	/usr/share/icons/hicolor/index.theme	/usr/share/icons/hicolor/index.theme
+# Dep(post):	/usr/bin/thunar	/usr/bin/thunar
+# Dep(post):	/usr/lib/libgarcon-1.so	/usr/lib/libgarcon-1.so
+
+nbuild() {
+  ./configure --prefix=/usr \
+	--sysconfdir=/etc \
+	--libexecdir=/usr/lib \
+	--localstatedir=/var \
+	--disable-static \
+	--enable-gio-unix \
+	--enable-thunarx \
+	--enable-exo \
+	--enable-notifications \
+	--disable-debug
+  make
+}
+
+ninstall() {
+make install
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

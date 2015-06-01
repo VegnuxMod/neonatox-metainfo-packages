@@ -1,0 +1,57 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	gnash
+# Version:	0.8.9
+# Release:	n06.2
+# License:	GPLv3
+# Group:	Multimedia
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64 arm arm64 armel
+# Url:	http://www.gnu.org/software/gnash/
+# Description:	GNU Flash movie player that supports many SWF v7,8,9 features.
+# MD5:	71e7346a6d6f566b18e85c5ef689d2b3  gnash-0.8.9.tar.xz
+
+
+# BuildDep:	/usr/lib/libagg.so	/usr/lib/libagg.so
+# BuildDep:	/usr/lib/libgdk-x11-2.0.so	/usr/lib/libgdk-x11-2.0.so
+# BuildDep:	/usr/lib/libboost_math_tr1f-gcc44-mt.so	/usr/lib/libboost_math_tr1f-gcc44-mt.so
+# BuildDep:	/usr/lib/gstreamer-0.10/libgstffmpeg.so	/usr/lib/gstreamer-0.10/libgstffmpeg.so
+# BuildDep:	/usr/lib/libSDL.so	/usr/lib/libSDL.so
+# BuildDep:	/usr/lib/libcurl.so	/usr/lib/libcurl.so
+# BuildDep:	/usr/lib/libxml2.so	/usr/lib/libxml2.so
+# BuildDep:	/usr/lib/libgif.so	/usr/lib/libgif.so
+# BuildDep:	/usr/lib/libva.so	/usr/lib/libva.so
+# BuildDep:	/usr/include/xulrunner-1.9.2/npapi.h	/usr/include/xulrunner-1.9.2/npapi.h
+# Dep(post):	/usr/lib/libagg.so	/usr/lib/libagg.so
+# Dep(post):	/usr/lib/libgdk-x11-2.0.so	/usr/lib/libgdk-x11-2.0.so
+# Dep(post):	/usr/lib/libboost_math_tr1f-gcc44-mt.so	/usr/lib/libboost_math_tr1f-gcc44-mt.so
+# Dep(post):	/usr/lib/gstreamer-0.10/libgstffmpeg.so	/usr/lib/gstreamer-0.10/libgstffmpeg.so
+# Dep(post):	/usr/lib/libSDL.so	/usr/lib/libSDL.so
+# Dep(post):	/usr/lib/libcurl.so	/usr/lib/libcurl.so
+# Dep(post):	/usr/lib/libxml2.so	/usr/lib/libxml2.so
+# Dep(post):	/usr/lib/libgif.so	/usr/lib/libgif.so
+# Dep(post):	/usr/lib/libva.so	/usr/lib/libva.so
+
+nbuild() {
+./configure --prefix=/usr \
+--enable-renderer=agg \
+--enable-gui=gtk,sdl \
+--enable-media=gst,ffmpeg \
+--with-plugins-install=system \
+--with-npapi-plugindir=/usr/lib/mozilla/plugins \
+--enable-hwaccel=vaapi
+make
+}
+
+ninstall() {
+make install
+make install-plugin
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

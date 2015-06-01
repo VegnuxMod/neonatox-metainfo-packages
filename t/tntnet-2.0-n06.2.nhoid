@@ -1,0 +1,37 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	tntnet
+# Version:	2.0
+# Release:	n06.2
+# License:	LGPL
+# Group:	System
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64 arm arm64
+# Url:	http://www.tntnet.org/index.html
+# Description:	A modular, multithreaded, high performance webapplicationserver for C++.
+# MD5:	d3322f33b1fdf4a9a007705d85622c72  tntnet-2.0.tar.xz
+
+
+# BuildDep:	/usr/lib/libcxxtools.so	/usr/lib/libcxxtools.so
+# BuildDep:	/usr/lib/libzip.so	/usr/lib/libzip.so
+# BuildDep:	/usr/lib/libgnutls.so	/usr/lib/libgnutls.so
+# Dep(post):	/usr/lib/libgnutls.so	/usr/lib/libgnutls.so
+# Dep(post):	/usr/lib/libzip.so	/usr/lib/libzip.so
+# Dep(post):	/usr/lib/libcxxtools.so	/usr/lib/libcxxtools.so
+
+nbuild() {
+./configure --prefix=/usr --sysconfdir=/etc
+make
+}
+
+ninstall() {
+make install
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

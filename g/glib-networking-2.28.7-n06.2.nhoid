@@ -1,0 +1,43 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	glib-networking
+# Version:	2.28.7
+# Release:	n06.2
+# License:	GPLv2
+# Group:	System
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64 arm arm64
+# Url:	http://www.gtk.org/
+# Description:	Network-related giomodules for glib.
+# MD5:	167a8d956ab6550ded13da6a7544e585  glib-networking-2.28.7.tar.xz
+
+
+# BuildDep:	/usr/lib/libglib-2.0.so	/usr/lib/libglib-2.0.so
+# BuildDep:	/usr/lib/libproxy.so	/usr/lib/libproxy.so
+# BuildDep:	/usr/lib/libgnutls.so	/usr/lib/libgnutls.so
+# BuildDep:	/etc/ca-certificates.conf	/etc/ca-certificates.conf
+# BuildDep:	/usr/share/pkgconfig/gsettings-desktop-schemas.pc	/usr/share/pkgconfig/gsettings-desktop-schemas.pc
+# Dep(post):	/usr/share/pkgconfig/gsettings-desktop-schemas.pc	/usr/share/pkgconfig/gsettings-desktop-schemas.pc
+# Dep(post):	/etc/ca-certificates.conf	/etc/ca-certificates.conf
+# Dep(post):	/usr/lib/libgnutls.so	/usr/lib/libgnutls.so
+# Dep(post):	/usr/lib/libproxy.so	/usr/lib/libproxy.so
+# Dep(post):	/usr/lib/libglib-2.0.so	/usr/lib/libglib-2.0.so
+
+nbuild() {
+./configure \
+--prefix=/usr  --sysconfdir=/etc \
+--libexecdir=/usr/lib/glib-networking --disable-static
+make
+}
+
+ninstall() {
+make install
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

@@ -1,0 +1,52 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	xscreensaver
+# Version:	5.12
+# Release:	n06.2
+# License:	BSD
+# Group:	System
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64 arm arm64
+# Url:	http://www.jwz.org/xscreensaver/
+# Description:	Screen saver and locker for the X Window System.
+# MD5:	b8a095c9f3734dc00a02686fdf7320a0  xscreensaver-5.12.tar.xz
+
+
+# BuildDep:	/usr/lib/libXxf86vm.so	/usr/lib/libXxf86vm.so
+# BuildDep:	/usr/lib/libglade-2.0.so	/usr/lib/libglade-2.0.so
+# BuildDep:	/usr/lib/libGL.so	/usr/lib/libGL.so
+# BuildDep:	/usr/lib/libpam.so	/usr/lib/libpam.so
+# BuildDep:	/usr/bin/appres	/usr/bin/appres
+# BuildDep:	/usr/lib/libXmu.so	/usr/lib/libXmu.so
+# BuildDep:	/usr/bin/bc	/usr/bin/bc
+# Dep(post):	/usr/lib/libXmu.so	/usr/lib/libXmu.so
+# Dep(post):	/usr/bin/appres	/usr/bin/appres
+# Dep(post):	/usr/lib/libpam.so	/usr/lib/libpam.so
+# Dep(post):	/usr/lib/libGL.so	/usr/lib/libGL.so
+# Dep(post):	/usr/lib/libglade-2.0.so	/usr/lib/libglade-2.0.so
+# Dep(post):	/usr/lib/libXxf86vm.so	/usr/lib/libXxf86vm.so
+# Dep(post):	/usr/bin/bc	/usr/bin/bc
+
+nbuild() {
+patch -Np0 -i "../add-electricsheep.diff"
+./configure --prefix=/usr --sysconfdir=/etc --localstatedir=/var \
+--libexecdir=/usr/lib --with-x-app-defaults=/usr/share/X11/app-defaults \
+--with-pam --without-motif --with-gtk --with-gl \
+--without-gle --with-xpm --with-pixbuf --with-jpeg
+make
+}
+
+ninstall() {
+make install
+install -D -m644 ../xscreensaver.pam "/etc/pam.d/xscreensaver"
+chmod 755 "/usr/bin/xscreensaver"
+echo "NotShowIn=KDE;GNOME;" >> "/usr/share/applications/xscreensaver-properties.desktop"
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

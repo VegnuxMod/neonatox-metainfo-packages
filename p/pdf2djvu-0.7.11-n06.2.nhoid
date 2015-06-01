@@ -1,0 +1,38 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	pdf2djvu
+# Version:	0.7.11
+# Release:	n06.2
+# License:	GPL
+# Group:	Graphics
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64 arm arm64
+# Url:	http://pdf2djvu.googlecode.com
+# Description:	Creates DjVu files from PDF files.
+# MD5:	aacaf6279d9016476c66b828dd4f9476  pdf2djvu-0.7.11.tar.xz
+
+
+# BuildDep:	/usr/lib/libpoppler.so	/usr/lib/libpoppler.so
+# BuildDep:	/usr/lib/libdjvulibre.so	/usr/lib/libdjvulibre.so
+# BuildDep:	/usr/lib/libxslt.so	/usr/lib/libxslt.so
+# Dep(post):	/usr/lib/libxslt.so	/usr/lib/libxslt.so
+# Dep(post):	/usr/lib/libdjvulibre.so	/usr/lib/libdjvulibre.so
+# Dep(post):	/usr/lib/libpoppler.so	/usr/lib/libpoppler.so
+
+nbuild() {
+./configure --prefix=/usr
+make
+}
+
+ninstall() {
+make install
+install -Dm644 doc/pdf2djvu.1 /usr/share/man/man1/pdf2djvu.1
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

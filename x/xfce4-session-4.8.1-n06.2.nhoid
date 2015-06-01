@@ -1,0 +1,69 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	xfce4-session
+# Version:	4.8.1
+# Release:	n06.2
+# License:	GPLv2
+# Group:	XFCE Desktop
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64 arm arm64
+# Url:	http://www.xfce.org/
+# Description:	A session manager for Xfce.
+# MD5:	f48df934d276e93bce6de287ea2783fb  xfce4-session-4.8.1.tar.xz
+
+
+# BuildDep:	/usr/lib/libxfce4ui-1.so	/usr/lib/libxfce4ui-1.so
+# BuildDep:	/usr/lib/libwnck-1.so	/usr/lib/libwnck-1.so
+# BuildDep:	/usr/lib/libxfconf-0.so	/usr/lib/libxfconf-0.so
+# BuildDep:	/usr/bin/perl	/usr/bin/perl
+# BuildDep:	/usr/lib/libxfce4util.so	/usr/lib/libxfce4util.so
+# BuildDep:	/usr/bin/iceauth	/usr/bin/iceauth
+# BuildDep:	/usr/share/icons/hicolor/index.theme	/usr/share/icons/hicolor/index.theme
+# BuildDep:	/usr/lib/libxfce4panel-1.0.so	/usr/lib/libxfce4panel-1.0.so
+# BuildDep:	/usr/share/xfce4/dev-tools/m4macros/xdt-xfce.m4	/usr/share/xfce4/dev-tools/m4macros/xdt-xfce.m4
+# BuildDep:	/usr/bin/upower	/usr/bin/upower
+# Dep(post):	/usr/bin/upower	/usr/bin/upower
+# Dep(post):	/usr/share/xfce4/dev-tools/m4macros/xdt-xfce.m4	/usr/share/xfce4/dev-tools/m4macros/xdt-xfce.m4
+# Dep(post):	/usr/lib/libxfce4panel-1.0.so	/usr/lib/libxfce4panel-1.0.so
+# Dep(post):	/usr/share/icons/hicolor/index.theme	/usr/share/icons/hicolor/index.theme
+# Dep(post):	/usr/bin/iceauth	/usr/bin/iceauth
+# Dep(post):	/usr/lib/libxfce4util.so	/usr/lib/libxfce4util.so
+# Dep(post):	/usr/bin/perl	/usr/bin/perl
+# Dep(post):	/usr/lib/libxfconf-0.so	/usr/lib/libxfconf-0.so
+# Dep(post):	/usr/lib/libwnck-1.so	/usr/lib/libwnck-1.so
+# Dep(post):	/usr/lib/libxfce4ui-1.so	/usr/lib/libxfce4ui-1.so
+
+nbuild() {
+./configure --prefix=/usr \
+	--sysconfdir=/etc \
+	--libexecdir=/usr/lib/xfce4 \
+	--localstatedir=/var \
+	--disable-static \
+	--disable-hal \
+	--disable-gnome \
+	--disable-libgnome-keyring \
+	--disable-legacy-sm \
+	--enable-session-screenshots \
+	--enable-upower \
+	--enable-consolekit \
+	--enable-polkit \
+	--enable-panel-plugin \
+	--disable-debug
+make
+}
+
+ninstall() {
+make install
+install -dm700 /etc/polkit-1/localauthority
+install -dm755 /etc/polkit-1/localauthority/50-local.d
+install -m644 ../org.freedesktop.consolekit.pkla /etc/polkit-1/localauthority/50-local.d/
+install -m644 ../org.freedesktop.upower.pkla /etc/polkit-1/localauthority/50-local.d/
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

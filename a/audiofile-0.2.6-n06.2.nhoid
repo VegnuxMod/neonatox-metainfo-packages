@@ -1,0 +1,31 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	audiofile
+# Version:	0.2.6
+# Release:	n06.2
+# License:	GPLv2
+# Group:	Multimedia
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64
+# Url:	http://www.68k.org/~michael/audiofile/
+# Description:	The Audio File Library provides a uniform and elegant API for accessing a variety of audio file formats, such as AIFF/AIFF-C, WAVE, NeXT/Sun .snd/.au, Berkeley/IRCAM/CARL Sound File, Audio Visual Research, Amiga IFF/8SVX, and NIST SPHERE. Supported compression formats are currently G.711 mu-law and A-law and IMA and MS ADPCM. Key goals of the Audio File Library are file format transparency and data format transparency. The same calls for opening a file, accessing and manipulating audio metadata (e.g. sample rate, sample format, textual information, MIDI parameters), and reading/writing sample data will work with any supported audio file format. Likewise, the format of the audio data presented to the application need not be tied to the format of the data contained in the file.
+# MD5:	4d0c44a36f09da6e2cfb950597d192df  audiofile-0.2.6.tar.xz
+
+
+
+nbuild() {
+./configure --prefix=/usr
+make
+}
+
+ninstall() {
+make install
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

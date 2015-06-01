@@ -1,0 +1,31 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	freepats
+# Version:	20060219
+# Release:	n06.2
+# License:	GPLv2
+# Group:	Multimedia
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64
+# Url:	http://freepats.opensrc.org/
+# Description:	Free and open set of instrument patches.
+# MD5:	18f08835a9740a6973f2bdd4d38e6ba5  freepats-20060219.tar.xz
+
+
+
+nbuild() {
+noemptyfuncs
+}
+
+ninstall() {
+install -d -m 755 /usr/share/timidity++/freepats
+cp -r * /usr/share/timidity++/freepats
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

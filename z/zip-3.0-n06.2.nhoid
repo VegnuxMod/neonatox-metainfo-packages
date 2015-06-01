@@ -1,0 +1,32 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	zip
+# Version:	3.0
+# Release:	n06.2
+# License:	BSD
+# Group:	System
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64 arm arm64
+# Url:	http://www.info-zip.org/pub/infozip/Zip.html
+# Description:	Creates PKZIP-compatible .zip files.
+# MD5:	dc391c41eaa2d8a070304b4b5375899e  zip-3.0.tar.xz
+
+
+# BuildDep:	/bin/bzip2	/bin/bzip2
+# Dep(post):	/bin/bzip2	/bin/bzip2
+
+nbuild() {
+make -f unix/Makefile LOCAL_ZIP="$CFLAGS" prefix=/usr generic_gcc
+}
+
+ninstall() {
+make -f unix/Makefile INSTALL=`which install` prefix=/usr MANDIR=/usr/share/man/man1 install
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

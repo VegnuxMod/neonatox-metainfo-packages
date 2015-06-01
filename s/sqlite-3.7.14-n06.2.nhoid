@@ -1,0 +1,35 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	sqlite
+# Version:	3.7.14
+# Release:	n06.2
+# License:	custom
+# Group:	Base System
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64 arm arm64 armel
+# Url:	http://www.sqlite.org/
+# Description:	SQLite is a software library that implements a self-contained, serverless, zero-configuration, transactional SQL database engine.
+# MD5:	e3b9e032fbd5920d7653b5aa65fe91ec  sqlite-3.7.14.tar.xz
+
+# BuildDep:	/usr/bin/tclsh	/usr/bin/tclsh
+# BuildDep:	/usr/lib/libreadline.so	/usr/lib/libreadline.so
+# Dep(post):	/usr/lib/libreadline.so	/usr/lib/libreadline.so
+
+nbuild() {
+export CFLAGS="$CFLAGS -DSQLITE_ENABLE_FTS3=1 -DSQLITE_ENABLE_COLUMN_METADATA=1 -DSQLITE_ENABLE_UNLOCK_NOTIFY -DSQLITE_SECURE_DELETE"
+./configure --prefix=/usr \
+--disable-static
+make
+}
+
+ninstall() {
+make install
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

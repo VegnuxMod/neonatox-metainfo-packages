@@ -1,0 +1,36 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	anyremote2html
+# Version:	1.4
+# Release:	n06.2
+# License:	GPL
+# Group:	System
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64 arm arm64
+# Url:	http://anyremote.sourceforge.net
+# Description:	anyRemote web interface.
+# MD5:	222345e073e12c1172e421c38bfa2578  anyremote2html-1.4.tar.xz
+
+
+# BuildDep:	/usr/bin/python	/usr/bin/python
+# BuildDep:	/usr/bin/anyremote	/usr/bin/anyremote
+# Dep(post):	/usr/bin/anyremote	/usr/bin/anyremote
+# Dep(post):	/usr/bin/python	/usr/bin/python
+
+nbuild() {
+noemptyfuncs
+}
+
+ninstall() {
+./configure --prefix=/usr
+make
+make install
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

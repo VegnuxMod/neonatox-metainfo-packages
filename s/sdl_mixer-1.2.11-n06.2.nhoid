@@ -1,0 +1,43 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	sdl_mixer
+# Version:	1.2.11
+# Release:	n06.2
+# License:	LGPL GPL
+# Group:	Multimedia
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64 arm arm64 armel
+# Url:	http://www.libsdl.org/projects/SDL_mixer/
+# Description:	A simple multi-channel audio mixer.
+# MD5:	0b401cf5ccce46b1f270fd0b716c6cd6  sdl_mixer-1.2.11.tar.xz
+
+
+# BuildDep:	/usr/lib/libSDL.so	/usr/lib/libSDL.so
+# BuildDep:	/usr/lib/libvorbis.so	/usr/lib/libvorbis.so
+# BuildDep:	/usr/lib/libmikmod.so	/usr/lib/libmikmod.so
+# BuildDep:	/usr/bin/smpeg-config	/usr/bin/smpeg-config
+# Dep(post):	/usr/bin/smpeg-config	/usr/bin/smpeg-config
+# Dep(post):	/usr/lib/libmikmod.so	/usr/lib/libmikmod.so
+# Dep(post):	/usr/lib/libvorbis.so	/usr/lib/libvorbis.so
+# Dep(post):	/usr/lib/libSDL.so	/usr/lib/libSDL.so
+
+nbuild() {
+sed -e "/CONFIG_FILE_ETC/s/\/etc\/timidity.cfg/\/etc\/timidity++\/timidity.cfg/" \
+-e "/DEFAULT_PATH/s/\/etc\/timidity/\/etc\/timidity++/" \
+-e "/DEFAULT_PATH2/s/\/usr\/local\/lib\/timidity/\/usr\/lib\/timidity/" \
+-i timidity/config.h
+./configure --prefix=/usr
+make
+}
+
+ninstall() {
+make install
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

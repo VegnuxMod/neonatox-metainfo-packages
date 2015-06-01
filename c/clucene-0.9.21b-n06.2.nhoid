@@ -1,0 +1,32 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	clucene
+# Version:	0.9.21b
+# Release:	n06.2
+# License:	APACHE LGPL
+# Group:	Programming
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64 arm arm64
+# Url:	http://clucene.sourceforge.net
+# Description:	CLucene is a C++ port of Lucene: A high-performance, full-featured text search engine.
+# MD5:	140a78695fdce5645e48147580fb6e77  clucene-0.9.21b.tar.xz
+
+
+
+nbuild() {
+CXXFLAGS="$CXXFLAGS -fPIC"
+./configure --prefix=/usr
+make
+}
+
+ninstall() {
+make install
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

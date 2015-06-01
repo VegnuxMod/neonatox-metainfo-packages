@@ -1,0 +1,34 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	xfce4-taskmanager
+# Version:	1.0.0
+# Release:	n06.2
+# License:	GPLv2
+# Group:	XFCE Desktop
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64 arm arm64
+# Url:	http://goodies.xfce.org/projects/applications/xfce4-taskmanager.
+# Description:	Easy to use task manager.
+# MD5:	3a7c27db974c247a0408b279998e2b83  xfce4-taskmanager-1.0.0.tar.xz
+
+
+# BuildDep:	/usr/lib/libwnck-1.so	/usr/lib/libwnck-1.so
+# Dep(post):	/usr/lib/libwnck-1.so	/usr/lib/libwnck-1.so
+
+nbuild() {
+./configure --prefix=/usr --sysconfdir=/etc --libexecdir=/usr/lib/xfce4 \
+--localstatedir=/var --disable-static
+make
+}
+
+ninstall() {
+make install
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

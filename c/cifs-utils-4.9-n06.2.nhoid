@@ -1,0 +1,44 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	cifs-utils
+# Version:	4.9
+# Release:	n06.2
+# License:	GPL
+# Group:	File System
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64 arm arm64 armel
+# Url:	http://wiki.samba.org/index.php/LinuxCIFS_utils
+# Description:	CIFS filesystem user-space tools.
+# MD5:	4970ce63be474f9d4626495fae76f2b6  cifs-utils-4.9.tar.xz
+
+
+# BuildDep:	/usr/lib/libkeyutils.so	/usr/lib/libkeyutils.so
+# BuildDep:	/lib/libcap.so	/lib/libcap.so
+# BuildDep:	/usr/lib/libkrb5.so.26.0.0	/usr/lib/libkrb5.so.26.0.0
+# BuildDep:	/usr/lib/libtalloc.so.1	/usr/lib/libtalloc.so.1
+# Dep(post):	/usr/lib/libtalloc.so.1	/usr/lib/libtalloc.so.1
+# Dep(post):	/usr/lib/libkrb5.so.26.0.0	/usr/lib/libkrb5.so.26.0.0
+# Dep(post):	/lib/libcap.so	/lib/libcap.so
+# Dep(post):	/usr/lib/libkeyutils.so	/usr/lib/libkeyutils.so
+
+nbuild() {
+./configure --prefix=/usr
+make
+}
+
+ninstall() {
+pkgdir=/tmp/cifs
+make DESTDIR="$pkgdir" install
+rm -r $pkgdir/usr/bin
+chmod +s $pkgdir/sbin/mount.cifs
+cp -r $pkgdir/* /
+rm -r $pkgdir
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

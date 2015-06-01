@@ -1,0 +1,38 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	iceweasel-i10n
+# Version:	17.0.1
+# Release:	n06.2
+# License:	MPL GPL LGPL
+# Group:	Networking
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64 arm arm64 armel
+# Url:	http://www.geticeweasel.org/
+# Description:	languageuage packs for iceweasel..
+# MD5:	f5c02e7cc5ad5b8138347c5067761efb  iceweasel-i10n-17.0.1.tar.xz
+
+
+
+# BuildDep:	/usr/bin/iceweasel	/usr/bin/iceweasel
+# Dep(post):	/usr/bin/iceweasel	/usr/bin/iceweasel
+
+nbuild() {
+noemptyfuncs
+}
+
+ninstall() {
+pkgdir=/tmp/iceweasel-i10n
+for language in $(ls  *.xpi); do
+	install -Dm644 ${language} ${pkgdir}/usr/lib/iceweasel/extensions/${language}
+done
+cp -r ${pkgdir}/* /
+rm -r ${pkgdir}
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

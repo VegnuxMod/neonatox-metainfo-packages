@@ -1,0 +1,45 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	git
+# Version:	1.7.10
+# Release:	n06.2
+# License:	GPLv2
+# Group:	Networking
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64 arm arm64 armel
+# Url:	http://git-scm.com/
+# Description:	The fast distributed version control system.
+# MD5:	360ba6e57f505ff85d60eb44b65e4bf8  git-1.7.10.tar.xz
+
+
+# BuildDep:	/usr/bin/curl	/usr/bin/curl
+# BuildDep:	/usr/lib/libexpat.so	/usr/lib/libexpat.so
+# BuildDep:	/usr/lib/perl5/vendor_perl/5.12.1/Error.pm	/usr/lib/perl5/vendor_perl/5.12.1/Error.pm
+# BuildDep:	/usr/bin/perl	/usr/bin/perl
+# BuildDep:	/usr/lib/libssl.so	/usr/lib/libssl.so
+# BuildDep:	/usr/lib/libpcre.so	/usr/lib/libpcre.so
+# Dep(post):	/usr/lib/libpcre.so	/usr/lib/libpcre.so
+# Dep(post):	/usr/lib/libssl.so	/usr/lib/libssl.so
+# Dep(post):	/usr/bin/perl	/usr/bin/perl
+# Dep(post):	/usr/lib/perl5/vendor_perl/5.12.1/Error.pm	/usr/lib/perl5/vendor_perl/5.12.1/Error.pm
+# Dep(post):	/usr/lib/libexpat.so	/usr/lib/libexpat.so
+# Dep(post):	/usr/bin/curl	/usr/bin/curl
+
+nbuild() {
+./configure --prefix=/usr --libexecdir=/usr/lib \
+--sysconfdir=/etc
+make
+}
+
+ninstall() {
+make install
+tar xvf ../git-manpages-1.7.10.tar.gz -C /usr/share/man
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

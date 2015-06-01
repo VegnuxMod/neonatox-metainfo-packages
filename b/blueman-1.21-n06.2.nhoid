@@ -1,0 +1,64 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	blueman
+# Version:	1.21
+# Release:	n06.2
+# License:	GPL
+# Group:	Networking
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64 arm arm64 armel
+# Url:	http://blueman-project.org
+# Description:	GTK+ bluetooth manager.
+# MD5:	9a14c96bdc4a0c8313b5ede2d484a778  blueman-1.21.tar.xz
+
+
+# BuildDep:	/usr/lib/python2.7/site-packages/gtk-2.0/pynotify/_pynotify.so	/usr/lib/python2.7/site-packages/gtk-2.0/pynotify/_pynotify.so
+# BuildDep:	/usr/lib/libbluetooth.so	/usr/lib/libbluetooth.so
+# BuildDep:	/usr/lib/python2.7/site-packages/_dbus_bindings.so	/usr/lib/python2.7/site-packages/_dbus_bindings.so
+# BuildDep:	/usr/lib/libgtk-x11-2.0.so	/usr/lib/libgtk-x11-2.0.so
+# BuildDep:	/usr/lib/libpyglib-2.0-python.so	/usr/lib/libpyglib-2.0-python.so
+# BuildDep:	/usr/lib/libstartup-notification-1.so	/usr/lib/libstartup-notification-1.so
+# BuildDep:	/usr/bin/obex-data-server	/usr/bin/obex-data-server
+# BuildDep:	/usr/lib/libpolkit-gtk-1.so	/usr/lib/libpolkit-gtk-1.so
+# BuildDep:	/usr/bin/xdg-open	/usr/bin/xdg-open
+# BuildDep:	/usr/share/icons/hicolor/index.theme	/usr/share/icons/hicolor/index.theme
+# BuildDep:	/usr/share/icons/gnome/index.theme	/usr/share/icons/gnome/index.theme
+# BuildDep:	/usr/bin/pyrexc	/usr/bin/pyrexc
+# BuildDep:	/usr/lib/python2.7/site-packages/gtk-2.0/gconf.so	/usr/lib/python2.7/site-packages/gtk-2.0/gconf.so
+# BuildDep:	/usr/lib/libnotify.so	/usr/lib/libnotify.so
+# Dep(post):	/usr/lib/libnotify.so	/usr/lib/libnotify.so
+# Dep(post):	/usr/lib/python2.7/site-packages/gtk-2.0/gconf.so	/usr/lib/python2.7/site-packages/gtk-2.0/gconf.so
+# Dep(post):	/usr/bin/pyrexc	/usr/bin/pyrexc
+# Dep(post):	/usr/share/icons/gnome/index.theme	/usr/share/icons/gnome/index.theme
+# Dep(post):	/usr/share/icons/hicolor/index.theme	/usr/share/icons/hicolor/index.theme
+# Dep(post):	/usr/bin/xdg-open	/usr/bin/xdg-open
+# Dep(post):	/usr/lib/libpolkit-gtk-1.so	/usr/lib/libpolkit-gtk-1.so
+# Dep(post):	/usr/bin/obex-data-server	/usr/bin/obex-data-server
+# Dep(post):	/usr/lib/libstartup-notification-1.so	/usr/lib/libstartup-notification-1.so
+# Dep(post):	/usr/lib/libpyglib-2.0-python.so	/usr/lib/libpyglib-2.0-python.so
+# Dep(post):	/usr/lib/libgtk-x11-2.0.so	/usr/lib/libgtk-x11-2.0.so
+# Dep(post):	/usr/lib/python2.7/site-packages/_dbus_bindings.so	/usr/lib/python2.7/site-packages/_dbus_bindings.so
+# Dep(post):	/usr/lib/libbluetooth.so	/usr/lib/libbluetooth.so
+# Dep(post):	/usr/lib/python2.7/site-packages/gtk-2.0/pynotify/_pynotify.so	/usr/lib/python2.7/site-packages/gtk-2.0/pynotify/_pynotify.so
+
+nbuild() {
+patch -Np1 -i "../PulsePatch.patch"
+./configure --prefix=/usr \
+--sysconfdir=/etc \
+--libexecdir=/usr/lib/blueman \
+--with-no-runtime-deps-check
+make
+}
+
+ninstall() {
+make install
+echo "OnlyShowIn=GNOME;XFCE;" >> ${pkgdir}/etc/xdg/autostart/blueman.desktop
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

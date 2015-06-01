@@ -1,0 +1,35 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sánchez <cargabsj175@gmail.com>
+
+# Name:	perl-extutils-pkgconfig
+# Version:	1.12
+# Release:	n06.2
+# License:	LGPL
+# Group:	Programming
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64
+# Url:	http://gtk2-perl.sourceforge.net/
+# Description:	The Perl Pkgconfig module.
+# MD5:	131d191e53a995ccae6f6db17afb0e45  perl-extutils-pkgconfig-1.12.tar.xz
+
+
+# BuildDep:	/usr/bin/perl	/usr/bin/perl
+# Dep(post):	/usr/bin/perl	/usr/bin/perl
+
+nbuild() {
+perl Makefile.PL INSTALLDIRS=vendor
+make
+}
+
+ninstall() {
+make install
+find /usr -name '.packlist' -delete
+find /usr -name 'perllocal.pod' -delete
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

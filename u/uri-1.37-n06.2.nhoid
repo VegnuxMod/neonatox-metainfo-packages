@@ -1,0 +1,32 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	uri
+# Version:	1.37
+# Release:	n06.2
+# License:	Perl license
+# Group:	Core System
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64
+# Url:	http://www.perl.org/
+# Description:	Perl module URI.
+# MD5:	c6f5b3ed1e6bf1fa763e83e4140ea8b0  uri-1.37.tar.xz
+
+
+
+nbuild() {
+perl Makefile.PL
+make
+make test
+}
+
+ninstall() {
+make install
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

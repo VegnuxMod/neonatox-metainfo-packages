@@ -1,0 +1,38 @@
+#%NHO-0.5
+# Package Maintainer:	Francisco Jesus Navarro Cortes <dominuskernel@gmail.com>
+
+# Name:	gparted
+# Version:	0.14.1
+# Release:	n06.2
+# License:	GPL
+# Group:	System
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64 arm arm64 armel
+# Url:	http://gparted.sourceforge.net
+# Description:	A Partition Magic clone, frontend to GNU Parted.
+# MD5:	4033671b9563bce94b31b1da7310d88f  gparted-0.14.1.tar.xz
+
+
+# BuildDep:	/usr/sbin/parted	/usr/sbin/parted
+# BuildDep:	/usr/lib/libgtkmm-2.4.so	/usr/lib/libgtkmm-2.4.so
+# BuildDep:	/usr/lib/libsigc-2.0.so	/usr/lib/libsigc-2.0.so
+# Dep(post):	/usr/lib/libsigc-2.0.so	/usr/lib/libsigc-2.0.so
+# Dep(post):	/usr/lib/libgtkmm-2.4.so	/usr/lib/libgtkmm-2.4.so
+# Dep(post):	/usr/sbin/parted	/usr/sbin/parted
+
+nbuild() {
+./configure --prefix=/usr --disable-doc
+make
+}
+
+ninstall() {
+make install
+sed -i -e "s:Exec= /usr/sbin:Exec=gksu /usr/sbin:g" /usr/share/applications/gparted.desktop
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

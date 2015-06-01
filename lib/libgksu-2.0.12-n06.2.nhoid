@@ -1,0 +1,49 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	libgksu
+# Version:	2.0.12
+# Release:	n06.2
+# License:	GPL
+# Group:	System
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64 arm arm64
+# Url:	http://www.nongnu.org/gksu/index.html
+# Description:	Gksu authorization library.
+# MD5:	f52f65305339e35291eb80236991af38  libgksu-2.0.12.tar.xz
+
+
+# BuildDep:	/usr/lib/libgnome-keyring.so	/usr/lib/libgnome-keyring.so
+# BuildDep:	/usr/lib/libgtop-2.0.so	/usr/lib/libgtop-2.0.so
+# BuildDep:	/usr/lib/libstartup-notification-1.so	/usr/lib/libstartup-notification-1.so
+# BuildDep:	/usr/lib/libgconf-2.so	/usr/lib/libgconf-2.so
+# Dep(post):	/usr/lib/libgconf-2.so	/usr/lib/libgconf-2.so
+# Dep(post):	/usr/lib/libstartup-notification-1.so	/usr/lib/libstartup-notification-1.so
+# Dep(post):	/usr/lib/libgtop-2.0.so	/usr/lib/libgtop-2.0.so
+# Dep(post):	/usr/lib/libgnome-keyring.so	/usr/lib/libgnome-keyring.so
+
+nbuild() {
+patch -Np1 -i "../libgksu-2.0.12-revert-forkpty.patch"
+./configure --prefix=/usr --sysconfdir=/etc \
+--localstatedir=/var --disable-static
+sed -i 's:        :\t:g' Makefile
+make
+}
+
+ninstall() {
+pkgdir=/tmp/gksu
+make GCONF_DISABLE_MAKEFILE_SCHEMA_INSTALL=1 DESTDIR="${pkgdir}" install
+rm -f ${pkgdir}/usr/lib/*.a
+install -m755 -d "${pkgdir}/usr/share/gconf/schemas"
+gconf-merge-schema "${pkgdir}/usr/share/gconf/schemas/${pkgname}.schemas" --domain libgksu ${pkgdir}/etc/gconf/schemas/*.schemas
+rm -f ${pkgdir}/etc/gconf/schemas/*.schemas
+cp -r /tmp/gksu/* /
+rm -r /tmp/gksu
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

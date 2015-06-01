@@ -1,0 +1,50 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	frostwire
+# Version:	5.3.2
+# Release:	n06.2
+# License:	GPL
+# Group:	Networking
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64 arm arm64
+# Url:	http://www.frostwire.com
+# Description:	BitTorrent client with integrated search.
+# MD5:	09bced64f9de1dc931e8ace889d587e8  frostwire-5.3.2.tar.xz
+
+
+# BuildDep:	/usr/bin/java	/usr/bin/java
+# BuildDep:	/usr/bin/mplayer	/usr/bin/mplayer
+# BuildDep:	/usr/share/icons/hicolor/index.theme	/usr/share/icons/hicolor/index.theme
+# BuildDep:	/usr/bin/desktop-file-install	/usr/bin/desktop-file-install
+# Dep(post):	/usr/bin/desktop-file-install	/usr/bin/desktop-file-install
+# Dep(post):	/usr/share/icons/hicolor/index.theme	/usr/share/icons/hicolor/index.theme
+# Dep(post):	/usr/bin/mplayer	/usr/bin/mplayer
+# Dep(post):	/usr/bin/java	/usr/bin/java
+
+nbuild() {
+noemptyfuncs
+}
+
+ninstall() {
+pkgdir=/tmp/frostwire
+curdir=$(pwd)
+patch -Np0 -i "../java-version-detection.patch"
+install -d "$pkgdir/usr/share/frostwire"
+cp -r $curdir/* "$pkgdir/usr/share/frostwire"
+tar xvf "../icons.tar.gz" -C "$pkgdir/usr/share"
+install -Dm755 ../frostwire "$pkgdir/usr/bin/frostwire"
+install -Dm644 frostwire.desktop "$pkgdir/usr/share/applications/frostwire.desktop"
+install -Dm644 "$pkgdir/usr/share/icons/hicolor/16x16/apps/frostwire.png" "$pkgdir/usr/share/pixmaps/frostwire.png"
+# Remove uneeded files
+rm -rf "$pkgdir"/usr/share/frostwire/{runFrostwireOSX.sh,unpack200.py,root/{.svn,magnet10/.svn}}
+cp -r $pkgdir/* /
+rm -r $pkgdir
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

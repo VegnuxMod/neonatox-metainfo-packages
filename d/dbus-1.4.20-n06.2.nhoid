@@ -1,0 +1,50 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	dbus
+# Version:	1.4.20
+# Release:	n06.2
+# License:	GPLv2
+# Group:	Core System
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64 arm arm64
+# Url:	http://dbus.freedesktop.org/
+# Description:	A message bus system, a simple way for applications to talk to each other.
+# MD5:	ad5219a24ef3027555175ee5a243308c  dbus-1.4.20.tar.xz
+
+
+# BuildDep:	/usr/lib/libexpat.so	/usr/lib/libexpat.so
+# Dep(post):	/usr/lib/libexpat.so	/usr/lib/libexpat.so
+
+nbuild() {
+./configure --prefix=/usr --sysconfdir=/etc --localstatedir=/var \
+--libexecdir=/usr/lib/dbus-1.0 --with-system-pid-file=/var/run/dbus.pid \
+--enable-inotify --disable-dnotify --disable-verbose-mode --disable-static \
+--disable-tests --disable-asserts --with-x
+make
+}
+
+ninstall() {
+make install
+rm -f /usr/share/man/man1/dbus-launch.1
+install -m 754 ../dbus /etc/rc.d/init.d/
+ln -sf  /etc/rc.d/init.d/dbus /etc/rc.d/rc0.d/K30dbus
+ln -sf  /etc/rc.d/init.d/dbus /etc/rc.d/rc1.d/K30dbus
+ln -sf  /etc/rc.d/init.d/dbus /etc/rc.d/rc6.d/K30dbus
+ln -sf  /etc/rc.d/init.d/dbus /etc/rc.d/rc2.d/S20dbus1
+ln -sf  /etc/rc.d/init.d/dbus /etc/rc.d/rc3.d/S20dbus1
+ln -sf  /etc/rc.d/init.d/dbus /etc/rc.d/rc4.d/S20dbus1
+ln -sf  /etc/rc.d/init.d/dbus /etc/rc.d/rc5.d/S20dbus1
+#sed -i -e 's|<user>messagebus</user>|<user>dbus</user>|g' /etc/dbus-1/system.conf
+}
+
+npostinstall() {
+groupadd -fg 18 messagebus &&
+useradd -c "D-BUS Message Daemon User" -d /dev/null -u 18 -g messagebus -s /bin/false messagebus || [ $? == 9 ]
+chown messagebus:messagebus /var/run/dbus
+}
+
+npostremove() {
+groupdel messagebus
+userdel messagebus
+rm -r /etc/rc.d/rc{0,1,2,3,4,5,6}.d/*dbus*
+}

@@ -1,0 +1,33 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	libnice
+# Version:	0.0.13
+# Release:	n06.2
+# License:	LGPL
+# Group:	Multimedia
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64 arm arm64
+# Url:	http://nice.freedesktop.org
+# Description:	An implementation of the IETF's draft ICE (for p2p UDP data streams).
+# MD5:	38fb0771d9ef041f487549b0c1ceaa0c  libnice-0.0.13.tar.xz
+
+
+# BuildDep:	/usr/lib/libgstbase-0.10.so	/usr/lib/libgstbase-0.10.so
+# Dep(post):	/usr/lib/libgstbase-0.10.so	/usr/lib/libgstbase-0.10.so
+
+nbuild() {
+./configure --prefix=/usr --disable-static
+make
+}
+
+ninstall() {
+make install
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

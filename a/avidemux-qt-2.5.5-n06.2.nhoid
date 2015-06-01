@@ -1,0 +1,49 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	avidemux-qt
+# Version:	2.5.5
+# Release:	n06.2
+# License:	GPL
+# Group:	Multimedia
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64 arm arm64 armel
+# Url:	http://fixounet.free.fr/avidemux/
+# Description:	A graphical tool to edit video (filter/re-encode/split) QT4 GUI.
+# MD5:	ae92c5c5f6ed1f420a4d4f46051bb62c  avidemux-qt-2.5.5.tar.xz
+
+
+# BuildDep:	/usr/bin/avidemux2_cli	/usr/bin/avidemux2_cli
+# BuildDep:	/usr/lib/libQtCore.so	/usr/lib/libQtCore.so
+# Dep(post):	/usr/bin/avidemux2_cli	/usr/bin/avidemux2_cli
+# Dep(post):	/usr/lib/libQtCore.so	/usr/lib/libQtCore.so
+
+nbuild() {
+chmod 755 buildGUI.sh
+./buildGUI.sh
+}
+
+ninstall() {
+pkgdir=/tmp/avidemux-qt
+install -D -m755 build/avidemux/avidemux2_qt4 "${pkgdir}/usr/bin/avidemux2_qt4"
+install -d "${pkgdir}"/usr/lib/ADM_plugins/videoEncoder/{x264,xvid}
+install -d "${pkgdir}"/usr/lib/ADM_plugins/videoFilter
+install -D -m755 build/lib/*{_qt4,QT4}.so "${pkgdir}/usr/lib"
+install -D -m755 plugins/build/ADM_videoEncoder/ADM_vidEnc_x264/qt4/*Qt.so "${pkgdir}/usr/lib/ADM_plugins/videoEncoder/x264"
+install -D -m755 plugins/build/ADM_videoEncoder/ADM_vidEnc_xvid/qt4/*Qt.so "${pkgdir}/usr/lib/ADM_plugins/videoEncoder/xvid"
+install -D -m755 plugins/build/ADM_videoFilters/*/*_qt4.so "${pkgdir}/usr/lib/ADM_plugins/videoFilter"
+install -d "${pkgdir}/usr/share/avidemux/i18n"
+install -D -m644 build/po/*.qm "${pkgdir}/usr/share/avidemux/i18n"
+install -D -m644 avidemux2.desktop "${pkgdir}/usr/share/applications/avidemux-qt.desktop"
+sed -i 's/Name=avidemux2/Name=avidemux (QT)/' "${pkgdir}/usr/share/applications/avidemux-qt.desktop"
+sed -i 's/avidemux2_gtk/avidemux2_qt4/' "${pkgdir}/usr/share/applications/avidemux-qt.desktop"
+cp -r ${pkgdir}/* /
+rm -r ${pkgdir}
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

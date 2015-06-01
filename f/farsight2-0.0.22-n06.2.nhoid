@@ -1,0 +1,47 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	farsight2
+# Version:	0.0.22
+# Release:	n06.2
+# License:	LGPL
+# Group:	Networking
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64 arm arm64
+# Url:	http://farsight.freedesktop.org
+# Description:	Audio/Video conference software for Instant Messengers.
+# MD5:	011598379fd18a2c38c0b14c1fadbaf6  farsight2-0.0.22.tar.xz
+
+
+# BuildDep:	/usr/lib/libnice.so	/usr/lib/libnice.so
+# BuildDep:	/usr/lib/pkgconfig/gstreamer-plugins-base-0.10.pc	/usr/lib/pkgconfig/gstreamer-plugins-base-0.10.pc
+# BuildDep:	/usr/lib/pkgconfig/gst-python-0.10.pc	/usr/lib/pkgconfig/gst-python-0.10.pc
+# BuildDep:	/usr/bin/python	/usr/bin/python
+# BuildDep:	/usr/lib/libpyglib-2.0-python.la	/usr/lib/libpyglib-2.0-python.la
+# Dep(post):	/usr/lib/libpyglib-2.0-python.la	/usr/lib/libpyglib-2.0-python.la
+# Dep(post):	/usr/bin/python	/usr/bin/python
+# Dep(post):	/usr/lib/pkgconfig/gst-python-0.10.pc	/usr/lib/pkgconfig/gst-python-0.10.pc
+# Dep(post):	/usr/lib/pkgconfig/gstreamer-plugins-base-0.10.pc	/usr/lib/pkgconfig/gstreamer-plugins-base-0.10.pc
+# Dep(post):	/usr/lib/libnice.so	/usr/lib/libnice.so
+
+nbuild() {
+sed -i -e 's#        ##' docs/libs/Makefile.in
+./configure --prefix=/usr \
+--with-package-name='Arch Linux farsight2 package' \
+--with-package-origin='http://archlinux.org' \
+--disable-static \
+--disable-valgrind \
+--disable-debug
+make
+}
+
+ninstall() {
+make install
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

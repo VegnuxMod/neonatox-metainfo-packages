@@ -1,0 +1,50 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	gnustep-base
+# Version:	1.24.0
+# Release:	n06.2.1
+# License:	GPL LGPL
+# Group:	System
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64 arm arm64 armel
+# Url:	http://www.gnustep.org/
+# Description:	The GNUstep base package.
+# MD5:	26df8d8d5128f7536c4c8b3aa8df98b0  gnustep-base-1.24.0.tar.xz
+
+
+# BuildDep:	/usr/lib/libxslt.so	/usr/lib/libxslt.so
+# BuildDep:	/usr/lib/libavahi-core.so	/usr/lib/libavahi-core.so
+# BuildDep:	/usr/lib/libgmp.so	/usr/lib/libgmp.so
+# BuildDep:	/usr/lib/libgcc_s.so	/usr/lib/libgcc_s.so
+# BuildDep:	/usr/lib/libssl.so	/usr/lib/libssl.so
+# BuildDep:	/usr/lib/libffi.so	/usr/lib/libffi.so
+# BuildDep:	/etc/profile.d/GNUstep.sh	/etc/profile.d/GNUstep.sh
+# BuildDep:	/usr/lib/libgnutls.so	/usr/lib/libgnutls.so
+# BuildDep:	/usr/lib/gcc/i686-pc-linux-gnu/4.5.1/cc1obj	/usr/lib/gcc/i686-pc-linux-gnu/4.5.1/cc1obj
+# Dep(post):	/usr/lib/libgnutls.so	/usr/lib/libgnutls.so
+# Dep(post):	/etc/profile.d/GNUstep.sh	/etc/profile.d/GNUstep.sh
+# Dep(post):	/usr/lib/libffi.so	/usr/lib/libffi.so
+# Dep(post):	/usr/lib/libssl.so	/usr/lib/libssl.so
+# Dep(post):	/usr/lib/libgcc_s.so	/usr/lib/libgcc_s.so
+# Dep(post):	/usr/lib/libgmp.so	/usr/lib/libgmp.so
+# Dep(post):	/usr/lib/libavahi-core.so	/usr/lib/libavahi-core.so
+# Dep(post):	/usr/lib/libxslt.so	/usr/lib/libxslt.so
+
+nbuild() {
+source /etc/profile.d/GNUstep.sh
+./configure --prefix=/usr --sysconfdir=/etc/GNUstep --with-ffi-include=/usr/lib/libffi-3.0.9/include/
+sed -i 's/tar -xf $(TIMEZONE_ARCHIVE);/tar -xf $(TIMEZONE_ARCHIVE);chown -R root:root * ;/' NSTimeZones/Makefile.postamble
+make VERBOSE=1
+}
+
+ninstall() {
+make install
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

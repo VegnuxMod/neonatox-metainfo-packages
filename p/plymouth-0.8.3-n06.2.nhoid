@@ -1,0 +1,60 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	plymouth
+# Version:	0.8.3
+# Release:	n06.2
+# License:	GPLv2
+# Group:	Core System
+# Arch:	i486 i586 i686 x86_64 mips mips64 mips64el ppc ppc64 arm arm64 armel
+# Url:	http://freedesktop.org/wiki/Software/Plymouth
+# Description:	A graphical boot splash screen with kernel mode-setting support.
+# MD5:	620e71b4091092382a57acf70b0ff03d  plymouth-0.8.3.tar.xz
+
+
+# BuildDep:	/sbin/udevd	/sbin/udevd
+# BuildDep:	/usr/lib/libdrm.so	/usr/lib/libdrm.so
+# BuildDep:	/usr/lib/libpango-1.0.so	/usr/lib/libpango-1.0.so
+# Dep(post):	/sbin/udevd	/sbin/udevd
+# Dep(post):	/usr/lib/libdrm.so	/usr/lib/libdrm.so
+# Dep(post):	/usr/lib/libpango-1.0.so	/usr/lib/libpango-1.0.so
+
+nbuild() {
+patch -Np1 -i ../01-parse-etc-neonatox_version.patch
+patch -Np1 -i ../02-set-default-framebuffer-device-to-dev-fb0.patch
+patch -Np1 -i ../03-awk.patch
+patch -Np1 -i ../04-stderr.patch
+patch -Np1 -i ../05-default-theme.patch
+patch -Np1 -i ../06-ply-terminal.patch
+sed -e 's:png_set_gray_1_2_4_to_8:png_set_expand_gray_1_2_4_to_8:g' -i src/libply-splash-graphics/ply-image.c
+./configure --prefix=/usr --exec-prefix=/usr --sysconfdir=/etc --localstatedir=/var --libdir=/usr/lib --libexecdir=/usr/lib \
+--enable-tracing --without-rhgb-compat-link --with-gdm-autostart-file=yes --with-logo=/usr/share/plymouth/neonatox.png \
+--with-background-start-color-stop=0xFFFFFF --with-background-end-color-stop=0x4D4D4D --without-system-root-install
+make
+}
+
+ninstall() {
+pkgdir=/tmp/plymouth
+make DESTDIR="${pkgdir}" install
+install -Dm644 "../neonatox.png" "${pkgdir}/usr/share/plymouth/neonatox.png"
+install -Dm644 ../encrypt_hook "${pkgdir}/usr/lib/initcpio/hooks/plymouth-encrypt"
+install -Dm644 ../encrypt_install "${pkgdir}/usr/lib/initcpio/install/plymouth-encrypt"
+install -Dm644 "../plymouth.functions" "${pkgdir}/etc/rc.d/functions.d/plymouth.functions"
+install -Dm644 "../plymouth.initcpio_hook" "${pkgdir}/usr/lib/initcpio/hooks/plymouth"
+install -Dm644 "../plymouth.initcpio_install" "${pkgdir}/usr/lib/initcpio/install/plymouth"
+install -Dm644 "../plymouthd.conf" "${pkgdir}/etc/plymouth/plymouthd.conf"
+install -Dm644 "../system-release" "${pkgdir}/etc/system-release"
+for i in {{gdm,kdm{,-unpatched},lxdm}-plymouth,plymouth-quit}.service; do
+install -Dm644 "../$i" "${pkgdir}/usr/lib/systemd/system/$i"
+done
+cp -r ${pkgdir}/* /
+rm -r ${pkgdir}
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

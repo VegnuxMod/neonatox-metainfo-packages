@@ -1,0 +1,33 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sánchez <cargabsj175@gmail.com>
+
+# Name:	pciutils
+# Version:	3.1.4
+# Release:	n06.2
+# License:	GPLv2
+# Group:	Core System
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64
+# Url:	http://mj.ucw.cz/pciutils.shtml
+# Description:	PCI Utilities are various utilities that allow inspection and setting of devices connected to the PCI bus.
+# MD5:	16f1b391c8854f66890fe29a9d4366db  pciutils-3.1.4.tar.xz
+
+
+# BuildDep:	/usr/bin/wget	/usr/bin/wget
+# Dep(post):	/usr/bin/wget	/usr/bin/wget
+
+nbuild() {
+make PREFIX=/usr CC="gcc -fPIC" ZLIB=no SHARED=yes
+}
+
+ninstall() {
+make PREFIX=/usr SHARED=yes install
+make PREFIX=/usr SHARED=yes install-lib
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

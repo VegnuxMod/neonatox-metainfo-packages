@@ -1,0 +1,33 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sánchez <cargabsj175@gmail.com>
+
+# Name:	hal-info
+# Version:	20091130
+# Release:	n06.2
+# License:	GPL custom
+# Group:	Core System
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64
+# Url:	http://www.freedesktop.org/wiki/Software/hal
+# Description:	Hardware Abstraction Layer information files.
+# MD5:	f22acf4e50ae6ecb3573cdb7ef8af3ef  hal-info-20091130.tar.xz
+
+
+
+nbuild() {
+./configure --prefix=/usr --sysconfdir=/etc \
+--enable-killswitch-dell-wlan=no --enable-killswitch-dell-bluetooth=no \
+--enable-killswitch-dell-wwan=no
+make
+}
+
+ninstall() {
+make install
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

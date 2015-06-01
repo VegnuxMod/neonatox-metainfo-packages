@@ -1,0 +1,39 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	btrfs-progs
+# Version:	0.19.20120110
+# Release:	n06.2
+# License:	GPLv2
+# Group:	File System
+# Arch:	i686 x86_64 mips mips64 mipsel mips64el ppc ppc64 arm arm64 armel
+# Url:	http://btrfs.wiki.kernel.org
+# Description:	Btrfs filesystem utilities.
+# MD5:	88c3508ceae9b9e497b3dc7be75ebd0d  btrfs-progs-0.19.20120110.tar.xz
+
+
+
+nbuild() {
+make CFLAGS="$CFLAGS" all convert
+}
+
+ninstall() {
+pkgdir=/tmp/btrfs
+make prefix=${pkgdir}/usr install
+mkdir -p ${pkgdir}/usr/share/
+mv ${pkgdir}/usr/man ${pkgdir}/usr/share/man
+mkdir -p ${pkgdir}/sbin
+ln -sf /usr/bin/btrfs ${pkgdir}/sbin/btrfs
+install -Dm644 ../initcpio-install-btrfs ${pkgdir}/usr/lib/initcpio/install/btrfs
+install -Dm644 ../initcpio-hook-btrfs ${pkgdir}/usr/lib/initcpio/hooks/btrfs
+cp -r ${pkgdir}/* /
+rm -r ${pkgdir}
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

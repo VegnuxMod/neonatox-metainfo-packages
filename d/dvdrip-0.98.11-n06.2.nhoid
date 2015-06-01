@@ -1,0 +1,50 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	dvdrip
+# Version:	0.98.11
+# Release:	n06.2
+# License:	custom
+# Group:	Multimedia
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64 arm arm64 armel
+# Url:	http://www.exit1.org/dvdrip
+# Description:	A Gtk frontend for transcode writen in Perl.
+# MD5:	e1dd4a2259f42b55e2db65888ac349ee  dvdrip-0.98.11.tar.xz
+
+
+# BuildDep:	/usr/lib/perl5/vendor_perl/5.12.1/Gtk2/Ex/FormFactory.pm	/usr/lib/perl5/vendor_perl/5.12.1/Gtk2/Ex/FormFactory.pm
+# BuildDep:	/usr/lib/libMagick++.so	/usr/lib/libMagick++.so
+# BuildDep:	/usr/lib/perl5/vendor_perl/5.12.1/i686-linux/auto/Locale/gettext_xs/gettext_xs.so	/usr/lib/perl5/vendor_perl/5.12.1/i686-linux/auto/Locale/gettext_xs/gettext_xs.so
+# BuildDep:	/usr/bin/desktop-file-install	/usr/bin/desktop-file-install
+# BuildDep:	/usr/bin/execflow	/usr/bin/execflow
+# BuildDep:	/usr/bin/lsdvd	/usr/bin/lsdvd
+# BuildDep:	/usr/sbin/fping	/usr/sbin/fping
+# BuildDep:	/usr/bin/ogminfo	/usr/bin/ogminfo
+# Dep(post):	/usr/bin/ogminfo	/usr/bin/ogminfo
+# Dep(post):	/usr/sbin/fping	/usr/sbin/fping
+# Dep(post):	/usr/bin/lsdvd	/usr/bin/lsdvd
+# Dep(post):	/usr/bin/execflow	/usr/bin/execflow
+# Dep(post):	/usr/bin/desktop-file-install	/usr/bin/desktop-file-install
+# Dep(post):	/usr/lib/perl5/vendor_perl/5.12.1/i686-linux/auto/Locale/gettext_xs/gettext_xs.so	/usr/lib/perl5/vendor_perl/5.12.1/i686-linux/auto/Locale/gettext_xs/gettext_xs.so
+# Dep(post):	/usr/lib/libMagick++.so	/usr/lib/libMagick++.so
+# Dep(post):	/usr/lib/perl5/vendor_perl/5.12.1/Gtk2/Ex/FormFactory.pm	/usr/lib/perl5/vendor_perl/5.12.1/Gtk2/Ex/FormFactory.pm
+
+nbuild() {
+PERL_MM_USE_DEFAULT=1 perl Makefile.PL INSTALLDIRS=vendor
+}
+
+ninstall() {
+pkgdir=/tmp/dvdrip
+make install DESTDIR=$pkgdir
+install -Dm644 ../dvdrip.desktop $pkgdir/usr/share/applications/dvdrip.desktop
+cp -r $pkgdir/* /
+rm -r $pkgdir
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

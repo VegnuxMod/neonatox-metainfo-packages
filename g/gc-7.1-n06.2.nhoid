@@ -1,0 +1,31 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	gc
+# Version:	7.1
+# Release:	n06.2
+# License:	GPL
+# Group:	Programming
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64 arm arm64
+# Url:	http://www.hpl.hp.com/personal/Hans_Boehm/gc/
+# Description:	A garbage collector for C and C++.
+# MD5:	a505c0e113cb897b7f7596621b41f7b9  gc-7.1.tar.xz
+
+
+
+nbuild() {
+./configure --prefix=/usr --enable-cplusplus
+make
+}
+
+ninstall() {
+make install
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

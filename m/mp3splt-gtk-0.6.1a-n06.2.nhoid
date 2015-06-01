@@ -1,0 +1,40 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	mp3splt-gtk
+# Version:	0.6.1a
+# Release:	n06.2
+# License:	GPL
+# Group:	Multimedia
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64 arm arm64
+# Url:	http://mp3splt.sourceforge.net/
+# Description:	Split mp3 and ogg files without decoding.
+# MD5:	0295b24a5bfefb8f146761bda2855960  mp3splt-gtk-0.6.1a.tar.xz
+
+
+# BuildDep:	/usr/bin/update-desktop-database	/usr/bin/update-desktop-database
+# BuildDep:	/usr/lib/gstreamer-0.10/libgstffmpeg.so	/usr/lib/gstreamer-0.10/libgstffmpeg.so
+# BuildDep:	/usr/lib/libgtk-x11-2.0.so	/usr/lib/libgtk-x11-2.0.so
+# BuildDep:	/usr/lib/libmp3splt.so	/usr/lib/libmp3splt.so
+# Dep(post):	/usr/lib/libmp3splt.so	/usr/lib/libmp3splt.so
+# Dep(post):	/usr/lib/libgtk-x11-2.0.so	/usr/lib/libgtk-x11-2.0.so
+# Dep(post):	/usr/lib/gstreamer-0.10/libgstffmpeg.so	/usr/lib/gstreamer-0.10/libgstffmpeg.so
+# Dep(post):	/usr/bin/update-desktop-database	/usr/bin/update-desktop-database
+
+nbuild() {
+./configure --prefix=/usr --disable-mp3splttest --disable-audacious --disable-gnome
+make
+}
+
+ninstall() {
+make install
+install -D -m644 ../mp3splt-gtk.desktop /usr/share/applications/mp3splt-gtk.desktop
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

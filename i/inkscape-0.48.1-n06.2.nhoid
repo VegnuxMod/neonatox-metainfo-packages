@@ -1,0 +1,57 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	inkscape
+# Version:	0.48.1
+# Release:	n06.2
+# License:	GPL LGPL
+# Group:	Graphic
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64 arm arm64
+# Url:	http://inkscape.sourceforge.net/
+# Description:	Vector graphics editor using the SVG file format.
+# MD5:	6fb41021b8da2d64057d85932b38ae61  inkscape-0.48.1.tar.xz
+
+
+# BuildDep:	/usr/lib/libgc.so	/usr/lib/libgc.so
+# BuildDep:	/usr/lib/libgtkmm-2.4.so	/usr/lib/libgtkmm-2.4.so
+# BuildDep:	/usr/lib/libpoppler-glib.so	/usr/lib/libpoppler-glib.so
+# BuildDep:	/usr/lib/libxslt.so	/usr/lib/libxslt.so
+# BuildDep:	/usr/lib/libgsl.so	/usr/lib/libgsl.so
+# BuildDep:	/usr/lib/libpopt.so	/usr/lib/libpopt.so
+# BuildDep:	/usr/bin/python	/usr/bin/python
+# BuildDep:	/usr/lib/libgtkspell.so	/usr/lib/libgtkspell.so
+# BuildDep:	/usr/lib/libMagick++.so	/usr/lib/libMagick++.so
+# BuildDep:	/usr/share/icons/hicolor/index.theme	/usr/share/icons/hicolor/index.theme
+# BuildDep:	/usr/bin/desktop-file-install	/usr/bin/desktop-file-install
+# Dep(post):	/usr/bin/desktop-file-install	/usr/bin/desktop-file-install
+# Dep(post):	/usr/share/icons/hicolor/index.theme	/usr/share/icons/hicolor/index.theme
+# Dep(post):	/usr/lib/libMagick++.so	/usr/lib/libMagick++.so
+# Dep(post):	/usr/lib/libgtkspell.so	/usr/lib/libgtkspell.so
+# Dep(post):	/usr/bin/python	/usr/bin/python
+# Dep(post):	/usr/lib/libpopt.so	/usr/lib/libpopt.so
+# Dep(post):	/usr/lib/libgsl.so	/usr/lib/libgsl.so
+# Dep(post):	/usr/lib/libxslt.so	/usr/lib/libxslt.so
+# Dep(post):	/usr/lib/libpoppler-glib.so	/usr/lib/libpoppler-glib.so
+# Dep(post):	/usr/lib/libgtkmm-2.4.so	/usr/lib/libgtkmm-2.4.so
+# Dep(post):	/usr/lib/libgc.so	/usr/lib/libgc.so
+
+nbuild() {
+./configure --prefix=/usr --with-python \
+--with-perl --without-gnome-vfs \
+--with-xft --enable-lcms \
+--enable-poppler-cairo --disable-dependency-tracking
+make
+}
+
+ninstall() {
+make install
+strip --strip-debug /usr/bin/ink{scape,view}
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

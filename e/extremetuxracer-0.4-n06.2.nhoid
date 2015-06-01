@@ -1,0 +1,49 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	extremetuxracer
+# Version:	0.4
+# Release:	n06.2
+# License:	GPL
+# Group:	Games
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64 arm arm64
+# Url:	http://www.extremetuxracer.com
+# Description:	Downhill racing game starring Tux.
+# MD5:	4d81fc4e17cf969df8c70592e481277d  extremetuxracer-0.4.tar.xz
+
+
+# BuildDep:	/usr/lib/libSDL_mixer.so	/usr/lib/libSDL_mixer.so
+# BuildDep:	/usr/bin/tclsh	/usr/bin/tclsh
+# BuildDep:	/usr/lib/libGL.so	/usr/lib/libGL.so
+# BuildDep:	/usr/lib/libpng.so	/usr/lib/libpng.so
+# BuildDep:	/usr/lib/libfreetype.so	/usr/lib/libfreetype.so
+# BuildDep:	/usr/lib/libXi.so	/usr/lib/libXi.so
+# BuildDep:	/usr/lib/libXmu.so	/usr/lib/libXmu.so
+# Dep(post):	/usr/lib/libSDL_mixer.so	/usr/lib/libSDL_mixer.so
+# Dep(post):	/usr/bin/tclsh	/usr/bin/tclsh
+# Dep(post):	/usr/lib/libGL.so	/usr/lib/libGL.so
+# Dep(post):	/usr/lib/libpng.so	/usr/lib/libpng.so
+# Dep(post):	/usr/lib/libfreetype.so	/usr/lib/libfreetype.so
+# Dep(post):	/usr/lib/libXi.so	/usr/lib/libXi.so
+# Dep(post):	/usr/lib/libXmu.so	/usr/lib/libXmu.so
+
+nbuild() {
+patch -Np1 -i ../libpng14.patch
+sed -i -e 's/libpng12/libpng14/g' configure
+./configure --prefix=/usr
+make
+}
+
+ninstall() {
+make install
+install -D -m644 ../extremetuxracer.desktop /usr/share/applications/extremetuxracer.desktop
+install -D -m644 ../extremetuxracer.png /usr/share/pixmaps/extremetuxracer.png
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

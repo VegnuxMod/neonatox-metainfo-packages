@@ -1,0 +1,57 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	icedtea-web
+# Version:	1.2
+# Release:	n06.2
+# License:	GPLv2
+# Group:	Networking
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64 arm arm64 armel
+# Url:	http:/icedtea.classpath.org/wiki/IcedTea-Web
+# Description:	Provides a Free Software web browser plugin running applets written in the Java programming language and an implementation of Java Web Start, originally based on the NetX project.
+# MD5:	d1d71ec748712fa61b96f5b0eca1e4ac  icedtea-web-1.2.tar.xz
+
+
+# BuildDep:	/usr/bin/java	/usr/bin/java
+# BuildDep:	/usr/lib/libgtk-x11-2.0.so	/usr/lib/libgtk-x11-2.0.so
+# BuildDep:	/usr/bin/desktop-file-install	/usr/bin/desktop-file-install
+# Dep(post):	/usr/bin/java	/usr/bin/java
+# Dep(post):	/usr/lib/libgtk-x11-2.0.so	/usr/lib/libgtk-x11-2.0.so
+# Dep(post):	/usr/bin/desktop-file-install	/usr/bin/desktop-file-install
+
+nbuild() {
+. /etc/profile.d/jre.sh
+. /etc/profile.d/jdk.sh
+./configure --prefix=/usr/lib/jvm/java-7-openjdk \
+--datarootdir=/usr/share \
+--with-jdk-home=/usr/lib/jvm/java-7-openjdk
+make
+}
+
+ninstall() {
+pkgdir=/tmp/icedtea-web
+make DESTDIR="${pkgdir}" install-exec-local install-data-local
+install -m755 -d ${pkgdir}/usr/share/{applications,pixmaps}
+install -m644 javaws.png ${pkgdir}/usr/share/pixmaps
+install -m644 {javaws,itweb-settings}.desktop ${pkgdir}/usr/share/applications
+install -m755 -d ${pkgdir}/usr/bin
+install -m755 -d ${pkgdir}/usr/lib/jvm/java-7-openjdk/jre/bin
+pushd ${pkgdir}/usr/lib/jvm/java-7-openjdk/bin
+for file in *; do
+ln -sf /usr/lib/jvm/java-7-openjdk/bin/${file} ${pkgdir}/usr/bin
+ln -sf /usr/lib/jvm/java-7-openjdk/bin/${file} ${pkgdir}/usr/lib/jvm/java-7-openjdk/jre/bin
+done
+popd
+install -m755 -d ${pkgdir}/usr/lib/mozilla/plugins/
+ln -sf /usr/lib/jvm/java-7-openjdk/lib/IcedTeaPlugin.so ${pkgdir}/usr/lib/mozilla/plugins/
+cp -r ${pkgdir}/* /
+rm -r ${pkgdir}
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

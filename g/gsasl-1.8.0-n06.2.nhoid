@@ -1,0 +1,40 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	gsasl
+# Version:	1.8.0
+# Release:	n06.2
+# License:	GPL
+# Group:	System
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64 arm arm64 armel
+# Url:	http://josefsson.org/gsasl/
+# Description:	Simple Authentication and Security Layer framework and a few common SASL mechanisms.
+# MD5:	7de429937ea439af79339dbfc0b245d6  gsasl-1.8.0.tar.xz
+
+
+# BuildDep:	/usr/lib/libgnutls.so	/usr/lib/libgnutls.so
+# BuildDep:	/usr/lib/libidn.so	/usr/lib/libidn.so
+# BuildDep:	/usr/lib/libkrb5.so	/usr/lib/libkrb5.so
+# BuildDep:	/usr/lib/libgcrypt.so	/usr/lib/libgcrypt.so
+# Dep(post):	/usr/lib/libgcrypt.so	/usr/lib/libgcrypt.so
+# Dep(post):	/usr/lib/libkrb5.so	/usr/lib/libkrb5.so
+# Dep(post):	/usr/lib/libidn.so	/usr/lib/libidn.so
+# Dep(post):	/usr/lib/libgnutls.so	/usr/lib/libgnutls.so
+
+nbuild() {
+./configure --prefix=/usr --with-gssapi-impl=mit
+make
+}
+
+ninstall() {
+make install
+rm "/usr/share/info/dir" "/usr/lib/libgsasl.la"
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

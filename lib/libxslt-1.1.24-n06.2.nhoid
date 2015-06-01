@@ -1,0 +1,35 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sánchez <cargabsj175@gmail.com>
+
+# Name:	libxslt
+# Version:	1.1.24
+# Release:	n06.2
+# License:	GPL compatible
+# Group:	Core System
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64
+# Url:	http://xmlsoft.org
+# Description:	The libxslt package contains XSLT libraries. These are useful for extending libxml2 libraries to support XSLT files.
+# MD5:	99666d587085ba08e73591ccc1bc8051  libxslt-1.1.24.tar.xz
+
+
+# BuildDep:	/usr/lib/libxml2.so	/usr/lib/libxml2.so
+# OptionalBuildDep:	/usr/bin/python	/usr/bin/python
+# Dep(post):	/usr/lib/libxml2.so	/usr/lib/libxml2.so
+# OptionalDep(post):	/usr/bin/python	/usr/bin/python
+
+nbuild() {
+./configure --prefix=/usr
+make
+}
+
+ninstall() {
+make install
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

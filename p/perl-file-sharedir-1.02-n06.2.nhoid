@@ -1,0 +1,35 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	perl-file-sharedir
+# Version:	1.02
+# Release:	n06.2
+# License:	PerlArtistic GPL
+# Group:	System
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64 arm arm64 armel
+# Url:	http://search.cpan.org/dist/File-ShareDir
+# Description:	Locate per-dist and per-module shared files.
+# MD5:	a89e494554f3de3fd535e8fe4c47e8c5  perl-file-sharedir-1.02.tar.xz
+
+
+# BuildDep:	/usr/lib/perl5/vendor_perl/5.12.1/Class/Inspector.pm	/usr/lib/perl5/vendor_perl/5.12.1/Class/Inspector.pm
+# BuildDep:	/usr/bin/perl	/usr/bin/perl
+# Dep(post):	/usr/bin/perl	/usr/bin/perl
+# Dep(post):	/usr/lib/perl5/vendor_perl/5.12.1/Class/Inspector.pm	/usr/lib/perl5/vendor_perl/5.12.1/Class/Inspector.pm
+
+nbuild() {
+PERL_MM_USE_DEFAULT=1 perl Makefile.PL INSTALLDIRS=vendor
+make
+}
+
+ninstall() {
+make install
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

@@ -1,0 +1,40 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	protobuf
+# Version:	2.4.1
+# Release:	n06.2
+# License:	APACHE
+# Group:	Programming
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64 arm arm64 armel
+# Url:	http://code.google.com/p/protobuf
+# Description:	"A way of encoding structured data in an efficient yet extensible format.
+# MD5:	73f6e89fc5ca9642dc8f964b089d7df8  protobuf-2.4.1.tar.xz
+
+
+# BuildDep:	/usr/lib/libz.so	/usr/lib/libz.so
+# BuildDep:	/usr/bin/python	/usr/bin/python
+# Dep(post):	/usr/bin/python	/usr/bin/python
+# Dep(post):	/usr/lib/libz.so	/usr/lib/libz.so
+
+nbuild() {
+./autogen.sh
+./configure --prefix=/usr --disable-static
+}
+
+ninstall() {
+make install
+pkgdir=/tmp/pypro
+cd python
+python setup.py install --prefix=/usr --root $pkgdir
+cp -r $pkgdir/* /
+rm -r $pkgdir
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

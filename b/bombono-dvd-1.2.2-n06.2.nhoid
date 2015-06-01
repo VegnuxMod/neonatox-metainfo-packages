@@ -1,0 +1,57 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	bombono-dvd
+# Version:	1.2.2
+# Release:	n06.2
+# License:	GPLv2
+# Group:	Multimedia
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64 arm arm64 armel
+# Url:	http://www.bombono.org
+# Description:	Bombono DVD is DVD authoring program with nice and clean GUI.
+# MD5:	caeb8be9b263ea411067f2154c3af2d6  bombono-dvd-1.2.2.tar.xz
+
+
+# BuildDep:	/usr/lib/libgtk-x11-2.0.so	/usr/lib/libgtk-x11-2.0.so
+# BuildDep:	/usr/lib/libgtkmm-2.4.so	/usr/lib/libgtkmm-2.4.so
+# BuildDep:	/usr/bin/scons	/usr/bin/scons
+# BuildDep:	/usr/lib/liblavjpeg.so	/usr/lib/liblavjpeg.so
+# BuildDep:	/usr/lib/libdvdread.so	/usr/lib/libdvdread.so
+# BuildDep:	/usr/bin/dvdauthor	/usr/bin/dvdauthor
+# BuildDep:	/usr/bin/growisofs	/usr/bin/growisofs
+# BuildDep:	/usr/lib/libtwolame.so	/usr/lib/libtwolame.so
+# BuildDep:	/usr/lib/libxml++-2.6.so	/usr/lib/libxml++-2.6.so
+# BuildDep:	/usr/bin/ffmpeg	/usr/bin/ffmpeg
+# BuildDep:	/usr/lib/libenca.so	/usr/lib/libenca.so
+# Dep(post):	/usr/lib/libenca.so	/usr/lib/libenca.so
+# Dep(post):	/usr/bin/ffmpeg	/usr/bin/ffmpeg
+# Dep(post):	/usr/lib/libxml++-2.6.so	/usr/lib/libxml++-2.6.so
+# Dep(post):	/usr/lib/libtwolame.so	/usr/lib/libtwolame.so
+# Dep(post):	/usr/bin/growisofs	/usr/bin/growisofs
+# Dep(post):	/usr/bin/dvdauthor	/usr/bin/dvdauthor
+# Dep(post):	/usr/lib/libdvdread.so	/usr/lib/libdvdread.so
+# Dep(post):	/usr/lib/liblavjpeg.so	/usr/lib/liblavjpeg.so
+# Dep(post):	/usr/bin/scons	/usr/bin/scons
+# Dep(post):	/usr/lib/libgtkmm-2.4.so	/usr/lib/libgtkmm-2.4.so
+# Dep(post):	/usr/lib/libgtk-x11-2.0.so	/usr/lib/libgtk-x11-2.0.so
+
+nbuild() {
+scons
+}
+
+ninstall() {
+pkgdir=/tmp/bombono-dvd
+scons DESTDIR=${pkgdir} install
+cp -r ${pkgdir}/usr/local/* ${pkgdir}/usr/
+rm -r ${pkgdir}/usr/local 
+cp -r ${pkgdir}/* /
+rm -r ${pkgdir}
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

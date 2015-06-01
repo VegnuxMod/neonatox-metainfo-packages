@@ -1,0 +1,38 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	tls
+# Version:	1.6
+# Release:	n06.2
+# License:	GPL
+# Group:	System
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64 arm arm64
+# Url:	http://tls.sourceforge.net/
+# Description:	OpenSSL extension to Tcl.
+# MD5:	3fc02ac63e070798436ce0cf027949cf  tls-1.6.tar.xz
+
+
+# BuildDep:	/usr/bin/tclsh	/usr/bin/tclsh
+# BuildDep:	/usr/lib/libssl.so	/usr/lib/libssl.so
+# BuildDep:	/usr/bin/awk	/usr/bin/awk
+# Dep(post):	/usr/bin/awk	/usr/bin/awk
+# Dep(post):	/usr/lib/libssl.so	/usr/lib/libssl.so
+# Dep(post):	/usr/bin/tclsh	/usr/bin/tclsh
+
+nbuild() {
+./configure --prefix=/usr --with-ssl-dir=/usr
+make
+}
+
+ninstall() {
+make install
+ln -s tls1.6/libtls1.6.so $pkgdir/usr/lib/libtls1.6.so
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

@@ -1,0 +1,43 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	eclipse-ecj
+# Version:	3.7.1
+# Release:	n06.2
+# License:	EPL
+# Group:	Programming
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64 arm arm64
+# Url:	http://www.eclipse.org/
+# Description:	Eclipse java bytecode compiler.
+# MD5:	4c0197c7c765055fe341b944e83670c3  eclipse-ecj-3.7.1.tar.xz
+
+
+# BuildDep:	/usr/bin/unzip	/usr/bin/unzip
+# BuildDep:	/usr/share/java/apache-ant/bin/ant	/usr/share/java/apache-ant/bin/ant
+# Dep(post):	/usr/share/java/apache-ant/bin/ant	/usr/share/java/apache-ant/bin/ant
+# Dep(post):	/usr/bin/unzip	/usr/bin/unzip
+
+nbuild() {
+mkdir src
+unzip ecjsrc-3.7.1.jar -d src
+cd src
+ant build
+}
+
+ninstall() {
+pkgdir=/tmp/ecj
+install -Dm644 src/ecj.jar ${pkgdir}/usr/share/java/eclipse-ecj-3.7.1.jar
+ln -s eclipse-ecj-3.7.1.jar ${pkgdir}/usr/share/java/ecj.jar
+ln -s eclipse-ecj-3.7.1.jar ${pkgdir}/usr/share/java/eclipse-ecj.jar
+install -Dm755 ecj ${pkgdir}/usr/bin/ecj
+cp -r ${pkgdir}/* /
+rm -r ${pkgdir}
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

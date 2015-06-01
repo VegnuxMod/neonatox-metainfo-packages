@@ -1,0 +1,38 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sánchez <cargabsj175@gmail.com>
+
+# Name:	totem-pl-parser
+# Version:	2.32.1
+# Release:	n06.2
+# License:	LGPL
+# Group:	Gnome Desktop
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64
+# Url:	http://www.hadess.net/totem.php3
+# Description:	Totem playlist parser library.
+# MD5:	90f0e8126241d349feaddd1497c726ef  totem-pl-parser-2.32.1.tar.xz
+
+
+# BuildDep:	/usr/lib/libgmime-2.4.so	/usr/lib/libgmime-2.4.so
+# BuildDep:	/usr/lib/libsoup-gnome-2.4.so	/usr/lib/libsoup-gnome-2.4.so
+# BuildDep:	/usr/lib/libgobject-2.0.so	/usr/lib/libgobject-2.0.so
+# Dep(post):	/usr/lib/libgobject-2.0.so	/usr/lib/libgobject-2.0.so
+# Dep(post):	/usr/lib/libsoup-gnome-2.4.so	/usr/lib/libsoup-gnome-2.4.so
+# Dep(post):	/usr/lib/libgmime-2.4.so	/usr/lib/libgmime-2.4.so
+
+nbuild() {
+./configure --prefix=/usr --sysconfdir=/etc \
+--localstatedir=/var --disable-static
+make
+}
+
+ninstall() {
+make install
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

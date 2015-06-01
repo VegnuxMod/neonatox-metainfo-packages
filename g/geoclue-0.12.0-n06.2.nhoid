@@ -1,0 +1,41 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	geoclue
+# Version:	0.12.0
+# Release:	n06.2
+# License:	LGPL
+# Group:	Networking
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64 arm arm64 armel
+# Url:	http://geoclue.freedesktop.org/
+# Description:	Modular geoinformation service built on the D-Bus messaging system.
+# MD5:	18ca04760c47771272cd6d37799f3f86  geoclue-0.12.0.tar.xz
+
+
+# BuildDep:	/usr/lib/libdbus-glib-1.so	/usr/lib/libdbus-glib-1.so
+# BuildDep:	/usr/lib/libgconf-2.so	/usr/lib/libgconf-2.so
+# BuildDep:	/usr/lib/libxslt.so	/usr/lib/libxslt.so
+# Dep(post):	/usr/lib/libxslt.so	/usr/lib/libxslt.so
+# Dep(post):	/usr/lib/libgconf-2.so	/usr/lib/libgconf-2.so
+# Dep(post):	/usr/lib/libdbus-glib-1.so	/usr/lib/libdbus-glib-1.so
+
+nbuild() {
+sed -i "s@ -Werror@@" configure &&
+sed -i "s@libnm_glib@libnm-glib@g" configure &&
+sed -i "s@geoclue/libgeoclue.la@& -lgthread-2.0@g" \
+providers/skyhook/Makefile.in &&
+./configure --prefix=/usr --libexecdir=/usr/lib/geoclue &&
+make
+}
+
+ninstall() {
+make install
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

@@ -1,0 +1,39 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	libreoffice-extension-pdfimport
+# Version:	3.5.2.2
+# Release:	n06.2
+# License:	LGPLv3
+# Group:	libreoffice extension
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64 arm arm64 armel
+# Url:	http://www.libreoffice.org/
+# Description:	This extension allows you to import and modify PDF documents.
+# MD5:	1dee59ab96a98b77723284675c5081dd  libreoffice-extension-pdfimport-3.5.2.2.tar.xz
+
+
+# BuildDep:	/usr/bin/libreoffice	/usr/bin/libreoffice
+# BuildDep:	/usr/lib/libpoppler.so	/usr/lib/libpoppler.so
+# BuildDep:	/usr/bin/unzip	/usr/bin/unzip
+# Dep(post):	/usr/bin/libreoffice	/usr/bin/libreoffice
+# Dep(post):	/usr/lib/libpoppler.so	/usr/lib/libpoppler.so
+
+nbuild() {
+./build.libreoffice
+}
+
+ninstall() {
+pkgdir=/tmp/libreoffice
+install -dm755 ${pkgdir}/usr/lib/libreoffice/share/extensions
+unzip -q solver/unxlng*/bin/pdfimport/pdfimport.oxt -d ${pkgdir}/usr/lib/libreoffice/share/extensions/pdfimport
+cp -r ${pkgdir}/* /
+rm -r ${pkgdir}
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

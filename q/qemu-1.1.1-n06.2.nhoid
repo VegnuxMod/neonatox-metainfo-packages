@@ -1,0 +1,73 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	qemu
+# Version:	1.1.1
+# Release:	n06.2
+# License:	GPLv3 LGPLv2.1
+# Group:	Virtualization
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64 arm arm64 armel
+# Url:	http://wiki.qemu.org/Index.html
+# Description:	A generic and open source processor emulator which achieves a good emulation speed by using dynamic translation.
+# MD5:	95e62ed3b98e33a0315c815b7e98ac63  qemu-1.1.1.tar.xz
+
+
+# BuildDep:	/usr/bin/python	/usr/bin/python
+# BuildDep:	/usr/bin/perl	/usr/bin/perl
+# BuildDep:	/usr/lib/libjpeg.so	/usr/lib/libjpeg.so
+# BuildDep:	/usr/lib/libpng.so	/usr/lib/libpng.so
+# BuildDep:	/usr/lib/libasound.so	/usr/lib/libasound.so
+# BuildDep:	/usr/lib/libnss3.so	/usr/lib/libnss3.so
+# BuildDep:	/usr/lib/libglib-2.0.so	/usr/lib/libglib-2.0.so
+# BuildDep:	/usr/lib/libgnutls.so	/usr/lib/libgnutls.so
+# BuildDep:	/usr/lib/libbluetooth.so	/usr/lib/libbluetooth.so
+# BuildDep:	/usr/lib/libvdehist.so	/usr/lib/libvdehist.so
+# BuildDep:	/usr/lib/libcurl.so	/usr/lib/libcurl.so
+# BuildDep:	/usr/lib/libsasl2.so	/usr/lib/libsasl2.so
+# BuildDep:	/usr/lib/libGL.so	/usr/lib/libGL.so
+# BuildDep:	/usr/share/qemu/bios.bin	/usr/share/qemu/bios.bin
+# Dep(post):	/usr/bin/python	/usr/bin/python
+# Dep(post):	/usr/bin/perl	/usr/bin/perl
+# Dep(post):	/usr/lib/libjpeg.so	/usr/lib/libjpeg.so
+# Dep(post):	/usr/lib/libpng.so	/usr/lib/libpng.so
+# Dep(post):	/usr/lib/libasound.so	/usr/lib/libasound.so
+# Dep(post):	/usr/lib/libnss3.so	/usr/lib/libnss3.so
+# Dep(post):	/usr/lib/libglib-2.0.so	/usr/lib/libglib-2.0.so
+# Dep(post):	/usr/lib/libgnutls.so	/usr/lib/libgnutls.so
+# Dep(post):	/usr/lib/libbluetooth.so	/usr/lib/libbluetooth.so
+# Dep(post):	/usr/lib/libvdehist.so	/usr/lib/libvdehist.so
+# Dep(post):	/usr/lib/libcurl.so	/usr/lib/libcurl.so
+# Dep(post):	/usr/lib/libsasl2.so	/usr/lib/libsasl2.so
+# Dep(post):	/usr/lib/libGL.so	/usr/lib/libGL.so
+# Dep(post):	/usr/share/qemu/bios.bin	/usr/share/qemu/bios.bin
+
+nbuild() {
+sed -i -e 's/lib64/lib/g' x86_64.ld
+patch -Np1 -i ../qemu-glibc-2.16-build.patch
+./configure --prefix=/usr --sysconfdir=/etc --audio-drv-list=oss,alsa,sdl --audio-card-list=ac97,sb16,es1370,hda --enable-docs
+make
+}
+
+ninstall() {
+pkgdir=/tmp/qemu
+make DESTDIR="${pkgdir}" libexecdir="/usr/lib/qemu" install
+rm "${pkgdir}/usr/share/qemu/bios.bin"
+install -D -m644 "../65-kvm.rules" "${pkgdir}/usr/lib/udev/rules.d/65-kvm.rules"
+# strip scripts directory
+find "${pkgdir}/usr/src/linux-$(uname -e)/scripts"  -type f -perm -u+w 2>/dev/null | while read binary ; do
+case "$(file -bi "$binary")" in
+*application/x-executable*) # Binaries
+/usr/bin/strip $STRIP_BINARIES "$binary";;
+esac
+done
+cp -r ${pkgdir}/* /
+rm -r ${pkgdir}
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

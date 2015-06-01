@@ -1,0 +1,40 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	polkit-gnome
+# Version:	0.99
+# Release:	n06.2
+# License:	LGPL
+# Group:	Gnome Desktop
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64 arm arm64 armel
+# Url:	http://www.freedesktop.org/wiki/Software/PolicyKit
+# Description:	PolicyKit integration for the GNOME desktop.
+# MD5:	1bdff55541d6106639f4dd2d50258ba5  polkit-gnome-0.99.tar.xz
+
+
+# BuildDep:	/usr/lib/libpolkit-agent-1.so	/usr/lib/libpolkit-agent-1.so
+# BuildDep:	/usr/lib/libgtk-x11-2.0.so	/usr/lib/libgtk-x11-2.0.so
+# BuildDep:	/usr/lib/libgobject-2.0.so	/usr/lib/libgobject-2.0.so
+# Dep(post):	/usr/lib/libgobject-2.0.so	/usr/lib/libgobject-2.0.so
+# Dep(post):	/usr/lib/libgtk-x11-2.0.so	/usr/lib/libgtk-x11-2.0.so
+# Dep(post):	/usr/lib/libpolkit-agent-1.so	/usr/lib/libpolkit-agent-1.so
+
+nbuild() {
+sed -i -e 's/OnlyShowIn=GNOME/NotShowIn=KDE/' src/polkit-gnome-authentication-agent-1.desktop.in.in
+./configure --prefix=/usr --sysconfdir=/etc \
+--localstatedir=/var --libexecdir=/usr/lib/polkit-gnome \
+--disable-static --disable-introspection
+make
+}
+
+ninstall() {
+make GCONF_DISABLE_MAKEFILE_SCHEMA_INSTALL=1  install
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

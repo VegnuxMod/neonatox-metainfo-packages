@@ -1,0 +1,38 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sánchez <cargabsj175@gmail.com>
+
+# Name:	gnome-themes
+# Version:	2.32.1
+# Release:	n06.2
+# License:	LGPL
+# Group:	Gnome Desktop
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64
+# Url:	http://www.gnome.org
+# Description:	Default themes for GNOME2.
+# MD5:	fc0185ad6b9426a2838b27ce84981f24  gnome-themes-2.32.1.tar.xz
+
+
+# BuildDep:	/usr/lib/pkgconfig/gtk-engines-2.pc	/usr/lib/pkgconfig/gtk-engines-2.pc
+# BuildDep:	/usr/bin/icon-name-mapping	/usr/bin/icon-name-mapping
+# BuildDep:	/usr/lib/librsvg-2.so	/usr/lib/librsvg-2.so
+# Dep(post):	/usr/bin/icon-name-mapping	/usr/bin/icon-name-mapping
+# Dep(post):	/usr/lib/librsvg-2.so	/usr/lib/librsvg-2.so
+# Dep(post):	/usr/lib/pkgconfig/gtk-engines-2.pc	/usr/lib/pkgconfig/gtk-engines-2.pc
+
+nbuild() {
+./configure --prefix=/usr --sysconfdir=/etc \
+--localstatedir=/var
+make
+}
+
+ninstall() {
+make install
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

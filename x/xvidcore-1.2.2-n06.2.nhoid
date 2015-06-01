@@ -1,0 +1,39 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sánchez <cargabsj175@gmail.com>
+
+# Name:	xvidcore
+# Version:	1.2.2
+# Release:	n06.2
+# License:	GPL
+# Group:	Multimedia
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64
+# Url:	http://www.xvid.org/
+# Description:	XviD is an open source MPEG-4 video codec.
+# MD5:	d9fd87598a13437dcc0ec6c74b827944  xvidcore-1.2.2.tar.xz
+
+
+# BuildDep:	/usr/bin/nasm	/usr/bin/nasm
+# Dep(post):	/usr/bin/nasm	/usr/bin/nasm
+
+nbuild() {
+cd build/generic
+./configure --prefix=/usr
+make
+}
+
+ninstall() {
+cd build/generic
+make install
+cd /usr/lib
+mylib=$(basename libxvidcore.so.*)
+ln -sf ${mylib} libxvidcore.so.4
+ln -sf ${mylib} libxvidcore.so
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

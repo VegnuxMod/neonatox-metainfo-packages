@@ -1,0 +1,34 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	perl-mozilla-ca
+# Version:	20130114
+# Release:	n06.2
+# License:	GPLv2
+# Group:	Programming
+# Arch:	noarch
+# Url:	https://metacpan.org/release/Mozilla-CA
+# Description:	Mozilla's CA cert bundle in PEM format.
+# MD5:	67cde0d2bcf795045921ec27283c61c9  perl-mozilla-ca-20130114.tar.xz
+
+# BuildDep:	/usr/bin/perl	/usr/bin/perl
+# Dep(post):	/usr/bin/perl	/usr/bin/perl
+
+nbuild() {
+export PERL_MM_USE_DEFAULT=1 PERL_AUTOINSTALL=--skipdeps
+unset PERL5LIB PERL_MM_OPT
+/usr/bin/perl Makefile.PL
+make
+}
+
+ninstall() {
+make install INSTALLDIRS=vendor
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

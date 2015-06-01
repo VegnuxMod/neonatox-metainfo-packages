@@ -1,0 +1,33 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	libnet
+# Version:	1.1.5
+# Release:	n06.2
+# License:	BSD
+# Group:	Networking
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64 arm arm64
+# Url:	http://sourceforge.net/projects/libnet-dev/
+# Description:	A library which provides API for commonly used low-level net functions.
+# MD5:	ce8c5d9e60b6542930cb7aef6d0b90d1  libnet-1.1.5.tar.xz
+
+
+# BuildDep:	/bin/sh	/bin/sh
+# Dep(post):	/bin/sh	/bin/sh
+
+nbuild() {
+./configure --prefix=/usr
+make CFLAGS="${CFLAGS} -fPIC"
+}
+
+ninstall() {
+make install
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

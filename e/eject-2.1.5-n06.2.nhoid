@@ -1,0 +1,32 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sánchez <cargabsj175@gmail.com>
+
+# Name:	eject
+# Version:	2.1.5
+# Release:	n06.2
+# License:	GPL
+# Group:	Core System
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64
+# Url:	http://ca.geocities.com/jefftranter@rogers.com/eject.html
+# Description:	Eject is a program for ejecting removable media under software control.
+# MD5:	aaf32173eeb9ff1711f2cd2a4fc3269f  eject-2.1.5.tar.xz
+
+
+
+nbuild() {
+patch -Np0 -i ../eject-2.1.5-handle-spaces.patch
+./configure --prefix=/usr --mandir=/usr/share/man
+make
+}
+
+ninstall() {
+make install
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

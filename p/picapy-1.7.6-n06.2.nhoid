@@ -1,0 +1,43 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	picapy
+# Version:	1.7.6
+# Release:	n06.2
+# License:	GPLv3
+# Group:	Networking
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64 arm arm64 armel
+# Url:	https://launchpad.net/picapy
+# Description:	A Picasa Web manager.
+# MD5:	d3c76d6e8dd5cafb7a759c2e6c18b7cf  picapy-1.7.6.tar.xz
+
+
+# BuildDep:	/usr/lib/python2.7/site-packages/Crypto/pct_warnings.py	/usr/lib/python2.7/site-packages/Crypto/pct_warnings.py
+# BuildDep:	/usr/lib/python2.7/site-packages/gdata/apps/service.py	/usr/lib/python2.7/site-packages/gdata/apps/service.py
+# Dep(post):	/usr/lib/python2.7/site-packages/gdata/apps/service.py	/usr/lib/python2.7/site-packages/gdata/apps/service.py
+# Dep(post):	/usr/lib/python2.7/site-packages/Crypto/pct_warnings.py	/usr/lib/python2.7/site-packages/Crypto/pct_warnings.py
+
+nbuild() {
+noemptyfuncs
+}
+
+ninstall() {
+pkgdir=/tmp/picapy
+mkdir -p $pkgdir/usr/share/applications
+mv picapy.desktop $pkgdir/usr/share/applications
+mkdir -p $pkgdir/usr/share/picapy
+mv * $pkgdir/usr/share/picapy
+mkdir -p $pkgdir/usr/bin
+ln -sf /usr/share/picapy/picapy.py $pkgdir/usr/bin/picapy
+chmod 755 /usr/share/picapy.py
+cp -r $pkgdir/* /
+rm -r $pkgdir
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

@@ -1,0 +1,39 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	enca
+# Version:	1.13
+# Release:	n06.2
+# License:	GPL
+# Group:	Programming
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64 arm arm64
+# Url:	http://freshmeat.net/projects/enca/
+# Description:	Charset analyser and converter.
+# MD5:	f385afe907db7350237a1471ae2b5b18  enca-1.13.tar.xz
+
+
+# BuildDep:	/usr/lib/librecode.so	/usr/lib/librecode.so
+# BuildDep:	/bin/sh	/bin/sh
+# Dep(post):	/bin/sh	/bin/sh
+# Dep(post):	/usr/lib/librecode.so	/usr/lib/librecode.so
+
+nbuild() {
+./configure --prefix=/usr \
+--libexecdir=/usr/lib \
+--mandir=/usr/share/man \
+--with-librecode=/usr \
+--enable-external
+make
+}
+
+ninstall() {
+make install
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

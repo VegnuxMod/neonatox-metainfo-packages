@@ -1,0 +1,35 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	unhide
+# Version:	20110113
+# Release:	n06.2
+# License:	GPLv3
+# Group:	System
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64 arm arm64 armel
+# Url:	http://www.unhide-forensics.info/
+# Description:	A forensic tool to find processes hidden by rootkits, LKMs or by other techniques.
+# MD5:	ecd4564fda3fc1ab95beb0468cbbf31e  unhide-20110113.tar.xz
+
+
+nbuild() {
+cc -Os -static unhide.c -o unhide-posix
+cc -Os -static -pthread unhide-linux26.c -o unhide-linux26
+cc -Os -static unhide-tcp.c -o unhide-tcp
+}
+
+ninstall() {
+install -Dm0755 unhide-posix "/usr/sbin/unhide-posix"
+install -Dm0755 unhide-linux26 "/usr/sbin/unhide-linux26"
+install -Dm0755 unhide-tcp "/usr/sbin/unhide-tcp"
+ln -fs ./unhide-linux26 "/usr/sbin/unhide"
+install -Dm0644 man/unhide.8 "/usr/share/man/man8/unhide.8"
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

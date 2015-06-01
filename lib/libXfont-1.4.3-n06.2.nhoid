@@ -1,0 +1,37 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	libXfont
+# Version:	1.4.3
+# Release:	n06.2.1
+# License:	X11 license
+# Group:	X Window System
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64 arm arm64
+# Url:	http://www.x.org/wiki
+# Description:	libXfont provides various services for X servers, most notably font selection and rasterisation (through external libraries).
+# MD5:	810504bd5684f36cc4f4569ecc214bf8  libXfont-1.4.3.tar.xz
+
+
+# BuildDep:	/usr/lib/libfontenc.so	/usr/lib/libfontenc.so
+# BuildDep:	/usr/lib/libfreetype.so	/usr/lib/libfreetype.so
+# BuildDep:	/usr/lib/libz.so	/usr/lib/libz.so
+# Dep(post):	/usr/lib/libz.so	/usr/lib/libz.so
+# Dep(post):	/usr/lib/libfreetype.so	/usr/lib/libfreetype.so
+# Dep(post):	/usr/lib/libfontenc.so	/usr/lib/libfontenc.so
+
+nbuild() {
+./configure --prefix=/usr --sysconfdir=/etc --mandir=/usr/share/man --localstatedir=/var --disable-devel-docs
+make
+}
+
+ninstall() {
+make install
+}
+
+npostinstall() {
+ldconfig
+}
+
+npostremove() {
+noemptyfuncs
+}

@@ -1,0 +1,33 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	ttf-freefont
+# Version:	20100919
+# Release:	n06.2
+# License:	GPL
+# Group:	X Window System
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64 arm arm64
+# Url:	http://www.nongnu.org/freefont/
+# Description:	A set of free high-quality TrueType fonts covering the UCS character set.
+# MD5:	8999b8e8e2fb62b2a8684fb91620158f  ttf-freefont-20100919.tar.xz
+
+
+# BuildDep:	/usr/lib/libfontconfig.so	/usr/lib/libfontconfig.so
+# Dep(post):	/usr/lib/libfontconfig.so	/usr/lib/libfontconfig.so
+
+nbuild() {
+noemptyfuncs
+}
+
+ninstall() {
+install -d "/usr/share/fonts/X11/TTF"
+install -m644 *.ttf "/usr/share/fonts/X11/TTF/"
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

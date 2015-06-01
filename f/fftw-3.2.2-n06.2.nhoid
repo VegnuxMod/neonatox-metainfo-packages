@@ -1,0 +1,31 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	fftw
+# Version:	3.2.2
+# Release:	n06.2
+# License:	GPLv2
+# Group:	Programming
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64 arm arm64 armel
+# Url:	http://www.fftw.org/
+# Description:	FFTW is a C subroutine library for computing the discrete Fourier transform (DFT) in one or more dimensions. The name, "FFTW," stands for "Fastest Fourier Transform in the West." FFTW was developed at MIT, which is in the east. DJBFFT is an alternative that claims to be faster.
+# MD5:	4f7c30cc37c22a0f540d3674a9cec564  fftw-3.2.2.tar.xz
+
+
+
+nbuild() {
+./configure --prefix=/usr --enable-shared --enable-threads &&
+make
+}
+
+ninstall() {
+make install
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

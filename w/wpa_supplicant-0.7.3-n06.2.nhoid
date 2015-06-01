@@ -1,0 +1,49 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sánchez <cargabsj175@gmail.com>
+
+# Name:	wpa_supplicant
+# Version:	0.7.3
+# Release:	n06.2
+# License:	GPL
+# Group:	Networking
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64
+# Url:	http://hostap.epitest.fi/wpa_supplicant
+# Description:	A utility providing key negotiation for WPA wireless networks.
+# MD5:	aeba2044d5cf0fc1ded3d9f9288b9fd4  wpa_supplicant-0.7.3.tar.xz
+
+
+# BuildDep:	/usr/lib/libssl.so	/usr/lib/libssl.so
+# BuildDep:	/usr/lib/libdbus-1.so	/usr/lib/libdbus-1.so
+# BuildDep:	/usr/lib/libreadline.so	/usr/lib/libreadline.so
+# BuildDep:	/usr/lib/libnl.so	/usr/lib/libnl.so
+# Dep(post):	/usr/lib/libnl.so	/usr/lib/libnl.so
+# Dep(post):	/usr/lib/libreadline.so	/usr/lib/libreadline.so
+# Dep(post):	/usr/lib/libdbus-1.so	/usr/lib/libdbus-1.so
+# Dep(post):	/usr/lib/libssl.so	/usr/lib/libssl.so
+
+nbuild() {
+cd wpa_supplicant
+cp ../../config ./.config
+sed -i 's@/usr/local@$(PREFIX)@g' Makefile
+make
+}
+
+ninstall() {
+cd wpa_supplicant
+make PREFIX=/usr install
+install -m644 wpa_supplicant.conf /etc/wpa_supplicant.conf
+install -m644 doc/docbook/*.5 /usr/share/man/man5/
+install -m644 doc/docbook/*.8 /usr/share/man/man8/
+rm -f /usr/share/man/man8/wpa_{priv,gui}.8
+install -m644 dbus/{fi.epitest.hostap.WPASupplicant.service,fi.w1.wpa_supplicant1.service} /usr/share/dbus-1/system-services/
+sed -e 's/sbin/usr\/sbin/' -i /usr/share/dbus-1/system-services/*.service
+install -m644 dbus/dbus-wpa_supplicant.conf /etc/dbus-1/system.d/wpa_supplicant.conf
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

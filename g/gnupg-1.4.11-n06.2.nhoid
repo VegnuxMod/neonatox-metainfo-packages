@@ -1,0 +1,45 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	gnupg
+# Version:	1.4.11
+# Release:	n06.2
+# License:	GPLv3
+# Group:	Programming
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64 arm arm64
+# Url:	http://www.gnupg.org/
+# Description:	GNU Privacy Guard - a PGP replacement tool.
+# MD5:	045514f444c7f421cd6ead8b8966ad23  gnupg-1.4.11.tar.xz
+
+
+# BuildDep:	/usr/lib/libz.so	/usr/lib/libz.so
+# BuildDep:	/bin/bzip2	/bin/bzip2
+# BuildDep:	/usr/lib/libldap.so	/usr/lib/libldap.so
+# BuildDep:	/usr/lib/libusb.so	/usr/lib/libusb.so
+# BuildDep:	/usr/lib/libcurl.so	/usr/lib/libcurl.so
+# BuildDep:	/usr/lib/libreadline.so	/usr/lib/libreadline.so
+# Dep(post):	/usr/lib/libreadline.so	/usr/lib/libreadline.so
+# Dep(post):	/usr/lib/libcurl.so	/usr/lib/libcurl.so
+# Dep(post):	/usr/lib/libusb.so	/usr/lib/libusb.so
+# Dep(post):	/usr/lib/libldap.so	/usr/lib/libldap.so
+# Dep(post):	/bin/bzip2	/bin/bzip2
+# Dep(post):	/usr/lib/libz.so	/usr/lib/libz.so
+
+nbuild() {
+./configure --prefix=/usr --libexecdir=/usr/lib
+make
+ln -s scripts ..
+}
+
+ninstall() {
+make install
+rm /usr/share/man/man1/gpg-zip.1
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

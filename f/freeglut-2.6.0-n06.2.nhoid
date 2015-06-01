@@ -1,0 +1,38 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	freeglut
+# Version:	2.6.0
+# Release:	n06.2
+# License:	MIT
+# Group:	Graphics library
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64 arm arm64
+# Url:	http://freeglut.sourceforge.net/
+# Description:	Provides functionality for small OpenGL programs.
+# MD5:	2147ad537458d45cfa99135dba9bb3e0  freeglut-2.6.0.tar.xz
+
+
+# BuildDep:	/usr/lib/libXxf86vm.so	/usr/lib/libXxf86vm.so
+# BuildDep:	/usr/lib/libGL.so	/usr/lib/libGL.so
+# BuildDep:	/usr/lib/libXi.so	/usr/lib/libXi.so
+# Dep(post):	/usr/lib/libXi.so	/usr/lib/libXi.so
+# Dep(post):	/usr/lib/libGL.so	/usr/lib/libGL.so
+# Dep(post):	/usr/lib/libXxf86vm.so	/usr/lib/libXxf86vm.so
+
+nbuild() {
+patch -p0 -i "../2.6.0-GFX_radeon.patch"
+./configure --prefix=/usr
+make all
+}
+
+ninstall() {
+make install
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

@@ -1,0 +1,39 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	rpmextract
+# Version:	1.0
+# Release:	n06.2
+# License:	GPL
+# Group:	System
+# Arch:	any
+# Url:	http://www.archlinux.org
+# Description:	Script to convert or extract RPM archives (contains rpm2cpio).
+# MD5:	d2da6d2e47d79297ea09162aead6d705  rpmextract-1.0.tar.xz
+
+
+# BuildDep:	/bin/sh	/bin/sh
+# BuildDep:	/usr/lib/libarchive.so	/usr/lib/libarchive.so
+# Dep(post):	/bin/sh	/bin/sh
+# Dep(post):	/usr/lib/libarchive.so	/usr/lib/libarchive.so
+
+nbuild() {
+noemptyfuncs
+}
+
+ninstall() {
+pkgdir=/tmp/rpm
+install -d ${pkgdir}/usr/bin
+install -m755 rpmextract ${pkgdir}/usr/bin/
+install -m755 rpm2cpio ${pkgdir}/usr/bin/
+cp -r ${pkgdir}/* /
+rm -r ${pkgdir}
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

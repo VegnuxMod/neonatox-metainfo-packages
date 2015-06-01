@@ -1,0 +1,66 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	jre7-openjdk
+# Version:	7.b147_2.1
+# Release:	n06.2
+# License:	GPLv2
+# Group:	Programming
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64 arm arm64 armel
+# Url:	http:/icedtea.classpath.org
+# Description:	Free Java environment based on OpenJDK 7.0 with IcedTea7 replacing binary plugs -Full Java runtime environment - needed for executing Java GUI and Webstart programs.
+# MD5:	3a41021abfec008a43a2f9a841d0a20a  jre7-openjdk-7.b147_2.1.tar.xz
+
+
+# BuildDep:	/usr/lib/jvm/java-7-openjdk/jre/bin/java	/usr/lib/jvm/java-7-openjdk/jre/bin/java
+# BuildDep:	/usr/bin/xdg-open	/usr/bin/xdg-open
+# BuildDep:	/usr/share/icons/hicolor/index.theme	/usr/share/icons/hicolor/index.theme
+# BuildDep:	/usr/lib/libasound.so	/usr/lib/libasound.so
+# BuildDep:	/usr/lib/libgif.so	/usr/lib/libgif.so
+# BuildDep:	/usr/lib/libgtk-x11-2.0.so	/usr/lib/libgtk-x11-2.0.so
+# BuildDep:	/usr/lib/libxslt.so	/usr/lib/libxslt.so
+# Dep(post):	/usr/lib/libxslt.so	/usr/lib/libxslt.so
+# Dep(post):	/usr/lib/libgtk-x11-2.0.so	/usr/lib/libgtk-x11-2.0.so
+# Dep(post):	/usr/lib/libgif.so	/usr/lib/libgif.so
+# Dep(post):	/usr/lib/libasound.so	/usr/lib/libasound.so
+# Dep(post):	/usr/share/icons/hicolor/index.theme	/usr/share/icons/hicolor/index.theme
+# Dep(post):	/usr/bin/xdg-open	/usr/bin/xdg-open
+# Dep(post):	/usr/lib/jvm/java-7-openjdk/jre/bin/java	/usr/lib/jvm/java-7-openjdk/jre/bin/java
+
+nbuild() {
+./build.openjdk
+}
+
+ninstall() {
+basesrc="/usr/src/nhopkg/jre7-openjdk-headless-7.b147_2.1"
+curdir=$(pwd)
+pkgdir=/tmp/jre7-openjdk
+mkdir ${pkgdir}
+cp -r ${curdir}/openjdk.build/j2sdk-image/tmp-desktop-jre/* ${pkgdir}
+# Link binaries into /usr/bin
+pushd ${pkgdir}/usr/lib/jvm/java-7-openjdk/jre/bin
+install -m755 -d ${pkgdir}/usr/bin/
+for file in *; do
+ln -sf /usr/lib/jvm/java-7-openjdk/jre/bin/${file} ${pkgdir}/usr/bin
+done
+popd
+cd "${curdir}/openjdk.build/j2sdk-image/jre"
+# Install icons and menu entries
+for s in 16 24 32 48 ; do
+install -m755 -d ${pkgdir}/usr/share/icons/hicolor/${s}x${s}/apps/
+install -m644 ../../../openjdk/jdk/src/solaris/classes/sun/awt/X11/java-icon${s}.png ${pkgdir}/usr/share/icons/hicolor/${s}x${s}/apps/java.png
+done
+# Install desktop files.
+install -m755 -d ${pkgdir}/usr/share/applications
+install -m644 ${basesrc}/{jconsole,policytool}.desktop ${pkgdir}/usr/share/applications
+cp -r ${pkgdir}/* /
+rm -r ${pkgdir}
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

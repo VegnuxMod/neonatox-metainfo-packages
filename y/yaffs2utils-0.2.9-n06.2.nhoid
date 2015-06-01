@@ -1,0 +1,36 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	yaffs2utils
+# Version:	0.2.9
+# Release:	n06.2
+# License:	GPLv2
+# Group:	System
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64 arm armel arm64
+# Url:	http://code.google.com/p/yaffs2utils
+# Description:	A collection of utilities to make/extract a YAFFS2/YAFFS1 image for Linux. Currently includes mkyaffs2, unyaffs2 and unspare2.
+# MD5:	9074a7486d0346f49bda84b68febcc15  yaffs2utils-0.2.9.tar.xz
+
+
+
+nbuild() {
+make
+}
+
+ninstall() {
+pkgdir=/tmp/yaffs
+mkdir -p $pkgdir/usr/bin
+install -m 0755 mkyaffs2 $pkgdir/usr/bin/
+install -m 0755 unyaffs2 $pkgdir/usr/bin/
+install -m 0755 unspare2 $pkgdir/usr/bin/
+cp -r $pkgdir/* /
+rm -r $pkgdir
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

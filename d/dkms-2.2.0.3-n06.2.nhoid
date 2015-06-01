@@ -1,0 +1,54 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	dkms
+# Version:	2.2.0.3
+# Release:	n06.2
+# License:	GPLv2
+# Group:	System
+# Arch:	any
+# Url:	http://linux.dell.com/dkms/
+# Description:	Dynamic Kernel Modules System.
+# MD5:	7fc47fba10a52b147f3996cd3aca6b53  dkms-2.2.0.3.tar.xz
+
+
+# BuildDep:	/bin/bash	/bin/bash
+# BuildDep:	/sbin/depmod	/sbin/depmod
+# Dep(post):	/sbin/depmod	/sbin/depmod
+# Dep(post):	/bin/bash	/bin/bash
+
+nbuild() {
+patches=../01-broken-uninstall.patch
+for p in "${patches[@]}"; do
+echo "Apply patch: ${p##*/}"
+patch -p1 -i "$p"
+done
+# /usr move
+echo '/usr move patching'
+for i in dkms{,_framework.conf,.bash-completion,.8,_common.postinst}; do
+sed -ri 's,/lib/modules,/usr/lib/modules,g' "$i"
+done
+}
+
+ninstall() {
+pkgdir=/tmp/dkms
+make DESTDIR="$pkgdir" install
+sed -i "s|/sbin/depmod|depmod|" $pkgdir/usr/sbin/dkms
+rm -r "$pkgdir/etc/kernel"
+install -d -m 755 "$pkgdir/usr/share/bash-completion"
+mv "$pkgdir/etc/bash_completion.d" "$pkgdir/usr/share/bash-completion/completions"
+#install -D -m 755 dkms.rc "$pkgdir/etc/rc.d/dkms"
+install -D -m 644 dkms.conf "$pkgdir/etc/conf.d/dkms"
+install -D -m 644 dkms.service "$pkgdir/usr/lib/systemd/system/dkms.service"
+install -D -m 755 dkms.systemd "$pkgdir/usr/lib/systemd/scripts/dkms"
+cp -r $pkgdir/* /
+rm -r $pkgdir
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

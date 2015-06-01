@@ -1,0 +1,58 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	gnupg2
+# Version:	2.0.17
+# Release:	n06.2
+# License:	GPL
+# Group:	System
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64 arm arm64
+# Url:	http://www.gnupg.org/
+# Description:	GNU Privacy Guard 2 - a PGP replacement tool.
+# MD5:	64052c06f95000a225ab35942dec7954  gnupg2-2.0.17.tar.xz
+
+
+# BuildDep:	/usr/lib/libldap.so	/usr/lib/libldap.so
+# BuildDep:	/usr/lib/libcurl.so	/usr/lib/libcurl.so
+# BuildDep:	/bin/bzip2	/bin/bzip2
+# BuildDep:	/usr/lib/libz.so	/usr/lib/libz.so
+# BuildDep:	/usr/lib/libksba.so	/usr/lib/libksba.so
+# BuildDep:	/usr/lib/libgcrypt.so	/usr/lib/libgcrypt.so
+# BuildDep:	/usr/lib/libpth.so	/usr/lib/libpth.so
+# BuildDep:	/usr/lib/libassuan.so	/usr/lib/libassuan.so
+# BuildDep:	/usr/lib/libreadline.so	/usr/lib/libreadline.so
+# BuildDep:	/usr/bin/pinentry	/usr/bin/pinentry
+# BuildDep:	/usr/bin/dirmngr	/usr/bin/dirmngr
+# Dep(post):	/usr/bin/dirmngr	/usr/bin/dirmngr
+# Dep(post):	/usr/bin/pinentry	/usr/bin/pinentry
+# Dep(post):	/usr/lib/libreadline.so	/usr/lib/libreadline.so
+# Dep(post):	/usr/lib/libassuan.so	/usr/lib/libassuan.so
+# Dep(post):	/usr/lib/libpth.so	/usr/lib/libpth.so
+# Dep(post):	/usr/lib/libgcrypt.so	/usr/lib/libgcrypt.so
+# Dep(post):	/usr/lib/libksba.so	/usr/lib/libksba.so
+# Dep(post):	/usr/lib/libz.so	/usr/lib/libz.so
+# Dep(post):	/bin/bzip2	/bin/bzip2
+# Dep(post):	/usr/lib/libcurl.so	/usr/lib/libcurl.so
+# Dep(post):	/usr/lib/libldap.so	/usr/lib/libldap.so
+
+nbuild() {
+./configure --prefix=/usr --libexecdir=/usr/lib/gnupg2
+make
+}
+
+ninstall() {
+pkgdir=/tmp/gnupg2
+make DESTDIR=${pkgdir} install
+mv ${pkgdir}/usr/share/gnupg{,2}
+rm -f ${pkgdir}/usr/share/info/dir
+cp -r ${pkgdir}/* /
+rm -r ${pkgdir}
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

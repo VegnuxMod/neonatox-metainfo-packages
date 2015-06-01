@@ -1,0 +1,49 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	docbook-xsl
+# Version:	1.76.1
+# Release:	n06.2
+# License:	custom
+# Group:	System
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64 arm arm64 armel
+# Url:	http://docbook.sourceforge.net/
+# Description:	XML stylesheets for Docbook-xml transformations.
+# MD5:	a1bdb39ab00ca0918afeba3ebe06b33a  docbook-xsl-1.76.1.tar.xz
+
+
+# BuildDep:	/etc/xml/docbook-xml	/etc/xml/docbook-xml
+# BuildDep:	/usr/lib/libxslt.so	/usr/lib/libxslt.so
+# BuildDep:	/usr/lib/libxml2.so	/usr/lib/libxml2.so
+# Dep(post):	/usr/lib/libxml2.so	/usr/lib/libxml2.so
+# Dep(post):	/usr/lib/libxslt.so	/usr/lib/libxslt.so
+# Dep(post):	/etc/xml/docbook-xml	/etc/xml/docbook-xml
+
+nbuild() {
+noemptyfuncs
+}
+
+ninstall() {
+pkgroot=/usr/share/xml/docbook/xsl-stylesheets-1.76.1
+install -dm755 ${pkgroot}/{common,params}
+install -m644 common/*.{xml,xsl,dtd,ent} ${pkgroot}/common/
+install -m644 params/*.xml ${pkgroot}/params/
+for fn in fo highlighting html roundtrip; do
+install -dm755 ${pkgroot}/${fn}
+install -m644 ${fn}/*.{xml,xsl} ${pkgroot}/${fn}/
+done
+for fn in eclipse htmlhelp javahelp lib manpages profiling template website xhtml{,-1_1}; do
+install -dm755 ${pkgroot}/${fn}
+install -m644 ${fn}/*.xsl ${pkgroot}/${fn}/
+done
+install -dm755 ${pkgdir}/etc/xml
+install -m644 VERSION ${pkgroot}/
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

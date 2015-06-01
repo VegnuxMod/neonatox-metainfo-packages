@@ -1,0 +1,123 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	xorg-server
+# Version:	1.9.3
+# Release:	n06.2
+# License:	X11 license
+# Group:	X Window System
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64 arm arm64
+# Url:	http://www.x.org/wiki/
+# Description:	The Xorg Server is the backbone of the X Windows system.
+# MD5:	9e5b612f21f5108e01f8b26fd6f69226  xorg-server-1.9.3.tar.xz
+
+
+# BuildDep:	/usr/include/X11/dri/xf86driproto.h	/usr/include/X11/dri/xf86driproto.h
+# BuildDep:	/usr/include/X11/extensions/xcmiscproto.h	/usr/include/X11/extensions/xcmiscproto.h
+# BuildDep:	/usr/include/X11/Xtrans/Xtrans.c	/usr/include/X11/Xtrans/Xtrans.c
+# BuildDep:	/usr/include/X11/extensions/bigreqsproto.h	/usr/include/X11/extensions/bigreqsproto.h
+# BuildDep:	/usr/include/X11/extensions/randrproto.h	/usr/include/X11/extensions/randrproto.h
+# BuildDep:	/usr/include/X11/extensions/XIproto.h	/usr/include/X11/extensions/XIproto.h
+# BuildDep:	/usr/include/X11/extensions/Xvproto.h	/usr/include/X11/extensions/Xvproto.h
+# BuildDep:	/usr/include/X11/extensions/composite.h	/usr/include/X11/extensions/composite.h
+# BuildDep:	/usr/include/X11/extensions/recordproto.h	/usr/include/X11/extensions/recordproto.h
+# BuildDep:	/usr/include/X11/extensions/saverproto.h	/usr/include/X11/extensions/saverproto.h
+# BuildDep:	/usr/include/X11/extensions/XResproto.h	/usr/include/X11/extensions/XResproto.h
+# BuildDep:	/usr/include/X11/extensions/panoramiXproto.h	/usr/include/X11/extensions/panoramiXproto.h
+# BuildDep:	/usr/include/X11/extensions/renderproto.h	/usr/include/X11/extensions/renderproto.h
+# BuildDep:	/usr/include/X11/extensions/xf86dgaproto.h	/usr/include/X11/extensions/xf86dgaproto.h
+# BuildDep:	/usr/include/X11/extensions/dmxproto.h	/usr/include/X11/extensions/dmxproto.h
+# BuildDep:	/usr/lib/libpixman-1.so	/usr/lib/libpixman-1.so
+# BuildDep:	/usr/lib/libX11.so	/usr/lib/libX11.so
+# BuildDep:	/usr/lib/libGL.so	/usr/lib/libGL.so
+# BuildDep:	/usr/lib/libxkbfile.so	/usr/lib/libxkbfile.so
+# BuildDep:	/usr/lib/libXfont.so	/usr/lib/libXfont.so
+# BuildDep:	/usr/lib/libpciaccess.so	/usr/lib/libpciaccess.so
+# BuildDep:	/usr/lib/libXv.so	/usr/lib/libXv.so
+# BuildDep:	/usr/lib/libXmuu.so	/usr/lib/libXmuu.so
+# BuildDep:	/usr/lib/libXrender.so	/usr/lib/libXrender.so
+# BuildDep:	/usr/lib/libXi.so	/usr/lib/libXi.so
+# BuildDep:	/usr/lib/libXaw.so	/usr/lib/libXaw.so
+# BuildDep:	/usr/lib/libdmx.so	/usr/lib/libdmx.so
+# BuildDep:	/usr/lib/libXtst.so	/usr/lib/libXtst.so
+# BuildDep:	/usr/lib/libXRes.so	/usr/lib/libXRes.so
+# BuildDep:	/usr/lib/libcrypto.so	/usr/lib/libcrypto.so
+# BuildDep:	/usr/lib/libudev.so	/usr/lib/libudev.so
+# BuildDep:	/usr/lib/libdrm.so	/usr/lib/libdrm.so
+# BuildDep:	/usr/bin/ucs2any	/usr/bin/ucs2any
+# BuildDep:	/usr/bin/xinit	/usr/bin/xinit
+# BuildDep:	/usr/bin/iceauth	/usr/bin/iceauth
+# BuildDep:	/usr/bin/xauth	/usr/bin/xauth
+# Dep(post):	/usr/lib/libpixman-1.so	/usr/lib/libpixman-1.so
+# Dep(post):	/usr/lib/libX11.so	/usr/lib/libX11.so
+# Dep(post):	/usr/lib/libGL.so	/usr/lib/libGL.so
+# Dep(post):	/usr/include/X11/Xtrans/Xtrans.c	/usr/include/X11/Xtrans/Xtrans.c
+# Dep(post):	/usr/lib/libxkbfile.so	/usr/lib/libxkbfile.so
+# Dep(post):	/usr/lib/libXfont.so	/usr/lib/libXfont.so
+# Dep(post):	/usr/lib/libpciaccess.so	/usr/lib/libpciaccess.so
+# Dep(post):	/usr/lib/libXv.so	/usr/lib/libXv.so
+# Dep(post):	/usr/lib/libXmuu.so	/usr/lib/libXmuu.so
+# Dep(post):	/usr/lib/libXrender.so	/usr/lib/libXrender.so
+# Dep(post):	/usr/lib/libXi.so	/usr/lib/libXi.so
+# Dep(post):	/usr/lib/libXaw.so	/usr/lib/libXaw.so
+# Dep(post):	/usr/lib/libdmx.so	/usr/lib/libdmx.so
+# Dep(post):	/usr/lib/libXtst.so	/usr/lib/libXtst.so
+# Dep(post):	/usr/lib/libXRes.so	/usr/lib/libXRes.so
+# Dep(post):	/usr/lib/libcrypto.so	/usr/lib/libcrypto.so
+# Dep(post):	/usr/lib/libudev.so	/usr/lib/libudev.so
+# Dep(post):	/usr/lib/libdrm.so	/usr/lib/libdrm.so
+# Dep(post):	/usr/bin/xauth	/usr/bin/xauth
+# Dep(post):	/usr/bin/iceauth	/usr/bin/iceauth
+# Dep(post):	/usr/bin/xinit	/usr/bin/xinit
+# Dep(post):	/usr/bin/ucs2any	/usr/bin/ucs2any
+
+nbuild() {
+./configure --prefix=/usr \
+      --enable-ipv6 \
+      --enable-dri \
+      --enable-dmx \
+      --enable-xvfb \
+      --enable-xnest \
+      --enable-composite \
+      --enable-xcsecurity \
+      --enable-xorg \
+      --enable-xephyr \
+      --enable-glx-tls \
+      --enable-kdrive \
+      --enable-install-setuid \
+      --enable-config-udev \
+      --disable-config-dbus \
+      --enable-record \
+      --disable-xfake \
+      --disable-static \
+      --sysconfdir=/etc/X11 \
+      --localstatedir=/var \
+      --with-xkb-path=/usr/share/X11/xkb \
+      --with-xkb-output=/var/lib/xkb \
+      --with-dri-driver-path=/usr/lib/X11/modules/drivers \
+      --with-module-dir=/usr/lib/X11/modules \
+      --with-fontrootdir=/usr/share/fonts
+make
+sed -e 's/^DMX_SUBDIRS =.*/DMX_SUBDIRS =/' \
+      -e 's/^XVFB_SUBDIRS =.*/XVFB_SUBDIRS =/' \
+      -e 's/^XNEST_SUBDIRS =.*/XNEST_SUBDIRS = /' \
+      -e 's/^KDRIVE_SUBDIRS =.*/KDRIVE_SUBDIRS =/' \
+      -i hw/Makefile
+}
+
+ninstall() {
+make install
+install -m755 -d /etc/X11
+install -m755 -d /etc/X11/xorg.conf.d
+install -m644 ../10-quirks.conf /etc/X11/xorg.conf.d/
+install -m755 ../xvfb-run /usr/bin/
+install -m644 ../xvfb-run.1 /usr/share/man/man1/
+}
+
+npostinstall() {
+cp /usr/lib/X11/modules/extensions/libglx.so /usr/lib/X11/modules/extensions/libglx.bak
+}
+
+npostremove() {
+noemptyfuncs
+}

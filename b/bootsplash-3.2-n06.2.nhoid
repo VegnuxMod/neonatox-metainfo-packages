@@ -1,0 +1,44 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sánchez <cargabsj175@gmail.com>
+
+# Name:	bootsplash
+# Version:	3.2
+# Release:	n06.2
+# License:	GPLv2
+# Group:	Core System
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64 arm arm64
+# Url:	http://www.bootsplash.org
+# Description:	This is the home of the graphical boot process for the linux kernel.
+# MD5:	2cdce4f52f565accb6c44a3991a1b717  bootsplash-3.2.tar.xz
+
+
+# BuildDep:	/usr/lib/libmng.so	/usr/lib/libmng.so
+# BuildDep:	/usr/lib/liblcms.so	/usr/lib/liblcms.so
+# Dep(post):	/usr/lib/libmng.so	/usr/lib/libmng.so
+# Dep(post):	/usr/lib/liblcms.so	/usr/lib/liblcms.so
+
+nbuild() {
+patch -Np1 -i ../bootsplash-3.2_makefile.patch
+cd Utilities
+make
+}
+
+ninstall() {
+cd Utilities
+cp splash fbresolution fbmngplay /sbin
+cd ../Scripts/
+cp bootanim /sbin
+chmod +x /sbin/bootanim
+mkdir -p /etc/bootsplash/themes
+chmod 755 /etc/bootsplash/themes
+tar -xf ../../NeonatoX.tbz -C /etc/bootsplash/themes
+ln -sf NeonatoX /etc/bootsplash/themes/current
+}
+
+npostinstall() {
+/sbin/splash -s -f /etc/bootsplash/themes/current/config/bootsplash-1024x768.cfg > /boot/splash.initrd
+}
+
+npostremove() {
+rm -r /boot/splash.initrd
+}

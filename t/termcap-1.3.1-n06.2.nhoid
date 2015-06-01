@@ -1,0 +1,32 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	termcap
+# Version:	1.3.1
+# Release:	n06.2
+# License:	GPL
+# Group:	System
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64 arm armel arm64
+# Url:	http://www.catb.org/~esr/terminfo
+# Description:	Enables programs to use display computer terminals in a device-independent manner.
+# MD5:	04263c3777ba0778c53156562ce24d8f  termcap-1.3.1.tar.xz
+
+
+
+nbuild() {
+gcc -fPIC -c "termcap.c" -o "termcap.o" -DHAVE_STRING_H=1 -DHAVE_UNISTD_H=1 -DSTDC_HEADERS=1
+gcc -shared -Wl,-soname,"libtermcap.so" -o "libtermcap.so.1.3.1" "termcap.o"
+}
+
+ninstall() {
+install -D -m755 "libtermcap.so.1.3.1" "/usr/lib/libtermcap.so.1.3.1"
+ln -svf libtermcap.so.1.3.1 /usr/lib/libtermcap.so
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

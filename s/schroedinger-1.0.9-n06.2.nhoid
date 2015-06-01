@@ -1,0 +1,33 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	schroedinger
+# Version:	1.0.9
+# Release:	n06.2
+# License:	GPL2 LGPL2 MPL MIT
+# Group:	Multimedia
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64 arm arm64
+# Url:	http://www.diracvideo.org/
+# Description:	An implemenation of the Dirac video codec in ANSI C code.
+# MD5:	0562a0569ae18cbc06e8cb5d79ffd094  schroedinger-1.0.9.tar.xz
+
+
+# BuildDep:	/usr/lib/liborc-0.4.so	/usr/lib/liborc-0.4.so
+# Dep(post):	/usr/lib/liborc-0.4.so	/usr/lib/liborc-0.4.so
+
+nbuild() {
+./configure --prefix=/usr
+make
+}
+
+ninstall() {
+make install
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

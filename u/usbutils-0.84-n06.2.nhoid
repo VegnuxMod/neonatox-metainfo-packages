@@ -1,0 +1,34 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	usbutils
+# Version:	0.84
+# Release:	n06.2
+# License:	GPLv2
+# Group:	System
+# Arch:	i686 mips64 i486
+# Url:	Unknow
+# Description:	Usb utilities.
+# MD5:	20ef386971fa4a10b65e800922fa5a76  usbutils-0.84.tar.xz
+
+
+# BuildDep:	/usr/lib/libusb.so	/usr/lib/libusb.so
+# Dep(post):	/usr/lib/libusb.so	/usr/lib/libusb.so
+
+nbuild() {
+./configure --prefix=/usr --disable-zlib
+make
+}
+
+ninstall() {
+make install
+install -v -m755 update-usbids.sh /usr/sbin/update-usbids
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

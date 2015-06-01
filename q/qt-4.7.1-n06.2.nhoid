@@ -1,0 +1,125 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	qt
+# Version:	4.8.2
+# Release:	n06.2
+# License:	GPLv3 LGPL
+# Group:	X Window System
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64 arm arm64 armel
+# Url:	http://qt.nokia.com/
+# Description:	A cross-platform application and UI framework.
+# MD5:	482b50547c2454336fd3c82354fa88f0  qt-4.8.2.tar.xz
+
+
+# BuildDep:	/usr/lib/libtiff.so	/usr/lib/libtiff.so
+# BuildDep:	/usr/lib/libpng.so	/usr/lib/libpng.so
+# BuildDep:	/usr/lib/libmng.so	/usr/lib/libmng.so
+# BuildDep:	/usr/lib/libsqlite3.so	/usr/lib/libsqlite3.so
+# BuildDep:	/usr/lib/libglib-2.0.so	/usr/lib/libglib-2.0.so
+# BuildDep:	/usr/lib/libdbus-1.so	/usr/lib/libdbus-1.so
+# BuildDep:	/usr/lib/libfontconfig.so	/usr/lib/libfontconfig.so
+# BuildDep:	/usr/lib/libGL.so	/usr/lib/libGL.so
+# BuildDep:	/usr/lib/libSM.so	/usr/lib/libSM.so
+# BuildDep:	/usr/lib/libXrandr.so	/usr/lib/libXrandr.so
+# BuildDep:	/usr/lib/libXv.so	/usr/lib/libXv.so
+# BuildDep:	/usr/lib/libXi.so	/usr/lib/libXi.so
+# BuildDep:	/usr/lib/libasound.so	/usr/lib/libasound.so
+# BuildDep:	/usr/lib/libXcursor.so	/usr/lib/libXcursor.so
+# BuildDep:	/usr/lib/libXfixes.so	/usr/lib/libXfixes.so
+# BuildDep:	/usr/lib/libcups.so	/usr/lib/libcups.so
+# Dep(post):	/usr/lib/libcups.so	/usr/lib/libcups.so
+# Dep(post):	/usr/lib/libXfixes.so	/usr/lib/libXfixes.so
+# Dep(post):	/usr/lib/libXcursor.so	/usr/lib/libXcursor.so
+# Dep(post):	/usr/lib/libasound.so	/usr/lib/libasound.so
+# Dep(post):	/usr/lib/libXi.so	/usr/lib/libXi.so
+# Dep(post):	/usr/lib/libXv.so	/usr/lib/libXv.so
+# Dep(post):	/usr/lib/libXrandr.so	/usr/lib/libXrandr.so
+# Dep(post):	/usr/lib/libSM.so	/usr/lib/libSM.so
+# Dep(post):	/usr/lib/libGL.so	/usr/lib/libGL.so
+# Dep(post):	/usr/lib/libfontconfig.so	/usr/lib/libfontconfig.so
+# Dep(post):	/usr/lib/libdbus-1.so	/usr/lib/libdbus-1.so
+# Dep(post):	/usr/lib/libglib-2.0.so	/usr/lib/libglib-2.0.so
+# Dep(post):	/usr/lib/libsqlite3.so	/usr/lib/libsqlite3.so
+# Dep(post):	/usr/lib/libmng.so	/usr/lib/libmng.so
+# Dep(post):	/usr/lib/libpng.so	/usr/lib/libpng.so
+# Dep(post):	/usr/lib/libtiff.so	/usr/lib/libtiff.so
+
+nbuild() {
+export QT4DIR=$(pwd)
+export PATH=${QT4DIR}/bin:${PATH}
+export LD_LIBRARY_PATH=${QT4DIR}/lib:${LD_LIBRARY_PATH}
+patch -Np1 -i ../improve-cups-support.patch
+sed -i "s|-O2|$CXXFLAGS|" mkspecs/common/g++.conf
+sed -i "/^QMAKE_RPATH/s| -Wl,-rpath,||g" mkspecs/common/g++.conf
+sed -i "/^QMAKE_LFLAGS\s/s|+=|+= $LDFLAGS|g" mkspecs/common/g++.conf
+./configure -confirm-license -opensource \
+-prefix /usr \
+-docdir /usr/share/doc/qt \
+-plugindir /usr/lib/qt/plugins \
+-importdir /usr/lib/qt/imports \
+-datadir /usr/share/qt \
+-translationdir /usr/share/qt/translations \
+-sysconfdir /etc \
+-examplesdir /usr/share/doc/qt/examples \
+-demosdir /usr/share/doc/qt/demos \
+-largefile \
+-plugin-sql-sqlite \
+-system-sqlite \
+-xmlpatterns \
+-svg \
+-webkit \
+-script \
+-scripttools \
+-system-zlib \
+-system-libtiff \
+-system-libpng \
+-system-libmng \
+-system-libjpeg \
+-openssl-linked \
+-silent \
+-optimized-qmake \
+-dbus \
+-reduce-relocations \
+-gtkstyle \
+-opengl \
+-glib \
+-no-openvg \
+-nomake demos \
+-nomake examples \
+-nomake docs \
+-no-separate-debug-info \
+-no-rpath \
+-no-phonon \
+-no-phonon-backend
+make
+}
+
+ninstall() {
+pkgdir=/tmp/qt4
+make INSTALL_ROOT=$pkgdir install
+for icon in tools/linguist/linguist/images/icons/linguist-*-32.png ; do
+size=$(echo $(basename ${icon}) | cut -d- -f2)
+install -p -D -m644 ${icon} ${pkgdir}/usr/share/icons/hicolor/${size}x${size}/apps/linguist.png
+done
+install -p -D -m644 src/gui/dialogs/images/qtlogo-64.png ${pkgdir}/usr/share/icons/hicolor/64x64/apps/qtlogo.png
+install -p -D -m644 tools/assistant/tools/assistant/images/assistant.png ${pkgdir}/usr/share/icons/hicolor/32x32/apps/assistant.png
+install -p -D -m644 tools/designer/src/designer/images/designer.png ${pkgdir}/usr/share/icons/hicolor/128x128/apps/designer.png
+install -d ${pkgdir}/usr/share/applications
+install -m644 ../{linguist,designer,assistant,qtconfig}.desktop ${pkgdir}/usr/share/applications/
+install -D -m644 LGPL_EXCEPTION.txt ${pkgdir}/usr/share/licenses/qt/LGPL_EXCEPTION.txt
+find ${pkgdir}/usr/lib/pkgconfig -type f -name '*.pc' \
+-exec perl -pi -e "s, -L$../?\S+,,g" {} \;
+find ${pkgdir}/usr/lib -type f -name '*.prl' \
+-exec sed -i -e '/^QMAKE_PRL_BUILD_DIR/d;s/\(QMAKE_PRL_LIBS =\).*/\1/' {} \;
+cp -r /tmp/qt4/* /
+rm -r /tmp/qt4
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

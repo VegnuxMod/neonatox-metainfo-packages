@@ -1,0 +1,32 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	flashrom
+# Version:	0.9.5.2
+# Release:	n06.2
+# License:	GPL
+# Group:	System
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64 arm arm64
+# Url:	http://www.flashrom.org
+# Description:	Utility for reading, writing, erasing and verifying flash ROM chips.
+# MD5:	a8352f23946f34a8152c4df13f00a7d6  flashrom-0.9.5.2.tar.xz
+
+
+# BuildDep:	/usr/lib/libftdi.so	/usr/lib/libftdi.so
+# Dep(post):	/usr/lib/libftdi.so	/usr/lib/libftdi.so
+
+nbuild() {
+make
+}
+
+ninstall() {
+make PREFIX=/usr install
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

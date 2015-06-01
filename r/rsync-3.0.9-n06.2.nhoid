@@ -1,0 +1,47 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	rsync
+# Version:	3.0.9
+# Release:	n06.2
+# License:	GPLv3
+# Group:	Networking
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64 arm arm64 armel
+# Url:	http://samba.anu.edu.au/rsync/
+# Description:	A file transfer program to keep remote files in sync.
+# MD5:	7aacf4ec59b69ef01efe89b5c24400e1  rsync-3.0.9.tar.xz
+
+
+# BuildDep:	/usr/bin/perl	/usr/bin/perl
+# Dep(post):	/usr/bin/perl	/usr/bin/perl
+
+nbuild() {
+./configure --prefix=/usr --with-included-popt
+make
+}
+
+ninstall() {
+pkgdir="/tmp/rsync"
+make DESTDIR="$pkgdir" install
+install -Dm755 ../rsyncd "$pkgdir/etc/rc.d/init.d/rsyncd"
+install -Dm644 ../rsyncd.conf "$pkgdir/etc/rsyncd.conf"
+install -Dm644 ../rsync.xinetd "$pkgdir/etc/xinetd.d/rsync"
+install -Dm644 ../rsyncd.service "$pkgdir/usr/lib/systemd/system/rsyncd.service"
+install -Dm755 support/rrsync "$pkgdir/usr/lib/rsync/rrsync"
+cp -r $pkgdir/* /
+rm -r $pkgdir
+}
+
+npostinstall() {
+ln -sf  ../init.d/rsyncd /etc/rc.d/rc0.d/K30rsyncd
+ln -sf  ../init.d/rsyncd /etc/rc.d/rc1.d/K30rsyncd
+ln -sf  ../init.d/rsyncd /etc/rc.d/rc2.d/K30rsyncd
+ln -sf  ../init.d/rsyncd /etc/rc.d/rc3.d/S30rsyncd
+ln -sf  ../init.d/rsyncd /etc/rc.d/rc4.d/S30rsyncd
+ln -sf  ../init.d/rsyncd /etc/rc.d/rc5.d/S30rsyncd
+ln -sf  ../init.d/rsyncd /etc/rc.d/rc6.d/K30rsyncd
+}
+
+npostremove() {
+rm -r /etc/rc.d/rc{0,1,2,3,4,5,6}.d/*rsyncd
+}

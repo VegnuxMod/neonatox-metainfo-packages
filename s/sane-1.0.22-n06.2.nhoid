@@ -1,0 +1,60 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	sane
+# Version:	1.0.22
+# Release:	n06.2
+# License:	GPL
+# Group:	System
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64 arm arm64
+# Url:	http://www.sane-project.org
+# Description:	Scanner Access Now Easy.
+# MD5:	faa25c4a9d33c333bff1d98f72c9219c  sane-1.0.22.tar.xz
+
+
+# BuildDep:	/usr/lib/libtiff.so	/usr/lib/libtiff.so
+# BuildDep:	/usr/lib/libgphoto2.so	/usr/lib/libgphoto2.so
+# BuildDep:	/usr/lib/libjpeg.so	/usr/lib/libjpeg.so
+# BuildDep:	/usr/lib/libieee1284.so	/usr/lib/libieee1284.so
+# BuildDep:	/usr/lib/libusb.so	/usr/lib/libusb.so
+# BuildDep:	/usr/lib/libv4l1.so	/usr/lib/libv4l1.so
+# BuildDep:	/usr/lib/libavahi-core.so	/usr/lib/libavahi-core.so
+# BuildDep:	/bin/bash	/bin/bash
+# Dep(post):	/bin/bash	/bin/bash
+# Dep(post):	/usr/lib/libavahi-core.so	/usr/lib/libavahi-core.so
+# Dep(post):	/usr/lib/libv4l1.so	/usr/lib/libv4l1.so
+# Dep(post):	/usr/lib/libusb.so	/usr/lib/libusb.so
+# Dep(post):	/usr/lib/libieee1284.so	/usr/lib/libieee1284.so
+# Dep(post):	/usr/lib/libjpeg.so	/usr/lib/libjpeg.so
+# Dep(post):	/usr/lib/libgphoto2.so	/usr/lib/libgphoto2.so
+# Dep(post):	/usr/lib/libtiff.so	/usr/lib/libtiff.so
+
+nbuild() {
+./configure --prefix=/usr --sysconfdir=/etc --localstatedir=/var --with-docdir=/usr/share/doc/sane --enable-avahi
+make
+}
+
+ninstall() {
+pkgdir=/tmp/sane
+make DESTDIR="${pkgdir}" install
+echo "#hpaio" >> "${pkgdir}/etc/sane.d/dll.conf"
+install -D -m0644 tools/udev/libsane.rules "${pkgdir}/lib/udev/rules.d/53-sane.rules"
+sed -i 's|NAME="%k", ||g' ${pkgdir}/lib/udev/rules.d/53-sane.rules
+mkdir -p "${pkgdir}/var/lock/sane"
+chgrp 0 "${pkgdir}/var"
+chmod 755 "${pkgdir}/var"
+chmod 1777 "${pkgdir}/var/lock"
+chgrp 0 "${pkgdir}/var/lock"
+chmod 775 "${pkgdir}/var/lock/sane"
+chgrp 96 "${pkgdir}/var/lock/sane"
+cp -r ${pkgdir}/* /
+rm -r ${pkgdir}
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

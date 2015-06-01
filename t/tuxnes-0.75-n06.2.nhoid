@@ -1,0 +1,40 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <carlos@lugma.org.ve>
+
+# Name:	tuxnes
+# Version:	0.75
+# Release:	n06.2
+# License:	GPLv2
+# Group:	Games
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64 arm arm64 armel
+# Url:	http://tuxnes.sourceforge.net/
+# Description:	Emulator for the 8-bit Nintendo Entertainment System.
+# MD5:	59c939de6bbe7a202eb34b7bfd18910e  tuxnes-0.75.tar.xz
+
+
+# BuildDep:	/usr/bin/X	/usr/bin/X
+# Dep(post):	/usr/bin/X	/usr/bin/X
+
+nbuild() {
+patch -Np0 -i ../tuxnes-0.75-configure.in.patch
+patch -Np0 -i ../tuxnes-0.75-exec-stack.patch
+patch -Np1 -i ../tuxnes-0.75-gcc34.patch
+patch -Np0 -i ../tuxnes-0.75-gcc43.patch
+patch -Np0 -i ../tuxnes-0.75-include.patch
+patch -Np0 -i ../tuxnes-0.75-xshm.patch
+automake --add-missing
+./configure --without-w --with-x
+make
+}
+
+ninstall() {
+make install
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

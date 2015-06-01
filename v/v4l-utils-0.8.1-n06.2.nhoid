@@ -1,0 +1,32 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sánchez <cargabsj175@gmail.com>
+
+# Name:	v4l-utils
+# Version:	0.8.1
+# Release:	n06.2
+# License:	LGPL
+# Group:	System
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64
+# Url:	http://freshmeat.net/projects/libv4l
+# Description:	Userspace tools and conversion library for Video 4 Linux.
+# MD5:	beab011de517d736a9b3bdb65f201050  v4l-utils-0.8.1.tar.xz
+
+
+
+nbuild() {
+sed -i 's|CFLAGS :=|CFLAGS ?=|' Make.rules
+make PREFIX="/usr"
+}
+
+ninstall() {
+make install PREFIX="/usr"
+rm -f /usr/bin/ivtv-ctl
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

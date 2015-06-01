@@ -1,0 +1,41 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	devede
+# Version:	3.17.0
+# Release:	n06.2
+# License:	GPLv3
+# Group:	Multimedia
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64 arm arm64 armel
+# Url:	http://www.rastersoft.com/programas/devede.html
+# Description:	A program to create VideoDVDs and CDs.
+# MD5:	f3133b150577e7e704b5effc8e152067  devede-3.17.0.tar.xz
+
+
+# BuildDep:	/usr/bin/mplayer	/usr/bin/mplayer
+# BuildDep:	/usr/bin/dvdauthor	/usr/bin/dvdauthor
+# BuildDep:	/usr/lib/libvcdinfo.so	/usr/lib/libvcdinfo.so
+# BuildDep:	/usr/bin/mkisofs	/usr/bin/mkisofs
+# BuildDep:	/usr/lib/python2.7/site-packages/gtk-2.0/gtk/_gtk.so	/usr/lib/python2.7/site-packages/gtk-2.0/gtk/_gtk.so
+# Dep(post):	/usr/lib/python2.7/site-packages/gtk-2.0/gtk/_gtk.so	/usr/lib/python2.7/site-packages/gtk-2.0/gtk/_gtk.so
+# Dep(post):	/usr/bin/mkisofs	/usr/bin/mkisofs
+# Dep(post):	/usr/lib/libvcdinfo.so	/usr/lib/libvcdinfo.so
+# Dep(post):	/usr/bin/dvdauthor	/usr/bin/dvdauthor
+# Dep(post):	/usr/bin/mplayer	/usr/bin/mplayer
+
+nbuild() {
+noemptyfuncs
+}
+
+ninstall() {
+./install.sh --prefix=/usr --unistall=no --targeted=yes
+install -D -m644 devede.desktop  /usr/share/applications/devede.desktop
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

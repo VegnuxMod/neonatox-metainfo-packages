@@ -1,0 +1,37 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sánchez <cargabsj175@gmail.com>
+
+# Name:	libmad
+# Version:	0.15.1b
+# Release:	n06.2
+# License:	GPL
+# Group:	Multimedia
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64
+# Url:	http://www.underbit.com/products/mad/
+# Description:	A high-quality MPEG audio decoder.
+# MD5:	6519b51e5c536081acf8aa8a49d21ea4  libmad-0.15.1b.tar.xz
+
+
+
+nbuild() {
+patch -Np1 -i ../libmad.patch
+patch -Np1 -i ../amd64-64bit.diff
+patch -Np1 -i ../frame_length.diff
+patch -Np1 -i ../optimize.diff
+CFLAGS="$CFLAGS -ftree-vectorize -ftree-vectorizer-verbose=1"
+autoconf
+./configure --prefix=/usr
+make
+}
+
+ninstall() {
+make install
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

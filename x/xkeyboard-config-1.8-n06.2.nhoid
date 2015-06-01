@@ -1,0 +1,36 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sánchez <cargabsj175@gmail.com>
+
+# Name:	xkeyboard-config
+# Version:	1.8
+# Release:	n06.2
+# License:	X11 license
+# Group:	X Window System
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64
+# Url:	http://www.x.org/wiki/
+# Description:	X keyboard configuration database.
+# MD5:	63fd0423043a4d96fcb6c47d7e90d0d6  xkeyboard-config-1.8.tar.xz
+
+
+# BuildDep:	/usr/lib/libxkbfile.so	/usr/lib/libxkbfile.so
+# Dep(post):	/usr/lib/libxkbfile.so	/usr/lib/libxkbfile.so
+
+nbuild() {
+./configure --prefix=/usr --sysconfdir=/etc --localstatedir=/var \
+--with-xkb-base=/usr/share/X11/xkb \
+--with-xkb-rules-symlink=xorg --enable-compat-rules \
+--enable-xkbcomp-symlink
+make
+}
+
+ninstall() {
+make install
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

@@ -1,0 +1,47 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	tagtool
+# Version:	0.12.3
+# Release:	n06.2
+# License:	GPL
+# Group:	Multimedia
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64 arm arm64
+# Url:	http://downloads.sourceforge.net/sourceforge/tagtool
+# Description:	Tool to edit tags in MP3 and Ogg Vorbis files.
+# MD5:	cf6902e3ddbe453daaa7002374f3dc0d  tagtool-0.12.3.tar.xz
+
+
+# BuildDep:	/usr/share/icons/hicolor/index.theme	/usr/share/icons/hicolor/index.theme
+# BuildDep:	/usr/lib/libglade-2.0.so	/usr/lib/libglade-2.0.so
+# BuildDep:	/usr/lib/libid3.so	/usr/lib/libid3.so
+# BuildDep:	/usr/lib/libvorbis.so	/usr/lib/libvorbis.so
+# BuildDep:	/usr/lib/libgconf-2.so	/usr/lib/libgconf-2.so
+# Dep(post):	/usr/lib/libgconf-2.so	/usr/lib/libgconf-2.so
+# Dep(post):	/usr/lib/libvorbis.so	/usr/lib/libvorbis.so
+# Dep(post):	/usr/lib/libid3.so	/usr/lib/libid3.so
+# Dep(post):	/usr/lib/libglade-2.0.so	/usr/lib/libglade-2.0.so
+# Dep(post):	/usr/share/icons/hicolor/index.theme	/usr/share/icons/hicolor/index.theme
+
+nbuild() {
+./configure --prefix=/usr --datadir=/usr/share
+make
+}
+
+ninstall() {
+pkgdir=/tmp/tagtool
+make GCONF_DISABLE_MAKEFILE_SCHEMA_INSTALL=1 DESTDIR=${pkgdir} install
+install -m755 -d "${pkgdir}/usr/share/gconf/schemas"
+gconf-merge-schema "${pkgdir}/usr/share/gconf/schemas/tagtool.schemas" --domain tagtool ${pkgdir}/etc/gconf/schemas/*.schemas
+rm -f ${pkgdir}/etc/gconf/schemas/*.schemas
+cp -r ${pkgdir}/* /
+rm -r ${pkgdir}
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

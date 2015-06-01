@@ -1,0 +1,37 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	libpng
+# Version:	1.4.5
+# Release:	n06.2
+# License:	custom
+# Group:	Graphics
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64 arm arm64
+# Url:	http://www.libpng.org/pub/png/libpng.html
+# Description:	A collection of routines used to create PNG format graphics files.
+# MD5:	b6da21dc79b0e41a6ee3cdb4954f784e  libpng-1.4.5.tar.xz
+
+
+# BuildDep:	/usr/lib/libz.so	/usr/lib/libz.so
+# Dep(post):	/usr/lib/libz.so	/usr/lib/libz.so
+
+nbuild() {
+patch -p1 -i "../libpng-1.4.5-apng.patch"
+./configure --prefix=/usr
+make
+}
+
+ninstall() {
+make install
+cd contrib/pngminus
+make PNGLIB="-L/usr/lib -lpng" -f makefile.std png2pnm pnm2png
+install -m755 png2pnm pnm2png "/usr/bin/"
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

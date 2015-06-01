@@ -1,0 +1,38 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	python-pybluez
+# Version:	0.18
+# Release:	n06.2
+# License:	GPL
+# Group:	System
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64 arm arm64
+# Url:	http://code.google.com/p/pybluez/
+# Description:	Python wrapper for the BlueZ Bluetooth stack.
+# MD5:	cbb7ac0b90065157a7f0b3677895d157  python-pybluez-0.18.tar.xz
+
+
+# BuildDep:	/usr/bin/python	/usr/bin/python
+# BuildDep:	/usr/lib/libbluetooth.so	/usr/lib/libbluetooth.so
+# Dep(post):	/usr/lib/libbluetooth.so	/usr/lib/libbluetooth.so
+# Dep(post):	/usr/bin/python	/usr/bin/python
+
+nbuild() {
+noemptyfuncs
+}
+
+ninstall() {
+pkgdir=/tmp/pybluez
+python setup.py install --root=$pkgdir
+ln -s bluetooth/_bluetooth.so $pkgdir/usr/lib/python2.7/site-packages/_bluetooth.so
+cp -r $pkgdir/* /
+rm -r $pkgdir
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

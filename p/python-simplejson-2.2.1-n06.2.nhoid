@@ -1,0 +1,35 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	python-simplejson
+# Version:	2.2.1
+# Release:	n06.2
+# License:	MIT
+# Group:	System
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64 arm arm64 armel
+# Url:	http://undefined.org/python/#simplejson
+# Description:	Simple, fast, extensible JSON encoder/decoder for Python.
+# MD5:	9faf2ac8fcb152f634f45a70f93ea0a2  python-simplejson-2.2.1.tar.xz
+
+
+# BuildDep:	/usr/bin/python	/usr/bin/python
+# Dep(post):	/usr/bin/python	/usr/bin/python
+
+nbuild() {
+noemptyfuncs
+}
+
+ninstall() {
+pkgdir=/tmp/pyjson
+python setup.py install --root=${pkgdir}
+cp -r $pkgdir/* /
+rm -r $pkgdir
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

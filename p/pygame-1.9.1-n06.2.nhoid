@@ -1,0 +1,49 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	pygame
+# Version:	1.9.1
+# Release:	n06.2
+# License:	LGPL
+# Group:	System
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64 arm arm64 armel
+# Url:	http://www.pygame.org/
+# Description:	Python game library.
+# MD5:	e31f73e8a35f9492ef7ae797da308c84  pygame-1.9.1.tar.xz
+
+
+# BuildDep:	/usr/bin/python	/usr/bin/python
+# BuildDep:	/usr/lib/libSDL_mixer.so	/usr/lib/libSDL_mixer.so
+# BuildDep:	/usr/lib/libSDL_ttf.so	/usr/lib/libSDL_ttf.so
+# BuildDep:	/usr/lib/libSDL_image.so	/usr/lib/libSDL_image.so
+# BuildDep:	/usr/lib/libsmpeg.so	/usr/lib/libsmpeg.so
+# BuildDep:	/usr/lib/libvorbis.so	/usr/lib/libvorbis.so
+# Dep(post):	/usr/lib/libvorbis.so	/usr/lib/libvorbis.so
+# Dep(post):	/usr/lib/libsmpeg.so	/usr/lib/libsmpeg.so
+# Dep(post):	/usr/lib/libSDL_image.so	/usr/lib/libSDL_image.so
+# Dep(post):	/usr/lib/libSDL_ttf.so	/usr/lib/libSDL_ttf.so
+# Dep(post):	/usr/lib/libSDL_mixer.so	/usr/lib/libSDL_mixer.so
+# Dep(post):	/usr/bin/python	/usr/bin/python
+
+nbuild() {
+patch -Np0 -i ../config.patch
+python config.py -auto
+}
+
+ninstall() {
+pkgdir=/tmp/pygame
+python setup.py install --root="${pkgdir}" --prefix=/usr
+cp -R examples lib/* "${pkgdir}/usr/lib/python2.7/site-packages/pygame"
+cp -R test/* "${pkgdir}/usr/lib/python2.7/site-packages/pygame/tests"
+chmod 644 "${pkgdir}"/usr/include/python2.7/pygame/*
+cp -r $pkgdir/* /
+rm -r $pkgdir
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

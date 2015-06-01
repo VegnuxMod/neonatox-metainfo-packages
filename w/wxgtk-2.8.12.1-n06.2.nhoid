@@ -1,0 +1,48 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	wxgtk
+# Version:	2.8.12.1
+# Release:	n06.2
+# License:	wxWindows
+# Group:	Graphics Library
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64 arm arm64 armel
+# Url:	http://wxwidgets.org
+# Description:	GTK+ implementation of wxWidgets API for GUI.
+# MD5:	70a6ce0282a4c3f25b8b3b0583700e29  wxgtk-2.8.12.1.tar.xz
+
+
+# BuildDep:	/usr/lib/libgtk-x11-2.0.so	/usr/lib/libgtk-x11-2.0.so
+# BuildDep:	/usr/lib/libgstapp-0.10.so	/usr/lib/libgstapp-0.10.so
+# BuildDep:	/usr/lib/libGL.so	/usr/lib/libGL.so
+# BuildDep:	/usr/lib/libXxf86vm.so	/usr/lib/libXxf86vm.so
+# BuildDep:	/usr/lib/libgconf-2.so	/usr/lib/libgconf-2.so
+# Dep(post):	/usr/lib/libgconf-2.so	/usr/lib/libgconf-2.so
+# Dep(post):	/usr/lib/libXxf86vm.so	/usr/lib/libXxf86vm.so
+# Dep(post):	/usr/lib/libGL.so	/usr/lib/libGL.so
+# Dep(post):	/usr/lib/libgstapp-0.10.so	/usr/lib/libgstapp-0.10.so
+# Dep(post):	/usr/lib/libgtk-x11-2.0.so	/usr/lib/libgtk-x11-2.0.so
+
+nbuild() {
+./configure --prefix=/usr --libdir=/usr/lib --with-gtk=2 --with-opengl --enable-unicode \
+--enable-graphics_ctx --disable-optimize --enable-mediactrl \
+--with-libpng=sys --with-libxpm=sys --with-libjpeg=sys --with-libtiff=sys
+make
+make -C locale allmo
+cd contrib/src
+make
+}
+
+ninstall() {
+make install
+cd contrib/src
+make install
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

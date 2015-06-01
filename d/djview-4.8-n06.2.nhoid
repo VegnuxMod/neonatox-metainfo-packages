@@ -1,0 +1,45 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	djview
+# Version:	4.8
+# Release:	n06.2
+# License:	GPL
+# Group:	Graphics
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64 arm arm64
+# Url:	http://djvu.sourceforge.net/djview4.html
+# Description:	Portable DjVu viewer and browser plugin.
+# MD5:	45b15f803867a541c00bddcabef0951b  djview-4.8.tar.xz
+
+
+# BuildDep:	/usr/lib/libQtCore.so	/usr/lib/libQtCore.so
+# BuildDep:	/usr/lib/libdjvulibre.so	/usr/lib/libdjvulibre.so
+# Dep(post):	/usr/lib/libdjvulibre.so	/usr/lib/libdjvulibre.so
+# Dep(post):	/usr/lib/libQtCore.so	/usr/lib/libQtCore.so
+
+nbuild() {
+QTDIR=/usr ./configure --prefix=/usr
+sed 's/netscape/mozilla/g' -i nsdejavu/Makefile
+sed 's/swap/rofl_swap/g' -i src/qdjvuwidget.cpp
+make
+}
+
+ninstall() {
+pkgdir=/tmp/djview
+make DESTDIR="${pkgdir}" install-djview install-nsdejavu
+cd desktopfiles
+install -Dm644 hi32-djview4.png "${pkgdir}"/usr/share/icons/hicolor/32x32/apps/djvulibre-djview4.png
+install -Dm644 hi64-djview4.png "${pkgdir}"/usr/share/icons/hicolor/64x64/apps/djvulibre-djview4.png
+install -Dm644 hi64-djview4.png "${pkgdir}"/usr/share/pixmaps/djvulibre-djview4.png
+install -Dm644 djvulibre-djview4.desktop "${pkgdir}"/usr/share/applications/djvulibre-djview4.desktop
+cp -r ${pkgdir}/* /
+rm -r ${pkgdir}
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

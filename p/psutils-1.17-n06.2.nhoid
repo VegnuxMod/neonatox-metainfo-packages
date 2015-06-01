@@ -1,0 +1,38 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	psutils
+# Version:	1.17
+# Release:	n06.2
+# License:	custom
+# Group:	System
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64 arm arm64
+# Url:	http://www.tardis.ed.ac.uk/~ajcd/psutils/index.html
+# Description:	A set of postscript utilities.
+# MD5:	b8621ed2eb84e23a80abff341bd34f98  psutils-1.17.tar.xz
+
+
+# BuildDep:	/usr/lib/libgs.so	/usr/lib/libgs.so
+# Dep(post):	/usr/lib/libgs.so	/usr/lib/libgs.so
+
+nbuild() {
+patch -Np1 -i "../psutils-1.17.diff"
+}
+
+ninstall() {
+pkgdir=/tmp/psutils
+install -d -m755 "${pkgdir}/usr/include"
+install -d -m755 "${pkgdir}/usr/share/man"
+make -j1 -f Makefile.unix BINDIR="${pkgdir}/usr/bin" INCLUDEDIR="${pkgdir}/usr/include/psutils" PERL=/usr/bin/perl MANDIR="${pkgdir}/usr/share/man/man1"
+make -j1 -f Makefile.unix BINDIR="${pkgdir}/usr/bin" INCLUDEDIR="${pkgdir}/usr/include/psutils" PERL=/usr/bin/perl MANDIR="${pkgdir}/usr/share/man/man1" install
+cp -r ${pkgdir}/* /
+rm -r ${pkgdir}
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

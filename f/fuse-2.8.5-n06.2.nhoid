@@ -1,0 +1,46 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sánchez <cargabsj175@gmail.com>
+
+# Name:	fuse
+# Version:	2.8.5
+# Release:	n06.2
+# License:	GPLv2
+# Group:	Core System
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64
+# Url:	http://fuse.sourceforge.net/
+# Description:	A library that makes it possible to implement a filesystem in a userspace program.
+# MD5:	96c17f21f35151ecabd39e52576941e5  fuse-2.8.5.tar.xz
+
+
+
+nbuild() {
+./configure --prefix=/usr --enable-lib \
+--enable-util --bindir=/bin
+make
+}
+
+ninstall() {
+make DESTDIR=/tmp/fuse install
+rm -rf /tmp/fuse/dev
+rm -rf /tmp/fuse/etc/init.d
+install -d /tmp/fuse/lib
+mv /tmp/fuse/usr/lib/libfuse.so.2.8.5 /tmp/fuse/lib/
+ln -s ../../lib/libfuse.so.2.8.5 /tmp/fuse/usr/lib/libfuse.so.2.8.5
+ln -s libfuse.so.2.8.5 /tmp/fuse/lib/libfuse.so.2
+mv /tmp/fuse/usr/lib/libulockmgr.so.1.0.1 /tmp/fuse/lib/
+ln -s ../../lib/libulockmgr.so.1.0.1 /tmp/fuse/usr/lib/libulockmgr.so.1.0.1
+ln -s libulockmgr.so.1.0.1 /tmp/fuse/lib/libulockmgr.so.1
+install -Dm644 ../fuse.conf /tmp/fuse/etc/fuse.conf
+install -d -m755 "/tmp/fuse/lib"
+mv "/tmp/fuse/etc/udev" "/tmp/fuse/lib/"
+cp -r /tmp/fuse/* /
+rm -r /tmp/fuse
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

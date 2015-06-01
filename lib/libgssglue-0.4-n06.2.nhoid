@@ -1,0 +1,32 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	libgssglue
+# Version:	0.4
+# Release:	n06.2
+# License:	BSD
+# Group:	System
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64 arm armel arm64
+# Url:	http://www.citi.umich.edu/projects/nfsv4/linux
+# Description:	Exports a gssapi interface which calls other random gssapi libraries.
+# MD5:	799740d80df50df8ade4664d6fc63c37  libgssglue-0.4.tar.xz
+
+
+
+nbuild() {
+./configure --prefix=/usr
+make
+}
+
+ninstall() {
+make install
+install -Dm644 ../gssapi_mech.conf /etc/gssapi_mech.conf
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

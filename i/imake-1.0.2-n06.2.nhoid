@@ -1,0 +1,33 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	imake
+# Version:	1.0.2
+# Release:	n06.2
+# License:	X11 license
+# Group:	X Window System
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64 arm arm64
+# Url:	http://x.org/wiki
+# Description:	Xorg's imake util.
+# MD5:	add27b8ec8dc350f64a118a8452704c8  imake-1.0.2.tar.xz
+
+
+# BuildDep:	/usr/include/X11/X.h	/usr/include/X11/X.h
+# Dep(post):	/usr/include/X11/X.h	/usr/include/X11/X.h
+
+nbuild() {
+./configure --prefix=/usr &&
+make
+}
+
+ninstall() {
+make install
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

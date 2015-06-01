@@ -1,0 +1,46 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sánchez <cargabsj175@gmail.com>
+
+# Name:	Python
+# Version:	2.7
+# Release:	n06.2
+# License:	GPL compatible
+# Group:	Core System
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64
+# Url:	http://www.python.org/
+# Description:	The Python package contains the Python development environment. This is useful for object-oriented programming, writing scripts, prototyping large programs or developing entire applications.
+# MD5:	fb548aa136551b0920d24b727eae3b34  Python-2.7.tar.xz
+
+
+# BuildDep:	/usr/bin/gcc	/usr/bin/gcc
+# BuildDep:	/usr/lib/libssl.so	/usr/lib/libssl.so
+# BuildDep:	/usr/lib/libgdbm.so	/usr/lib/libgdbm.so
+# BuildDep:	/usr/lib/libsqlite3.so	/usr/lib/libsqlite3.so
+# BuildDep:	/usr/lib/libdb.so	/usr/lib/libdb.so
+# BuildDep:	/usr/bin/wish	/usr/bin/wish
+# Dep(post):	/usr/lib/libssl.so	/usr/lib/libssl.so
+# Dep(post):	/usr/lib/libgdbm.so	/usr/lib/libgdbm.so
+# Dep(post):	/usr/lib/libsqlite3.so	/usr/lib/libsqlite3.so
+# Dep(post):	/usr/lib/libdb.so	/usr/lib/libdb.so
+# Dep(post):	/usr/bin/wish	/usr/bin/wish
+
+nbuild() {
+patch -Np1 -i ../python-2.7-db51.diff
+sed -i "s/ndbm_libs = \[\]/ndbm_libs = ['gdbm', 'gdbm_compat']/" setup.py
+./configure --prefix=/usr --enable-shared
+make
+}
+
+ninstall() {
+make DESTDIR=/tmp/python install
+cp -r /tmp/python/* /
+rm -r /tmp/python
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

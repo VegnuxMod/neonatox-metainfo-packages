@@ -1,0 +1,66 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	avahi
+# Version:	0.6.25
+# Release:	n06.2
+# License:	LGPL
+# Group:	Networking
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64 arm arm64
+# Url:	http://www.avahi.org/
+# Description:	A multicast/unicast DNS-SD framework
+# MD5:	115b6eb2e0c026f70fcb3272f305b56c  avahi-0.6.25.tar.xz
+
+
+# BuildDep:	/usr/lib/libexpat.so	/usr/lib/libexpat.so
+# BuildDep:	/usr/lib/libdaemon.so	/usr/lib/libdaemon.so
+# BuildDep:	/usr/lib/libglib-2.0.so	/usr/lib/libglib-2.0.so
+# BuildDep:	/usr/lib/libdbus-1.so	/usr/lib/libdbus-1.so
+# BuildDep:	/lib/libcap.so	/lib/libcap.so
+# BuildDep:	/usr/lib/libgdbm.so	/usr/lib/libgdbm.so
+# BuildDep:	/usr/bin/intltoolize	/usr/bin/intltoolize
+# BuildDep:	/usr/lib/python2.7/site-packages/dbus/_dbus.py	/usr/lib/python2.7/site-packages/dbus/_dbus.py
+# BuildDep:	/usr/lib/libgobject-2.0.so	/usr/lib/libgobject-2.0.so
+# Dep(post):	/usr/lib/libgobject-2.0.so	/usr/lib/libgobject-2.0.so
+# Dep(post):	/usr/lib/python2.7/site-packages/dbus/_dbus.py	/usr/lib/python2.7/site-packages/dbus/_dbus.py
+# Dep(post):	/usr/bin/intltoolize	/usr/bin/intltoolize
+# Dep(post):	/usr/lib/libgdbm.so	/usr/lib/libgdbm.so
+# Dep(post):	/lib/libcap.so	/lib/libcap.so
+# Dep(post):	/usr/lib/libdbus-1.so	/usr/lib/libdbus-1.so
+# Dep(post):	/usr/lib/libglib-2.0.so	/usr/lib/libglib-2.0.so
+# Dep(post):	/usr/lib/libdaemon.so	/usr/lib/libdaemon.so
+# Dep(post):	/usr/lib/libexpat.so	/usr/lib/libexpat.so
+
+nbuild() {
+sed -i 's/netdev/network/g' avahi-daemon/avahi-dbus.conf
+patch -Np0 -i "../avahi-daemon-dbus.patch"
+./configure --prefix=/usr --sysconfdir=/etc \
+--localstatedir=/var --disable-qt3 --disable-pygtk \
+--disable-monodoc --disable-doxygen-doc \
+--disable-xmltoman --enable-compat-libdns_sd \
+--enable-compat-howl --with-distro=none \
+--with-avahi-priv-access-group=network --with-autoipd-user=avahi \
+--with-autoipd-group=avahi --disable-qt4 --disable-mono
+make
+}
+
+ninstall() {
+make install
+install -D -m 644 ../gnome-nettool.png /usr/share/pixmaps/gnome-nettool.png
+cd /usr/include
+ln -sf avahi-compat-libdns_sd/dns_sd.h dns_sd.h
+ln -sf avahi-compat-howl howl
+cd /usr/lib/pkgconfig
+ln -sf avahi-compat-howl.pc howl.pc
+rm -r /usr/share/applications/{bssh,bvnc}.desktop
+}
+
+npostinstall() {
+groupadd -fg 20 avahi
+useradd -c "Avahi User" -d /dev/null -u 20 -g avahi -s /bin/false avahi || [ $? == 9 ]
+}
+
+npostremove() {
+groupdel avahi
+userdel avahi
+}

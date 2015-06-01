@@ -1,0 +1,60 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	amule
+# Version:	r10598
+# Release:	n06.2
+# License:	GPL
+# Group:	Networking
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64 arm arm64
+# Url:	http://www.amule.org
+# Description:	An eMule-like client for ed2k p2p network.
+# MD5:	94c1a1e9262b330f3e11b2b95dcb6aec  amule-r10598.tar.xz
+
+
+# BuildDep:	/usr/lib/libwx_baseu-2.8.so	/usr/lib/libwx_baseu-2.8.so
+# BuildDep:	/usr/lib/libgd.so	/usr/lib/libgd.so
+# BuildDep:	/usr/lib/libGeoIP.so	/usr/lib/libGeoIP.so
+# BuildDep:	/usr/lib/libupnp.so	/usr/lib/libupnp.so
+# BuildDep:	/usr/lib/libcryptopp.so	/usr/lib/libcryptopp.so
+# BuildDep:	/usr/lib/libSM.so	/usr/lib/libSM.so
+# Dep(post):	/usr/lib/libSM.so	/usr/lib/libSM.so
+# Dep(post):	/usr/lib/libcryptopp.so	/usr/lib/libcryptopp.so
+# Dep(post):	/usr/lib/libupnp.so	/usr/lib/libupnp.so
+# Dep(post):	/usr/lib/libGeoIP.so	/usr/lib/libGeoIP.so
+# Dep(post):	/usr/lib/libgd.so	/usr/lib/libgd.so
+# Dep(post):	/usr/lib/libwx_baseu-2.8.so	/usr/lib/libwx_baseu-2.8.so
+
+nbuild() {
+./configure --prefix=/usr \
+--mandir=/usr/share/man \
+--enable-cas \
+--enable-wxcas \
+--enable-amule-daemon \
+--enable-amulecmd \
+--enable-amule-gui \
+--enable-alc \
+--enable-alcc \
+--enable-webserver \
+--disable-debug \
+--enable-optimize \
+--enable-ccache \
+--enable-geoip \
+--enable-upnp
+make
+}
+
+ninstall() {
+pkgdir=/tmp/amule
+make DESTDIR=${pkgdir}/ install
+cp -r ${pkgdir}/* /
+rm -r ${pkgdir}
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

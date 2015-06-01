@@ -1,0 +1,42 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	waf
+# Version:	1.6.3
+# Release:	n06.2
+# License:	BSD
+# Group:	System
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64 arm arm64
+# Url:	http://code.google.com/p/waf
+# Description:	A general-purpose build system modelled after Scons.
+# MD5:	e9234a188b50589993ba9041453c72a9  waf-1.6.3.tar.xz
+
+
+# BuildDep:	/usr/bin/python	/usr/bin/python
+# Dep(post):	/usr/bin/python	/usr/bin/python
+
+nbuild() {
+python ./waf-light configure --prefix=/usr
+python ./waf-light --make-waf
+waf_tools='compat,compat15,ocaml,go,cython,scala,erlang,cuda,gcj,boost,pep8'
+yes | python ./waf-light install -f --destdir=$pkgdir --tools=${waf_tools}
+}
+
+ninstall() {
+pkgdir=/tmp/waf
+install -D -m755 waf $pkgdir/usr/bin/waf
+cd demos/c
+$pkgdir/usr/bin/waf configure build  >& /dev/null
+chmod -R 0644 $pkgdir/usr/bin/.waf*/waflib/Tools/*
+chown -R root:root $pkgdir/usr/*
+cp -r $pkgdir/* /
+rm -r $pkgdir
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

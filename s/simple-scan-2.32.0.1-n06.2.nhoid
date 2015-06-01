@@ -1,0 +1,37 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	simple-scan
+# Version:	2.32.0.1
+# Release:	n06.2
+# License:	GPLv3
+# Group:	System
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64 arm arm64
+# Url:	http://launchpad.net/simple-scan
+# Description:	Simple scanning utility.
+# MD5:	14d8d563054100fa8f25c66a642a7684  simple-scan-2.32.0.1.tar.xz
+
+
+# BuildDep:	/usr/lib/libsane.so	/usr/lib/libsane.so
+# BuildDep:	/usr/lib/libgconf-2.so	/usr/lib/libgconf-2.so
+# Dep(post):	/usr/lib/libgconf-2.so	/usr/lib/libgconf-2.so
+# Dep(post):	/usr/lib/libsane.so	/usr/lib/libsane.so
+
+nbuild() {
+./configure --prefix=/usr \
+--with-gconf-schema-file-dir=/usr/share/gconf/schemas \
+--disable-schemas-install
+make
+}
+
+ninstall() {
+make install
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

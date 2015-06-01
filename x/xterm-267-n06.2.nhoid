@@ -1,0 +1,65 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sánchez <cargabsj175@gmail.com>
+
+# Name:	xterm
+# Version:	267
+# Release:	n06.2
+# License:	X11 License
+# Group:	X Window System
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64 arm arm64
+# Url:	http://invisible-island.net/xterm/
+# Description:	X Terminal Emulator.
+# MD5:	b19e4d71a7ded83e3e39d2c829851f14  xterm-267.tar.xz
+
+
+# BuildDep:	/usr/lib/libXaw.so	/usr/lib/libXaw.so
+# BuildDep:	/usr/lib/libXft.so	/usr/lib/libXft.so
+# BuildDep:	/usr/lib/libncurses.so	/usr/lib/libncurses.so
+# BuildDep:	/usr/bin/luit	/usr/bin/luit
+# Dep(post):	/usr/bin/luit	/usr/bin/luit
+# Dep(post):	/usr/lib/libncurses.so	/usr/lib/libncurses.so
+# Dep(post):	/usr/lib/libXft.so	/usr/lib/libXft.so
+# Dep(post):	/usr/lib/libXaw.so	/usr/lib/libXaw.so
+
+nbuild() {
+./configure --prefix=/usr \
+--libdir=/etc \
+--mandir=/usr/share/man \
+--with-app-defaults=/usr/share/X11/app-defaults/ \
+--with-x \
+--disable-full-tgetent \
+--disable-imake \
+--enable-ansi-color \
+--enable-88-color \
+--enable-256-color \
+--enable-broken-osc \
+--enable-broken-st \
+--enable-load-vt-fonts \
+--enable-i18n \
+--enable-wide-chars \
+--enable-doublechars \
+--enable-warnings \
+--enable-tcap-query \
+--enable-logging \
+--enable-dabbrev \
+--enable-freetype \
+--enable-luit \
+--enable-mini-luit \
+--enable-narrowproto \
+--enable-exec-xterm \
+--with-tty-group=tty
+make
+}
+
+ninstall() {
+make install
+chmod 0755 /usr/bin/xterm
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

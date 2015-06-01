@@ -1,0 +1,30 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	hdparm
+# Version:	9.15
+# Release:	n06.2
+# License:	BSD
+# Group:	Core System
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64
+# Url:	http://sourceforge.net/projects/hdparm/
+# Description:	hdparm - get/set ATA/SATA drive parameters under Linux.
+# MD5:	d8604cf047c8b40d91a772ea3ed10e46  hdparm-9.15.tar.xz
+
+
+
+nbuild() {
+make
+}
+
+ninstall() {
+make install
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

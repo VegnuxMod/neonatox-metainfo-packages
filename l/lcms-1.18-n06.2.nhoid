@@ -1,0 +1,37 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	lcms
+# Version:	1.18
+# Release:	n06.2
+# License:	Copyright (c) 1998-2007 Marti Maria Saguer
+# Group:	Graphics
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64
+# Url:	http://www.littlecms.com/
+# Description:	Little cms is a small-footprint, speed optimized, color management engine in open source form.
+# MD5:	a59d6a7e3073d36e706610a2a4a0bca6  lcms-1.18.tar.xz
+
+
+# OptionalBuildDep:	/usr/lib/libjpeg.so	/usr/lib/libjpeg.so
+# OptionalBuildDep:	/usr/lib/libtiff.so	/usr/lib/libtiff.so
+# OptionalDep(post):	/usr/lib/libtiff.so	/usr/lib/libtiff.so
+# OptionalDep(post):	/usr/lib/libjpeg.so	/usr/lib/libjpeg.so
+
+nbuild() {
+./configure --prefix=/usr
+make
+}
+
+ninstall() {
+make install &&
+install -v -m755 -d /usr/share/doc/lcms-1.18 &&
+install -v -m644 README.1ST doc/* /usr/share/doc/lcms-1.18
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

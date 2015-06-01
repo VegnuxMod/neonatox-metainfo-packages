@@ -1,0 +1,31 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	libdvdcss
+# Version:	1.2.10
+# Release:	n06.2
+# License:	GPLv2
+# Group:	Multimedia
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64
+# Url:	http://www.videolan.org/developers/libdvdcss.html
+# Description:	libdvdcss is a simple library designed for accessing DVDs as a block device without having to bother about the decryption.
+# MD5:	daad2adc4a101890bb9cb250a3a99c90  libdvdcss-1.2.10.tar.xz
+
+
+
+nbuild() {
+./configure --prefix=/usr
+make
+}
+
+ninstall() {
+make install
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

@@ -1,0 +1,32 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sánchez <cargabsj175@gmail.com>
+
+# Name:	menu-cache
+# Version:	0.3.2
+# Release:	n06.2
+# License:	GPLv2
+# Group:	LXDE Desktop
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64
+# Url:	http://lxde.org
+# Description:	Caches to speed up freedesktop.org's application menus use.
+# MD5:	a574d3943562644cdc68fc8edd1eee23  menu-cache-0.3.2.tar.xz
+
+
+
+nbuild() {
+./configure --prefix=/usr --sysconfdir=/etc \
+--libexecdir=/usr/lib/menu-cache --disable-static
+make
+}
+
+ninstall() {
+make install
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

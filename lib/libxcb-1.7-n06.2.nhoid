@@ -1,0 +1,48 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@vegnux.org>
+
+# Name:	libxcb
+# Version:	1.7
+# Release:	n06.2
+# License:	X11 license
+# Group:	X Window System
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64
+# Url:	http://www.x.org/wiki/
+# Description:	This package contains the library files needed to run software using libxcb, the X C Binding.
+# MD5:	ca5689caee936a51ae3a0564005584ab  libxcb-1.7.tar.xz
+
+
+# BuildDep:	/usr/lib/pkgconfig/xcb-proto.pc	/usr/lib/pkgconfig/xcb-proto.pc
+# BuildDep:	/usr/lib/libXdmcp.so	/usr/lib/libXdmcp.so
+# BuildDep:	/usr/lib/libXau.so	/usr/lib/libXau.so
+# BuildDep:	/usr/bin/pkg-config	/usr/bin/pkg-config
+# BuildDep:	/usr/lib/libxslt.so	/usr/lib/libxslt.so
+# BuildDep:	/usr/bin/python	/usr/bin/python
+# Dep(post):	/usr/lib/pkgconfig/xcb-proto.pc	/usr/lib/pkgconfig/xcb-proto.pc
+# Dep(post):	/usr/lib/libXdmcp.so	/usr/lib/libXdmcp.so
+# Dep(post):	/usr/lib/libXau.so	/usr/lib/libXau.so
+# Dep(post):	/usr/bin/pkg-config	/usr/bin/pkg-config
+# Dep(post):	/usr/lib/libxslt.so	/usr/lib/libxslt.so
+# Dep(post):	/usr/bin/python	/usr/bin/python
+
+nbuild() {
+patch -Np1 -i "../libxcb-1.1-no-pthread-stubs.patch"
+libtoolize --force --copy
+aclocal
+autoconf
+automake --add-missing
+./configure --prefix=/usr --enable-xinput
+make
+}
+
+ninstall() {
+make install
+}
+
+npostinstall() {
+ldconfig
+}
+
+npostremove() {
+ldconfig
+}

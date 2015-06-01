@@ -1,0 +1,41 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com.>
+
+# Name:	libmusicbrainz
+# Version:	3.0.3
+# Release:	n06.2
+# License:	LGPLv2.1
+# Group:	multimedia
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64
+# Url:	http://musicbrainz.org/
+# Description:	Library That Provides Access to the MusicBrainz Server.
+# MD5:	e2fbca24d23638824a7106de6b589c49  libmusicbrainz-3.0.3.tar.xz
+
+
+# BuildDep:	/usr/lib/libneon.so	/usr/lib/libneon.so
+# BuildDep:	/usr/lib/libdiscid.so	/usr/lib/libdiscid.so
+# Dep(post):	/usr/lib/libdiscid.so	/usr/lib/libdiscid.so
+# Dep(post):	/usr/lib/libneon.so	/usr/lib/libneon.so
+
+nbuild() {
+mkdir -p build
+cd build
+cmake ../ \
+-DCMAKE_INSTALL_PREFIX:PATH=/usr \
+-DBUILD_SHARED_LIBS:BOOL=ON \
+-DBUILD_STATIC_LIBS:BOOL=OFF
+make
+}
+
+ninstall() {
+cd build
+make install
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

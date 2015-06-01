@@ -1,0 +1,43 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	lucene
+# Version:	2.9.4
+# Release:	n06.2
+# License:	APACHE
+# Group:	Programming
+# Arch:	any
+# Url:	http://lucene.apache.org/java/docs/index.html
+# Description:	A high-performance, full-featured text search engine library written entirely in Java
+# MD5:	e3aa78d1ea110860acc752ec64f38555  lucene-2.9.4.tar.xz
+
+
+# BuildDep:	/usr/bin/java	/usr/bin/java
+# Dep(post):	/usr/bin/java	/usr/bin/java
+
+nbuild() {
+noemptyfuncs
+}
+
+ninstall() {
+pkgdir=/tmp/lucene
+install -m755 -d ${pkgdir}/usr/share/java/
+for i in `find $(pwd) -name '*.jar'`; do
+install $i ${pkgdir}/usr/share/java/
+done
+cd ${pkgdir}/usr/share/java/
+for i in `ls -1 *2.9.4*.jar`; do
+j=${i//-2.9.4/}
+ln -sv $i $j
+done
+cp -r ${pkgdir}/* /
+rm -r ${pkgdir}
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

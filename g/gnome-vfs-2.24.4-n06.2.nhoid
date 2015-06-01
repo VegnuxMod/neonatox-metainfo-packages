@@ -1,0 +1,56 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	gnome-vfs
+# Version:	2.24.4
+# Release:	n06.2
+# License:	LGPL
+# Group:	Gnome Desktop
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64 arm arm64
+# Url:	http://www.gnome.org
+# Description:	The GNOME Virtual File System.
+# MD5:	5bf93224d9e1572a0fac92a30f76a2ea  gnome-vfs-2.24.4.tar.xz
+
+
+# BuildDep:	/usr/lib/libgconf-2.so	/usr/lib/libgconf-2.so
+# BuildDep:	/usr/lib/libhal.so	/usr/lib/libhal.so
+# BuildDep:	/bin/bzip2	/bin/bzip2
+# BuildDep:	/usr/lib/libavahi-core.so	/usr/lib/libavahi-core.so
+# BuildDep:	/usr/lib/libgnutls.so	/usr/lib/libgnutls.so
+# BuildDep:	/usr/lib/libsl.so	/usr/lib/libsl.so
+# BuildDep:	/usr/share/mime-info/gnome-vfs.mime	/usr/share/mime-info/gnome-vfs.mime
+# Dep(post):	/usr/share/mime-info/gnome-vfs.mime	/usr/share/mime-info/gnome-vfs.mime
+# Dep(post):	/usr/lib/libsl.so	/usr/lib/libsl.so
+# Dep(post):	/usr/lib/libgnutls.so	/usr/lib/libgnutls.so
+# Dep(post):	/usr/lib/libavahi-core.so	/usr/lib/libavahi-core.so
+# Dep(post):	/bin/bzip2	/bin/bzip2
+# Dep(post):	/usr/lib/libhal.so	/usr/lib/libhal.so
+# Dep(post):	/usr/lib/libgconf-2.so	/usr/lib/libgconf-2.so
+
+nbuild() {
+patch -Np1 -i "../hal-show-volume-names.patch"
+patch -Np1 -i "../gnutls-config.patch"
+libtoolize --force
+gtkdocize
+aclocal
+autoconf
+automake
+./configure --prefix=/usr --sysconfdir=/etc \
+--localstatedir=/var --disable-static \
+--libexecdir=/usr/lib/gnome-vfs-2.0
+make
+}
+
+ninstall() {
+make GCONF_DISABLE_MAKEFILE_SCHEMA_INSTALL=1 install
+install -d -m755 /usr/share/gconf/schemas
+gconf-merge-schema /usr/share/gconf/schemas/gnome-vfs.schemas --domain gnome-vfs-2.0 /etc/gconf/schemas/*.schemas
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

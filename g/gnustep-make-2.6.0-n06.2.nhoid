@@ -1,0 +1,32 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	gnustep-make
+# Version:	2.6.0
+# Release:	n06.2
+# License:	GPL
+# Group:	System
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64 arm arm64
+# Url:	http://www.gnustep.org/
+# Description:	The GNUstep make package.
+# MD5:	989e036a60a14488f096c553ad5201a2  gnustep-make-2.6.0.tar.xz
+
+
+
+nbuild() {
+./configure --prefix=/usr --sysconfdir=/etc/GNUstep
+make
+}
+
+ninstall() {
+make install
+install -D -m755 /usr/share/GNUstep/Makefiles/GNUstep.sh /etc/profile.d/GNUstep.sh
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

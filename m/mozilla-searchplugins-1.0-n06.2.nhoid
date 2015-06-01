@@ -1,0 +1,31 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	mozilla-searchplugins
+# Version:	1.0
+# Release:	n06.2
+# License:	MPL GPL LGPL
+# Group:	Networking
+# Arch:	any
+# Url:	https://parabolagnulinux.org/
+# Description:	System-wide OpenSearch plugins common for Mozilla based browsers.
+# MD5:	41d442a97e2aec32a29f7d789069b636  mozilla-searchplugins-1.0.tar.xz
+
+
+
+nbuild() {
+noemptyfuncs
+}
+
+ninstall() {
+install -m755 -d /usr/lib/mozilla/searchplugins
+install -m644 *.xml /usr/lib/mozilla/searchplugins
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

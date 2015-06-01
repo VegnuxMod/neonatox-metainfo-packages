@@ -1,0 +1,39 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sánchez <cargabsj175@gmail.com>
+
+# Name:	physfs
+# Version:	2.0.1
+# Release:	n06.2
+# License:	zlib
+# Group:	Core System
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64
+# Url:	http://icculus.org/physfs/
+# Description:	A library to provide abstract access to various archives.
+# MD5:	becb752ee83ab6a45bfa1a9b9341337c  physfs-2.0.1.tar.xz
+
+
+# BuildDep:	/usr/lib/libz.so	/usr/lib/libz.so
+# BuildDep:	/usr/lib/libreadline.so	/usr/lib/libreadline.so
+# BuildDep:	/usr/bin/cmake	/usr/bin/cmake
+# Dep(post):	/usr/bin/cmake	/usr/bin/cmake
+# Dep(post):	/usr/lib/libreadline.so	/usr/lib/libreadline.so
+# Dep(post):	/usr/lib/libz.so	/usr/lib/libz.so
+
+nbuild() {
+export CFLAGS="$CFLAGS -fno-strict-aliasing"
+export CXXFLAGS="$CXXFLAGS -fno-strict-aliasing"
+cmake . -DCMAKE_INSTALL_PREFIX=/usr
+make
+}
+
+ninstall() {
+make install
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

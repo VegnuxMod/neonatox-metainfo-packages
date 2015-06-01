@@ -1,0 +1,40 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	silc-toolkit
+# Version:	1.1.10
+# Release:	n06.2
+# License:	GPL
+# Group:	Networking
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64 arm arm64
+# Url:	http://www.silcnet.org
+# Description:	Toolkit for Secure Internet Live Conferencing
+# MD5:	6a995e3d9cb43e41515e633df23d909a  silc-toolkit-1.1.10.tar.xz
+
+
+# BuildDep:	/usr/lib/libglib-2.0.so	/usr/lib/libglib-2.0.so
+# BuildDep:	/usr/bin/perl	/usr/bin/perl
+# BuildDep:	/usr/lib/libidn.so	/usr/lib/libidn.so
+# Dep(post):	/usr/lib/libidn.so	/usr/lib/libidn.so
+# Dep(post):	/usr/bin/perl	/usr/bin/perl
+# Dep(post):	/usr/lib/libglib-2.0.so	/usr/lib/libglib-2.0.so
+
+nbuild() {
+./configure --prefix=/usr --with-etcdir=/etc/silc \
+--enable-ipv6 --with-perl=yes \
+--with-simdir=/usr/lib/silc/modules
+make
+}
+
+ninstall() {
+make install
+rm -rf /usr/share/doc/silc-toolkit/toolkit
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

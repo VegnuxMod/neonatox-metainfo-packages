@@ -1,0 +1,30 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	poppler-data
+# Version:	0.4.4
+# Release:	n06.2
+# License:	custom GPLv2
+# Group:	System
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64 arm arm64
+# Url:	http://poppler.freedesktop.org/
+# Description:	Encoding data for the poppler PDF rendering library.
+# MD5:	a047ae5e23c076a0e1236783ef4ec75d  poppler-data-0.4.4.tar.xz
+
+
+
+nbuild() {
+noemptyfuncs
+}
+
+ninstall() {
+make prefix=/usr  install
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

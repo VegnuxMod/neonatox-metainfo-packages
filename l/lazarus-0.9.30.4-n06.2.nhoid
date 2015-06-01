@@ -1,0 +1,63 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	lazarus
+# Version:	0.9.30.4
+# Release:	n06.2
+# License:	GPLv2 MPL LGPL
+# Group:	Programming
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64 arm arm64 armel
+# Url:	http://www.lazarus.freepascal.org/
+# Description:	Delphi-like IDE for FreePascal common files.
+# MD5:	6547e8c8110c76b4de99f709de436875  lazarus-0.9.30.4.tar.xz
+
+
+# BuildDep:	/usr/bin/fpc	/usr/bin/fpc
+# BuildDep:	/usr/lib/fpc/src/Makefile	/usr/lib/fpc/src/Makefile
+# BuildDep:	/usr/lib/libgtk-x11-2.0.so	/usr/lib/libgtk-x11-2.0.so
+# BuildDep:	/usr/bin/rsync	/usr/bin/rsync
+# BuildDep:	/usr/bin/perl	/usr/bin/perl
+# Dep(post):	/usr/bin/fpc	/usr/bin/fpc
+
+nbuild() {
+basedir=$(pwd)
+cd components/lazcontrols
+patch -p0 -i "../../../lazcontrols2.diff"
+cd ${basedir}
+make FPC=/usr/bin/fpc LCL_PLATFORM=gtk2 clean bigide
+mv lazarus lazarus-gtk2
+mv startlazarus startlazarus-gtk2
+}
+
+ninstall() {
+pkgdir=/tmp/lazarus
+mkdir $pkgdir
+mkdir -p $pkgdir/usr/lib/lazarus $pkgdir/usr/bin $pkgdir/usr/share/man/man1 $pkgdir/usr/share/doc
+rsync -a --exclude="CVS"     --exclude=".cvsignore" --exclude="*.ppw"   --exclude="*.ppl" \
+--exclude="*.ow"    --exclude="*.a" --exclude="*.rst"   --exclude=".#*" \
+--exclude="*.~*"    --exclude="*.bak" --exclude="*.orig"  --exclude="*.rej" \
+--exclude=".xvpics" --exclude="killme*" --exclude=".gdb_hist*" \
+--exclude="debian"  --exclude="COPYING*" --exclude="*.app"   --exclude="tools/install" . "$pkgdir"/usr/lib/lazarus
+pushd $pkgdir/usr/lib/lazarus
+rm lazarus-*
+rm startlazarus-*
+popd
+ln -svf /usr/lib/lazarus/lazbuild $pkgdir/usr/bin/lazbuild
+cp -R install/man/man1/* $pkgdir/usr/share/man/man1/
+mv $pkgdir/usr/lib/lazarus/docs $pkgdir/usr/share/doc/lazarus
+rm -r $pkgdir/usr/lib/lazarus/install
+mv $pkgdir"/usr/lib/lazarus/components/lazreport/doc/tutorials/stringgrid/es/Tutorial LazReport y StringGrid.pdf" \
+$pkgdir/usr/lib/lazarus/components/lazreport/doc/tutorials/stringgrid/es/Tutorial_LazReport_y_StringGrid.pdf
+mv $pkgdir"/usr/lib/lazarus/components/lazreport/doc/tutorials/stringgrid/en/Tutorial LazReport and StringGrid.pdf" \
+$pkgdir/usr/lib/lazarus/components/lazreport/doc/tutorials/stringgrid/en/Tutorial_LazReport_and_StringGrid.pdf
+cp -r $pkgdir/* /
+rm -r $pkgdir
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

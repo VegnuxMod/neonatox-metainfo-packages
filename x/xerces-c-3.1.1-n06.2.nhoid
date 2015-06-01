@@ -1,0 +1,33 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	xerces-c
+# Version:	3.1.1
+# Release:	n06.2
+# License:	APACHE
+# Group:	Programming
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64 arm arm64 armel
+# Url:	http://xerces.apache.org/xerces-c
+# Description:	A validating XML parser written in a portable subset of C++.
+# MD5:	17bc8e637bfbff1216d04b409abfaea7  xerces-c-3.1.1.tar.xz
+
+
+# BuildDep:	/usr/lib/libcurl.so	/usr/lib/libcurl.so
+# Dep(post):	/usr/lib/libcurl.so	/usr/lib/libcurl.so
+
+nbuild() {
+./configure --prefix=/usr --sysconfdir=/etc
+make
+}
+
+ninstall() {
+make install
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

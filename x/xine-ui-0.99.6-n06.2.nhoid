@@ -1,0 +1,64 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	xine-ui
+# Version:	0.99.6
+# Release:	n06.2
+# License:	GPL
+# Group:	Multimedia
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64 arm arm64
+# Url:	http://www.xine-project.org
+# Description:	A free video player for Unix.
+# MD5:	18bf314bdf95b42c12f76e5f425eb904  xine-ui-0.99.6.tar.xz
+
+
+# BuildDep:	/usr/lib/libxine.so	/usr/lib/libxine.so
+# BuildDep:	/usr/lib/libcurl.so	/usr/lib/libcurl.so
+# BuildDep:	/usr/lib/libXtst.so	/usr/lib/libXtst.so
+# BuildDep:	/usr/lib/libXinerama.so	/usr/lib/libXinerama.so
+# BuildDep:	/usr/lib/libXv.so	/usr/lib/libXv.so
+# BuildDep:	/usr/lib/libpng.so	/usr/lib/libpng.so
+# BuildDep:	/usr/lib/libXft.so	/usr/lib/libXft.so
+# BuildDep:	/usr/lib/libXxf86vm.so	/usr/lib/libXxf86vm.so
+# BuildDep:	/usr/lib/libreadline.so	/usr/lib/libreadline.so
+# BuildDep:	/usr/bin/xdg-desktop-menu	/usr/bin/xdg-desktop-menu
+# BuildDep:	/usr/bin/update-mime-database	/usr/bin/update-mime-database
+# BuildDep:	/usr/share/icons/hicolor/index.theme	/usr/share/icons/hicolor/index.theme
+# BuildDep:	/usr/bin/desktop-file-install	/usr/bin/desktop-file-install
+# Dep(post):	/usr/bin/desktop-file-install	/usr/bin/desktop-file-install
+# Dep(post):	/usr/share/icons/hicolor/index.theme	/usr/share/icons/hicolor/index.theme
+# Dep(post):	/usr/bin/update-mime-database	/usr/bin/update-mime-database
+# Dep(post):	/usr/bin/xdg-desktop-menu	/usr/bin/xdg-desktop-menu
+# Dep(post):	/usr/lib/libreadline.so	/usr/lib/libreadline.so
+# Dep(post):	/usr/lib/libXxf86vm.so	/usr/lib/libXxf86vm.so
+# Dep(post):	/usr/lib/libXft.so	/usr/lib/libXft.so
+# Dep(post):	/usr/lib/libpng.so	/usr/lib/libpng.so
+# Dep(post):	/usr/lib/libXv.so	/usr/lib/libXv.so
+# Dep(post):	/usr/lib/libXinerama.so	/usr/lib/libXinerama.so
+# Dep(post):	/usr/lib/libXtst.so	/usr/lib/libXtst.so
+# Dep(post):	/usr/lib/libcurl.so	/usr/lib/libcurl.so
+# Dep(post):	/usr/lib/libxine.so	/usr/lib/libxine.so
+
+nbuild() {
+patch -p1 < "../lirc-check-a89347673097.patch"
+patch -p1 < "../lirc-makefile-a68dd15ff7ae.patch"
+patch -p1 < "../fix_lirc.diff"
+patch -p1 < "../xine-ui-xdg.diff"
+autoconf
+./configure --prefix=/usr --mandir=/usr/share/man \
+--with-x --enable-lirc --without-aalib --enable-debug --disable-lirc
+make
+}
+
+ninstall() {
+make install
+mv "/usr/share/xine/desktop/xine.desktop" "/usr/share/applications/"
+}
+
+npostinstall() {
+xdg-icon-resource forceupdate --theme hicolor &> /dev/null
+}
+
+npostremove() {
+xdg-icon-resource forceupdate --theme hicolor &> /dev/null
+}

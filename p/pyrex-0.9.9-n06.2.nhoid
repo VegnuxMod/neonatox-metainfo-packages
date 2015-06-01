@@ -1,0 +1,34 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	pyrex
+# Version:	0.9.9
+# Release:	n06.2
+# License:	APACHE
+# Group:	System
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64 arm arm64 armel
+# Url:	http://www.cosc.canterbury.ac.nz/~greg/python/Pyrex/
+# Description:	This is a development version of Pyrex, a language for writing Python extension modules.
+# MD5:	4bb2b900326eb02012dbd35d942a99bc  pyrex-0.9.9.tar.xz
+
+
+# BuildDep:	/usr/bin/python	/usr/bin/python
+# Dep(post):	/usr/bin/python	/usr/bin/python
+
+nbuild() {
+noemptyfuncs
+}
+
+ninstall() {
+python setup.py install --root=/tmp/pyrex
+cp -r /tmp/pyrex/* /
+rm -r /tmp/pyrex
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

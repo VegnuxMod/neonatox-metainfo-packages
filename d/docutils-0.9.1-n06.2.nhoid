@@ -1,0 +1,34 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	docutils
+# Version:	0.9.1
+# Release:	n06.2
+# License:	custom
+# Group:	System
+# Arch:	any
+# Url:	http://docutils.sourceforge.net
+# Description:	Set of tools processing plaintext docs into formats such as HTML, XML, or LaTeX.
+# MD5:	658b79f32d42648939f3d25ba8f15aa2  docutils-0.9.1.tar.xz
+
+
+# BuildDep:	/usr/bin/python	/usr/bin/python
+# Dep(post):	/usr/bin/python	/usr/bin/python
+
+nbuild() {
+noemptyfuncs
+}
+
+ninstall() {
+python setup.py build --build-lib=build/python install --root=/tmp/docutils --optimize=1
+cp -r /tmp/docutils/* /
+rm -r /tmp/docutils
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

@@ -1,0 +1,78 @@
+#%NHO-0.5
+# Package Maintainer:	Francisco Jesus Navarro Cortes <dominuskernel@gmail.com>
+
+# Name:	wine
+# Version:	1.5.21
+# Release:	n06.2
+# License:	GPLv2
+# Group:	Multimedia
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64 arm arm64 armel
+# Url:	http://www.winehq.org/
+# Description:	A compatibility layer for running windows programs.
+# MD5:	7fd887f748ae0bc81551f2e80671f952  wine-1.5.21.tar.xz
+
+
+# BuildDep:	/usr/lib/libfontconfig.so	/usr/lib/libfontconfig.so
+# BuildDep:	/usr/lib/libGL.so	/usr/lib/libGL.so
+# BuildDep:	/usr/lib/libXcursor.so	/usr/lib/libXcursor.so
+# BuildDep:	/usr/lib/libXrandr.so	/usr/lib/libXrandr.so
+# BuildDep:	/usr/lib/libXdamage.so	/usr/lib/libXdamage.so
+# BuildDep:	/usr/lib/libXxf86dga.so	/usr/lib/libXxf86dga.so
+# BuildDep:	/usr/lib/libasound.so	/usr/lib/libasound.so
+# BuildDep:	/usr/bin/perl	/usr/bin/perl
+# BuildDep:	/usr/lib/libgif.so	/usr/lib/libgif.so
+# BuildDep:	/usr/lib/libXpm.so	/usr/lib/libXpm.so
+# BuildDep:	/usr/lib/libpng.so	/usr/lib/libpng.so
+# BuildDep:	/usr/lib/libXinerama.so	/usr/lib/libXinerama.so
+# BuildDep:	/usr/lib/libXcomposite.so	/usr/lib/libXcomposite.so
+# BuildDep:	/usr/lib/libXmu.so	/usr/lib/libXmu.so
+# BuildDep:	/usr/lib/libxml2.so	/usr/lib/libxml2.so
+# BuildDep:	/usr/lib/libexslt.so	/usr/lib/libexslt.so
+# BuildDep:	/usr/lib/libldap.so	/usr/lib/libldap.so
+# BuildDep:	/usr/lib/liblcms.so	/usr/lib/liblcms.so
+# BuildDep:	/usr/lib/libopenal.so	/usr/lib/libopenal.so
+# BuildDep:	/usr/lib/libjack.so	/usr/lib/libjack.so
+# BuildDep:	/usr/lib/libv4l1.so	/usr/lib/libv4l1.so
+# Dep(post):	/usr/lib/libfontconfig.so	/usr/lib/libfontconfig.so
+# Dep(post):	/usr/lib/libGL.so	/usr/lib/libGL.so
+# Dep(post):	/usr/lib/libXcursor.so	/usr/lib/libXcursor.so
+# Dep(post):	/usr/lib/libXrandr.so	/usr/lib/libXrandr.so
+# Dep(post):	/usr/lib/libXdamage.so	/usr/lib/libXdamage.so
+# Dep(post):	/usr/lib/libXxf86dga.so	/usr/lib/libXxf86dga.so
+# Dep(post):	/usr/lib/libasound.so	/usr/lib/libasound.so
+# Dep(post):	/usr/bin/perl	/usr/bin/perl
+# Dep(post):	/usr/lib/libgif.so	/usr/lib/libgif.so
+# Dep(post):	/usr/lib/libXpm.so	/usr/lib/libXpm.so
+# Dep(post):	/usr/lib/libpng.so	/usr/lib/libpng.so
+# Dep(post):	/usr/lib/libXinerama.so	/usr/lib/libXinerama.so
+# Dep(post):	/usr/lib/libXcomposite.so	/usr/lib/libXcomposite.so
+# Dep(post):	/usr/lib/libXmu.so	/usr/lib/libXmu.so
+# Dep(post):	/usr/lib/libxml2.so	/usr/lib/libxml2.so
+# Dep(post):	/usr/lib/libexslt.so	/usr/lib/libexslt.so
+# Dep(post):	/usr/lib/libldap.so	/usr/lib/libldap.so
+# Dep(post):	/usr/lib/liblcms.so	/usr/lib/liblcms.so
+# Dep(post):	/usr/lib/libopenal.so	/usr/lib/libopenal.so
+# Dep(post):	/usr/lib/libjack.so	/usr/lib/libjack.so
+# Dep(post):	/usr/lib/libv4l1.so	/usr/lib/libv4l1.so
+
+nbuild() {
+if [[ $(uname -m) == x86_64 ]]; then
+WINE_ARCH=--enable-win64
+else
+WINE_ARCH=""
+fi
+./configure --prefix=/usr --sysconfdir=/etc --with-x $WINE_ARCH
+make
+}
+
+ninstall() {
+make install
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

@@ -1,0 +1,35 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	dialog
+# Version:	1.1-20080819
+# Release:	n06.2
+# License:	LGPLv2.1
+# Group:	Core System
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64
+# Url:	http://hightek.org/dialog
+# Description:	Dialog is a utility to create nice user interfaces to shell scripts, or other scripting languages, such as perl. It is non-graphical (it uses curses) so it can be run in the console or an xterm.
+# MD5:	c84829071382134abe678ee1cb4f7b69  dialog-1.1-20080819.tar.xz
+
+
+# BuildDep:	/usr/lib/libncurses.so	/usr/lib/libncurses.so
+# Dep(post):	/usr/lib/libncurses.so	/usr/lib/libncurses.so
+
+nbuild() {
+./configure --prefix=/usr \
+--enable-nls --with-ncurses --with-libtool --enable-widec
+make
+}
+
+ninstall() {
+make install &&
+chmod -v 755 /usr/lib/libdialog.so.*.*.*
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

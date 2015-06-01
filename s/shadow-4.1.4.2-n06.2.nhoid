@@ -1,0 +1,98 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	shadow
+# Version:	4.1.4.2
+# Release:	n06.2
+# License:	custom
+# Group:	Core System
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64 arm arm64
+# Url:	http://pkg-shadow.alioth.debian.org/
+# Description:	The Shadow package contains programs for handling passwords in a secure way.
+# MD5:	7ece1ba10129be4d208084a05b1a3aa7  shadow-4.1.4.2.tar.xz
+
+
+# BuildDep:	/usr/lib/libcrack.so	/usr/lib/libcrack.so
+# BuildDep:	/usr/lib/libpam.so	/usr/lib/libpam.so
+# Dep(post):	/usr/lib/libpam.so	/usr/lib/libpam.so
+# Dep(post):	/usr/lib/libcrack.so	/usr/lib/libcrack.so
+
+nbuild() {
+./configure --libdir=/lib --sysconfdir=/etc --enable-shared \
+--without-audit --without-selinux --with-libcrack --with-libpam
+sed -i 's/groups$(EXEEXT) //' src/Makefile
+find man -name Makefile -exec sed -i '/groups.1.xml/d' '{}' \;
+find man -name Makefile -exec sed -i 's/groups.1 //' '{}' \;
+sed -i -e 's/ ko//' -e 's/ zh_CN zh_TW//' man/Makefile.in
+sed -i -e 's@#ENCRYPT_METHOD DES@ENCRYPT_METHOD MD5@' \
+-e 's@/var/spool/mail@/var/mail@' etc/login.defs
+make
+}
+
+ninstall() {
+make install
+mv -v /usr/bin/passwd /bin
+cp etc/login.defs /etc/login.defs
+sed -i -e 's@#MD5_CRYPT_ENAB.no@MD5_CRYPT_ENAB yes@' \
+-e 's@/var/spool/mail@/var/mail@' \
+-e 's@DICTPATH.*@DICTPATH\t/lib/cracklib/pw_dict@' /etc/login.defs
+FUNCTIONS="LASTLOG_ENAB MAIL_CHECK_ENAB PORTTIME_CHECKS_ENAB CONSOLE MOTD_FILE
+NOLOGINS_FILE PASS_MIN_LEN SU_WHEEL_ONLY MD5_CRYPT_ENAB CONSOLE_GROUPS
+ENVIRON_FILE ULIMIT ENV_TZ ENV_HZ ENV_SUPATH ENV_PATH QMAIL_DIR MAIL_DIR
+MAIL_FILE CHFN_AUTH FAILLOG_ENAB QUOTAS_ENAB FTMP_FILE OBSCURE_CHECKS_ENAB
+CRACKLIB_DICTPATH PASS_CHANGE_TRIES PASS_ALWAYS"
+for function in $FUNCTIONS; do
+sed -i "s/^$function/# &/" /etc/login.defs
+done
+cat > /etc/pam.d/login << "EOF"
+#%PAM-1.0
+#
+# The common PAM configuration file for login
+#
+auth       required     pam_shells.so
+auth       include      system-auth
+auth       optional     pam_securetty.so
+account    required     pam_nologin.so
+account    include      system-auth
+password   include      system-auth
+session    include      system-auth
+session    required     pam_mkhomedir.so skel=/etc/skel/ umask=0022
+session    optional     pam_lastlog.so nowtmp
+session    optional     pam_mail.so dir=/var/mail standard
+EOF
+for file in chage chfn chgpasswd chpasswd chsh groupadd groupdel groupmems \
+groupmod newusers passwd useradd userdel usermod; do
+cat > /etc/pam.d/$file << "EOF"
+#%PAM-1.0
+#
+# The common PAM configuration file authentication only, root ok
+#
+auth       sufficient   pam_rootok.so
+account    required     pam_permit.so
+account    include      system-auth
+password   include      system-auth
+EOF
+done
+cat > /etc/pam.d/su << "EOF"
+#%PAM-1.0
+#
+# The common PAM configuration file for su
+#
+auth            sufficient      pam_rootok.so
+auth            include         system-auth
+account         include         system-auth
+password        include         system-auth
+session         include         system-auth
+session         optional        pam_xauth.so
+EOF
+sed -i 's/yes/no/' /etc/default/useradd
+}
+
+npostinstall() {
+pwconv
+grpconv
+}
+
+npostremove() {
+noemptyfuncs
+}

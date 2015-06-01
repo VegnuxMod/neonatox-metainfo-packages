@@ -1,0 +1,41 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	android-tools
+# Version:	20130425
+# Release:	n06.2
+# License:	Apache
+# Group:	Programming
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64 arm arm64 armel
+# Url:	http://android.googlesource.com/platform/system/core
+# Description:	Android platform tools(adb, fastboot).
+# MD5:	f2428cf0e2e934847a7aa177026935fa  android-tools-20130425.tar.xz
+
+# BuildDep:	/usr/lib/libusb.so	/usr/lib/libusb.so
+# Dep(post):	/usr/lib/libusb.so	/usr/lib/libusb.so
+
+nbuild() {
+noemptyfuncs
+}
+
+ninstall() {
+ROOT_SRC=$(pwd)
+ADB_SRC=${ROOT_SRC}/core/adb
+FASTBOOT_SRC=${ROOT_SRC}/core/fastboot
+cd ${ADB_SRC}
+mv ../../adbMakefile Makefile
+make
+cd ${FASTBOOT_SRC}
+mv ../../fastbootMakefile Makefile
+make
+install -D ${ADB_SRC}/adb /usr/bin/adb
+install -D ${FASTBOOT_SRC}/fastboot /usr/bin/fastboot
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

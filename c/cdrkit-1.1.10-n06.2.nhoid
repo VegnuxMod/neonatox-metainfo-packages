@@ -1,0 +1,52 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sánchez <cargabsj175@gmail.com>
+
+# Name:	cdrkit
+# Version:	1.1.10
+# Release:	n06.2
+# License:	GPLv2
+# Group:	Multimedia
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64
+# Url:	http://cdrkit.org/
+# Description:	Suite of programs for CD/DVD recording, ISO image creation, and audio CD extraction.
+# MD5:	0af37c204ae875ec63c2cb1696d9876f  cdrkit-1.1.10.tar.xz
+
+
+# BuildDep:	/usr/bin/file	/usr/bin/file
+# BuildDep:	/bin/bzip2	/bin/bzip2
+# BuildDep:	/usr/bin/perl	/usr/bin/perl
+# BuildDep:	/usr/bin/cmake	/usr/bin/cmake
+# BuildDep:	/lib/libcap.so	/lib/libcap.so
+# Dep(post):	/usr/bin/file	/usr/bin/file
+# Dep(post):	/bin/bzip2	/bin/bzip2
+# Dep(post):	/usr/bin/perl	/usr/bin/perl
+# Dep(post):	/usr/bin/cmake	/usr/bin/cmake
+# Dep(post):	/lib/libcap.so	/lib/libcap.so
+
+nbuild() {
+make
+}
+
+ninstall() {
+make PREFIX="/usr" install
+cd "/usr/bin"
+ln -fv wodim cdrecord
+ln -fv readom readcd
+ln -fv genisoimage mkisofs
+ln -fv genisoimage mkhybrid
+ln -fv icedax cdda2wav
+cd "/usr/share/man/man1"
+ln -fv wodim.1 cdrecord.1
+ln -fv readom.1 readcd.1
+ln -fv genisoimage.1 mkisofs.1
+ln -fv genisoimage.1 mkhybrid.1
+ln -fv icedax.1 cdda2wav.1
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

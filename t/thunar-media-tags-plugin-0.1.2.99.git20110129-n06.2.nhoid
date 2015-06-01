@@ -1,0 +1,43 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	thunar-media-tags-plugin
+# Version:	0.1.2.99.git20110129
+# Release:	n06.2
+# License:	GPLv2
+# Group:	XFCE Desktop
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64 arm arm64
+# Url:	http://goodies.xfce.org/projects/thunar-plugins/thunar-media-tags-plugin
+# Description:	Adds special features for media files to the Thunar File Manager.
+# MD5:	1256078e6a65412a0f7d54b125540a9d  thunar-media-tags-plugin-0.1.2.99.git20110129.tar.xz
+
+
+# BuildDep:	/usr/bin/thunar	/usr/bin/thunar
+# BuildDep:	/usr/lib/libtag.so	/usr/lib/libtag.so
+# Dep(post):	/usr/lib/libtag.so	/usr/lib/libtag.so
+# Dep(post):	/usr/bin/thunar	/usr/bin/thunar
+
+nbuild() {
+patch -Np1 -i ../0001-Switch-to-the-new-tooltip-api-in-gtk-depend-on-gtk-2.patch
+patch -Np1 -i ../04_fix-implicit-dso-linking.patch
+xdt-autogen
+./configure --prefix=/usr \
+--sysconfdir=/etc \
+--libexecdir=/usr/lib/xfce4 \
+--localstatedir=/var \
+--disable-static \
+--disable-debug
+make
+}
+
+ninstall() {
+make install
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

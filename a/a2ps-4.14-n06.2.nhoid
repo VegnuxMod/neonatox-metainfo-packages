@@ -1,0 +1,51 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	a2ps
+# Version:	4.14
+# Release:	n06.2
+# License:	GPLv3
+# Group:	System
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64 arm arm64
+# Url:	http://www.gnu.org/software/a2ps/
+# Description:	a2ps is an Any to PostScript filter.
+# MD5:	fb8b42af1b08d3fd99423b14cff1f7c6  a2ps-4.14.tar.xz
+
+
+# BuildDep:	/usr/lib/libgs.so	/usr/lib/libgs.so
+# BuildDep:	/usr/bin/psnup	/usr/bin/psnup
+# BuildDep:	/usr/lib/libMagick++.so	/usr/lib/libMagick++.so
+# BuildDep:	/usr/bin/perl	/usr/bin/perl
+# BuildDep:	/usr/bin/gperf	/usr/bin/gperf
+# Dep(post):	/usr/bin/gperf	/usr/bin/gperf
+# Dep(post):	/usr/bin/perl	/usr/bin/perl
+# Dep(post):	/usr/lib/libMagick++.so	/usr/lib/libMagick++.so
+# Dep(post):	/usr/bin/psnup	/usr/bin/psnup
+# Dep(post):	/usr/lib/libgs.so	/usr/lib/libgs.so
+
+nbuild() {
+patch -p1 < ../a2ps-4.13c-fnmatch-replacement.patch
+patch -p1 < ../a2ps-4.13c-emacs.patch
+patch -p1 < ../a2ps-4.13-manpage-chmod.patch
+patch -p1 < ../a2ps-4.14-check-mempcpy.patch
+patch -p0 < ../a2ps-4.14-fix-stpcpy-proto.patch
+libtoolize --force --copy
+autoreconf -I m4
+./configure --prefix=/usr --sysconfdir=/etc/a2ps \
+--includedir=/usr/include --enable-nls
+export LANG=C
+make
+}
+
+ninstall() {
+make  install
+sed -i "s:^countdictstack: \0:" /usr/bin/psset
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

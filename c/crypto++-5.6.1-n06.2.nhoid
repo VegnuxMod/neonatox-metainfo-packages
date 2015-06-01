@@ -1,0 +1,41 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	crypto++
+# Version:	5.6.1
+# Release:	n06.2
+# License:	custom
+# Group:	Programming
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64 arm arm64
+# Url:	http://www.cryptopp.com/
+# Description:	A free C++ class library of cryptographic schemes.
+# MD5:	28cd010202c2f6ee3abeaa8d989585da  crypto++-5.6.1.tar.xz
+
+
+
+nbuild() {
+noemptyfuncs
+}
+
+ninstall() {
+pkgdir=/tmp/crypto
+sed -i -e 's/^CXXFLAGS/#CXXFLAGS/' GNUmakefile
+export CXXFLAGS="${CXXFLAGS} -DNDEBUG -fPIC"
+make -f GNUmakefile
+make libcryptopp.so
+install -d ${pkgdir}/usr/{lib/pkgconfig,include/cryptopp}
+install -m644 *.h ${pkgdir}/usr/include/cryptopp/
+install -m644 libcryptopp.a ${pkgdir}/usr/lib/libcryptopp.a
+install -m644 libcryptopp.so ${pkgdir}/usr/lib/libcryptopp.so
+install -m644 ../libcrypto++.pc "${pkgdir}/usr/lib/pkgconfig/libcrypto++.pc"
+cp -r ${pkgdir}/* /
+rm -r ${pkgdir}
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

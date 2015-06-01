@@ -1,0 +1,50 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	mercurial
+# Version:	2.1.2
+# Release:	n06.2
+# License:	GPL
+# Group:	Networking
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64 arm arm64 armel
+# Url:	http://mercurial.selenic.com/
+# Description:	A scalable distributed SCM tool.
+# MD5:	186967a35e361e2ee57b93d1141c3bb5  mercurial-2.1.2.tar.xz
+
+
+# BuildDep:	/usr/local/bin/python	/usr/local/bin/python
+# Dep(post):	/usr/local/bin/python	/usr/local/bin/python
+
+nbuild() {
+noemptyfuncs
+}
+
+ninstall() {
+pkgdir=/tmp/hg
+python setup.py install --root="${pkgdir}/" --optimize=1
+install -d ${pkgdir}/usr/local/share/man/{man1,man5}
+install -m644 doc/hg.1 "${pkgdir}/usr/local/share/man/man1"
+install -m644 doc/{hgrc.5,hgignore.5} "${pkgdir}/usr/local/share/man/man5"
+install -m755 contrib/hgk "${pkgdir}/usr/local/bin"
+install -m644 -D contrib/zsh_completion "${pkgdir}/usr/local/share/zsh/site-functions/_hg"
+install -m644 -D contrib/bash_completion "${pkgdir}/usr/local/share/bash-completion/completions/hg"
+install -d "${pkgdir}/usr/local/share/emacs/site-lisp"
+install -m644 contrib/{mq.el,mercurial.el} "${pkgdir}/usr/local/share/emacs/site-lisp"
+vimpath="${pkgdir}/usr/share/vim/vimfiles"
+install -Dm644 contrib/vim/HGAnnotate.vim "${vimpath}/syntax/HGAnnotate.vim"
+install -m755 -d ${pkgdir}/etc/profile.d
+install -m755 ../mercurial.profile "${pkgdir}/etc/profile.d/mercurial.sh"
+install -m755 -d ${pkgdir}/etc/mercurial
+install -m644 contrib/sample.hgrc "${pkgdir}/etc/mercurial/hgrc"
+cp -rv ${pkgdir}/usr/local/* /usr/
+cp -rv ${pkgdir}/etc/* /etc/
+rm -rv ${pkgdir}
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

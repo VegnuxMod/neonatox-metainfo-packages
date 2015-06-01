@@ -1,0 +1,40 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	pgadmin3
+# Version:	1.14.1
+# Release:	n06.2
+# License:	custom
+# Group:	Data Base
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64 arm arm64 armel
+# Url:	http://www.pgadmin.org
+# Description:	A comprehensive design and management interface for PostgreSQL database.
+# MD5:	6b036fda875bd88caec6f3b344d56510  pgadmin3-1.14.1.tar.xz
+
+
+# BuildDep:	/usr/lib/libxslt.so	/usr/lib/libxslt.so
+# BuildDep:	/usr/bin/postgres	/usr/bin/postgres
+# BuildDep:	/usr/bin/wxrc	/usr/bin/wxrc
+# Dep(post):	/usr/lib/libxslt.so	/usr/lib/libxslt.so
+# Dep(post):	/usr/bin/postgres	/usr/bin/postgres
+# Dep(post):	/usr/bin/wxrc	/usr/bin/wxrc
+
+nbuild() {
+[ -f Makefile ] || ./configure --prefix=/usr
+make
+}
+
+ninstall() {
+make  install
+install -Dm644 i18n/pgadmin3.lng /usr/share/pgadmin3/i18n
+install -Dm644 pgadmin/include/images/pgAdmin3.ico /usr/share/pgadmin3/pixmaps/pgAdmin3.ico
+install -Dm644 ../pgadmin3.desktop /usr/share/applications/pgadmin3.desktop
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

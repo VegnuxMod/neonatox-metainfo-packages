@@ -1,0 +1,35 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	libmythes
+# Version:	1.2.2
+# Release:	n06.2
+# License:	custom
+# Group:	System
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64 arm arm64 armel
+# Url:	http://hunspell.sourceforge.net/
+# Description:	A simple thesaurus.
+# MD5:	2b62974d7715c19a6f27c50b8e135f36  libmythes-1.2.2.tar.xz
+
+
+# BuildDep:	/usr/bin/perl	/usr/bin/perl
+# Dep(post):	/usr/bin/perl	/usr/bin/perl
+
+nbuild() {
+./configure --prefix=/usr --disable-static
+make
+./example th_en_US_new.idx th_en_US_new.dat checkme.lst
+./example morph.idx morph.dat morph.lst morph.aff morph.dic
+}
+
+ninstall() {
+make install
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

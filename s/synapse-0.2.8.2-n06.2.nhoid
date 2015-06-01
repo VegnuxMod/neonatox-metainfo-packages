@@ -1,0 +1,52 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargbsj175@gmail.com>
+
+# Name:	synapse
+# Version:	0.2.8.2
+# Release:	n06.2
+# License:	GPLv3
+# Group:	System
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64 arm arm64 armel
+# Url:	https://launchpad.net/synapse-project
+# Description:	A semantic file launcher.
+# MD5:	b2fe568cb40066a6552840df61a2d2be  synapse-0.2.8.2.tar.xz
+
+
+# BuildDep:	/usr/bin/desktop-file-install	/usr/bin/desktop-file-install
+# BuildDep:	/usr/lib/libdbus-glib-1.so	/usr/lib/libdbus-glib-1.so
+# BuildDep:	/usr/lib/libgtkhotkey.so	/usr/lib/libgtkhotkey.so
+# BuildDep:	/usr/lib/libjson-glib-1.0.so	/usr/lib/libjson-glib-1.0.so
+# BuildDep:	/usr/lib/libgee.so	/usr/lib/libgee.so
+# BuildDep:	/usr/lib/libunique-1.0.so	/usr/lib/libunique-1.0.so
+# BuildDep:	/usr/lib/libnotify.so	/usr/lib/libnotify.so
+# BuildDep:	/usr/bin/vala	/usr/bin/vala
+# BuildDep:	/usr/lib/libzeitgeist-1.0.so	/usr/lib/libzeitgeist-1.0.so
+# Dep(post):	/usr/lib/libzeitgeist-1.0.so	/usr/lib/libzeitgeist-1.0.so
+# Dep(post):	/usr/bin/vala	/usr/bin/vala
+# Dep(post):	/usr/lib/libnotify.so	/usr/lib/libnotify.so
+# Dep(post):	/usr/lib/libunique-1.0.so	/usr/lib/libunique-1.0.so
+# Dep(post):	/usr/lib/libgee.so	/usr/lib/libgee.so
+# Dep(post):	/usr/lib/libjson-glib-1.0.so	/usr/lib/libjson-glib-1.0.so
+# Dep(post):	/usr/lib/libgtkhotkey.so	/usr/lib/libgtkhotkey.so
+# Dep(post):	/usr/lib/libdbus-glib-1.so	/usr/lib/libdbus-glib-1.so
+# Dep(post):	/usr/bin/desktop-file-install	/usr/bin/desktop-file-install
+
+nbuild() {
+patch -Np1 -i "../fix-vala-0.14.patch"
+patch -Np1 -i "../fix-suspend-hibernate.patch"
+export LDFLAGS="${LDFLAGS} -ldl -lm"
+./configure --prefix=/usr
+make
+}
+
+ninstall() {
+make install
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

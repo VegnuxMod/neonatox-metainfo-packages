@@ -1,0 +1,48 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	celestia
+# Version:	1.6.0
+# Release:	n06.2
+# License:	GPL
+# Group:	Science
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64 arm arm64
+# Url:	http://www.shatters.net/celestia/
+# Description:	Real-time space simulation.
+# MD5:	cee5692bad8d8b9d03b937a7437a72d6  celestia-1.6.0.tar.xz
+
+
+# BuildDep:	/usr/lib/libgtk-x11-2.0.so	/usr/lib/libgtk-x11-2.0.so
+# BuildDep:	/usr/lib/libtheora.so	/usr/lib/libtheora.so
+# BuildDep:	/usr/lib/liblua.so	/usr/lib/liblua.so
+# BuildDep:	/usr/lib/libgtkglext-x11-1.0.so	/usr/lib/libgtkglext-x11-1.0.so
+# BuildDep:	/usr/lib/libGL.so	/usr/lib/libGL.so
+# BuildDep:	/usr/lib/libXmu.so	/usr/lib/libXmu.so
+# BuildDep:	/usr/lib/libjpeg.so	/usr/lib/libjpeg.so
+# Dep(post):	/usr/lib/libjpeg.so	/usr/lib/libjpeg.so
+# Dep(post):	/usr/lib/libXmu.so	/usr/lib/libXmu.so
+# Dep(post):	/usr/lib/libgtkglext-x11-1.0.so	/usr/lib/libgtkglext-x11-1.0.so
+# Dep(post):	/usr/lib/liblua.so	/usr/lib/liblua.so
+# Dep(post):	/usr/lib/libtheora.so	/usr/lib/libtheora.so
+# Dep(post):	/usr/lib/libgtk-x11-2.0.so	/usr/lib/libgtk-x11-2.0.so
+
+nbuild() {
+patch -Np1 -i ../celestia-1.6.0-gcc45.patch
+patch -Np1 -i ../celestia-1.6.0-gnome-desktop.patch
+patch -Np1 -i ../celestia-libpng14.patch
+./configure --prefix=/usr --with-lua=/usr \
+--datadir=/usr/share --with-gtk
+make
+}
+
+ninstall() {
+make install
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

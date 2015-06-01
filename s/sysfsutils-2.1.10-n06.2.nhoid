@@ -1,0 +1,32 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	sysfsutils
+# Version:	2.1.10
+# Release:	n06.2
+# License:	GPL
+# Group:	System
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64 arm arm64 armel
+# Url:	http://linux-diag.sourceforge.net/Sysfsutils.html
+# Description:	System Utilities Based on Sysfs.
+# MD5:	c624cb353d6654292100c56ffc47504a  sysfsutils-2.1.10.tar.xz
+
+
+
+nbuild() {
+./configure --prefix=/usr --mandir=/usr/share/man
+make
+}
+
+ninstall() {
+make install
+rm /usr/lib/libsysfs.a
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

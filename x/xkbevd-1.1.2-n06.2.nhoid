@@ -1,0 +1,33 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	xkbevd
+# Version:	1.1.2
+# Release:	n06.2.1
+# License:	X11 license
+# Group:	X Window System
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64 arm arm64
+# Url:	http://www.x.org/wiki/
+# Description:	XKB event daemon.
+# MD5:	40e2d9ee260e73aac9084ca4a1f16e11  xkbevd-1.1.2.tar.xz
+
+
+# BuildDep:	/usr/lib/libxkbfile.so	/usr/lib/libxkbfile.so
+# Dep(post):	/usr/lib/libxkbfile.so	/usr/lib/libxkbfile.so
+
+nbuild() {
+./configure --prefix=/usr --sysconfdir=/etc --mandir=/usr/share/man --localstatedir=/var
+make
+}
+
+ninstall() {
+make install
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

@@ -1,0 +1,33 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	rarian
+# Version:	0.8.1
+# Release:	n06.2
+# License:	LGPLv2.1
+# Group:	Documentation
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64
+# Url:	http://www.freedesktop.org/
+# Description:	A documentation metadata library.
+# MD5:	d45d3778f6d71bbabfb03672b32f62da  rarian-0.8.1.tar.xz
+
+
+# BuildDep:	/usr/lib/libxslt.so	/usr/lib/libxslt.so
+# Dep(post):	/usr/lib/libxslt.so	/usr/lib/libxslt.so
+
+nbuild() {
+./configure --prefix=/usr --localstatedir=/var
+make
+}
+
+ninstall() {
+make install
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

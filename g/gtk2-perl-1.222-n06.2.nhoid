@@ -1,0 +1,37 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	gtk2-perl
+# Version:	1.222
+# Release:	n06.2
+# License:	LGPL
+# Group:	System
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64 arm arm64 armel
+# Url:	http://gtk2-perl.sourceforge.net/
+# Description:	Gtk2-Perl allows Perl developers to write GTK+ 2.x applications.
+# MD5:	e6a0e9ae6ea432c7e2f3d6fd0e11fdbb  gtk2-perl-1.222.tar.xz
+
+
+# BuildDep:	/usr/lib/perl5/vendor_perl/5.12.1/ExtUtils/Depends.pm	/usr/lib/perl5/vendor_perl/5.12.1/ExtUtils/Depends.pm
+# BuildDep:	/usr/lib/perl5/vendor_perl/5.12.1/ExtUtils/PkgConfig.pm	/usr/lib/perl5/vendor_perl/5.12.1/ExtUtils/PkgConfig.pm
+# BuildDep:	/usr/lib/perl5/vendor_perl/5.12.1/i686-linux/Pango.pm	/usr/lib/perl5/vendor_perl/5.12.1/i686-linux/Pango.pm
+# BuildDep:	/usr/lib/libgtk-x11-2.0.so	/usr/lib/libgtk-x11-2.0.so
+# Dep(post):	/usr/lib/libgtk-x11-2.0.so	/usr/lib/libgtk-x11-2.0.so
+# Dep(post):	/usr/lib/libgtk-x11-2.0.so	/usr/lib/libgtk-x11-2.0.so
+
+nbuild() {
+PERL_MM_USE_DEFAULT=1 perl Makefile.PL INSTALLDIRS=vendor
+make
+}
+
+ninstall() {
+make install
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

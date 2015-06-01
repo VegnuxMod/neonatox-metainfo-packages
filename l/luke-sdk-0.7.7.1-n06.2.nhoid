@@ -1,0 +1,42 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	luke-sdk
+# Version:	0.7.7.1
+# Release:	n06.2
+# License:	GPL
+# Group:	Programming
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64 arm arm64 armel
+# Url:	http://luke-sdk.berlios.de/
+# Description:	An Integrated Development Environment for Boo, C, C++, C#, Java, JavaScript, Lua, OCaml, Perl, PHP, Pike, Python, Ruby and Tcl/Tk.
+# MD5:	c022452d83e6b9cf369c05fc04ad1ebd  luke-sdk-0.7.7.1.tar.xz
+
+
+# BuildDep:	/usr/bin/python	/usr/bin/python
+# BuildDep:	/usr/bin/pywxrc	/usr/bin/pywxrc
+# Dep(post):	/usr/bin/pywxrc	/usr/bin/pywxrc
+# Dep(post):	/usr/bin/python	/usr/bin/python
+
+nbuild() {
+noemptyfuncs
+}
+
+ninstall() {
+pkgdir=/tmp/luke-sdk
+patch -Np1 -i "../install.patch"
+cd install/
+PREFIX="$pkgdir/usr" ./install.sh
+install -D -m755 "../../luke.sh" "$pkgdir/usr/bin/luke"
+install -D -m644 "../images/luke.png" "$pkgdir/usr/share/pixmaps/luke.png"
+install -D -m644 "../../luke.desktop" "$pkgdir/usr/share/applications/luke.desktop"
+cp -r $pkgdir/* /
+rm -r $pkgdir
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

@@ -1,0 +1,46 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	lua
+# Version:	5.1.4
+# Release:	n06.2
+# License:	MIT
+# Group:	Programming
+# Arch:	i486 i586 i686 x86_64 mips mips64 mipsel mips64el ppc ppc64 arm arm64
+# Url:	http://www.lua.org/
+# Description:	A powerful light-weight programming language designed for extending applications.
+# MD5:	f9e62e8e6542c8c6389d08cd651944e5  lua-5.1.4.tar.xz
+
+
+# BuildDep:	/usr/lib/libreadline.so	/usr/lib/libreadline.so
+# BuildDep:	/usr/lib/libncurses.so	/usr/lib/libncurses.so
+# Dep(post):	/usr/lib/libncurses.so	/usr/lib/libncurses.so
+# Dep(post):	/usr/lib/libreadline.so	/usr/lib/libreadline.so
+
+nbuild() {
+patch -p1 -i "../lua-arch.patch"
+patch -i ../../patch-lua-5.1.4-2 -d src
+if [ $(uname -m) == x86_64 ]; then
+patch -Np1 -i ../lua-5.1-cflags.diff
+else
+echo ""
+fi
+}
+
+ninstall() {
+export CFLAGS="$CFLAGS -fPIC" -fPIC
+make INSTALL_DATA="cp -d" \
+TO_LIB="liblua.a liblua.so liblua.so.5.1" \
+LUA_SO=liblua.so  INSTALL_TOP="/usr" \
+INSTALL_MAN="/usr/share/man/man1" \
+linux install
+install -D -m 644 etc/lua.pc "/usr/lib/pkgconfig/lua.pc"
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}
