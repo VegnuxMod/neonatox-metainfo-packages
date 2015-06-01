@@ -30,7 +30,7 @@ ninstall() {
 pkgdir=/tmp/ntfs-3g-2015.3.14
 make DESTDIR="${pkgdir}" rootbindir=/usr/bin rootsbindir=/usr/bin rootlibdir=/usr/lib64 install
 ln -s /usr/bin/ntfs-3g "${pkgdir}/usr/bin/mount.ntfs"
-cp -r ${pkgdir} /
+cp -r ${pkgdir}/* /
 rm -r ${pkgdir}
 }
 
