@@ -1,0 +1,43 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	ntfs-3g
+# Version:	2015.3.14
+# Release:	n2015.1
+# License:	GPLv2
+# Group:	Core System
+# Arch:	i686 x86_64
+# Url:	http://www.tuxera.com
+# Description:	Stable read and write NTFS driver.
+# MD5:	eebb12378d8b3497af19fa108068adfb  ntfs-3g-2015.3.14.tar.xz
+
+
+# BuildDep:	/usr/lib64/libfuse.so	/usr/lib64/libfuse.so
+# Dep(post):	/usr/lib64/libfuse.so	/usr/lib64/libfuse.so
+
+nbuild() {
+sed 's|$(DESTDIR)/sbin|$(DESTDIR)/usr/bin|' -i {ntfsprogs,src}/Makefile.in
+CC="gcc ${BUILD64}" \
+PKG_CONFIG_PATH=${PKG_CONFIG_PATH64} \
+./configure --prefix=/usr --sbin=/usr/bin \
+--mandir=/usr/share/man --disable-ldconfig \
+--disable-static --with-fuse=external \
+--enable-posix-acls --enable-extras
+make
+}
+
+ninstall() {
+pkgdir=/tmp/ntfs-3g-2015.3.14
+make DESTDIR="${pkgdir}" rootbindir=/usr/bin rootsbindir=/usr/bin rootlibdir=/usr/lib64 install
+ln -s /usr/bin/ntfs-3g "${pkgdir}/usr/bin/mount.ntfs"
+cp -r ${pkgdir} /
+rm -r ${pkgdir}
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}
