@@ -1,0 +1,33 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	dosfstools
+# Version:	3.0.27
+# Release:	n2015.1
+# License:	GPLv2
+# Group:	Core System
+# Arch:	i686 x86_64
+# Url:	http://www.daniel-baumann.ch/software/dosfstools/
+# Description:	DOS filesystem utilities.
+# MD5:	3254566ea66b185920abb7f694df2c2a  dosfstools-3.0.27.tar.xz
+
+
+
+nbuild() {
+make
+}
+
+ninstall() {
+pkgdir=/tmp/dosfstools-3.0.27
+make DESTDIR=$pkgdir PREFIX=/usr SBINDIR=/usr/bin MANDIR=/usr/share/man DOCDIR=/usr/share/doc install
+cp -r ${pkgdir}/* /
+rm -r ${pkgdir}
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}
