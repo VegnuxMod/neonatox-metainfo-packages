@@ -1,0 +1,40 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	fuse
+# Version:	2.9.4
+# Release:	n2015.1
+# License:	GPLv2
+# Group:	Core System
+# Arch:	i686 x86_64
+# Url:	http://fuse.sourceforge.net/
+# Description:	A library that makes it possible to implement a filesystem in a userspace program.
+# MD5:	f198bea4bb1936ad78806e7b038b040f  fuse-2.9.4.tar.xz
+
+nbuild() {
+chmod -R 0755 *
+sed -i '1i#define _GNU_SOURCE' util/fusermount.c 
+sed -i "/MOUNT_FUSE_PATH=/s#/sbin#/usr/bin#" configure
+CC="gcc ${BUILD64}" ./configure --prefix=/usr --libdir=/usr/lib64 \
+--enable-lib --enable-util --disable-example
+make
+}
+
+ninstall() {
+pkgdir=/tmp/fuse-2.9.4
+make DESTDIR=${pkgdir} install
+rm -rf ${pkgdir}/etc/init.d
+install -Dm644 ../fuse.conf ${pkgdir}/etc/fuse.conf
+rm -rf ${pkgdir}/etc/udev
+rm -rf ${pkgdir}/dev
+cp -r ${pkgdir}/* /
+rm -r ${pkgdir}
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}
