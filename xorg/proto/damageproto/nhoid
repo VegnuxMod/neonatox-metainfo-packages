@@ -1,0 +1,38 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	damageproto
+# Version:	1.2.1
+# Release:	n2015.1
+# License:	X11 license
+# Group:	X Window System
+# Arch:	any
+# Url:	http://www.x.org/wiki/
+# Description:	The damage protocol is used to detect when the screen has been damaged (altered).
+# MD5:	898c1fcef0186b388f144e8bfd60e3e9  damageproto-1.2.1.tar.xz
+
+
+# BuildDep:	/usr/bin/pkg-config	/usr/bin/pkg-config
+# Dep(post):	/usr/bin/pkg-config	/usr/bin/pkg-config
+
+nbuild() {
+./configure --prefix=/usr
+make
+}
+
+ninstall() {
+pkgdir=/tmp/damageproto-1.2.1
+make DESTDIR="$pkgdir/" install
+install -m755 -d "${pkgdir}/usr/share/licenses/damageproto"
+install -m644 COPYING "${pkgdir}/usr/share/licenses/damageproto/"
+cp -r ${pkgdir}/* /
+rm -r ${pkgdir}
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

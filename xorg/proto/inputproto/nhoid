@@ -1,0 +1,38 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	inputproto
+# Version:	2.3.1
+# Release:	n2015.1
+# License:	X11 license
+# Group:	X Window System
+# Arch:	any
+# Url:	http://www.x.org/wiki/
+# Description:	Input devices protocol.
+# MD5:	4c1756a9d6124db48b2229aeb341c9e6  inputproto-2.3.1.tar.xz
+
+
+# BuildDep:	/usr/bin/pkg-config	/usr/bin/pkg-config
+# Dep(post):	/usr/bin/pkg-config	/usr/bin/pkg-config
+
+nbuild() {
+./configure --prefix=/usr
+make
+}
+
+ninstall() {
+pkgdir=/tmp/inputproto-2.3.1
+make DESTDIR="$pkgdir/" install
+install -m755 -d "${pkgdir}/usr/share/licenses/inputproto"
+install -m644 COPYING "${pkgdir}/usr/share/licenses/inputproto/"
+cp -r ${pkgdir}/* /
+rm -r ${pkgdir}
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

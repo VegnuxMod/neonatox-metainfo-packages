@@ -1,0 +1,36 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	util-macros
+# Version:	1.19.0
+# Release:	n2015.1
+# License:	X11 license
+# Group:	X Window System
+# Arch:	any
+# Url:	http://www.x.org/wiki/
+# Description:	Xorg's util macros.
+# MD5:	83be019d313fc94c994701a3ed6eaf6d  util-macros-1.19.0.tar.xz
+
+nbuild() {
+./configure --prefix=/usr
+make
+}
+
+ninstall() {
+pkgdir=/tmp/util-macros-1.19.0
+make DESTDIR="${pkgdir}" install
+install -m755 -d "${pkgdir}/usr/lib"
+mv "${pkgdir}/usr/share/pkgconfig" "${pkgdir}/usr/lib/"
+install -m755 -d "${pkgdir}/usr/share/licenses/util-macros"
+install -m644 COPYING "${pkgdir}/usr/share/licenses/util-macros/"
+cp -r ${pkgdir}/* /
+rm -r ${pkgdir}
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

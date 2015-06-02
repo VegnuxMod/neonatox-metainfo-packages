@@ -1,0 +1,37 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	kbproto
+# Version:	1.0.7
+# Release:	n2015.1
+# License:	X11 license
+# Group:	X Window System
+# Arch:	any
+# Url:	http://www.x.org/wiki/
+# Description:	Keyboard protocol.
+# MD5:	c6735228ce8937c389c9474c220cd556  kbproto-1.0.7.tar.xz
+
+
+# BuildDep:	/usr/bin/pkg-config	/usr/bin/pkg-config
+# Dep(post):	/usr/bin/pkg-config	/usr/bin/pkg-config
+
+nbuild() {
+./configure --prefix=/usr
+make
+}
+
+ninstall() {
+pkgdir=/tmp/kbproto-1.0.7
+make DESTDIR="$pkgdir/" install
+install -Dm644 COPYING "${pkgdir}/usr/share/licenses/kbproto/COPYING"
+cp -r ${pkgdir}/* /
+rm -r ${pkgdir}
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

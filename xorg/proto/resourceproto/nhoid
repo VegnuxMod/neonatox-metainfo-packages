@@ -1,0 +1,38 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	resourceproto
+# Version:	1.2.0
+# Release:	n2015.1
+# License:	X11 license
+# Group:	X Window System
+# Arch:	any
+# Url:	http://www.x.org/wiki/
+# Description:	X.Org Resource protocol headers.
+# MD5:	9dd901771678e5a3b73ef389e2ea2794  resourceproto-1.2.0.tar.xz
+
+
+# BuildDep:	/usr/bin/pkg-config	/usr/bin/pkg-config
+# Dep(post):	/usr/bin/pkg-config	/usr/bin/pkg-config
+
+nbuild() {
+./configure --prefix=/usr
+make
+}
+
+ninstall() {
+pkgdir=/tmp/resourceproto-1.2.0
+make DESTDIR="$pkgdir/" install
+install -m755 -d "${pkgdir}/usr/share/licenses/resourceproto"
+install -m644 COPYING "${pkgdir}/usr/share/licenses/resourceproto/"
+cp -r ${pkgdir}/* /
+rm -r ${pkgdir}
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

@@ -1,0 +1,38 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	glproto
+# Version:	1.4.17
+# Release:	n2015.1
+# License:	X11 license
+# Group:	X Window System
+# Arch:	any
+# Url:	http://www.x.org/wiki/
+# Description:	Protocol that defines the interface between the GL core and the surrounding "operating system" that supports it.
+# MD5:	9abe18a0ad2d98cdf3eef5ab0be1e414  glproto-1.4.17.tar.xz
+
+
+# BuildDep:	/usr/bin/pkg-config	/usr/bin/pkg-config
+# Dep(post):	/usr/bin/pkg-config	/usr/bin/pkg-config
+
+nbuild() {
+./configure --prefix=/usr
+make
+}
+
+ninstall() {
+pkgdir=/tmp/glproto-1.4.17
+make DESTDIR="$pkgdir/" install
+install -m755 -d "${pkgdir}/usr/share/licenses/glproto"
+install -m644 "COPYING" "${pkgdir}/usr/share/licenses/glproto/"
+cp -r ${pkgdir}/* /
+rm -r ${pkgdir}
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}

@@ -1,0 +1,38 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	dri3proto
+# Version:	1.0
+# Release:	n2015.1
+# License:	X11 license
+# Group:	X Window System
+# Arch:	any
+# Url:	http://www.x.org/wiki/
+# Description:	X.Org DRI3 protocol.
+# MD5:	79c97f2d0314d0875b0017dcbc446265  dri3proto-1.0.tar.xz
+
+
+# BuildDep:	/usr/bin/pkg-config	/usr/bin/pkg-config
+# Dep(post):	/usr/bin/pkg-config	/usr/bin/pkg-config
+
+nbuild() {
+./configure --prefix=/usr
+make
+}
+
+ninstall() {
+pkgdir=/tmp/dri3proto-1.0
+make DESTDIR="$pkgdir/" install
+install -m755 -d "${pkgdir}/usr/share/licenses/dri3proto"
+install -m644 ../COPYING "${pkgdir}/usr/share/licenses/dri3proto/"
+cp -r ${pkgdir}/* /
+rm -r ${pkgdir}
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}
