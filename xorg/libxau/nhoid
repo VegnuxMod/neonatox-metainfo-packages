@@ -1,0 +1,41 @@
+#%NHO-0.5
+# Package Maintainer:	Carlos Sanchez <cargabsj175@gmail.com>
+
+# Name:	libXau
+# Version:	1.0.8
+# Release:	n2015.1
+# License:	X11 license
+# Group:	X Window System
+# Arch:	i686 x86_64
+# Url:	http://www.x.org/wiki/
+# Description:	X11 authorisation library.
+# MD5:	1d14b76dc533ab8a028fba9325bfa3ee  libXau-1.0.8.tar.xz
+
+
+# BuildDep:	/usr/bin/pkg-config	/usr/bin/pkg-config
+# BuildDep:	/usr/include/X11/X.h	/usr/include/X11/X.h
+# Dep(post):	/usr/bin/pkg-config	/usr/bin/pkg-config
+# Dep(post):	/usr/include/X11/X.h	/usr/include/X11/X.h
+
+nbuild() {
+CC="gcc ${BUILD64}" \
+PKG_CONFIG_PATH=${PKG_CONFIG_PATH32} \
+./configure --prefix=/usr
+make
+}
+
+ninstall() {
+pkgdir=/tmp/libXau-1.0.8
+make DESTDIR="${pkgdir}" install
+install -Dm644 COPYING "${pkgdir}/usr/share/licenses/${pkgname}/COPYING"
+cp -r ${pkgdir}/* /
+rm -r ${pkgdir}
+}
+
+npostinstall() {
+noemptyfuncs
+}
+
+npostremove() {
+noemptyfuncs
+}
